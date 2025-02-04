@@ -6,7 +6,7 @@ import Profile from './dashboard/Profile';
 import Likes from './dashboard/Likes';
 import Chats from './dashboard/Chats'
 
-const Dashboard = () => {
+export default function Dashboard(){
   const [value, setValue] = useState(0);
 
   const renderContent = () => {
@@ -53,5 +53,3 @@ const Dashboard = () => {
     </Box>
   );
 };
-
-export default Dashboard;

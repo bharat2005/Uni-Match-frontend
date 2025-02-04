@@ -2,7 +2,7 @@ import React, { createContext, useState, useEffect } from "react";
 
 export const AuthContext = createContext();
 
-export default function AuthProvider(props) {
+export default function AuthProvider({children}) {
 
   const [bool, setBool] = useState(!!localStorage.getItem("authToken") );
   const [profile, setProfile] = useState(false)
@@ -37,7 +37,7 @@ export default function AuthProvider(props) {
 
   return (
     <AuthContext.Provider value={{ bool, login, logout, profile, profileSetup }}>
-      {props.children}
+      {children}
     </AuthContext.Provider>
   );
 }

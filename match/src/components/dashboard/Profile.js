@@ -3,7 +3,7 @@ import { Box, Typography, Avatar, Button, Tab, Tabs, Container } from "@mui/mate
 import {AuthContext} from '../../AuthProvider';
 
 
-const Profile = () => {
+export default function Profile(){
   const {logout} = useContext(AuthContext);
 
 
@@ -39,5 +39,3 @@ const Profile = () => {
     </Box>
   );
 };
-
-export default Profile;
