@@ -9,18 +9,22 @@ export default function StyledTextArea() {
   };
 
   return (
-    <Box sx={{ display: "flex", flexDirection: "column", gap: 2, p: 9, width: "100%", maxWidth: 500, justifyContent:'center', alignItems:'center' }}>
-        <Typography variant="h5">Bio</Typography>
+    <div style={{ paddingTop: 60, paddingLeft:60, paddingRight:60}}>
+    <Typography variant="h4" gutterBottom>
+      Write a bio to introduce yourelf
+    </Typography>
       <TextField
         value={text}
         onChange={handleChange}
         multiline
-        rows={6}  // Fixed height for the text area
+        placeholder="Enter a bio!"
+        rows={6}
         variant="outlined"
-        fullWidth
         sx={{
-          borderRadius: "12px", // Rounded corners
-          backgroundColor: "#fff",  // White background
+          marginTop:8,
+          width:'80%',
+          borderRadius: "12px", 
+          backgroundColor: "#fff",
           padding: "10px",
           "& .MuiOutlinedInput-root": {
             borderRadius: "12px", // Rounded corners for the input itself
@@ -35,13 +39,13 @@ export default function StyledTextArea() {
           },
           "& .MuiOutlinedInput-root.Mui-focused": {
             borderColor: "black", // Change border color to black when focused
-            boxShadow: "0px 0px 0px 0px rgba(0, 0, 0, 0.2)", // Optional: remove the default blue shadow
+            //boxShadow: "0px 0px 0px 0px rgba(0, 0, 0, 0.2)", // Optional: remove the default blue shadow
           },
           "& .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline": {
             borderColor: "black", // Ensure the outline is also black when focused
           },
         }}
       />
-    </Box>
+    </div>
   );
 }

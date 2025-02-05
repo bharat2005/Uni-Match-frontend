@@ -30,9 +30,7 @@ export default function StepForm(){
         )}
 
         {step === 1 && (
-            <Box sx={{display:'flex', justifyContent:'center'}}>
            <ImagePickerCard/>
-           </Box>
         )}
 
         {step === 2 && (

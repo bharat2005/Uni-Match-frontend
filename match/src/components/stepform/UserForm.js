@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { TextField, ToggleButton, ToggleButtonGroup, Grid, Typography } from "@mui/material";
+import { TextField, ToggleButton, ToggleButtonGroup, Grid, Typography, Box } from "@mui/material";
 
 const UserForm = () => {
   const [formData, setFormData] = useState({
@@ -27,14 +27,16 @@ const UserForm = () => {
   };
 
   return (
-    <div style={{ padding: 20 }}>
+    <div style={{ paddingTop: 60, paddingLeft: 60, paddingRight: 60 }}>
       <Typography variant="h4" gutterBottom>
-        User Information Form
+        Introduce yourself
       </Typography>
 
-      <Grid container spacing={2}>
-        {/* Name Field */}
+      <Grid container mt={5} spacing={3}> {/* Increased spacing between fields */}
         <Grid item xs={12}>
+          <Typography variant="body1" gutterBottom>
+            Name
+          </Typography>
           <TextField
             label="Name"
             variant="outlined"
@@ -42,13 +44,31 @@ const UserForm = () => {
             name="name"
             value={formData.name}
             onChange={handleInputChange}
+            sx={{
+              "& label": {
+                color: "black", // Default label color
+                textAlign: "left", // Left-align the label
+              },
+              "& label.Mui-focused": {
+                color: "black", // Label color when focused
+              },
+              "& .MuiOutlinedInput-root": {
+                "&:hover .MuiOutlinedInput-notchedOutline": {
+                  borderColor: "#ccc",
+                },
+                "&.Mui-focused .MuiOutlinedInput-notchedOutline": {
+                  borderColor: "black",
+                },
+              },
+              marginBottom: 2, // Spacing between fields
+            }}
           />
         </Grid>
 
         {/* Gender Selection */}
         <Grid item xs={12}>
           <Typography variant="body1" gutterBottom>
-            Gender
+            You are...
           </Typography>
           <ToggleButtonGroup
             value={formData.gender}
@@ -56,51 +76,67 @@ const UserForm = () => {
             onChange={handleGenderChange}
             fullWidth
           >
-            <ToggleButton value="male">Male</ToggleButton>
-            <ToggleButton value="female">Female</ToggleButton>
-            <ToggleButton value="other">Other</ToggleButton>
+            {["male", "female", "other"].map((gender) => (
+              <ToggleButton
+                key={gender}
+                value={gender}
+                sx={{
+                  backgroundColor: formData.gender === gender ? "black" : "transparent",
+                  color: formData.gender === gender ? "white" : "black",
+                  border: "1px solid #ccc",
+                  "&:hover": {
+                    backgroundColor: "rgba(0, 0, 0, 0.1)", // Default hover effect
+                  },
+                  "&.Mui-selected": {
+                    backgroundColor: "black !important", // Keep black when selected
+                    color: "white !important",
+                  },
+                  marginBottom: 3, // Spacing below gender buttons
+                }}
+              >
+                {gender.charAt(0).toUpperCase() + gender.slice(1)}
+              </ToggleButton>
+            ))}
           </ToggleButtonGroup>
         </Grid>
 
         {/* Date of Birth */}
         <Grid item xs={12}>
           <Typography variant="body1" gutterBottom>
-            Date of Birth
+            Birthday
           </Typography>
-          <Grid container spacing={2}>
-            <Grid item xs={4}>
-              <TextField
-                label="Day"
-                variant="outlined"
-                name="day"
-                value={formData.dob.day}
-                onChange={handleInputChange}
-                inputProps={{ maxLength: 2 }}
-                fullWidth
-              />
-            </Grid>
-            <Grid item xs={4}>
-              <TextField
-                label="Month"
-                variant="outlined"
-                name="month"
-                value={formData.dob.month}
-                onChange={handleInputChange}
-                inputProps={{ maxLength: 2 }}
-                fullWidth
-              />
-            </Grid>
-            <Grid item xs={4}>
-              <TextField
-                label="Year"
-                variant="outlined"
-                name="year"
-                value={formData.dob.year}
-                onChange={handleInputChange}
-                inputProps={{ maxLength: 4 }}
-                fullWidth
-              />
-            </Grid>
+          <Grid container spacing={3}> {/* Increased spacing between DOB fields */}
+            {["day", "month", "year"].map((field) => (
+              <Grid item xs={4} key={field}>
+                <TextField
+                  label={field.charAt(0).toUpperCase() + field.slice(1)}
+                  variant="outlined"
+                  name={field}
+                  value={formData.dob[field]}
+                  onChange={handleInputChange}
+                  inputProps={{ maxLength: field === "year" ? 4 : 2 }}
+                  fullWidth
+                  sx={{
+                    "& label": {
+                      color: "black", // Default label color
+                      textAlign: "left", // Left-align the label
+                    },
+                    "& label.Mui-focused": {
+                      color: "black", // Label color when focused
+                    },
+                    "& .MuiOutlinedInput-root": {
+                      "&:hover .MuiOutlinedInput-notchedOutline": {
+                        borderColor: "#ccc",
+                      },
+                      "&.Mui-focused .MuiOutlinedInput-notchedOutline": {
+                        borderColor: "black",
+                      },
+                    },
+                    marginBottom: 2, // Spacing between DOB fields
+                  }}
+                />
+              </Grid>
+            ))}
           </Grid>
         </Grid>
       </Grid>

@@ -28,12 +28,11 @@ export default function Login(){
           color:'white',
           width:'500px',
           transition: "background-color 0.3s",
-            '&:hover': {
-              backgroundColor: "white",
-              boxShadow:'none',
-              color:'black'
-            },
           boxShadow:'none', 
+          '&:hover':{
+            backgroundColor:'black',
+            color:'white'
+          },
           borderRadius:'50px', 
           height:'60px',
           fontSize:'20px',

@@ -1,5 +1,45 @@
 import React, { useState } from "react";
-import { Chip, Box } from "@mui/material";
+import { Chip, Box, Typography } from "@mui/material";
+
+const interests = [
+  "Movies/TV shows 🎬",
+  "Music festivals / Concerts 🎶",
+  "Sports / Fitness 🏋️‍♂️",
+  "Gaming 🎮",
+  "Traveling ✈️",
+  "Cooking / Trying new foods 🍽️",
+  "Art / Photography 🎨",
+  "Books / Reading 📖",
+  "Hiking 🥾",
+  "Painting 🖌️",
+  "Yoga 🧘‍♀️",
+  "Camping ⛺",
+  "Fishing 🎣",
+  "Dancing 💃",
+  "Running 🏃‍♀️",
+  "Cycling 🚴‍♂️",
+  "Writing ✍️",
+  "Podcasts 🎧",
+  "Social media 📱",
+  "Music production 🎧",
+  "Shopping 🛍️",
+  "Swimming 🏊‍♂️",
+  "Board games 🎲",
+  "Video games 🕹️",
+  "Makeup 💄",
+  "Gardening 🌱",
+  "Fitness training 🏃‍♂️",
+  "Baking 🍰",
+  "Skiing 🎿",
+  "Food tasting 🍷",
+  "Road trips 🚗",
+  "Pet care 🐾",
+  "Fashion styling 👗",
+  "Web design 💻"
+];
+
+
+
 
 
 
@@ -17,13 +57,17 @@ export default function CustomSelectableChips() {
   };
 
   return (
-    <Box sx={{ display: "flex", flexWrap: "wrap", gap: 1, p: 9 }}>
-      {[...Array(100)].map((item,chip) => {
+    <div style={{ paddingTop:60 }}>
+    <Typography variant="h4" gutterBottom>
+      What are you into?
+    </Typography>
+    <Box sx={{ display: "flex", flexWrap: "wrap", gap: 1, p: 9 , justifyContent:'center'}}>
+      {interests.map((item,chip) => {
         const isSelected = selectedChips.includes(chip);
         return (
           <Chip
-            key={chip}
-            label={chip + "...."}
+            key={item}
+            label={item}
             onClick={() => handleSelect(chip)}
             onDelete={isSelected ? () => handleSelect(chip) : undefined}
             variant={isSelected ? "filled" : "outlined"}
@@ -39,5 +83,6 @@ export default function CustomSelectableChips() {
         );
       })}
     </Box>
+    </div>
   );
 }
