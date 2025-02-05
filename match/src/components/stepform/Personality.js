@@ -1,29 +1,49 @@
 import React, { useState } from "react";
 import { Box, Typography } from "@mui/material";
 
+
+const array =[
+'/personality/extrovert.png',
+'/personality/introvert.png',
+
+]
+
+
 export default function Personality() {
-  const [selected, setSelected] = useState(1); // Default selected box
+  const [selected, setSelected] = useState(1);
 
   return (
-    <Box display="flex" sx={{flexDirection:'column', alignItems:'center'}} justifyContent="center" gap={2} mt={5}>
-      {[0, 1, 2].map((index) => (
+        <div style={{ paddingTop: 60 , paddingLeft:60, paddingRight:60}}>
+          <Typography variant="h4" gutterBottom>
+          Are you an introvert or extrovert?
+          </Typography>
+
+    <Box display="flex" sx={{flexDirection:'row', alignItems:'center'}} justifyContent="center" gap={2} mt={5}>
+      {array.map((item,index) => (
         <Box
           key={index}
           onClick={() => setSelected(index)}
-          sx={{
-            width: selected === index ? 230: 210,
-            height: selected === index ? 200 : 180,
-            backgroundColor: selected === index ? "black" : "#ffbf00",
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-            cursor: "pointer",
-            transition: "all 0.3s ease-in-out",
-            borderRadius: 2,
-          }}
+            sx={{
+              width: selected === index ? 240 : 230,
+              height: selected === index ? 240 : 230,
+              backgroundImage: `url(${item})`, // Ensure correct image path
+              backgroundSize: "cover",
+              backgroundPosition: "center",
+              backgroundRepeat: "no-repeat",
+              display: "flex",
+              marginTop:8,
+              alignItems: "center",
+              justifyContent: "center",
+              cursor: "pointer",
+              transition: "all 0.3s ease-in-out",
+              borderRadius: 2,
+              border: selected ===index? "1.5px solid black" : "1px solid black", // Outline effect
+              boxShadow: selected === index ? "0px 0px 10px black" : "none", // Slight glow effect
+            }}
         >
         </Box>
       ))}
     </Box>
+    </div>
   );
 }

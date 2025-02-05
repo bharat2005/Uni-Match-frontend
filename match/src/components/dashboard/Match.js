@@ -32,7 +32,7 @@ export default function Match() {
       }}
     >
       <CardWrapper onSwipe={onSwipe} swipeThreshold={0.1}>
-        {[...Array(1)].map((_, index) => (
+        {[...Array(100)].map((_, index) => (
           <Card
             key={index}
             sx={{

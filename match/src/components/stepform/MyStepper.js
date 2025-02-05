@@ -8,16 +8,16 @@ import DoneIcon from '@mui/icons-material/Done';
 
 
 export default function MyStepper({step,setStep}){
-    const {profileSetup} = useContext(AuthContext);
-    const navigate = useNavigate();
+    //const {profileSetup} = useContext(AuthContext);
+    //const navigate = useNavigate();
 
     function handleNextClick(){
         if(step<7){
-            setStep(prev=>prev+1)
-         } else{
-             profileSetup(true)
-            navigate("/dashboard", { replace: true } )
-         }
+            setStep(prev=>prev+1)}
+        //  } else{
+        //      profileSetup(true)
+        //     navigate("/dashboard", { replace: true } )
+        //  }
     }
 
     return (
@@ -28,13 +28,13 @@ export default function MyStepper({step,setStep}){
         position="static"
         activeStep={step}
         nextButton={
-        <Button variant="contained" sx={{color:'#ffbf00', backgroundColor:'black', borderRadius:'50px',boxShadow:'none'}} size="small"  onClick={handleNextClick}>
+        <Button variant="contained" sx={{color:'#ffbf00', backgroundColor:'black', borderRadius:'50px',boxShadow:'none',"&:hover":{backgroundColor:'black'}}} size="small"  onClick={handleNextClick}>
             {step==7?<DoneIcon/>:<ArrowForwardIosIcon/>}
               
         </Button>
         }
         backButton={
-        <Button variant="contained" sx={{color:'#ffbf00',backgroundColor:'black', borderRadius:'50px',boxShadow:'none'}} size="small" onClick={()=>setStep(prev=>prev-1)} disabled={step === 0}>
+        <Button variant="contained" sx={{color:'#ffbf00',backgroundColor:'black', borderRadius:'50px',boxShadow:'none',"&:hover":{backgroundColor:'black'}}} size="small" onClick={()=>setStep(prev=>prev-1)} disabled={step === 0}>
           
             <ArrowBackIosNewIcon/>
         </Button>

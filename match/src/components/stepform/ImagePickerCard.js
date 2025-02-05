@@ -20,8 +20,17 @@ export default function ImagePickerCard() {
   };
 
   return (
+
+<div style={{ paddingTop:60,paddingLeft:60,paddingRight:60 }}>
+        <Typography variant="h4" gutterBottom>
+          Add your best photo
+        </Typography>
+
     <Card 
       sx={{
+        marginLeft:'60px',
+        marginRight:'60px',
+        marginTop:'40px',
         width: 400,
         height: 400,
         display: "flex",
@@ -29,10 +38,11 @@ export default function ImagePickerCard() {
         justifyContent: "center",
         border: "2px dashed gray",
         cursor: "pointer",
-        "&:hover": { borderColor: "blue" },
+        "&:hover": { borderColor: "black" },
       }}
       onClick={handleCardClick}
     >
+
       <input
         id="fileInput"
         type="file"
@@ -40,6 +50,7 @@ export default function ImagePickerCard() {
         style={{ display: "none" }}
         onChange={handleImageChange}
       />
+
       <CardActionArea>
         {selectedImage ? (
           <CardMedia
@@ -50,12 +61,14 @@ export default function ImagePickerCard() {
           />
         ) : (
           <Box textAlign="center">
-            <Typography variant="body2" sx={{color:'black'}}>
             <AddAPhotoIcon/>
-            </Typography>
           </Box>
         )}
       </CardActionArea>
+
+
+
     </Card>
+    </div>
   );
 }
