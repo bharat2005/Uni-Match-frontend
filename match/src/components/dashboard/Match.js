@@ -6,12 +6,12 @@ let me = {
   image: './me.jpg',
   name: 'Sammy',
   age: '19',
-  reason: 'Here for Dating',
-  interests: ['pizza', 'traveling', 'football', 'movies', 'music'],
-  bio: 'I love those guys who are so much caring!',
-  personality: 'extrovert',
-  starsign: 'gemini',
-  pets: 'cat',
+  reason: '🎉Casual Dating',
+  interests: ["Fishing 🎣", "Dancing 💃", "Running 🏃‍♀️", "Cycling 🚴‍♂️", "Writing ✍️"],
+  bio: 'Heyy...🎉! I love traveling so much!',
+  personality: '🤩Extrovert',
+  starsign: '🌬️Gemini',
+  pets: '🐱Cat',
 };
 
 export default function Match() {
@@ -40,7 +40,6 @@ export default function Match() {
               width: "300px",
               height: "400px",
               color: "white",
-              backgroundColor: "black",
               backgroundSize: "cover",
               backgroundPosition: "center",
               borderRadius: "12px",
@@ -54,7 +53,6 @@ export default function Match() {
               overflow: "hidden",
             }}
           >
-  
             <Box
               sx={{
                 width: "100%",
@@ -63,10 +61,20 @@ export default function Match() {
                 display: "flex",
                 flexDirection: "column",
                 overflowY: "auto",
-                maxHeight: "100%", 
-                zIndex: 1, 
+                maxHeight: "100%",
+                zIndex: 1,
+                backgroundColor: "black",
+                paddingBottom: "20px",
+
+                /* Hide scrollbar */
+                scrollbarWidth: "none",
+                "-ms-overflow-style": "none",
+                "&::-webkit-scrollbar": {
+                  display: "none",
+                },
               }}
             >
+              {/* Shadow Overlay */}
               <Box
                 sx={{
                   position: "absolute",
@@ -75,49 +83,49 @@ export default function Match() {
                   right: 0,
                   bottom: 0,
                   zIndex: 1,
-                  boxShadow: "inset 0 20px 30px 0px rgba(0, 0, 0, 0.8), inset 0 -20px 30px 0px rgba(0, 0, 0, 0.8)", // Stronger and more spread shadow
+                  boxShadow: "inset 0 -100px 40px 0px rgba(0, 0, 0, 0.8)",
                 }}
               />
 
-    
+              {/* Profile Image */}
               <img
                 src={me.image}
                 alt="Profile"
                 style={{
-                  maxWidth: "100%", 
-                  maxHeight: "100%", 
-                  objectFit: "cover", 
-                  pointerEvents: "none", 
-                  zIndex: 0, 
+                  maxWidth: "100%",
+                  maxHeight: "100%",
+                  objectFit: "cover",
+                  pointerEvents: "none",
+                  zIndex: 0,
                 }}
               />
 
-        
+              {/* Name & Age */}
               <Typography
                 variant="h6"
                 sx={{
                   position: "absolute",
-                  top: "10px", 
-                  left: "10px", 
+                  bottom: "70px", // Adjusted for spacing
+                  left: "20px",
                   fontWeight: "bold",
-                  textShadow: "2px 2px 4px rgba(0,0,0,0.5)", 
-                  zIndex: 2, 
+                  zIndex: 2,
+                  fontSize: "25px",
                   color: "white",
                 }}
               >
                 {me.name}, {me.age}
               </Typography>
 
+              {/* Reason - Separate Line */}
               <Typography
-                variant="body2"
+                variant="body1"
                 sx={{
                   position: "absolute",
-                  top: "30px", 
-                  left: "10px", 
-                  fontWeight: "normal",
-                  color: "white",
+                  bottom: "45px", // Positioned below name/age
+                  left: "20px",
                   zIndex: 2,
-                  textShadow: "2px 2px 4px rgba(0,0,0,0.5)",
+                  fontSize: "15px", // Slightly smaller
+                  color: "white", // Gold/yellowish color for contrast
                 }}
               >
                 {me.reason}
