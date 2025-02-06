@@ -10,7 +10,7 @@ const array =[
 
 
 export default function Personality() {
-  const [selected, setSelected] = useState(1);
+  const [selected, setSelected] = useState(0);
 
   return (
         <div style={{ paddingTop: 60 , paddingLeft:60, paddingRight:60}}>
@@ -35,10 +35,10 @@ export default function Personality() {
               alignItems: "center",
               justifyContent: "center",
               cursor: "pointer",
-              transition: "all 0.3s ease-in-out",
+              //transition: "all 0.3s ease-in-out",
               borderRadius: 2,
-              border: selected ===index? "1.5px solid black" : "1px solid black", // Outline effect
-              boxShadow: selected === index ? "0px 0px 10px black" : "none", // Slight glow effect
+              border: selected ===index? "2.5px solid black" : "1px solid black", // Outline effect
+              //boxShadow: selected === index ? "0px 0px 10px black" : "none", // Slight glow effect
             }}
         >
         </Box>

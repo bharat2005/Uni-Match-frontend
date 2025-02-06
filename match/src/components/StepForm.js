@@ -5,10 +5,8 @@ import UserForm from './stepform/UserForm';
 import ImagePickerCard from './stepform/ImagePickerCard';
 import Reason from './stepform/Reason';
 import Interest from './stepform/Interest';
-import Bio from './stepform/Bio';
 import Personality from './stepform/Personality';
-import Pets from './stepform/Pets';
-import StarSign from './stepform/StarSign';
+
 
 
 
@@ -42,19 +40,7 @@ export default function StepForm(){
         )}   
 
         {step === 4 && (
-            <Bio/>
-        )}
-
-        {step === 5 && (
             <Personality/>
-        )}
-
-        {step === 6 && (
-            <StarSign/>
-        )}
-
-        {step === 7 && (
-                <Pets/>
         )}
 
       </Box>

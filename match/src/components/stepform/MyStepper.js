@@ -12,7 +12,7 @@ export default function MyStepper({step,setStep}){
     //const navigate = useNavigate();
 
     function handleNextClick(){
-        if(step<7){
+        if(step<4){
             setStep(prev=>prev+1)}
         //  } else{
         //      profileSetup(true)
@@ -24,12 +24,12 @@ export default function MyStepper({step,setStep}){
         <MobileStepper
         variant="progress"
         sx={{marginBottom:'0px'}}
-        steps={8}
+        steps={5}
         position="static"
         activeStep={step}
         nextButton={
         <Button variant="contained" sx={{color:'#ffbf00', backgroundColor:'black', borderRadius:'50px',boxShadow:'none',"&:hover":{backgroundColor:'black'}}} size="small"  onClick={handleNextClick}>
-            {step==7?<DoneIcon/>:<ArrowForwardIosIcon/>}
+            {step==4?<DoneIcon/>:<ArrowForwardIosIcon/>}
               
         </Button>
         }
