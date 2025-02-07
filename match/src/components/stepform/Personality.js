@@ -26,7 +26,7 @@ export default function Personality() {
             sx={{
               width: selected === index ? 240 : 230,
               height: selected === index ? 240 : 230,
-              backgroundImage: `url(${item})`, // Ensure correct image path
+              backgroundImage: `url(${item})`,
               backgroundSize: "cover",
               backgroundPosition: "center",
               backgroundRepeat: "no-repeat",
@@ -35,10 +35,8 @@ export default function Personality() {
               alignItems: "center",
               justifyContent: "center",
               cursor: "pointer",
-              //transition: "all 0.3s ease-in-out",
               borderRadius: 2,
-              border: selected ===index? "2.5px solid black" : "1px solid black", // Outline effect
-              //boxShadow: selected === index ? "0px 0px 10px black" : "none", // Slight glow effect
+              border: selected ===index? "2.5px solid black" : "1px solid black",
             }}
         >
         </Box>

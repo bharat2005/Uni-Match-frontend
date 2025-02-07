@@ -17,7 +17,7 @@ let me = {
 export default function Match() {
   const [lastDirection, setLastDirection] = useState("");
 
-  const onSwipe = (direction, name) => {
+  function onSwipe(direction, name){
     setLastDirection(direction);
     console.log(`${name} was swiped ${direction}`);
   };
@@ -31,7 +31,7 @@ export default function Match() {
         overflow: "visible",
       }}
     >
-      <CardWrapper onSwipe={onSwipe} swipeThreshold={0.1}>
+      <CardWrapper onSwipe={onSwipe}>
         {[...Array(100)].map((_, index) => (
           <Card
             key={index}

@@ -1,12 +1,7 @@
 import React, { useState } from "react";
 import { TextField, ToggleButton, ToggleButtonGroup, Grid, Typography, Box } from "@mui/material";
 
-const UserForm = () => {
-  const [formData, setFormData] = useState({
-    name: "",
-    gender: "",
-    dob: { day: "", month: "", year: "" },
-  });
+const UserForm = ({ formData, setFormData }) => {
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -28,14 +23,16 @@ const UserForm = () => {
 
   return (
     <div style={{ paddingTop: 60, paddingLeft: 60, paddingRight: 60 }}>
+      {/* Main form content */}
       <Typography variant="h4" gutterBottom>
         Introduce yourself
       </Typography>
 
-      <Grid container mt={5} spacing={3}> {/* Increased spacing between fields */}
+      <Grid container mt={5} spacing={3}>
+        {/* Name Field */}
         <Grid item xs={12}>
           <Typography variant="body1" gutterBottom>
-            Name
+            What should we call you?✨
           </Typography>
           <TextField
             label="Name"
@@ -45,22 +42,13 @@ const UserForm = () => {
             value={formData.name}
             onChange={handleInputChange}
             sx={{
-              "& label": {
-                color: "black", // Default label color
-                textAlign: "left", // Left-align the label
-              },
-              "& label.Mui-focused": {
-                color: "black", // Label color when focused
-              },
+              "& label": { color: "black" },
+              "& label.Mui-focused": { color: "black" },
               "& .MuiOutlinedInput-root": {
-                "&:hover .MuiOutlinedInput-notchedOutline": {
-                  borderColor: "#ccc",
-                },
-                "&.Mui-focused .MuiOutlinedInput-notchedOutline": {
-                  borderColor: "black",
-                },
+                "&:hover .MuiOutlinedInput-notchedOutline": { borderColor: "#ccc" },
+                "&.Mui-focused .MuiOutlinedInput-notchedOutline": { borderColor: "black" },
               },
-              marginBottom: 2, // Spacing between fields
+              marginBottom: 2,
             }}
           />
         </Grid>
@@ -68,7 +56,7 @@ const UserForm = () => {
         {/* Gender Selection */}
         <Grid item xs={12}>
           <Typography variant="body1" gutterBottom>
-            You are...
+            What’s your gender?🚻
           </Typography>
           <ToggleButtonGroup
             value={formData.gender}
@@ -84,14 +72,9 @@ const UserForm = () => {
                   backgroundColor: formData.gender === gender ? "black" : "transparent",
                   color: formData.gender === gender ? "white" : "black",
                   border: "1px solid #ccc",
-                  "&:hover": {
-                    backgroundColor: "rgba(0, 0, 0, 0.1)", // Default hover effect
-                  },
-                  "&.Mui-selected": {
-                    backgroundColor: "black !important", // Keep black when selected
-                    color: "white !important",
-                  },
-                  marginBottom: 3, // Spacing below gender buttons
+                  "&:hover": { backgroundColor: "rgba(0, 0, 0, 0.1)" },
+                  "&.Mui-selected": { backgroundColor: "black !important", color: "white !important" },
+                  marginBottom: 3,
                 }}
               >
                 {gender.charAt(0).toUpperCase() + gender.slice(1)}
@@ -100,12 +83,12 @@ const UserForm = () => {
           </ToggleButtonGroup>
         </Grid>
 
-        {/* Date of Birth */}
+        {/* Birthday Fields */}
         <Grid item xs={12}>
           <Typography variant="body1" gutterBottom>
-            Birthday
+            What's your birthdate? 🎂
           </Typography>
-          <Grid container spacing={3}> {/* Increased spacing between DOB fields */}
+          <Grid container spacing={2}>
             {["day", "month", "year"].map((field) => (
               <Grid item xs={4} key={field}>
                 <TextField
@@ -117,22 +100,13 @@ const UserForm = () => {
                   inputProps={{ maxLength: field === "year" ? 4 : 2 }}
                   fullWidth
                   sx={{
-                    "& label": {
-                      color: "black", // Default label color
-                      textAlign: "left", // Left-align the label
-                    },
-                    "& label.Mui-focused": {
-                      color: "black", // Label color when focused
-                    },
+                    "& label": { color: "black" },
+                    "& label.Mui-focused": { color: "black" },
                     "& .MuiOutlinedInput-root": {
-                      "&:hover .MuiOutlinedInput-notchedOutline": {
-                        borderColor: "#ccc",
-                      },
-                      "&.Mui-focused .MuiOutlinedInput-notchedOutline": {
-                        borderColor: "black",
-                      },
+                      "&:hover .MuiOutlinedInput-notchedOutline": { borderColor: "#ccc" },
+                      "&.Mui-focused .MuiOutlinedInput-notchedOutline": { borderColor: "black" },
                     },
-                    marginBottom: 2, // Spacing between DOB fields
+                    marginBottom: 2,
                   }}
                 />
               </Grid>
@@ -145,3 +119,4 @@ const UserForm = () => {
 };
 
 export default UserForm;
+

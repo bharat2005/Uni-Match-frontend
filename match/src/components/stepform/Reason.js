@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { Box, Typography } from "@mui/material";
 
 const array = [
@@ -10,8 +10,14 @@ const array = [
   '/reason/sf.png',
 ];
 
-export default function Reason() {
-  const [selected, setSelected] = useState(1); // Default selected box
+export default function Reason({ formData, setFormData }) {
+  const [selected, setSelected] = React.useState(0);
+
+  const handleSelection = (index) => {
+    setSelected(index);
+    const selectedReason = array[index];
+    setFormData((prevState) => ({ ...prevState, reason: selectedReason }));
+  };
 
   return (
     <div style={{ paddingTop: 60, backgroundColor: 'white' }}>
@@ -26,16 +32,16 @@ export default function Reason() {
           alignItems: "center",
         }}
         justifyContent="center"
-        gap={2}
+        gap={3}
         mt={6}
       >
         {array.map((item, index) => (
           <Box
             key={index}
-            onClick={() => setSelected(index)}
+            onClick={() => handleSelection(index)}
             sx={{
-              width: 150,  // Fixed width to prevent displacement
-              height: 150, // Fixed height to prevent displacement
+              width: 150, 
+              height: 150, 
               backgroundImage: `url(${item})`,
               backgroundSize: "cover",
               backgroundPosition: "center",
@@ -45,9 +51,8 @@ export default function Reason() {
               justifyContent: "center",
               cursor: "pointer",
               borderRadius: 2,
-              border: selected === index ? "2px solid black" : "1px solid black", // Highlight effect without resizing
-              //boxShadow: selected === index ? "0px 4px 10px rgba(0,0,0,0.3)" : "none", // Glow effect without shifting
-              transform: selected === index ? "scale(1.05)" : "scale(1)", // Slight zoom effect without displacement
+              border: selected === index ? "2px solid black" : "1px solid black", 
+              transform: selected === index ? "scale(1.05)" : "scale(1)", 
             }}
           ></Box>
         ))}

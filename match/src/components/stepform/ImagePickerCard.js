@@ -1,44 +1,40 @@
-import React, { useState } from "react";
-import { Card, CardMedia, CardActionArea, Typography, Box } from "@mui/material";
+import React from "react";
+import { Card, CardMedia, CardActionArea, Box, Typography } from "@mui/material";
 import AddAPhotoIcon from '@mui/icons-material/AddAPhoto';
 
-export default function ImagePickerCard() {
-  const [images, setImages] = useState(Array(6).fill(null)); // Array for 6 images
-
-  // Handle Image Selection
+const ImagePickerCard = ({ formData, setFormData }) => {
   const handleImageChange = (event, index) => {
     const file = event.target.files[0];
     if (file) {
       const imageUrl = URL.createObjectURL(file);
-      const newImages = [...images];
-      newImages[index] = imageUrl;
-      setImages(newImages);
+      const newImages = [...formData.images];
+      newImages[index] = imageUrl; 
+      setFormData({ ...formData, images: newImages }); 
     }
   };
 
-  // Trigger File Input on Card Click
   const handleCardClick = (index) => {
     document.getElementById(`fileInput-${index}`).click();
   };
 
   return (
     <div style={{ paddingLeft: 60, paddingRight: 60, paddingTop: 60 }}>
-      <Typography variant="h4" sx={{marginBottom:'50px'}} gutterBottom>
+      <Typography variant="h4" sx={{ marginBottom: '50px' }} gutterBottom>
         Add your best photos
       </Typography>
 
       <Box
         sx={{
           display: "grid",
-          gridTemplateColumns: "repeat(auto-fill, minmax(140px, 1fr))", // Auto-fill keeps it responsive
-          gap: "30px", // Controls spacing between boxes (reducing row gap)
+          gridTemplateColumns: "repeat(auto-fill, minmax(140px, 1fr))",
+          gap: "30px",
           justifyContent: "center",
           alignItems: "center",
-          maxWidth: "480px", // Ensures it doesn't stretch too wide
+          maxWidth: "480px", 
           margin: "auto",
         }}
       >
-        {images.map((image, index) => (
+        {formData.images.map((image, index) => (
           <Card
             key={index}
             sx={{
@@ -80,4 +76,6 @@ export default function ImagePickerCard() {
       </Box>
     </div>
   );
-}
+};
+
+export default ImagePickerCard;
