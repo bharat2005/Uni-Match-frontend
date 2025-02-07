@@ -6,7 +6,7 @@ import { ArrowBackIos, ArrowForwardIos } from "@mui/icons-material";
 
 
 
-export default function Card({ profile }){
+export default function Card({ profile,lastDirection }){
     const [currentImageIndex, setCurrentImageIndex] = useState(0);
   
     const nextImage = () => {
@@ -53,6 +53,24 @@ export default function Card({ profile }){
         >
           <ArrowForwardIos />
         </IconButton>
+
+
+        {lastDirection && (
+            <Box
+            sx={{
+            position: "absolute",
+            top: "30%",
+            opacity:1,
+            transition: "opacity 0.5s ease-in-out",
+                  
+        }}
+                >
+                  <img
+                    src={lastDirection === "left" ? "/cross.png" : "/accept.png" }
+                    style={{ width: "200px" }}
+                  />
+                </Box>
+              )}
   
         {/* User Info */}
         <Typography
