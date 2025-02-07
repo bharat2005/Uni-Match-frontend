@@ -19,7 +19,8 @@
     "react-router-dom": "^7.1.5",
     "react-scripts": "5.0.1",
     "react-swipeable": "^7.0.2",
-    "react-swipeable-cards": "^1.0.6"
+    "react-swipeable-cards": "^1.0.6",
+    "react-tinder-card": "^1.6.4"
   },
   "scripts": {
     "start": "react-scripts start",
