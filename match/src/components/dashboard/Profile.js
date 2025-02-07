@@ -4,7 +4,7 @@ import {AuthContext} from '../../AuthProvider';
 
 
 export default function Profile(){
-  const {logout} = useContext(AuthContext);
+  //const {logout} = useContext(AuthContext);
 
 
   return (
@@ -33,7 +33,7 @@ export default function Profile(){
       </Typography>
 
 
-      <Button variant="contained" onClick={logout}>Logout</Button>
+      <Button variant="contained" >Logout</Button>
     
 
     </Box>
