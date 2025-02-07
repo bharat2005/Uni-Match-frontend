@@ -9,7 +9,7 @@ import Dashboard from './components/Dashboard';
 export default function App() {
   return (
     <Login/>
-    // <AuthProvider>
+    {/* // <AuthProvider>
     //   <Router>
 
     //     <Routes>
@@ -19,6 +19,7 @@ export default function App() {
     //     </Routes>
 
     //   </Router>
-    // </AuthProvider>
+    // </AuthProvider> */}
+  
   );
 }
