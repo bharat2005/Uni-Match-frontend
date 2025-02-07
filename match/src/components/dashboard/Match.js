@@ -15,8 +15,8 @@ let profiles = [
   }
 ];
 
-export default function App() {
-  const [lastDirection, setLastDirection] = useState();
+export default function Match() {
+  const [lastDirection, setLastDirection] = useState(null);
 
   const swiped = (direction, name) => {
     console.log("Swiped " + name + " to " + direction);
@@ -45,7 +45,7 @@ export default function App() {
             onSwipe={(dir) => swiped(dir, profile.name)}
             onCardLeftScreen={() => outOfFrame(profile.name)}
           >
-            <Card profile={profile} />
+            <Card profile={profile} lastDirection={lastDirection}/>
           </TinderCard>
         ))}
       </div>
