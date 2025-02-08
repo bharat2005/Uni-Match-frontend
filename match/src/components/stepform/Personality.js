@@ -7,10 +7,22 @@ const array =[
 '/personality/introvert.png',
 
 ]
+const personalities = [
+  'extrovert',
+  'introvert',
+]
 
 
-export default function Personality() {
+export default function Personality({setFormData}) {
   const [selected, setSelected] = useState(0);
+
+  function handleClick(index){
+    setSelected(index);
+    const per = personalities[index]
+    setFormData(prev => {
+      return {...prev, personality:per}
+  })
+  }
 
   return (
         <div style={{ paddingTop: 60 , paddingLeft:60, paddingRight:60}}>
@@ -22,7 +34,7 @@ export default function Personality() {
       {array.map((item,index) => (
         <Box
           key={index}
-          onClick={() => setSelected(index)}
+          onClick={() => handleClick(index)}
             sx={{
               width: selected === index ? 240 : 230,
               height: selected === index ? 240 : 230,

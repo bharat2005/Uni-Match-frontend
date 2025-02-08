@@ -4,7 +4,7 @@ import {AuthContext} from '../../AuthProvider';
 
 
 export default function Profile(){
-  //const {logout} = useContext(AuthContext);
+  
 
 
   return (
@@ -15,13 +15,12 @@ export default function Profile(){
       boxShadow: 2,
       width:'500px',
       p: 2,
-     // maxHeight: 400,
       overflowY: "auto",
       "&::-webkit-scrollbar": {
-        display: "none", // Hide scrollbar for Webkit browsers
+        display: "none", 
       },
-      msOverflowStyle: "none", // Hide scrollbar for IE and Edge
-      scrollbarWidth: "none", // Hide scrollbar for Firefox
+      msOverflowStyle: "none", 
+      scrollbarWidth: "none",
     }}
     >
     

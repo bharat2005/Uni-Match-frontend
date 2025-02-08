@@ -1,7 +1,24 @@
 import React from "react";
 import { Box, Typography, Avatar, List, ListItem, ListItemAvatar, ListItemText, Divider } from "@mui/material";
 
-export default function Likes({ matches, onChatOpen }) {
+
+let list =[
+  {name:'Sammy', id: 0, age:'19', image:'/me.jpg',type:'mutual'},
+  {name:'Mandy', id: 1, age:'18', image:'/me2.jpg',type:'likedByYou'},
+  {name:'Linda', id: 2, age:'20', image:'/me3.jpg',type:'likesYou'},
+  {name:'Linda', id: 2, age:'20', image:'/me3.jpg',type:'mutual'},
+  {name:'Linda', id: 2, age:'20', image:'/me3.jpg',type:'likedByYou'},
+  {name:'Linda', id: 2, age:'20', image:'/me3.jpg',type:'likedByYou'},
+  {name:'Linda', id: 2, age:'20', image:'/me3.jpg',type:'likedByYou'},
+  {name:'Linda', id: 2, age:'20', image:'/me3.jpg',type:'likedByYou'},
+  {name:'Linda', id: 2, age:'20', image:'/me3.jpg',type:'likedByYou'},
+  {name:'Linda', id: 2, age:'20', image:'/me3.jpg',type:'mutual'},
+  {name:'Linda', id: 2, age:'20', image:'/me3.jpg',type:'likedByYou'},
+  {name:'Linda', id: 2, age:'20', image:'/me3.jpg',type:'likedByYou'}
+]
+
+
+export default function Likes({  onChatOpen }) {
   return (
     <Box
       sx={{
@@ -23,8 +40,8 @@ export default function Likes({ matches, onChatOpen }) {
         Likes
       </Typography>
       <List>
-        {matches.length > 0 ? (
-          matches.map((match, index) => {
+        {list.length > 0 ? (
+          list.map((match, index) => {
             let bgColor = "white";
             if (match.type === "mutual") bgColor = "#d4edda"; // Green for mutual matches
             else if (match.type === "likedByYou") bgColor = "#cce5ff"; // Blue for liked by user
@@ -47,7 +64,7 @@ export default function Likes({ matches, onChatOpen }) {
                   </ListItemAvatar>
                   <ListItemText primary={match.name} secondary={match.age + " years old"} />
                 </ListItem>
-                {index < matches.length - 1 && <Divider variant="inset" component="li" />}
+                {index < list.length - 1 && <Divider variant="inset" component="li" />}
               </React.Fragment>
             );
           })

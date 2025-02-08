@@ -3,103 +3,33 @@ import { MobileStepper, Button, Modal, Box, Typography } from "@mui/material";
 import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
 import ArrowBackIosNewIcon from "@mui/icons-material/ArrowBackIosNew";
 import DoneIcon from "@mui/icons-material/Done";
+import ErrorModal from './ErrorModal';
+import DoneModal from './DoneModal';
 
-export default function MyStepper({ step, setStep, setBoolo, validateStep }) {
-  const [errorModalOpen, setErrorModalOpen] = useState(false);
-  const [successModalOpen, setSuccessModalOpen] = useState(false);
+export default function MyStepper({ step, setStep, validateStep, handleDone }) {
+  const [errorOpen, setErrorOpen] = useState(false);
+  const [doneOpen, setDoneOpen] = useState(false);
 
   function handleNextClick() {
     if (step < 4) {
       if (validateStep()) {
         setStep((prev) => prev + 1);
       } else {
-        setErrorModalOpen(true); // Open error modal if validation fails
+        setErrorOpen(true); 
       }
     } else {
-      setSuccessModalOpen(true); // Open success modal on profile completion
+      handleDone()
+      setDoneOpen(true); 
     }
   }
 
   return (
     <>
-      {/* ❌ Validation Error Modal */}
-      <Modal open={errorModalOpen} onClose={() => setErrorModalOpen(false)}>
-        <Box
-          sx={{
-            width: 400,
-            margin: "auto",
-            marginTop: "20%",
-            backgroundColor: "white",
-            padding: 3,
-            borderRadius: 2,
-            boxShadow: 24,
-            textAlign: "center",
-          }}
-        >
-          <Typography variant="h6" sx={{ marginBottom: 2, color: "red" }}>
-            ⚠️ Missing Information!
-          </Typography>
-          <Typography variant="body1" sx={{ marginBottom: 2 }}>
-            Please fill in all required details before proceeding!
-          </Typography>
-          <Button
-            variant="contained"
-            onClick={() => setErrorModalOpen(false)}
-            sx={{
-              width: "100%",
-              padding: "10px",
-              backgroundColor: "#ffbf00",
-              color: "black",
-              borderRadius: "8px",
-              "&:hover": { backgroundColor: "#ffbf00" },
-            }}
-          >
-            Okay
-          </Button>
-        </Box>
-      </Modal>
+    <ErrorModal errorOpen={errorOpen} setErrorOpen={setErrorOpen} />
+     
+    <DoneModal doneOpen={doneOpen}/>
 
-      {/* ✅ Success Modal */}
-      <Modal open={successModalOpen} onClose={() => setBoolo(true)}>
-        <Box
-          sx={{
-            width: 400,
-            margin: "auto",
-            marginTop: "15%",
-            backgroundColor: "white",
-            padding: 3,
-            borderRadius: 2,
-            boxShadow: 24,
-            textAlign: "center",
-          }}
-        >
-          <Typography variant="h6" sx={{ marginBottom: 2, color: "green" }}>
-            🎉 Profile Created Successfully!
-          </Typography>
-          <Typography>
-            <br/>
-            Your profile is ready, and you're all set to begin your journey!<br/><br/>
-            Welcome to the community! 🌟<br/><br/>
 
-          </Typography>
-          <Button
-            variant="contained"
-            onClick={() => setBoolo(true)}
-            sx={{
-              width: "100%",
-              padding: "10px",
-              backgroundColor: "#ffbf00",
-              color: "black",
-              borderRadius: "8px",
-              "&:hover": { backgroundColor: "#ffbf00" },
-            }}
-          >
-            Go to Dashboard
-          </Button>
-        </Box>
-      </Modal>
-
-      {/* 🔄 Stepper Navigation */}
       <MobileStepper
         sx={{
           "& .MuiLinearProgress-root": {

@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useState} from "react";
 import { Chip, Box, Typography } from "@mui/material";
 
 const interests = [
@@ -42,17 +42,17 @@ const selectedColor = { backgroundColor: "grey", color: "white" };
 const hoverColor = { backgroundColor: "black", color: "black" };
 
 export default function Interest({ formData, setFormData }) {
-  const [selectedChips, setSelectedChips] = React.useState(formData.selectedInterests || []);
+  const [chips, setChips] = useState (formData.interests || []);
 
-  const handleSelect = (chip) => {
-    const updatedSelectedChips = selectedChips.includes(chip)
-      ? selectedChips.filter((c) => c !== chip)
-      : [...selectedChips, chip];
+  function handleSelect(chip){
+    const updatedSelectedChips = chips.includes(chip)
+      ? chips.filter((c) => c !== chip)
+      : [...chips, chip];
 
-    setSelectedChips(updatedSelectedChips);
-
-    // Update formData state with selected chips
-    setFormData((prevState) => ({ ...prevState, selectedInterests: updatedSelectedChips }));
+    setChips(updatedSelectedChips);
+    setFormData((prev) => {
+      return { ...prev, interests: updatedSelectedChips }
+  });
   };
 
   return (
@@ -62,20 +62,20 @@ export default function Interest({ formData, setFormData }) {
       </Typography>
       <Box sx={{ display: "flex", flexWrap: "wrap", gap: 1, p: 9, justifyContent: "center" }}>
         {interests.map((item, index) => {
-          const isSelected = selectedChips.includes(item);
+          const bool = chips.includes(item);
           return (
             <Chip
               key={item}
               label={item}
               onClick={() => handleSelect(item)}
-              onDelete={isSelected ? () => handleSelect(item) : undefined}
-              variant={isSelected ? "filled" : "outlined"}
+              onDelete={bool ? () => handleSelect(item) : undefined}
+              variant={bool ? "filled" : "outlined"}
               sx={{
                 cursor: "pointer",
                 transition: "all 0.2s ease-in-out",
-                ...(isSelected ? selectedColor : {}),
+                ...(bool ? selectedColor : {}),
                 "&:hover": {
-                  ...(isSelected ? selectedColor : hoverColor),
+                  ...(bool ? selectedColor : hoverColor),
                 },
               }}
             />

@@ -1,35 +1,49 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { TextField, ToggleButton, ToggleButtonGroup, Grid, Typography, Box } from "@mui/material";
 
-const UserForm = ({ formData, setFormData }) => {
+export default function UserForm({ formData, setFormData }) {
 
-  const handleInputChange = (e) => {
-    const { name, value } = e.target;
-    if (["day", "month", "year"].includes(name)) {
+  function calculateAge(day, month, year){
+    const today = new Date();
+    const birthDate = new Date(year, month - 1, day); 
+    let age = today.getFullYear() - birthDate.getFullYear();
+    const m = today.getMonth() - birthDate.getMonth();
+    if (m < 0 || (m === 0 && today.getDate() < birthDate.getDate())) {
+      age--;
+    }
+    return age;
+  };
+
+
+  function handleInputChange(e) {
+    if (["day", "month", "year"].includes(e.target.name)) {
+      const newDob = { ...formData.dob, [e.target.name]: e.target.value };
+      const age = calculateAge(newDob.day, newDob.month, newDob.year);
       setFormData((prev) => ({
         ...prev,
-        dob: { ...prev.dob, [name]: value },
+        dob: newDob, 
+        age: age,    
       }));
     } else {
-      setFormData({ ...formData, [name]: value });
+      setFormData({ ...formData, [e.target.name]: e.target.value });
     }
-  };
+  }
 
-  const handleGenderChange = (event, newGender) => {
-    if (newGender !== null) {
-      setFormData({ ...formData, gender: newGender });
+
+  function handleGenderChange(e, gender) {
+    if (gender !== null) {
+      setFormData({ ...formData, gender: gender });
     }
-  };
+  }
 
   return (
     <div style={{ paddingTop: 60, paddingLeft: 60, paddingRight: 60 }}>
-      {/* Main form content */}
+
       <Typography variant="h4" gutterBottom>
         Introduce yourself
       </Typography>
 
       <Grid container mt={5} spacing={3}>
-        {/* Name Field */}
         <Grid item xs={12}>
           <Typography variant="body1" gutterBottom>
             What should we call you?✨
@@ -53,7 +67,6 @@ const UserForm = ({ formData, setFormData }) => {
           />
         </Grid>
 
-        {/* Gender Selection */}
         <Grid item xs={12}>
           <Typography variant="body1" gutterBottom>
             What’s your gender?🚻
@@ -77,13 +90,12 @@ const UserForm = ({ formData, setFormData }) => {
                   marginBottom: 3,
                 }}
               >
-                {gender.charAt(0).toUpperCase() + gender.slice(1)}
+                {gender.toUpperCase()}
               </ToggleButton>
             ))}
           </ToggleButtonGroup>
         </Grid>
 
-        {/* Birthday Fields */}
         <Grid item xs={12}>
           <Typography variant="body1" gutterBottom>
             What's your birthdate? 🎂
@@ -95,7 +107,7 @@ const UserForm = ({ formData, setFormData }) => {
                   label={field.charAt(0).toUpperCase() + field.slice(1)}
                   variant="outlined"
                   name={field}
-                  value={formData.dob[field]}
+                  value={formData.dob[field] || ''}
                   onChange={handleInputChange}
                   inputProps={{ maxLength: field === "year" ? 4 : 2 }}
                   fullWidth
@@ -116,7 +128,6 @@ const UserForm = ({ formData, setFormData }) => {
       </Grid>
     </div>
   );
-};
+}
 
-export default UserForm;
 

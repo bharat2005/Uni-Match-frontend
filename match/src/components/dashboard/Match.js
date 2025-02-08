@@ -1,26 +1,19 @@
 import React, { useState } from "react";
 import "../../App.css";
-import { Box, Typography, IconButton } from "@mui/material";
+import { Box } from "@mui/material";
 import TinderCard from "react-tinder-card";
-import { ArrowBackIos, ArrowForwardIos } from "@mui/icons-material";
-import Card from './Card';
+import Card from "./Card";
 
-let profiles = [
-  {
-    id: 1,
-    images: ["/me.jpg", "/me2.jpg", "/me3.jpg"],
-    name: "Sammy",
-    age: "19",
-    reason: "🎉 Casual Dating",
-  }
-];
+export default function Match({ profiles }) {
+  const [swipeStates, setSwipeStates] = useState({}); // Store swipe state for each profile
 
-export default function Match() {
-  const [lastDirection, setLastDirection] = useState(null);
+  const swiped = (direction, profileId) => {
+    console.log(`Swiped ${profileId} to ${direction}`);
 
-  const swiped = (direction, name) => {
-    console.log("Swiped " + name + " to " + direction);
-    setLastDirection(direction);
+    setSwipeStates((prevStates) => ({
+      ...prevStates,
+      [profileId]: direction, // Store swipe direction for this profile
+    }));
   };
 
   const outOfFrame = (name) => {
@@ -42,14 +35,13 @@ export default function Match() {
           <TinderCard
             className="swipe"
             key={profile.id}
-            onSwipe={(dir) => swiped(dir, profile.name)}
+            onSwipe={(dir) => swiped(dir, profile.id)}
             onCardLeftScreen={() => outOfFrame(profile.name)}
           >
-            <Card profile={profile} lastDirection={lastDirection}/>
+            <Card profile={profile} lastDirection={swipeStates[profile.id]} />
           </TinderCard>
         ))}
       </div>
     </Box>
   );
 }
-
