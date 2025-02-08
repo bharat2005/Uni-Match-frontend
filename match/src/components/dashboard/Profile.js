@@ -9,16 +9,20 @@ export default function Profile(){
 
   return (
     <Box
-      sx={{
-        position:'relative',
-        backgroundColor:'white',
-        width:'640px',
-        height:'100%',
-        display: "flex",
-        flexDirection: "column",
-        alignItems: "center",
-        padding: "0px",
-      }}
+    sx={{
+      height: "95%",
+      bgcolor: "background.paper",
+      boxShadow: 2,
+      width:'500px',
+      p: 2,
+     // maxHeight: 400,
+      overflowY: "auto",
+      "&::-webkit-scrollbar": {
+        display: "none", // Hide scrollbar for Webkit browsers
+      },
+      msOverflowStyle: "none", // Hide scrollbar for IE and Edge
+      scrollbarWidth: "none", // Hide scrollbar for Firefox
+    }}
     >
     
       <Avatar

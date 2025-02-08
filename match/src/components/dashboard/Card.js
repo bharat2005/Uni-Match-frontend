@@ -66,6 +66,7 @@ export default function Card({ profile,lastDirection }){
         }}
                 >
                   <img
+                  draggable='false'
                     src={lastDirection === "left" ? "/cross.png" : "/accept.png" }
                     style={{ width: "200px" }}
                   />

@@ -50,6 +50,7 @@ if (boolo){
     <Box
       sx={{
         display: 'flex',
+        width:'100vw',
         flexDirection: 'column',
         alignItems: 'center',
         justifyContent: 'center',
