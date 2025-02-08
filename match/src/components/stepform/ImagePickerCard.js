@@ -3,13 +3,12 @@ import { Card, CardMedia, CardActionArea, Box, Typography } from "@mui/material"
 import AddAPhotoIcon from '@mui/icons-material/AddAPhoto';
 
 const ImagePickerCard = ({ formData, setFormData }) => {
-  const handleImageChange = (event, index) => {
-    const file = event.target.files[0];
-    if (file) {
-      const imageUrl = URL.createObjectURL(file);
-      const newImages = [...formData.images];
-      newImages[index] = imageUrl; 
-      setFormData({ ...formData, images: newImages }); 
+  function handleImageChange(event, index){
+    if (event.target.files[0]) {
+      const imageUrl = URL.createObjectURL(event.target.files[0]);
+      const list = [...formData.images];
+      list[index] = imageUrl; 
+      setFormData({ ...formData, images: list }); 
     }
   };
 
