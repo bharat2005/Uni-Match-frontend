@@ -5,16 +5,17 @@ import { ArrowBackIos, ArrowForwardIos } from "@mui/icons-material";
 
 export default function Card({ profile, lastDirection }) {
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
+  const list = profile.images.filter(item => item!=null)
 
   const nextImage = () => {
     setCurrentImageIndex((prevIndex) =>
-      prevIndex === profile.images.length - 1 ? 0 : prevIndex + 1
+      prevIndex === list.length - 1 ? 0 : prevIndex + 1
     );
   };
 
   const prevImage = () => {
     setCurrentImageIndex((prevIndex) =>
-      prevIndex === 0 ? profile.images.length - 1 : prevIndex - 1
+      prevIndex === 0 ? list.length - 1 : prevIndex - 1
     );
   };
 
@@ -27,7 +28,7 @@ export default function Card({ profile, lastDirection }) {
         height: "500px",
         boxShadow: "inset 0px -80px 40px 0px black",
         borderRadius: "8px",
-        backgroundImage: `url(${profile.images[currentImageIndex]})`,
+        backgroundImage: `url(${list[currentImageIndex]})`,
         backgroundSize: "cover",
         backgroundPosition: "center",
         display: "flex",
@@ -35,7 +36,7 @@ export default function Card({ profile, lastDirection }) {
         alignItems: "center",
       }}
     >
-      {/* Left Arrow Button */}
+      
       <IconButton
         sx={{ position: "absolute", left: "10px", color: "white" }}
         onClick={prevImage}
@@ -43,7 +44,7 @@ export default function Card({ profile, lastDirection }) {
         <ArrowBackIos />
       </IconButton>
 
-      {/* Right Arrow Button */}
+
       <IconButton
         sx={{ position: "absolute", right: "10px", color: "white" }}
         onClick={nextImage}
@@ -51,12 +52,12 @@ export default function Card({ profile, lastDirection }) {
         <ArrowForwardIos />
       </IconButton>
 
-      {/* Show Accept/Cross image only if this card was swiped */}
+    
       {lastDirection && (
         <Box
           sx={{
             position: "absolute",
-            top: "30%",
+            top: "20%",
             opacity: 1,
             transition: "opacity 0.5s ease-in-out",
           }}
@@ -64,7 +65,7 @@ export default function Card({ profile, lastDirection }) {
           <img
             draggable="false"
             src={lastDirection === "left" ? "/cross.png" : "/accept.png"}
-            style={{ width: "200px" }}
+            style={{ width: "300px" }}
           />
         </Box>
       )}

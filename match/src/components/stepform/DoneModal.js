@@ -1,8 +1,10 @@
 import React, { useState } from "react";
 import { Button, Modal, Box, Typography } from "@mui/material";
+import Dashboard from '../dashboard/Dashboard';
 
 
-export default function DoneModal({doneOpen}){
+export default function DoneModal({doneOpen, bool, setBool}){
+  
     return (
         <Modal open={doneOpen}>
         <Box
@@ -28,6 +30,7 @@ export default function DoneModal({doneOpen}){
           </Typography>
           <Button
             variant="contained"
+            onClick={()=>setBool(true)}
             sx={{
               width: "100%",
               padding: "10px",

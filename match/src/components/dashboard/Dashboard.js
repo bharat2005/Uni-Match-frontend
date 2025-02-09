@@ -8,6 +8,23 @@ import Chats from './Chats';
 import axios from 'axios';
 
 
+let list =[
+  {name:'Sammy', id: 0, age:'19', image:'/me.jpg',type:'likedByYou'},
+  {name:'Mandy', id: 1, age:'18', image:'/me2.jpg',type:'likesYou'},
+  {name:'Linda', id: 2, age:'20', image:'/me3.jpg',type:'mutual'},
+
+]
+
+function shuffleArray(array) {
+  for (let i = array.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1)); // random index from 0 to i
+      [array[i], array[j]] = [array[j], array[i]]; // swap elements
+  }
+  return array;
+}
+
+
+
 export default function Dashboard(){
   const [value, setValue] = useState(0);
   const [profiles,setProfiles] = useState([])
@@ -27,11 +44,11 @@ export default function Dashboard(){
   function renderCompo(){
     switch (value) {
       case 0:
-        return <Match profiles={profiles}/>;
+        return <Match profiles={shuffleArray(profiles)}/>;
       case 1:
-        return <Likes  onChatOpen={()=>true}/>;
+        return <Likes list={list.filter((item)=>item.type=="likedByYou" || item.type == "likesYou")} onChatOpen={()=>true}/>;
       case 2:
-        return <Chats />;
+        return <Chats list={list.filter((item)=> item.type=="mutual")} onChatOpen={()=>true}/>;
       case 3:
         return <Profile />;
       default:

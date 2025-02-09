@@ -8,6 +8,7 @@ import Interest from "./Interest";
 import Personality from "./Personality";
 import FormStartModal from './FormStartModal';
 import axios from 'axios';
+import Dashboard from '../dashboard/Dashboard'
 
 
 
@@ -23,6 +24,7 @@ export default function StepForm() {
     interests:[],
     personality:'',
   });
+  const [bool,setBool] = useState(false)
 
 
 function handleDone(){
@@ -56,9 +58,9 @@ function handleDone(){
         return formData.personality !== "";
     }
   };
-
-
-
+ if (bool){
+  return <Dashboard/>
+ }
   return (
     <Box
       sx={{
@@ -92,7 +94,7 @@ function handleDone(){
           {step === 4 && <Personality formData={formData} setFormData={setFormData} />}
         </Box>
 
-        <MyStepper step={step} setStep={setStep} validateStep={validateStep} handleDone={handleDone}/>
+        <MyStepper step={step} setStep={setStep} validateStep={validateStep} handleDone={handleDone} bool={bool} setBool={setBool}/>
 
       </Box>
     </Box>
