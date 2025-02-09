@@ -1,51 +1,41 @@
 import React from "react";
 import { Box, Typography, Avatar, List, ListItem, ListItemAvatar, ListItemText, Divider } from "@mui/material";
 
-
-let list =[
-  {name:'Sammy', id: 0, age:'19', image:'/me.jpg',type:'mutual'},
-  {name:'Mandy', id: 1, age:'18', image:'/me2.jpg',type:'likedByYou'},
-  {name:'Linda', id: 2, age:'20', image:'/me3.jpg',type:'likesYou'},
-  {name:'Linda', id: 2, age:'20', image:'/me3.jpg',type:'mutual'},
-  {name:'Linda', id: 2, age:'20', image:'/me3.jpg',type:'likedByYou'},
-  {name:'Linda', id: 2, age:'20', image:'/me3.jpg',type:'likedByYou'},
-  {name:'Linda', id: 2, age:'20', image:'/me3.jpg',type:'likedByYou'},
-  {name:'Linda', id: 2, age:'20', image:'/me3.jpg',type:'likedByYou'},
-  {name:'Linda', id: 2, age:'20', image:'/me3.jpg',type:'likedByYou'},
-  {name:'Linda', id: 2, age:'20', image:'/me3.jpg',type:'mutual'},
-  {name:'Linda', id: 2, age:'20', image:'/me3.jpg',type:'likedByYou'},
-  {name:'Linda', id: 2, age:'20', image:'/me3.jpg',type:'likedByYou'}
-]
-
-
-export default function Likes({  onChatOpen }) {
+export default function Likes({ onChatOpen, list }) {
   return (
     <Box
       sx={{
         height: "95%",
         bgcolor: "background.paper",
         boxShadow: 2,
-        width:'500px',
+        width: "500px",
         p: 2,
-       // maxHeight: 400,
         overflowY: "auto",
         "&::-webkit-scrollbar": {
-          display: "none", // Hide scrollbar for Webkit browsers
+          display: "none", 
         },
-        msOverflowStyle: "none", // Hide scrollbar for IE and Edge
-        scrollbarWidth: "none", // Hide scrollbar for Firefox
+        msOverflowStyle: "none", 
+        scrollbarWidth: "none", 
       }}
     >
-      <Typography variant="h6" sx={{ fontWeight: "bold", mb: 2 }}>
-        Likes
-      </Typography>
+      
+        <Box display="flex" justifyContent="center" gap={12} mb={1.9} mt={1}>
+        <Box display="flex" alignItems="center" gap={0.5}>
+            <img src="/blue.png" width={"25px"} alt="Liked by You" />
+          <b>Liked by You</b></Box>
+          <Box display="flex" alignItems="center" gap={0.5}>
+            <img src="/red.png" width={"25px"} alt="Likes You" />
+          <b>Likes You</b></Box>
+        </Box>
+  
+
       <List>
         {list.length > 0 ? (
           list.map((match, index) => {
             let bgColor = "white";
-            if (match.type === "mutual") bgColor = "#d4edda"; // Green for mutual matches
-            else if (match.type === "likedByYou") bgColor = "#cce5ff"; // Blue for liked by user
-            else if (match.type === "likesYou") bgColor = "#f8d7da"; // Red for incoming likes
+            if (match.type === "mutual") bgColor = "#d4edda"; 
+            else if (match.type === "likedByYou") bgColor = "#cce5ff"; 
+            else if (match.type === "likesYou") bgColor = "#f8d7da"; 
 
             return (
               <React.Fragment key={match.id}>
