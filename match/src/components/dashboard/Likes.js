@@ -1,7 +1,9 @@
 import React from "react";
 import { Box, Typography, Avatar, List, ListItem, ListItemAvatar, ListItemText, Divider } from "@mui/material";
+import FavoriteRoundedIcon from '@mui/icons-material/FavoriteRounded';
+import CloseRoundedIcon from '@mui/icons-material/CloseRounded';
 
-export default function Likes({ onChatOpen, list }) {
+export default function Likes({ list }) {
   return (
     <Box
       sx={{
@@ -21,10 +23,10 @@ export default function Likes({ onChatOpen, list }) {
       
         <Box display="flex" justifyContent="center" gap={12} mb={1.9} mt={1}>
         <Box display="flex" alignItems="center" gap={0.5}>
-            <img src="/blue.png" width={"25px"} alt="Liked by You" />
+            <img src="/signs/blue.png" width={"25px"} alt="Liked by You" />
           <b>Liked by You</b></Box>
           <Box display="flex" alignItems="center" gap={0.5}>
-            <img src="/red.png" width={"25px"} alt="Likes You" />
+            <img src="/signs/red.png" width={"25px"} alt="Likes You" />
           <b>Likes You</b></Box>
         </Box>
   
@@ -40,7 +42,6 @@ export default function Likes({ onChatOpen, list }) {
             return (
               <React.Fragment key={match.id}>
                 <ListItem
-                  onClick={() => onChatOpen(match)}
                   sx={{
                     bgcolor: bgColor,
                     borderRadius: "8px",
@@ -53,8 +54,10 @@ export default function Likes({ onChatOpen, list }) {
                     <Avatar alt={match.name} src={match.image} />
                   </ListItemAvatar>
                   <ListItemText primary={match.name} secondary={match.age + " years old"} />
+                  {match.type === "likesYou"&&<><FavoriteRoundedIcon sx={{color:'red', marginRight:'20px'}}/><CloseRoundedIcon/></>}
                 </ListItem>
                 {index < list.length - 1 && <Divider variant="inset" component="li" />}
+
               </React.Fragment>
             );
           })
