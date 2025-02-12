@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import { Box, Typography } from "@mui/material";
 
-
 const imagePaths = [
   '/reason/cd.png',
   '/reason/stf.png',
@@ -10,7 +9,6 @@ const imagePaths = [
   '/reason/sb.png',
   '/reason/sf.png',
 ];
-
 
 const reasons = [
   "Casual Dating",
@@ -31,8 +29,12 @@ export default function Reason({ setFormData }) {
   }
 
   return (
-    <div style={{ paddingTop: 60, backgroundColor: 'white' }}>
-      <Typography variant="h4" gutterBottom>
+    <div style={{ paddingTop: 40, backgroundColor: 'white' }}>
+      <Typography 
+        variant="h4" 
+        gutterBottom 
+        sx={{ fontSize: { xs: "1.5rem", sm: "2rem", md: "2.5rem" }, textAlign: "center" }}
+      >
         What are you looking for?
       </Typography>
       <Box
@@ -41,19 +43,19 @@ export default function Reason({ setFormData }) {
           flexDirection: "row",
           flexWrap: "wrap",
           alignItems: "center",
+          justifyContent: "center",
+          gap: { xs: 2, sm: 3 }, // Adjust gap for mobile
+          marginTop: { xs: 4, sm: 6 }, // Adjust margin for better spacing on smaller screens
         }}
-        justifyContent="center"
-        gap={3}
-        mt={6}
       >
         {imagePaths.map((item, index) => (
           <Box
             key={index}
             onClick={() => handleSelection(index)}
             sx={{
-              width: 150,
-              height: 150,
-              backgroundImage: `url(${item})`, // Background image from imagePaths array
+              width: { xs: 120, sm: 150 },  // Adjust width based on screen size
+              height: { xs: 120, sm: 150 }, // Adjust height for better visibility
+              backgroundImage: `url(${imagePaths[index]})`, // Background image from imagePaths array
               backgroundSize: "cover",
               backgroundPosition: "center",
               backgroundRepeat: "no-repeat",
@@ -64,8 +66,11 @@ export default function Reason({ setFormData }) {
               borderRadius: 2,
               border: selected === index ? "2px solid black" : "1px solid black",
               transform: selected === index ? "scale(1.05)" : "scale(1)",
+              position: "relative", // For absolute text positioning
+              transition: "transform 0.2s ease, border 0.2s ease", // Smooth transition for scale and border
             }}
-          ></Box>
+          >
+          </Box>
         ))}
       </Box>
     </div>

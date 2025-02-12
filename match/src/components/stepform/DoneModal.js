@@ -1,28 +1,40 @@
-import React, { useState } from "react";
+import React from "react";
 import { Button, Modal, Box, Typography } from "@mui/material";
-import Dashboard from '../dashboard/Dashboard';
 
 
-export default function DoneModal({doneOpen, bool, setBool}){
+export default function DoneModal({doneOpen}){
   
     return (
         <Modal open={doneOpen}>
         <Box
           sx={{
-            width: 400,
+            width: "90%",
             margin: "auto",
-            marginTop: "15%",
+            marginTop: "40%",
             backgroundColor: "white",
             padding: 3,
+            paddingTop:3.5,
             borderRadius: 2,
+            padding:'15px',
             boxShadow: 24,
-            textAlign: "center",
           }}
         >
-          <Typography variant="h6" sx={{ marginBottom: 2, color: "green" }}>
-            🎉 Profile Created Successfully!
+          <Typography variant="h6" 
+          sx={{    
+            color:'green',
+            whiteSpace: "nowrap", 
+            marginBottom: 2,
+            textAlign: "center",
+            fontSize: { xs: "1.3rem", sm: "1.75rem" },  
+            }}>
+            🎉Profile Created Successfully!
           </Typography>
-          <Typography>
+          <Typography 
+          sx={{
+            marginBottom: 2,
+            textAlign: "center",
+            fontSize: { xs: "0.875rem", sm: "1rem" },
+          }}>
             <br/>
             Your profile is ready, and you're all set to begin your journey!<br/><br/>
             Welcome to the community! 🌟<br/><br/>
@@ -30,7 +42,6 @@ export default function DoneModal({doneOpen, bool, setBool}){
           </Typography>
           <Button
             variant="contained"
-            onClick={()=>setBool(true)}
             sx={{
               width: "100%",
               padding: "10px",

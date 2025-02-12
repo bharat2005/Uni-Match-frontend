@@ -14,7 +14,6 @@ export default function UserForm({ formData, setFormData }) {
     return age;
   };
 
-
   function handleInputChange(e) {
     if (["day", "month", "year"].includes(e.target.name)) {
       const newDob = { ...formData.dob, [e.target.name]: e.target.value };
@@ -29,7 +28,6 @@ export default function UserForm({ formData, setFormData }) {
     }
   }
 
-
   function handleGenderChange(e, gender) {
     if (gender !== null) {
       setFormData({ ...formData, gender: gender });
@@ -37,15 +35,14 @@ export default function UserForm({ formData, setFormData }) {
   }
 
   return (
-    <div style={{ paddingTop: 60, paddingLeft: 60, paddingRight: 60 }}>
-
-      <Typography variant="h4" gutterBottom>
+    <div style={{ paddingTop: 40, paddingLeft: 20, paddingRight: 20 }}> {/* Adjusted padding for mobile */}
+      <Typography variant="h4" gutterBottom sx={{ fontSize: { xs: "1.5rem", sm: "2rem" } }}>
         Introduce yourself
       </Typography>
 
-      <Grid container mt={5} spacing={3}>
+      <Grid container mt={2} spacing={3}>
         <Grid item xs={12}>
-          <Typography variant="body1" gutterBottom>
+          <Typography variant="body1" gutterBottom sx={{ fontSize: { xs: "1rem", sm: "1.25rem" } }}>
             What should we call you?✨
           </Typography>
           <TextField
@@ -68,7 +65,7 @@ export default function UserForm({ formData, setFormData }) {
         </Grid>
 
         <Grid item xs={12}>
-          <Typography variant="body1" gutterBottom>
+          <Typography variant="body1" gutterBottom sx={{ fontSize: { xs: "1rem", sm: "1.25rem" } }}>
             What’s your gender?🚻
           </Typography>
           <ToggleButtonGroup
@@ -88,6 +85,7 @@ export default function UserForm({ formData, setFormData }) {
                   "&:hover": { backgroundColor: "rgba(0, 0, 0, 0.1)" },
                   "&.Mui-selected": { backgroundColor: "black !important", color: "white !important" },
                   marginBottom: 3,
+                  padding: { xs: "8px", sm: "12px" }, // Adjust padding for mobile
                 }}
               >
                 {gender.toUpperCase()}
@@ -97,7 +95,7 @@ export default function UserForm({ formData, setFormData }) {
         </Grid>
 
         <Grid item xs={12}>
-          <Typography variant="body1" gutterBottom>
+          <Typography variant="body1" gutterBottom sx={{ fontSize: { xs: "1rem", sm: "1.25rem" } }}>
             What's your birthdate? 🎂
           </Typography>
           <Grid container spacing={2}>
@@ -129,5 +127,3 @@ export default function UserForm({ formData, setFormData }) {
     </div>
   );
 }
-
-

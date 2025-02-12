@@ -19,6 +19,23 @@ export default function Card({ profile, lastDirection }) {
     );
   };
 
+  function emoji(){
+  switch (profile.reason){
+    case "Casual Dating":
+      return "🎉"
+    case "Short-term fun":
+      return "😍"
+    case "Long-term relationship":
+      return "💘"
+    case "New friends":
+      return "👋"
+    case "Study buddy":
+      return "📚"
+    case "Still figuring it out":
+      return "🤔"
+  }}
+
+
   return (
     <Box
       sx={{
@@ -39,7 +56,7 @@ export default function Card({ profile, lastDirection }) {
       
       <IconButton
         sx={{ position: "absolute", left: "10px", color: "white" }}
-        onClick={prevImage}
+        onPointerDown={prevImage}
       >
         <ArrowBackIos />
       </IconButton>
@@ -47,7 +64,7 @@ export default function Card({ profile, lastDirection }) {
 
       <IconButton
         sx={{ position: "absolute", right: "10px", color: "white" }}
-        onClick={nextImage}
+        onPointerDown={nextImage}
       >
         <ArrowForwardIos />
       </IconButton>
@@ -94,7 +111,7 @@ export default function Card({ profile, lastDirection }) {
           color: "white",
         }}
       >
-        {profile.reason}
+        {emoji()}{profile.reason}
       </Typography>
     </Box>
   );
