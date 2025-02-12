@@ -3,22 +3,40 @@ import "../../App.css";
 import { Box } from "@mui/material";
 import TinderCard from "react-tinder-card";
 import Card from "./Card";
+import axios from 'axios';
 
-export default function Match({ profiles }) {
-  const [swipeStates, setSwipeStates] = useState({}); // Store swipe state for each profile
 
-  const swiped = (direction, profileId) => {
-    console.log(`Swiped ${profileId} to ${direction}`);
+export default function Match({ profiles, user_id }) {
+  const [swipeStates, setSwipeStates] = useState({})
 
+  const swiped = (direction, target_user_id) => {
     setSwipeStates((prevStates) => ({
       ...prevStates,
-      [profileId]: direction, // Store swipe direction for this profile
+      [target_user_id]: direction
     }));
+
+    axios.post('http://127.0.0.1:5000/swipeadd',{user_id: user_id, target_user_id: target_user_id, swipe_action: direction})
+    .then(responce => {
+      console.log(responce.data.message)
+    })
+    .catch(error => {
+      console.error("Error:",error)
+    })
   };
 
-  const outOfFrame = (name) => {
-    console.log(name + " left the screen!");
+
+  const preventVerticalSwipe = (e) => {
+    // Prevent default behavior if user tries to swipe vertically (up/down)
+    if (Math.abs(e.deltaX) > Math.abs(e.deltaY)) {
+      return true; // Allow horizontal swipes
+    }
+    return false; // Prevent vertical swipes (up/down)
   };
+
+
+
+
+
 
   return (
     <Box
@@ -35,10 +53,10 @@ export default function Match({ profiles }) {
           <TinderCard
             className="swipe"
             key={profile.id}
-            onSwipe={(dir) => swiped(dir, profile.id)}
-            onCardLeftScreen={() => outOfFrame(profile.name)}
+            onSwipe={(dir) => swiped(dir, profile.user_id)}
+            preventSwipe={['up', 'down']}  
           >
-            <Card profile={profile} lastDirection={swipeStates[profile.id]} />
+            <Card profile={profile} lastDirection={swipeStates[profile.user_id]} />
           </TinderCard>
         ))}
       </div>

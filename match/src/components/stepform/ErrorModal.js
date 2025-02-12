@@ -1,43 +1,56 @@
 import React from "react";
 import { Button, Modal, Box, Typography } from "@mui/material";
 
-
-export default function ErrorModal({errorOpen, setErrorOpen}){
-    return (
-        <Modal open={errorOpen} onClose={() => setErrorOpen(false)}>
-        <Box
+export default function ErrorModal({ errorOpen, setErrorOpen }) {
+  return (
+    <Modal open={errorOpen} onClose={() => setErrorOpen(false)}>
+      <Box
+        sx={{
+          width: { xs: 320, sm: 400 }, // Adjust width for mobile screens
+          margin: "auto",
+          marginTop: { xs: "60%", sm: "20%" }, // Adjust top margin for smaller screens
+          backgroundColor: "white",
+          padding: 3,
+          borderRadius: 2,
+          boxShadow: 24,
+          textAlign: "center",
+        }}
+      >
+        <Typography
+          variant="h6"
           sx={{
-            width: 400,
-            margin: "auto",
-            marginTop: "20%",
-            backgroundColor: "white",
-            padding: 3,
-            borderRadius: 2,
-            boxShadow: 24,
-            textAlign: "center",
+            marginBottom: 2,
+            color: "red",
+            fontSize: { xs: "1rem", sm: "1.25rem" }, // Adjust font size for mobile and desktop
           }}
         >
-          <Typography variant="h6" sx={{ marginBottom: 2, color: "red" }}>
-            ⚠️ Missing Information!
-          </Typography>
-          <Typography variant="body1" sx={{ marginBottom: 2 }}>
-            Please fill in all required details before proceeding!
-          </Typography>
-          <Button
-            variant="contained"
-            onClick={() => setErrorOpen(false)}
-            sx={{
-              width: "100%",
-              padding: "10px",
-              backgroundColor: "#ffbf00",
-              color: "black",
-              borderRadius: "8px",
-              "&:hover": { backgroundColor: "#ffbf00" },
-            }}
-          >
-            Okay
-          </Button>
-        </Box>
-      </Modal>
-    )
+          ⚠️ Missing Information!
+        </Typography>
+        <Typography
+          variant="body1"
+          sx={{
+            marginBottom: 2,
+            fontSize: { xs: "0.875rem", sm: "1rem" }, // Adjust font size for readability
+          }}
+        >
+          Please fill in all required details before proceeding!
+        </Typography>
+        <Button
+          variant="contained"
+          onClick={() => setErrorOpen(false)}
+          sx={{
+            width: "100%",
+            padding: { xs: "8px", sm: "10px" }, // Adjust padding for mobile
+            backgroundColor: "#ffbf00",
+            color: "black",
+            borderRadius: "8px",
+            "&:hover": { backgroundColor: "#ffbf00" },
+            fontSize: { xs: "0.875rem", sm: "1rem" }, // Adjust button text size
+          }}
+        >
+          Okay
+        </Button>
+      </Box>
+    </Modal>
+  );
 }

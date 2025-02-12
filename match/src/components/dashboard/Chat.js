@@ -6,24 +6,27 @@ import SendIcon from '@mui/icons-material/Send';
 
 const socket = io("http://127.0.0.1:5000");
 
-const ChatPage = ({ matchId = "123", currentUser = "bharat", onBack, match }) => {
+const room = "f0f421418433ba3cb592238eb7e51441"
+
+const ChatPage = ({ onBack, match, user_id }) => {
   const [message, setMessage] = useState("");
   const [messages, setMessages] = useState([]);
   const messagesEndRef = useRef(null);
 
   useEffect(() => {
-    socket.emit("join_room", { room: matchId });
+    socket.emit("join_room", { room: room, user_id: user_id });
+    socket.emit("bharat",{room, sender_id: user_id, receiver_id: match.user_id});
     socket.on("bharat", (data) => {
-      setMessages((prevMessages) => [...prevMessages, data]);
+      setMessages(data)
     });
     return () => {
       socket.off("bharat");
     };
-  }, [matchId, currentUser]);
+  }, [room]);
 
-  const sendMessage = () => {
+  function sendMessage(){
     if (message.trim() !== "") {
-      const messageData = { user: currentUser, text: message, room: matchId };
+      const messageData = { sender_id: user_id, receiver_id: match.user_id , message: message, room: room };
       socket.emit("bharat", messageData);
       setMessage("");
     }
@@ -40,7 +43,7 @@ const ChatPage = ({ matchId = "123", currentUser = "bharat", onBack, match }) =>
         <IconButton onClick={onBack} sx={{ mr: 1 }}>
           <ArrowBackIcon />
         </IconButton>
-        <Avatar src={match.image} />
+        <Avatar src={match.images[0]} />
         <Typography variant="h6" sx={{ marginLeft: '15px', textAlign: "center", fontWeight: "bold" }}>{match.name}</Typography>
       </Box>
 
@@ -62,27 +65,27 @@ const ChatPage = ({ matchId = "123", currentUser = "bharat", onBack, match }) =>
             key={index}
             sx={{
               display: "flex",
-              justifyContent: msg.user === currentUser ? "flex-end" : "flex-start",
+              justifyContent: msg.sender_id === user_id ? "flex-end" : "flex-start",
               mb: 1,
-              wordWrap: "break-word", // Ensures long words break correctly
-              whiteSpace: "normal",   // Ensures text wraps instead of overflowing
+              wordWrap: "break-word",
+              whiteSpace: "normal",  
             }}
           >
             <Box sx={{ display: "flex", alignItems: "flex-start" }}>
               <Box
                 sx={{
-                  backgroundColor: msg.user === currentUser ? "black" : "darkgrey",
+                  backgroundColor: msg.sender_id === user_id ? "black" : "darkgrey",
                   color: "white",
                   padding: "10px 15px",
                   borderRadius: "15px",
                   maxWidth: "75%",
-                  wordWrap: "break-word",  // Prevents long words from causing overflow
-                  whiteSpace: "normal",    // Ensures wrapping
-                  display: "inline-block", // Keeps box aligned properly
-                  flexShrink: 0,          // Prevents shrinking of the message box
+                  wordWrap: "break-word",  
+                  whiteSpace: "normal",    
+                  display: "inline-block", 
+                  flexShrink: 0,         
                 }}
               >
-                <Typography variant="body2">{msg.text}</Typography>
+                <Typography variant="body2">{msg.content}</Typography>
               </Box>
             </Box>
           </Box>

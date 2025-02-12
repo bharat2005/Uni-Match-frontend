@@ -1,51 +1,49 @@
-import React, { useEffect, useState } from 'react';
-import { Box } from '@mui/material';
-import Match from './Match';
-import Navbar from './NavBar';
-import Profile from './Profile';
-import Likes from './Likes';
-import Chats from './Chats';
-import axios from 'axios';
+import React, { useEffect, useState } from "react";
+import { Box } from "@mui/material";
+import Match from "./Match";
+import Navbar from "./NavBar";
+import Profile from "./Profile";
+import Likes from "./Likes";
+import Chats from "./Chats";
+import axios from "axios";
 
+const user_id = 3;
 
-let list =[
-  {name:'Kaori', id: 0, age:'19', image:'/pic/1.jpeg',type:'likedByYou'},
-  {name:'Misaki', id: 1, age:'18', image:'/pic/2.jpeg',type:'likesYou'},
-  {name:'Yuki', id:2, age:'19', image:'/pic/3.jpeg', type:'mutual'}
-]
-
-
-
-export default function Dashboard(){
+export default function Dashboard() {
   const [value, setValue] = useState(0);
-  const [profiles,setProfiles] = useState([])
+  const [profiles, setProfiles] = useState([]);
 
-  useEffect(()=>{
-    axios.get('http://127.0.0.1:5000/dashboard')
-    .then(responce => {
-      console.log("Message from server: ", responce.data)
-      setProfiles(responce.data)
-    })
-    .catch(error => {
-      console.error("Error", error)
-    })
-  },[])
+  useEffect(() => {
+    axios
+      .get("http://127.0.0.1:5000/dashboard")
+      .then((response) => {
+        console.log("Message from server: ", response.data);
+        setProfiles(response.data);
+      })
+      .catch((error) => {
+        console.error("Error", error);
+      });
+  }, []);
 
+  let profile;
+  for (let a of profiles){
+    if (a.user_id == user_id){
+      profile = a
+    }
+  }
 
-  function renderCompo(){
+  function renderCompo() {
     switch (value) {
       case 0:
-        return <Match profiles={profiles}/>;
+        return <Match profiles={profiles} user_id={user_id}/>;
       case 1:
-        return <Likes list={list.filter((item)=>item.type=="likedByYou" || item.type == "likesYou")}/>;
+        return <Likes user_id={user_id} />;
       case 2:
-        return <Chats list={list.filter((item)=> item.type=="mutual")} onChatOpen={()=>true}/>;
+        return <Chats profile={profile} user_id={user_id} />;
       case 3:
-        return <Profile />;
-      default:
-        return <Match/>;
+        return <Profile profile={profile} user_id={user_id} />;
     }
-  };
+  }
 
   return (
     <Box
@@ -55,24 +53,59 @@ export default function Dashboard(){
         height: "100vh",
         flexDirection: "column",
         alignItems: "center",
-        justifyContent: 'space-between',
         backgroundColor: "#ffbf00",
-        
+        overflow: "hidden",
       }}
     >
-      <Box
+      <Box 
         sx={{
-          display:'flex',
-          justifyContent:'center',
-          width: "100%",
-          height: "90%",
+          backgroundColor: '#ffbf00',
+          width: '100vw',
+          height: '7vh',
+          display: 'flex',
+          justifyContent: 'left',
+          alignItems: 'center',
+        }}
+      >
+        <img 
+          src={'/signs/Matchp.png'} 
+          alt="Logo"
+          style={{
+            maxHeight: '100%',
+            maxWidth: '100%', 
+            objectFit: 'contain',
+          }} 
+        />
+      </Box>
+
+      <Box
+        mt={1}
+        sx={{
+          display: "flex",
+          justifyContent: "center",
+          width: "100vw",
+          backgroundColor: '#ffbf00',
+          height: "75vh", 
           position: "relative",
         }}
       >
         {renderCompo()}
       </Box>
 
-      <Navbar value={value} onChange={(event, newValue) => setValue(newValue)} />
+      <Box
+        sx={{
+          width: "100%",
+          height: "10vh",
+          backgroundColor: "#ffbf00",
+          position: "fixed",
+          bottom: 0,
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+        }}
+      >
+        <Navbar value={value} onChange={(event, newValue) => setValue(newValue)} />
+      </Box>
     </Box>
   );
-};
+}

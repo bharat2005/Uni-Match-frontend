@@ -1,72 +1,184 @@
-import React from "react";
-import { Box, Typography, Avatar, List, ListItem, ListItemAvatar, ListItemText, Divider } from "@mui/material";
+import React, { useState, useEffect } from "react";
+import { Box, Typography, Avatar, List, ListItem, ListItemAvatar, ListItemText, Tabs, Tab, CircularProgress, IconButton } from "@mui/material";
+import axios from 'axios';
 import FavoriteRoundedIcon from '@mui/icons-material/FavoriteRounded';
 import CloseRoundedIcon from '@mui/icons-material/CloseRounded';
 
-export default function Likes({ list }) {
+
+
+export default function Likes({user_id}) {
+  const [likesList, setLikesList] = useState(null); 
+  const [value, setValue] = useState(0);  
+
+  useEffect(() => {
+    axios
+      .post('http://127.0.0.1:5000/likes', { user_id })
+      .then(response => {
+        console.log(response.data)
+        setLikesList(response.data); 
+      })
+      .catch(error => {
+        console.error("Error: ", error);
+      });
+  }, []);
+
+  const handleTabChange = (event, newValue) => {
+    setValue(newValue);
+  };
+
+let filteredList;
+if (likesList){
+  filteredList = value === 0 ? likesList.likedByYou : likesList.likesYou
+}
+
+
+
+
+function handleLikeClick(target_user_id){
+    axios.post('http://127.0.0.1:5000/match',{user_id:user_id, target_user_id: target_user_id,swipe_action:'right' })
+    .then(responce => {
+      console.log(responce.data.message)
+      setLikesList(prev => {
+        return {...prev, likesYou:responce.data.likesYou}
+      })
+    })
+    .catch(error => {
+      console.error("Error: ",error)
+    })
+}
+
+function handleCrossClick(target_user_id){
+  axios.post('http://127.0.0.1:5000/likeno',{user_id:user_id, target_user_id: target_user_id,swipe_action:'left' })
+  .then(responce => {
+    console.log(responce.data.message)
+    setLikesList(prev => {
+      return {...prev, likesYou:responce.data.likesYou}
+    })
+  })
+  .catch(error => {
+    console.error("Error: ",error)
+  })
+
+}
+
+
+
+
+
+
+
+
+
+
   return (
-    <Box
-      sx={{
-        height: "95%",
-        bgcolor: "background.paper",
-        boxShadow: 2,
-        width: "500px",
-        p: 2,
-        overflowY: "auto",
-        "&::-webkit-scrollbar": {
-          display: "none", 
-        },
-        msOverflowStyle: "none", 
-        scrollbarWidth: "none", 
-      }}
-    >
-      
-        <Box display="flex" justifyContent="center" gap={12} mb={1.9} mt={1}>
-        <Box display="flex" alignItems="center" gap={0.5}>
-            <img src="/signs/blue.png" width={"25px"} alt="Liked by You" />
-          <b>Liked by You</b></Box>
-          <Box display="flex" alignItems="center" gap={0.5}>
-            <img src="/signs/red.png" width={"25px"} alt="Likes You" />
-          <b>Likes You</b></Box>
-        </Box>
-  
+    <Box 
+    sx={{
+      height: "85vh",
+      backgroundColor:'#ffbf00',
+      width: "100%",
+      p: 2,
+      pl:0,
+      pt:0,
+      pb:0,
+      overflowY: "auto",
+      "&::-webkit-scrollbar": { display: "none" },
+      msOverflowStyle: "none",
+      scrollbarWidth: "none"
+      }} 
+      >
+      <Tabs
+        value={value}
+        onChange={handleTabChange}
+        aria-label="Likes Tabs"
+        indicatorColor="transparent"
+        sx={{
+          width:'100%',
+          display: "flex",
+          justifyContent: "space-between",
+          backgroundColor: "#ffbf00",  
+        }}
+      >
+        <Tab
+          label="Liked By You"
+          sx={{
+            fontSize: '12px',
+            flex: 1,
+            textAlign: "center",
+            color: value === 0 ? "black !important" : "", 
+            borderBottom: value === 0 ? "2px solid black" : "none", 
+            transition: "background-color 0.3s ease, color 0.3s ease", 
+          }}
+        />
+        <Tab
+          label="Likes You"
+          sx={{
+            fontSize: '12px',
+            flex: 1,
+            textAlign: "center",
+            color: value === 1 ? "black !important" : "", 
+            borderBottom: value === 1 ? "2px solid black" : "none",
+            transition: "background-color 0.3s ease, color 0.3s ease", 
+          }}
+        />
+      </Tabs>
 
-      <List>
-        {list.length > 0 ? (
-          list.map((match, index) => {
-            let bgColor = "white";
-            if (match.type === "mutual") bgColor = "#d4edda"; 
-            else if (match.type === "likedByYou") bgColor = "#cce5ff"; 
-            else if (match.type === "likesYou") bgColor = "#f8d7da"; 
-
-            return (
-              <React.Fragment key={match.id}>
-                <ListItem
-                  sx={{
-                    bgcolor: bgColor,
-                    borderRadius: "8px",
-                    mb: 1,
-                    cursor: "pointer",
-                    "&:hover": { bgcolor: bgColor },
-                  }}
-                >
-                  <ListItemAvatar>
-                    <Avatar alt={match.name} src={match.image} />
-                  </ListItemAvatar>
-                  <ListItemText primary={match.name} secondary={match.age + " years old"} />
-                  {match.type === "likesYou"&&<><FavoriteRoundedIcon sx={{color:'red', marginRight:'20px'}}/><CloseRoundedIcon/></>}
-                </ListItem>
-                {index < list.length - 1 && <Divider variant="inset" component="li" />}
-
-              </React.Fragment>
-            );
-          })
-        ) : (
-          <Typography variant="body2" color="textSecondary" align="center">
-            No matches yet. Keep swiping!
-          </Typography>
+      <Box
+        sx={{
+          height: "75vh",
+          backgroundColor: '#ffbf00',
+          width: "100%",
+          p: 2,
+          pt: 1,
+          pb: 1,
+          overflowY: "auto",
+          msOverflowStyle: "none", 
+          scrollbarWidth: "none", 
+          "&::-webkit-scrollbar": {
+            display: "none",
+          },
+        }}
+      >
+        { likesList ? (
+        <List>
+          {filteredList.length > 0 ? (
+            filteredList.map((like) => (
+              <ListItem
+                key={like.user_id}
+                sx={{
+                  width:'96%',
+                  bgcolor: value === 0? '#cce5ff':'#f8d7da',
+                  borderRadius: "8px",
+                  mb: 1,
+                  
+                }}
+              >
+                <ListItemAvatar>
+                  <Avatar alt={like.name} src={like.images[0]} />
+                </ListItemAvatar>
+                <ListItemText primary={like.name} secondary={like.age + " years old"} />
+                {value === 1 && <>
+                <IconButton onClick={() => handleLikeClick(like.user_id)}>
+                  <FavoriteRoundedIcon sx={{color:'red'}}/>
+                  </IconButton>
+                <IconButton onClick={() => handleCrossClick(like.user_id)}>
+                  <CloseRoundedIcon/>
+                  </IconButton></>}
+              </ListItem>
+            ))
+          ) : likesList === null ? (  
+            <Typography variant="h5" color="textSecondary" align="center">
+              Loading...
+            </Typography>
+          ) : (
+            <Typography variant="h5" color="textSecondary" mt={'30vh'} align="center">
+              No likes yet. Keep swiping!
+            </Typography>
+          )}
+        </List>
+        ):(
+          <CircularProgress size={50} sx={{ color: 'black' }} />
         )}
-      </List>
+      </Box>
     </Box>
   );
 }
