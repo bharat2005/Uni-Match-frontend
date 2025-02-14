@@ -41,8 +41,9 @@ export default function Login() {
         alignItems: 'center',
         justifyContent: 'center',
         height: '100vh',
-        backgroundColor: '#ffbf00',
+        backgroundColor: 'white',
         padding: 2,
+        border:'3px solid black',
         boxSizing: 'border-box',
       }}
     >

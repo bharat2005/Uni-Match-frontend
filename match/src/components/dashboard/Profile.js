@@ -1,42 +1,32 @@
-import React from "react";
-import { Card, CardContent, Avatar, Typography, Box, Button, Stack } from "@mui/material";
+import React, { useState } from "react";
+import { Card, CardContent, Typography, Avatar, Box, Chip } from "@mui/material";
+import AboutUs from './profile/AboutUs';
+import ProfileHome from './profile/ProfileHome';
+import EditProfile from './profile/EditProfile';
+import { PencilIcon, ShareIcon ,InformationCircleIcon , ArrowLeftStartOnRectangleIcon, CurrencyRupeeIcon} from '@heroicons/react/24/solid';
 
-export default function Profile({ profile}){
+const ProfileSection = ({ profile }) => {
+  const [bool, setBool] = useState(0);
+
+  const handleOptionClick = (option) => {
+  
+   if (option === "Edit Profile") {
+      setBool(1);
+    } else if (option === "About Us") {
+      setBool(2);
+    }
+  };
+
+  if (bool == 3){
+    return <AboutUs/>
+  }
   return (
-    <Card
-      sx={{
-        width:'100%',
-        mx: "auto",
-        textAlign: "center",
-        backgroundColor:'#ffbf00',
-        boxShadow: 'none',
-        p: 2,
-      }}
-    >
-      <Box display="flex" justifyContent="center" mt={2}>
-        <Avatar
-          alt={profile.name}
-          src={profile.images[0]}
-          sx={{ width: 100, height: 100, border: "3px solid black" }}
-        />
-      </Box>
-      <CardContent>
-        <Typography variant="h6" gutterBottom>
-          {profile.name}, {profile.user_id}
-        </Typography>
-        <Stack direction="column" spacing={5} mt={2}>
-          <Button variant="contained" color="primary" size="small">
-            Edit Profile
-          </Button>
-          <Button variant="outlined" color="error" size="small">
-            Logout
-          </Button>
-          <Button variant="text" color="secondary" size="small">
-            About Us
-          </Button>
-        </Stack>
-      </CardContent>
-    </Card>
+    <>
+    {bool === 0 && <ProfileHome handleOptionClick={handleOptionClick} profile={profile}/>}
+    {bool === 1 && <EditProfile setBool={setBool} profile={profile}/>}
+    {bool === 2 && <AboutUs setBool={setBool} profile={profile}/>}
+  </>
   );
 };
 
+export default ProfileSection;

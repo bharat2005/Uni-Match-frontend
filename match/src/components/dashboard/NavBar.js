@@ -1,10 +1,7 @@
 
 import React from 'react';
 import { BottomNavigation, BottomNavigationAction } from '@mui/material';
-import ExploreIcon from '@mui/icons-material/Explore';
-import FavoriteIcon from '@mui/icons-material/Favorite';
-import ChatIcon from '@mui/icons-material/Chat';
-import AccountCircleIcon from '@mui/icons-material/AccountCircle';
+import { HeartIcon, HomeIcon, ChatBubbleOvalLeftEllipsisIcon, UserCircleIcon } from '@heroicons/react/24/solid';
 
 
 export default function Navbar({ value, onChange }){
@@ -14,21 +11,20 @@ export default function Navbar({ value, onChange }){
       onChange={onChange}
       showLabels
       sx={{
-        borderTopLeftRadius:'12px',
-        borderTopRightRadius:'12px',
+        borderTop:'3px solid black',
         height:'60px',
         width: '640px',
         position: 'relative',
         bottom: 0,
         left: 0,
         zIndex: 1000,
-        backgroundColor: 'black',
+        backgroundColor: 'white',
       }}
     >
-      <BottomNavigationAction label="Match" sx={{color:'grey',"&.Mui-selected": { color: "white" }}} icon={<ExploreIcon />} />
-      <BottomNavigationAction label="Likes" sx={{color:'grey',"&.Mui-selected": { color: "white" }}} icon={<FavoriteIcon />} />
-      <BottomNavigationAction label="Chats" sx={{color:'grey',"&.Mui-selected": { color: "white" }}} icon={<ChatIcon />} />
-      <BottomNavigationAction label="Profile" sx={{color:'grey',"&.Mui-selected": { color: "white" }}} icon={<AccountCircleIcon />} />
+      <BottomNavigationAction label="Match" sx={{color:'grey',"&.Mui-selected": { color: "black" }}} icon={<HomeIcon style={{width:'40%'}} />} />
+      <BottomNavigationAction label="Likes" sx={{color:'grey',"&.Mui-selected": { color: "black" }}} icon={<HeartIcon style={{width:'40%'}} />} />
+      <BottomNavigationAction label="Chats" sx={{color:'grey',"&.Mui-selected": { color: "black" }}} icon={<ChatBubbleOvalLeftEllipsisIcon style={{width:'40%'}} />} />
+      <BottomNavigationAction label="Profile" sx={{color:'grey',"&.Mui-selected": { color: "black" }}} icon={<UserCircleIcon  style={{width:'40%'}} />} />
     </BottomNavigation>
 
   );

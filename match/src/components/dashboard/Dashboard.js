@@ -1,17 +1,21 @@
 import React, { useEffect, useState } from "react";
-import { Box } from "@mui/material";
+import { Box , Button} from "@mui/material";
 import Match from "./Match";
 import Navbar from "./NavBar";
 import Profile from "./Profile";
 import Likes from "./Likes";
 import Chats from "./Chats";
 import axios from "axios";
+import { AdjustmentsVerticalIcon } from '@heroicons/react/24/solid';
+import FilterModal from './FilterModal';
 
-const user_id = 3;
+const user_id = 1;
 
 export default function Dashboard() {
   const [value, setValue] = useState(0);
   const [profiles, setProfiles] = useState([]);
+  const [open, setOpen] = useState(false)
+
 
   useEffect(() => {
     axios
@@ -25,6 +29,7 @@ export default function Dashboard() {
       });
   }, []);
 
+ 
   let profile;
   for (let a of profiles){
     if (a.user_id == user_id){
@@ -49,22 +54,25 @@ export default function Dashboard() {
     <Box
       sx={{
         display: "flex",
-        width: "100vw",
+        width: "100%",
         height: "100vh",
         flexDirection: "column",
         alignItems: "center",
-        backgroundColor: "#ffbf00",
+        backgroundColor: "white",
         overflow: "hidden",
+        
       }}
     >
       <Box 
         sx={{
-          backgroundColor: '#ffbf00',
-          width: '100vw',
-          height: '7vh',
+          backgroundColor: 'white',
+          width: '100%',
+          height: '6vh',
+          padding:1,
           display: 'flex',
           justifyContent: 'left',
           alignItems: 'center',
+          borderBottom: "1px solid #e0e0e0",
         }}
       >
         <img 
@@ -77,14 +85,16 @@ export default function Dashboard() {
           }} 
         />
       </Box>
-
+      <FilterModal open={open} setOpen={setOpen} setProfiles={setProfiles}/>
+      <Box sx={{display:'flex', width:'100%',  justifyContent:'right'}}>
+      {value === 0 && <Button size="small" onClick={()=>setOpen(true)} sx={{ display:'flex', width:'1%', justifyContent:'center',color:'black !important'}}><AdjustmentsVerticalIcon style={{width:'65%'}}/></Button>}
+      </Box>
       <Box
-        mt={1}
         sx={{
           display: "flex",
           justifyContent: "center",
-          width: "100vw",
-          backgroundColor: '#ffbf00',
+          width: "100%",
+          backgroundColor: 'white',
           height: "75vh", 
           position: "relative",
         }}
@@ -96,7 +106,7 @@ export default function Dashboard() {
         sx={{
           width: "100%",
           height: "10vh",
-          backgroundColor: "#ffbf00",
+          backgroundColor: "white",
           position: "fixed",
           bottom: 0,
           display: "flex",

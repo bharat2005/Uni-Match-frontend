@@ -31,7 +31,7 @@ export default function MyStepper({ step, setStep, validateStep, handleDone}) {
       <MobileStepper
         sx={{
           "& .MuiLinearProgress-root": {
-            backgroundColor: "#ffbf00",
+            backgroundColor: "lightgrey",
             "& .MuiLinearProgress-bar": {
               backgroundColor: "black",
               marginBottom: "0px",
@@ -48,7 +48,7 @@ export default function MyStepper({ step, setStep, validateStep, handleDone}) {
           <Button
             variant="contained"
             sx={{
-              color: "#ffbf00",
+              color: "white",
               backgroundColor: "black",
               borderRadius: "50px",
               '&:hover':{backgroundColor:'black'},
@@ -71,7 +71,7 @@ export default function MyStepper({ step, setStep, validateStep, handleDone}) {
           <Button
             variant="contained"
             sx={{
-              color: "#ffbf00",
+              color: "white",
               backgroundColor: "black",
               borderRadius: "50px",
               boxShadow: "none",

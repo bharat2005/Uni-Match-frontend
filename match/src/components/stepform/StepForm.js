@@ -64,7 +64,7 @@ export default function StepForm() {
         height: "100vh",
         alignItems: "center",
         justifyContent: "center",
-        backgroundColor: "#ffbf00",
+        backgroundColor: "black",
         padding: 2,  // Added padding to avoid edge-to-edge content on mobile
         boxSizing: "border-box",  // To ensure the padding is included in the width
         flexDirection: "column", // Stack items vertically on smaller screens
