@@ -11,17 +11,13 @@ export default function FormStartModal() {
           width: "90%", // Use 90% width for smaller screens
           //maxWidth: 400, // Limit max width for larger screens
           margin: "auto",
-          marginTop: "40%", // Adjusted margin for better alignment on smaller screens
+          marginTop: "60%", // Adjusted margin for better alignment on smaller screens
           backgroundColor: "white",
           padding: 3,
           paddingTop:3.5,
           borderRadius: 2,
           padding:'15px',
           boxShadow: 24,
-          // "@media (min-width:600px)": {
-          //   marginTop: "12%", // Smaller margin on larger screens
-          //   width: 400, // Keep the modal size limited on larger screens
-          // },
         }}
       >
         <Typography
@@ -60,10 +56,10 @@ export default function FormStartModal() {
           sx={{
             width: "100%",
             padding: "12px",
-            backgroundColor: "#ffbf00",
-            color: "black",
+            backgroundColor: "black",
+            color: "white",
             borderRadius: "8px",
-            "&:hover": { backgroundColor: "#ffbf00" },
+            "&:hover": { backgroundColor: "black" },
             fontSize: { xs: "1rem", sm: "1.2rem" }, // Adjust button font size for responsiveness
           }}
         >

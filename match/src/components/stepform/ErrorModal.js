@@ -8,7 +8,7 @@ export default function ErrorModal({ errorOpen, setErrorOpen }) {
         sx={{
           width: { xs: 320, sm: 400 }, // Adjust width for mobile screens
           margin: "auto",
-          marginTop: { xs: "60%", sm: "20%" }, // Adjust top margin for smaller screens
+          marginTop: '70%', // Adjust top margin for smaller screens
           backgroundColor: "white",
           padding: 3,
           borderRadius: 2,
@@ -41,8 +41,8 @@ export default function ErrorModal({ errorOpen, setErrorOpen }) {
           sx={{
             width: "100%",
             padding: { xs: "8px", sm: "10px" }, // Adjust padding for mobile
-            backgroundColor: "#ffbf00",
-            color: "black",
+            backgroundColor: "black",
+            color: "white",
             borderRadius: "8px",
             "&:hover": { backgroundColor: "#ffbf00" },
             fontSize: { xs: "0.875rem", sm: "1rem" }, // Adjust button text size

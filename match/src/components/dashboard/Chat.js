@@ -6,7 +6,7 @@ import SendIcon from '@mui/icons-material/Send';
 
 const socket = io("http://127.0.0.1:5000");
 
-const room = "f0f421418433ba3cb592238eb7e51441"
+const room = "c62d9e9c826d00c9a58597558f117ad8"
 
 const ChatPage = ({ onBack, match, user_id }) => {
   const [message, setMessage] = useState("");
@@ -15,7 +15,9 @@ const ChatPage = ({ onBack, match, user_id }) => {
 
   useEffect(() => {
     socket.emit("join_room", { room: room, user_id: user_id });
+
     socket.emit("bharat",{room, sender_id: user_id, receiver_id: match.user_id});
+
     socket.on("bharat", (data) => {
       setMessages(data)
     });
@@ -37,7 +39,7 @@ const ChatPage = ({ onBack, match, user_id }) => {
   }, [messages]);
 
   return (
-    <Box sx={{ width: "500px", mx: "auto", p: 2, display: "flex", flexDirection: "column", height: "95%", boxShadow: 2, bgcolor: 'background.paper' }}>
+    <Box sx={{ width: "100%", display: "flex", flexDirection: "column", height: "100%", backgroundColor: 'white' }}>
       
       <Box sx={{ display: "flex", alignItems: "center", justifyContent: 'left', padding: "10px" }}>
         <IconButton onClick={onBack} sx={{ mr: 1 }}>
@@ -122,9 +124,9 @@ const ChatPage = ({ onBack, match, user_id }) => {
             display: "flex",
             justifyContent: "center",
             alignItems: "center",
-            backgroundColor: '#ffbf00',
+            backgroundColor: 'black',
             color: 'black',
-            "&:hover": { backgroundColor: "#ffbf00" },
+            "&:hover": { backgroundColor: "black" },
           }}
         >
           <SendIcon />

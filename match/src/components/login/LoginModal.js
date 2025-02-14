@@ -8,11 +8,12 @@ export default function LoginModal({ open, handleClose, handleLogin, handleLogin
         sx={{
           width: "90%",
           margin: "auto",
-          marginTop: "40%",
+          marginTop: "50%",
           backgroundColor: "white",
           padding: 3,
           paddingTop:3.5,
           borderRadius: 2,
+          border:'3px solid black',
           padding:'15px',
           boxShadow: 24,
         }}
@@ -70,10 +71,10 @@ export default function LoginModal({ open, handleClose, handleLogin, handleLogin
               color="primary"
               sx={{
                 padding: '12px',
-                backgroundColor: '#ffbf00',
-                color: 'black',
+                backgroundColor: 'black',
+                color: 'white',
                 borderRadius: '8px',
-                '&:hover': { backgroundColor: '#ffbf00' },
+                '&:hover': { backgroundColor: 'black', color:'white' },
                 fontSize: '1rem',
               }}
             >

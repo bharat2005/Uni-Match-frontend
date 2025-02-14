@@ -1,9 +1,10 @@
 import React, { useState, useEffect} from "react";
-import { Box, Typography, Avatar, List, ListItem, ListItemAvatar, ListItemText, CircularProgress } from "@mui/material";
+import { Box, Typography, Avatar, List, ListItem, ListItemAvatar, ListItemText, CircularProgress, Tabs, Tab } from "@mui/material";
 import Chat from './Chat';
 import axios from 'axios';
 
 export default function Likes({ user_id, profile }) {
+  const [value, setValue] = useState(0)
   const [selectedMatch, setSelectedMatch] = useState(null);
   const [matchList, setMatchList] = useState(null)
 
@@ -19,6 +20,9 @@ export default function Likes({ user_id, profile }) {
       });
   }, []);
 
+  const handleTabChange = (event, newValue) => {
+    setValue(newValue);
+  };
 
   let filteredList;
   if (matchList){
@@ -29,23 +33,73 @@ export default function Likes({ user_id, profile }) {
 
   return (
     <>
+        <Box 
+    sx={{
+      height: "85vh",
+      backgroundColor:'white',
+      width: "100%",
+      p: 2,
+      overflowY: "auto",
+      "&::-webkit-scrollbar": { display: "none" },
+      msOverflowStyle: "none",
+      scrollbarWidth: "none"
+      }} 
+      >
+
+   <Tabs
+        value={value}
+        onChange={handleTabChange}
+        aria-label="Likes Tabs"
+        indicatorColor="transparent"
+        sx={{
+          width:'100%',
+          display: "flex",
+          justifyContent: "space-between",
+          backgroundColor: "white",  
+        }}
+      >
+        <Tab
+          label="Chats"
+          sx={{
+            fontSize: '12px',
+            flex: 1,
+            textAlign: "center",
+            color: value === 0 ? "black !important" : "", 
+            borderBottom: value === 0 ? "2px solid black" : "none", 
+            transition: "background-color 0.3s ease, color 0.3s ease", 
+          }}
+        />
+        <Tab
+          label="Shared vibes"
+          sx={{
+            fontSize: '12px',
+            flex: 1,
+            textAlign: "center",
+            color: value === 1 ? "black !important" : "", 
+            borderBottom: value === 1 ? "2px solid black" : "none",
+            transition: "background-color 0.3s ease, color 0.3s ease", 
+          }}
+        />
+      </Tabs>
+
+{value === 0 &&
+<>
       {selectedMatch ? (
         <Chat match={selectedMatch} user_id={user_id} profile={profile} onBack={() => setSelectedMatch(null)} />
       ) : (
         <Box
-          sx={{
-            height: "85vh",
-            backgroundColor:'#ffbf00',
-            width: "500px",
-            p: 2,
-            pt:0,
-            pb:0,
-            overflowY: "auto",
-            "&::-webkit-scrollbar": { display: "none" },
-            msOverflowStyle: "none",
-            scrollbarWidth: "none",
-          }}
-        >
+        sx={{
+          height: "75vh",
+          backgroundColor: 'white',
+          width: "100%",
+          overflowY: "auto",
+          msOverflowStyle: "none", 
+          scrollbarWidth: "none", 
+          "&::-webkit-scrollbar": {
+            display: "none",
+          },
+        }}
+      >
          { matchList ? (
           <List>
             {filteredList.length > 0 ? (
@@ -58,7 +112,7 @@ export default function Likes({ user_id, profile }) {
                       sx={{
                         bgcolor: "#d4edda",
                         borderRadius: "8px",
-                        mb: 1,
+
                       }}
                     >
                       <ListItemAvatar>
@@ -80,6 +134,8 @@ export default function Likes({ user_id, profile }) {
          )}
         </Box>
       )}
+      </>}
+      </Box>
     </>
   );
 }

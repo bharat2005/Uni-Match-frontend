@@ -10,7 +10,7 @@ export default function DoneModal({doneOpen}){
           sx={{
             width: "90%",
             margin: "auto",
-            marginTop: "40%",
+            marginTop: "60%",
             backgroundColor: "white",
             padding: 3,
             paddingTop:3.5,
@@ -45,10 +45,10 @@ export default function DoneModal({doneOpen}){
             sx={{
               width: "100%",
               padding: "10px",
-              backgroundColor: "#ffbf00",
-              color: "black",
+              backgroundColor: "black",
+              color: "white",
               borderRadius: "8px",
-              "&:hover": { backgroundColor: "#ffbf00" },
+              "&:hover": { backgroundColor: "black" },
             }}
           >
             Go to Dashboard

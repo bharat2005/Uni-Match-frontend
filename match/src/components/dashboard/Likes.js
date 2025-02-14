@@ -9,6 +9,7 @@ import CloseRoundedIcon from '@mui/icons-material/CloseRounded';
 export default function Likes({user_id}) {
   const [likesList, setLikesList] = useState(null); 
   const [value, setValue] = useState(0);  
+  const [load, setLoad] = useState(false)
 
   useEffect(() => {
     axios
@@ -35,6 +36,7 @@ if (likesList){
 
 
 function handleLikeClick(target_user_id){
+  setLoad(true)
     axios.post('http://127.0.0.1:5000/match',{user_id:user_id, target_user_id: target_user_id,swipe_action:'right' })
     .then(responce => {
       console.log(responce.data.message)
@@ -45,9 +47,13 @@ function handleLikeClick(target_user_id){
     .catch(error => {
       console.error("Error: ",error)
     })
+    .finally(()=>{
+      setLoad(false)
+    })
 }
 
 function handleCrossClick(target_user_id){
+  setLoad(true)
   axios.post('http://127.0.0.1:5000/likeno',{user_id:user_id, target_user_id: target_user_id,swipe_action:'left' })
   .then(responce => {
     console.log(responce.data.message)
@@ -57,6 +63,9 @@ function handleCrossClick(target_user_id){
   })
   .catch(error => {
     console.error("Error: ",error)
+  })
+  .finally(()=>{
+    setLoad(false)
   })
 
 }
@@ -74,12 +83,9 @@ function handleCrossClick(target_user_id){
     <Box 
     sx={{
       height: "85vh",
-      backgroundColor:'#ffbf00',
+      backgroundColor:'white',
       width: "100%",
       p: 2,
-      pl:0,
-      pt:0,
-      pb:0,
       overflowY: "auto",
       "&::-webkit-scrollbar": { display: "none" },
       msOverflowStyle: "none",
@@ -95,7 +101,7 @@ function handleCrossClick(target_user_id){
           width:'100%',
           display: "flex",
           justifyContent: "space-between",
-          backgroundColor: "#ffbf00",  
+          backgroundColor: "white",  
         }}
       >
         <Tab
@@ -125,11 +131,8 @@ function handleCrossClick(target_user_id){
       <Box
         sx={{
           height: "75vh",
-          backgroundColor: '#ffbf00',
+          backgroundColor: 'white',
           width: "100%",
-          p: 2,
-          pt: 1,
-          pb: 1,
           overflowY: "auto",
           msOverflowStyle: "none", 
           scrollbarWidth: "none", 
@@ -145,9 +148,9 @@ function handleCrossClick(target_user_id){
               <ListItem
                 key={like.user_id}
                 sx={{
-                  width:'96%',
+                  width:'100%',
                   bgcolor: value === 0? '#cce5ff':'#f8d7da',
-                  borderRadius: "8px",
+                  borderRadius:3,
                   mb: 1,
                   
                 }}
@@ -158,10 +161,10 @@ function handleCrossClick(target_user_id){
                 <ListItemText primary={like.name} secondary={like.age + " years old"} />
                 {value === 1 && <>
                 <IconButton onClick={() => handleLikeClick(like.user_id)}>
-                  <FavoriteRoundedIcon sx={{color:'red'}}/>
+                  {load ? <CircularProgress size={5} sx={{ color: 'black' }} />:<FavoriteRoundedIcon sx={{color:'red'}}/>}
                   </IconButton>
                 <IconButton onClick={() => handleCrossClick(like.user_id)}>
-                  <CloseRoundedIcon/>
+                {load ? <CircularProgress size={5} sx={{ color: 'black' }} />:<CloseRoundedIcon sx={{color:'black'}}/>}
                   </IconButton></>}
               </ListItem>
             ))
@@ -176,7 +179,7 @@ function handleCrossClick(target_user_id){
           )}
         </List>
         ):(
-          <CircularProgress size={50} sx={{ color: 'black' }} />
+          <CircularProgress size={50} sx={{ color: 'black', marginTop:'50%' }} />
         )}
       </Box>
     </Box>

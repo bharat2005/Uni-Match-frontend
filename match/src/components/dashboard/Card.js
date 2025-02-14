@@ -40,7 +40,8 @@ export default function Card({ profile, lastDirection }) {
     <Box
       sx={{
         position: "relative",
-        backgroundColor: "black",
+        backgroundColor: "white",
+        border:'4px solid black',
         width: "350px",
         height: "500px",
         boxShadow: "inset 0px -80px 40px 0px black",
