@@ -24,7 +24,8 @@
     "react-swipeable": "^7.0.2",
     "react-swipeable-cards": "^1.0.6",
     "react-tinder-card": "^1.6.4",
-    "socket.io-client": "^4.8.1"
+    "socket.io-client": "^4.8.1",
+    "web-vitals": "^4.2.4"
   },
   "scripts": {
     "start": "react-scripts start",

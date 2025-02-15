@@ -9,7 +9,7 @@ import axios from "axios";
 import { AdjustmentsVerticalIcon } from '@heroicons/react/24/solid';
 import FilterModal from './FilterModal';
 
-const user_id = 1;
+const user_id = 3;
 
 export default function Dashboard() {
   const [value, setValue] = useState(0);

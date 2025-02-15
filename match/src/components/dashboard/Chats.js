@@ -130,7 +130,7 @@ export default function Likes({ user_id, profile }) {
             )}
           </List>
          ):(
-          <CircularProgress size={50} sx={{ color: 'black' }} />
+          <CircularProgress size={50} sx={{ color: 'black', marginTop:'50%' }} />
          )}
         </Box>
       )}
