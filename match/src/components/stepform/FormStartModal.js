@@ -28,7 +28,7 @@ export default function FormStartModal() {
             fontSize: { xs: "1.5rem", sm: "1.75rem" }, // Adjust font size for responsiveness
           }}
         >
-          Let’s Set You Up!
+          Let’s Begin!
         </Typography>
 
         <Typography
@@ -41,7 +41,7 @@ export default function FormStartModal() {
         >
           <br />
           The details you provide here will be used
-          to create your profile and will help us recommend the perfect matches
+          to create your profile and will help us to recommend the perfect matches
           for you.💕
           <br />
           <br />

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Box , Button} from "@mui/material";
+import { Box , Button, Badge} from "@mui/material";
 import Match from "./Match";
 import Navbar from "./NavBar";
 import Profile from "./Profile";
@@ -9,20 +9,22 @@ import axios from "axios";
 import { AdjustmentsVerticalIcon } from '@heroicons/react/24/solid';
 import FilterModal from './FilterModal';
 
-const user_id = 1;
+const user_id = 3;
 
 export default function Dashboard() {
   const [value, setValue] = useState(0);
   const [profiles, setProfiles] = useState([]);
   const [open, setOpen] = useState(false)
+  const [likesBool, setLikesBool] = useState(null)
 
 
   useEffect(() => {
     axios
-      .get("http://127.0.0.1:5000/dashboard")
+      .post("http://127.0.0.1:5000/dashboard", {user_id})
       .then((response) => {
         console.log("Message from server: ", response.data);
-        setProfiles(response.data);
+        setProfiles(response.data.cards);
+        setLikesBool(response.data.bool);
       })
       .catch((error) => {
         console.error("Error", error);
@@ -42,7 +44,7 @@ export default function Dashboard() {
       case 0:
         return <Match profiles={profiles} user_id={user_id}/>;
       case 1:
-        return <Likes user_id={user_id} />;
+        return <Likes user_id={user_id} setLikesBool={setLikesBool} />;
       case 2:
         return <Chats profile={profile} user_id={user_id} />;
       case 3:
@@ -114,7 +116,7 @@ export default function Dashboard() {
           justifyContent: "center",
         }}
       >
-        <Navbar value={value} onChange={(event, newValue) => setValue(newValue)} />
+        <Navbar value={value} onChange={(event, newValue) => setValue(newValue)} likesBool={likesBool}/>
       </Box>
     </Box>
   );

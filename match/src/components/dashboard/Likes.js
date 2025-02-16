@@ -6,7 +6,7 @@ import CloseRoundedIcon from '@mui/icons-material/CloseRounded';
 
 
 
-export default function Likes({user_id}) {
+export default function Likes({user_id, setLikesBool,}) {
   const [likesList, setLikesList] = useState(null); 
   const [value, setValue] = useState(0);  
   const [load, setLoad] = useState(false)
@@ -16,7 +16,8 @@ export default function Likes({user_id}) {
       .post('http://127.0.0.1:5000/likes', { user_id })
       .then(response => {
         console.log(response.data)
-        setLikesList(response.data); 
+        setLikesList(response.data);
+        setLikesBool(response.data.bool)
       })
       .catch(error => {
         console.error("Error: ", error);
@@ -29,7 +30,7 @@ export default function Likes({user_id}) {
 
 let filteredList;
 if (likesList){
-  filteredList = value === 0 ? likesList.likedByYou : likesList.likesYou
+  filteredList = value === 1 ? likesList.likedByYou : likesList.likesYou
 }
 
 
@@ -73,14 +74,8 @@ function handleCrossClick(target_user_id){
 
 
 
-
-
-
-
-
-
   return (
-    <Box 
+    <Box
     sx={{
       height: "85vh",
       backgroundColor:'white',
@@ -104,25 +99,27 @@ function handleCrossClick(target_user_id){
           backgroundColor: "white",  
         }}
       >
-        <Tab
-          label="Liked By You"
-          sx={{
-            fontSize: '12px',
-            flex: 1,
-            textAlign: "center",
-            color: value === 0 ? "black !important" : "", 
-            borderBottom: value === 0 ? "2px solid black" : "none", 
-            transition: "background-color 0.3s ease, color 0.3s ease", 
-          }}
-        />
+
         <Tab
           label="Likes You"
           sx={{
             fontSize: '12px',
             flex: 1,
             textAlign: "center",
+            color: value === 0 ? "black !important" : "", 
+            borderBottom: value === 0 ? "2px solid black" : "none",
+            transition: "background-color 0.3s ease, color 0.3s ease", 
+          }}
+        />
+
+        <Tab
+          label="Liked By You"
+          sx={{
+            fontSize: '12px',
+            flex: 1,
+            textAlign: "center",
             color: value === 1 ? "black !important" : "", 
-            borderBottom: value === 1 ? "2px solid black" : "none",
+            borderBottom: value === 1 ? "2px solid black" : "none", 
             transition: "background-color 0.3s ease, color 0.3s ease", 
           }}
         />
@@ -149,7 +146,7 @@ function handleCrossClick(target_user_id){
                 key={like.user_id}
                 sx={{
                   width:'100%',
-                  bgcolor: value === 0? '#cce5ff':'#f8d7da',
+                  bgcolor: value === 1? '#cce5ff':'#f8d7da',
                   borderRadius:3,
                   mb: 1,
                   
@@ -159,12 +156,12 @@ function handleCrossClick(target_user_id){
                   <Avatar alt={like.name} src={like.images[0]} />
                 </ListItemAvatar>
                 <ListItemText primary={like.name} secondary={like.age + " years old"} />
-                {value === 1 && <>
+                {value === 0 && <>
                 <IconButton onClick={() => handleLikeClick(like.user_id)}>
-                  {load ? <CircularProgress size={5} sx={{ color: 'black' }} />:<FavoriteRoundedIcon sx={{color:'red'}}/>}
+                  <FavoriteRoundedIcon sx={{color:'red'}}/>
                   </IconButton>
                 <IconButton onClick={() => handleCrossClick(like.user_id)}>
-                {load ? <CircularProgress size={5} sx={{ color: 'black' }} />:<CloseRoundedIcon sx={{color:'black'}}/>}
+                <CloseRoundedIcon sx={{color:'black'}}/>
                   </IconButton></>}
               </ListItem>
             ))
