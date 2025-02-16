@@ -47,19 +47,19 @@ export default function Login() {
         boxSizing: 'border-box',
       }}
     >
-      {/* Image with responsive width */}
+    
       <img
         src='/signs/Match.png'
         alt="Logo"
         draggable='false'
         style={{
-          width: '100%', // Adjust width to 50% of the screen on mobile
-          maxWidth: '300px', // Max width for larger screens
-          marginBottom: '300px', // Adjusted margin
+          width: '100%', 
+          maxWidth: '300px', 
+          marginBottom: '300px', 
         }}
       />
 
-      {/* Button with responsive width */}
+      
       <Button
         variant="contained"
         onClick={handleOpen}
@@ -67,8 +67,8 @@ export default function Login() {
           backgroundImage: 'url(/signs/but.png)',
           backgroundSize: 'cover',
           backgroundPosition: 'center',
-          width: '80%', // Button width will take 80% of screen width
-          maxWidth: '450px', // Max width for larger screens
+          width: '80%', 
+          maxWidth: '450px', 
           borderRadius: '8px',
           height: '50px',
           textAlign: 'center',
@@ -77,7 +77,7 @@ export default function Login() {
       >
       </Button>
 
-      {/* Modal for login */}
+ 
       <LoginModal
         open={open}
         handleClose={handleClose}

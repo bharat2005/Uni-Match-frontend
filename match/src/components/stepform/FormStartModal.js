@@ -8,10 +8,10 @@ export default function FormStartModal() {
     <Modal open={openModal}>
       <Box
         sx={{
-          width: "90%", // Use 90% width for smaller screens
-          //maxWidth: 400, // Limit max width for larger screens
+          width: "90%", 
+       
           margin: "auto",
-          marginTop: "60%", // Adjusted margin for better alignment on smaller screens
+          marginTop: "60%", 
           backgroundColor: "white",
           padding: 3,
           paddingTop:3.5,
@@ -25,7 +25,7 @@ export default function FormStartModal() {
           sx={{
             marginBottom: 2,
             textAlign: "center",
-            fontSize: { xs: "1.5rem", sm: "1.75rem" }, // Adjust font size for responsiveness
+            fontSize: { xs: "1.5rem", sm: "1.75rem" }, 
           }}
         >
           Let’s Begin!
@@ -36,7 +36,7 @@ export default function FormStartModal() {
           sx={{
             marginBottom: 2,
             textAlign: "center",
-            fontSize: { xs: "0.875rem", sm: "1rem" }, // Adjust font size for readability
+            fontSize: { xs: "0.875rem", sm: "1rem" },
           }}
         >
           <br />
@@ -60,7 +60,7 @@ export default function FormStartModal() {
             color: "white",
             borderRadius: "8px",
             "&:hover": { backgroundColor: "black" },
-            fontSize: { xs: "1rem", sm: "1.2rem" }, // Adjust button font size for responsiveness
+            fontSize: { xs: "1rem", sm: "1.2rem" }, 
           }}
         >
           Let's go

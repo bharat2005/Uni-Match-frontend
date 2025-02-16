@@ -3,10 +3,11 @@ import { io } from "socket.io-client";
 import { Box, TextField, Button, Typography, Paper, Avatar, IconButton } from "@mui/material";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import SendIcon from '@mui/icons-material/Send';
+import { PaperAirplaneIcon } from '@heroicons/react/24/solid';
 
 const socket = io("http://127.0.0.1:5000");
 
-const room = "f0f421418433ba3cb592238eb7e51441"
+const room = "f7f36072ec9f0fe5195aad91aa95c460"
 
 const ChatPage = ({ onBack, match, user_id }) => {
   const [message, setMessage] = useState("");
@@ -39,7 +40,7 @@ const ChatPage = ({ onBack, match, user_id }) => {
   }, [messages]);
 
   return (
-    <Box sx={{ width: "100%", display: "flex", flexDirection: "column", height: "90%", backgroundColor: 'white' }}>
+    <Box sx={{ width: "100%", display: "flex", flexDirection: "column", height: "78vh", backgroundColor: 'white' }}>
       
       <Box sx={{ display: "flex", alignItems: "center", justifyContent: 'left', padding: "10px" }}>
         <IconButton onClick={onBack} sx={{ mr: 1 }}>
@@ -95,7 +96,7 @@ const ChatPage = ({ onBack, match, user_id }) => {
         <div ref={messagesEndRef} />
       </Paper>
 
-      {/* Input Section */}
+  
       <Box sx={{ display: "flex", alignItems: "center", padding: "10px" }}>
         <TextField
           fullWidth
@@ -125,11 +126,11 @@ const ChatPage = ({ onBack, match, user_id }) => {
             justifyContent: "center",
             alignItems: "center",
             backgroundColor: 'black',
-            color: 'black',
+            color: 'white',
             "&:hover": { backgroundColor: "black" },
           }}
         >
-          <SendIcon />
+          <PaperAirplaneIcon />
         </Button>
       </Box>
     </Box>

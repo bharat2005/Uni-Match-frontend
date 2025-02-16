@@ -65,10 +65,10 @@ export default function StepForm() {
         alignItems: "center",
         justifyContent: "center",
         backgroundColor: "black",
-        padding: 2,  // Added padding to avoid edge-to-edge content on mobile
-        boxSizing: "border-box",  // To ensure the padding is included in the width
-        flexDirection: "column", // Stack items vertically on smaller screens
-        "@media (min-width:600px)": { flexDirection: "row" },  // Use row layout on larger screens
+        padding: 2,  
+        boxSizing: "border-box",  
+        flexDirection: "column", 
+        "@media (min-width:600px)": { flexDirection: "row" },  
       }}
     >
       <FormStartModal />
@@ -77,18 +77,18 @@ export default function StepForm() {
         sx={{
           width: "100%",
           maxWidth: "640px",
-          height:'90%',  // Limit max width for larger screens
+          height:'90%',  
           textAlign: "center",
           backgroundColor: "white",
           display: "flex",
           flexDirection: "column",
           justifyContent: "space-between",
-          padding: 2,  // Added padding to keep content away from edges
-          borderRadius: 2,  // Rounded corners for a softer look
-          boxShadow: 3,  // Add shadow for contrast
+          padding: 2,  
+          borderRadius: 2,  
+          boxShadow: 3, 
           "@media (min-width:600px)": {
-            padding: 3,  // More padding on larger screens
-            borderRadius: 3,  // Larger border radius for bigger screens
+            padding: 3, 
+            borderRadius: 3, 
           },
         }}
       >
