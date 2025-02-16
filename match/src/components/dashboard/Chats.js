@@ -1,12 +1,13 @@
 import React, { useState, useEffect} from "react";
-import { Box, Typography, Avatar, List, ListItem, ListItemAvatar, ListItemText, CircularProgress, Tabs, Tab } from "@mui/material";
+import { Box, Typography, Avatar, List, ListItem, ListItemAvatar, ListItemText, CircularProgress, Tabs, Tab, Badge } from "@mui/material";
 import Chat from './Chat';
 import axios from 'axios';
 
-export default function Likes({ user_id, profile }) {
+export default function Chats({ user_id, profile }) {
   const [value, setValue] = useState(0)
   const [selectedMatch, setSelectedMatch] = useState(null);
   const [matchList, setMatchList] = useState(null)
+  const [notifications, setNotifications] = useState(null)
 
   useEffect(() => {
     axios
@@ -14,15 +15,26 @@ export default function Likes({ user_id, profile }) {
       .then(response => {
         console.log(response.data.matches)
         setMatchList(response.data.matches); 
+        setNotifications(response.data.notifications)
       })
       .catch(error => {
         console.error("Error: ", error);
       });
-  }, []);
+  }, [selectedMatch]);
 
   const handleTabChange = (event, newValue) => {
     setValue(newValue);
   };
+
+  function handleClick(sender_id){
+    axios.post('http://127.0.0.1:5000/seen',{ user_id , sender_id})
+    .then(responce => {
+      console.log(responce.data.message)
+    })
+    .catch(error =>{
+      console.error("Error: ", error)
+    })
+  }
 
   let filteredList;
   if (matchList){
@@ -108,7 +120,7 @@ export default function Likes({ user_id, profile }) {
                 return (
                   <React.Fragment key={match.user_id}>
                     <ListItem
-                      onClick={() => setSelectedMatch(match)}
+                      onClick={() => {setSelectedMatch(match); handleClick(match.user_id)}}
                       sx={{
                         bgcolor: "#d4edda",
                         borderRadius: "8px",
@@ -119,12 +131,15 @@ export default function Likes({ user_id, profile }) {
                         <Avatar alt={match.name} src={match.images[0]} />
                       </ListItemAvatar>
                       <ListItemText primary={match.name} secondary={match.age + " years old"} />
+                      <Badge badgeContent={notifications.filter((item) => item.sender_id == match.user_id).length} color="error" >
+                        <ListItemText />
+                      </Badge>
                     </ListItem>
                   </React.Fragment>
                 );
               })
             ) : (
-              <Typography variant="h5" color="textSecondary" align="center" mt={'38vh'}>
+              <Typography variant="h5" color="textSecondary" align="center" mt={'30vh'}>
                 No matches yet. Keep swiping!
               </Typography>
             )}

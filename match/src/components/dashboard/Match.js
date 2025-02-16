@@ -25,17 +25,6 @@ export default function Match({ profiles, user_id }) {
   };
 
 
-  const preventVerticalSwipe = (e) => {
-    // Prevent default behavior if user tries to swipe vertically (up/down)
-    if (Math.abs(e.deltaX) > Math.abs(e.deltaY)) {
-      return true; // Allow horizontal swipes
-    }
-    return false; // Prevent vertical swipes (up/down)
-  };
-
-
-
-
 
 
   return (

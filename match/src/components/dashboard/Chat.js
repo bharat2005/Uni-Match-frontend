@@ -28,7 +28,7 @@ const ChatPage = ({ onBack, match, user_id }) => {
 
   function sendMessage(){
     if (message.trim() !== "") {
-      const messageData = { sender_id: user_id, receiver_id: match.user_id , message: message, room: room };
+      const messageData = { sender_id: user_id, receiver_id: match.user_id , message: message, room: room, type:'message', is_seen:'unseen' };
       socket.emit("bharat", messageData);
       setMessage("");
     }
@@ -39,7 +39,7 @@ const ChatPage = ({ onBack, match, user_id }) => {
   }, [messages]);
 
   return (
-    <Box sx={{ width: "100%", display: "flex", flexDirection: "column", height: "100%", backgroundColor: 'white' }}>
+    <Box sx={{ width: "100%", display: "flex", flexDirection: "column", height: "90%", backgroundColor: 'white' }}>
       
       <Box sx={{ display: "flex", alignItems: "center", justifyContent: 'left', padding: "10px" }}>
         <IconButton onClick={onBack} sx={{ mr: 1 }}>
@@ -49,7 +49,7 @@ const ChatPage = ({ onBack, match, user_id }) => {
         <Typography variant="h6" sx={{ marginLeft: '15px', textAlign: "center", fontWeight: "bold" }}>{match.name}</Typography>
       </Box>
 
-      {/* Chat Messages */}
+      
       <Paper sx={{
         p: 2,
         flex: 1,
