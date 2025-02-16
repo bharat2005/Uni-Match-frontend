@@ -24,8 +24,8 @@ export default function Reason({ setFormData }) {
 
   function handleSelection(index) {
     setSelected(index);
-    const selectedReason = reasons[index]; // Get the corresponding string for the selected image
-    setFormData((prev) => ({ ...prev, reason: selectedReason })); // Store the selected string in formData
+    const selectedReason = reasons[index]; 
+    setFormData((prev) => ({ ...prev, reason: selectedReason }));
   }
 
   return (
@@ -44,8 +44,8 @@ export default function Reason({ setFormData }) {
           flexWrap: "wrap",
           alignItems: "center",
           justifyContent: "center",
-          gap: { xs: 2, sm: 3 }, // Adjust gap for mobile
-          marginTop: { xs: 4, sm: 6 }, // Adjust margin for better spacing on smaller screens
+          gap: { xs: 2, sm: 3 }, 
+          marginTop: { xs: 4, sm: 6 }, 
         }}
       >
         {imagePaths.map((item, index) => (
@@ -53,9 +53,9 @@ export default function Reason({ setFormData }) {
             key={index}
             onClick={() => handleSelection(index)}
             sx={{
-              width: { xs: 120, sm: 150 },  // Adjust width based on screen size
-              height: { xs: 120, sm: 150 }, // Adjust height for better visibility
-              backgroundImage: `url(${imagePaths[index]})`, // Background image from imagePaths array
+              width: { xs: 120, sm: 150 }, 
+              height: { xs: 120, sm: 150 }, 
+              backgroundImage: `url(${imagePaths[index]})`, 
               backgroundSize: "cover",
               backgroundPosition: "center",
               backgroundRepeat: "no-repeat",
@@ -66,8 +66,8 @@ export default function Reason({ setFormData }) {
               borderRadius: 2,
               border: selected === index ? "2px solid black" : "1px solid black",
               transform: selected === index ? "scale(1.05)" : "scale(1)",
-              position: "relative", // For absolute text positioning
-              transition: "transform 0.2s ease, border 0.2s ease", // Smooth transition for scale and border
+              position: "relative",
+              transition: "transform 0.2s ease, border 0.2s ease",
             }}
           >
           </Box>

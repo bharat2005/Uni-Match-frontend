@@ -6,9 +6,9 @@ export default function ErrorModal({ errorOpen, setErrorOpen }) {
     <Modal open={errorOpen} onClose={() => setErrorOpen(false)}>
       <Box
         sx={{
-          width: { xs: 320, sm: 400 }, // Adjust width for mobile screens
+          width: { xs: 320, sm: 400 },
           margin: "auto",
-          marginTop: '70%', // Adjust top margin for smaller screens
+          marginTop: '70%', 
           backgroundColor: "white",
           padding: 3,
           borderRadius: 2,
@@ -21,7 +21,7 @@ export default function ErrorModal({ errorOpen, setErrorOpen }) {
           sx={{
             marginBottom: 2,
             color: "red",
-            fontSize: { xs: "1rem", sm: "1.25rem" }, // Adjust font size for mobile and desktop
+            fontSize: { xs: "1rem", sm: "1.25rem" }, 
           }}
         >
           ⚠️ Missing Information!
@@ -30,7 +30,7 @@ export default function ErrorModal({ errorOpen, setErrorOpen }) {
           variant="body1"
           sx={{
             marginBottom: 2,
-            fontSize: { xs: "0.875rem", sm: "1rem" }, // Adjust font size for readability
+            fontSize: { xs: "0.875rem", sm: "1rem" },
           }}
         >
           Please fill in all required details before proceeding!
@@ -40,12 +40,12 @@ export default function ErrorModal({ errorOpen, setErrorOpen }) {
           onClick={() => setErrorOpen(false)}
           sx={{
             width: "100%",
-            padding: { xs: "8px", sm: "10px" }, // Adjust padding for mobile
+            padding: { xs: "8px", sm: "10px" },
             backgroundColor: "black",
             color: "white",
             borderRadius: "8px",
             "&:hover": { backgroundColor: "#ffbf00" },
-            fontSize: { xs: "0.875rem", sm: "1rem" }, // Adjust button text size
+            fontSize: { xs: "0.875rem", sm: "1rem" }, 
           }}
         >
           Okay

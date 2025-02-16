@@ -3,7 +3,7 @@ import { Box, Typography, Avatar, List, ListItem, ListItemAvatar, ListItemText, 
 import Chat from './Chat';
 import axios from 'axios';
 
-export default function Chats({ user_id, profile }) {
+export default function Chats({ user_id, profile , setMatchesNoti}) {
   const [value, setValue] = useState(0)
   const [selectedMatch, setSelectedMatch] = useState(null);
   const [matchList, setMatchList] = useState(null)
@@ -26,7 +26,21 @@ export default function Chats({ user_id, profile }) {
     setValue(newValue);
   };
 
+
+  function handleNotiClick(sender_id){
+    axios.patch('http://127.0.0.1:5000/notidel',{sender_id, user_id: user_id})
+    .then(response => {
+      console.log(response.data)
+      setMatchesNoti(response.data.MatchesNoti)
+    })
+    .catch(error => {
+      console.error("Error: ",error)
+    })
+  }
+
+
   function handleClick(sender_id){
+    handleNotiClick(sender_id)
     axios.post('http://127.0.0.1:5000/seen',{ user_id , sender_id})
     .then(responce => {
       console.log(responce.data.message)
@@ -41,6 +55,9 @@ export default function Chats({ user_id, profile }) {
     filteredList = matchList
   }
   
+  if (selectedMatch){
+    return <Chat match={selectedMatch} user_id={user_id} profile={profile} onBack={() => setSelectedMatch(null)} />
+  }
 
 
   return (
@@ -96,9 +113,7 @@ export default function Chats({ user_id, profile }) {
 
 {value === 0 &&
 <>
-      {selectedMatch ? (
-        <Chat match={selectedMatch} user_id={user_id} profile={profile} onBack={() => setSelectedMatch(null)} />
-      ) : (
+      
         <Box
         sx={{
           height: "75vh",
@@ -147,8 +162,8 @@ export default function Chats({ user_id, profile }) {
          ):(
           <CircularProgress size={50} sx={{ color: 'black', marginTop:'50%' }} />
          )}
-        </Box>
-      )}
+      </Box>
+
       </>}
       </Box>
     </>

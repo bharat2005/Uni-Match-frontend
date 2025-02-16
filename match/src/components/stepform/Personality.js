@@ -26,7 +26,7 @@ export default function Personality({ setFormData }) {
       <Typography 
         variant="h4" 
         gutterBottom 
-        sx={{ textAlign: "center", fontSize: { xs: "1.5rem", sm: "2rem" }}} // Adjust text size for responsiveness
+        sx={{ textAlign: "center", fontSize: { xs: "1.5rem", sm: "2rem" }}} 
       >
         Are you an introvert or extrovert?
       </Typography>
@@ -61,17 +61,17 @@ export default function Personality({ setFormData }) {
               border: selected === index ? "2.5px solid black" : "1px solid black",
               transition: "transform 0.3s, border 0.3s",
               "&:hover": {
-                transform: "scale(1.05)", // Adds a subtle zoom-in effect on hover
+                transform: "scale(1.05)", 
               },
               "@media (max-width:600px)": {
-                width: "150px", // Reduce size for mobile screens
+                width: "150px",
                 height: "150px",
               }
             }}
           >
             <img
               src={item}
-              alt={personalities[index]} // Add alt text for accessibility
+              alt={personalities[index]} 
               style={{
                 width: "100%",
                 height: "100%",

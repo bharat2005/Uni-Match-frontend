@@ -63,7 +63,7 @@ export default function ImagePickerCard({ formData, setFormData }) {
     <div style={{ paddingLeft: 40, paddingRight: 40, paddingTop: 40 }}>
       <Typography
         variant="h4"
-        sx={{ marginBottom: '40px', fontSize: { xs: '1.5rem', sm: '1.75rem' } }} // Adjust font size for mobile
+        sx={{ marginBottom: '40px', fontSize: { xs: '1.5rem', sm: '1.75rem' } }} 
         gutterBottom
       >
         Add your best photos
@@ -73,9 +73,9 @@ export default function ImagePickerCard({ formData, setFormData }) {
         sx={{
           
           display: "grid",
-          gridTemplateColumns: "repeat(auto-fill, minmax(120px, 1fr))", // Use auto-fill for responsive columns
-          gap: "20px", // Adjust gap for mobile
-          justifyItems: "center", // Center each item in the grid
+          gridTemplateColumns: "repeat(auto-fill, minmax(120px, 1fr))",
+          gap: "20px", 
+          justifyItems: "center", 
           alignItems: "center",
           columnGap:'20px',
           width: "100%",
@@ -87,8 +87,8 @@ export default function ImagePickerCard({ formData, setFormData }) {
             key={index}
             sx={{
               width: "100%",
-              maxWidth: "120px", // Adjust max width for mobile
-              height: "160px", // Adjust height for mobile
+              maxWidth: "120px", 
+              height: "160px",
               display: "flex",
               alignItems: "center",
               justifyContent: "center",

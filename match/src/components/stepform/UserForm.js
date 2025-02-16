@@ -35,7 +35,7 @@ export default function UserForm({ formData, setFormData }) {
   }
 
   return (
-    <div style={{ paddingTop: 40, paddingLeft: 20, paddingRight: 20 }}> {/* Adjusted padding for mobile */}
+    <div style={{ paddingTop: 40, paddingLeft: 20, paddingRight: 20 }}> 
       <Typography variant="h4" gutterBottom sx={{ fontSize: { xs: "1.5rem", sm: "2rem" } }}>
         Introduce yourself
       </Typography>
@@ -85,7 +85,7 @@ export default function UserForm({ formData, setFormData }) {
                   "&:hover": { backgroundColor: "rgba(0, 0, 0, 0.1)" },
                   "&.Mui-selected": { backgroundColor: "black !important", color: "white !important" },
                   marginBottom: 3,
-                  padding: { xs: "8px", sm: "12px" }, // Adjust padding for mobile
+                  padding: { xs: "8px", sm: "12px" }, 
                 }}
               >
                 {gender.toUpperCase()}

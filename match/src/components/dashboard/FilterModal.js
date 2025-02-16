@@ -12,10 +12,10 @@ import {
 import Modal from "@mui/material/Modal";
 import axios from "axios";
 
-export default function FilterModal({ open, setOpen, setProfiles }) {
-  const [ageRange, setAgeRange] = useState([18, 24]); // Age range slider value
-  const [gender, setGender] = useState(""); // Selected gender
-  const [reason, setReason] = useState(""); // Selected reason
+export default function FilterModal({ open, setOpen, setProfiles, user_id }) {
+  const [ageRange, setAgeRange] = useState([18, 24]); 
+  const [gender, setGender] = useState(""); 
+  const [reason, setReason] = useState(""); 
 
   const reasons = [
     "Casual Dating",
@@ -26,24 +26,24 @@ export default function FilterModal({ open, setOpen, setProfiles }) {
     "Still figuring it out",
   ];
 
-  // Handle form submission
+  
   const handleApplyFilters = (e) => {
-    e.preventDefault(); // Prevent default form submission behavior
+    e.preventDefault(); 
 
     if (gender && reason) {
-      const filters = { ageRange, gender, reason };
+      const filters = { ageRange, gender, reason, user_id };
       console.log(filters);
 
-      // Send POST request with filters
+    
       axios
         .post("http://127.0.0.1:5000/filtered_dashboard", filters)
         .then((response) => {
-          setProfiles(response.data); // Update profiles in the parent component
+          setProfiles(response.data); 
         })
         .catch((error) => {
           console.error("Error: ", error);
         });
-      setOpen(false); // Close modal after applying filters
+      setOpen(false); 
     } else {
       alert("Please fill all fields before applying the filters.");
     }
@@ -62,7 +62,7 @@ export default function FilterModal({ open, setOpen, setProfiles }) {
           borderRadius: "10px",
           boxShadow: 24,
           p: 4,
-          textAlign: "center", // Center-align content horizontally
+          textAlign: "center", 
         }}
       >
         <Typography variant="h5" sx={{ mb: 2 }}>
@@ -70,7 +70,7 @@ export default function FilterModal({ open, setOpen, setProfiles }) {
         </Typography>
 
         <form onSubmit={handleApplyFilters}>
-          {/* Age Range Slider */}
+          
           <div style={{ marginBottom: "20px" }}>
             <Typography variant="body1" gutterBottom>
               Age Range (18-24)
@@ -90,7 +90,7 @@ export default function FilterModal({ open, setOpen, setProfiles }) {
             />
           </div>
 
-          {/* Gender Toggle Buttons */}
+        
           <div style={{ marginBottom: "20px" }}>
             <Typography variant="body1" gutterBottom>
               Gender
@@ -133,7 +133,7 @@ export default function FilterModal({ open, setOpen, setProfiles }) {
             </ToggleButtonGroup>
           </div>
 
-          {/* Reason Filter */}
+         
           <div style={{ marginBottom: "30px" }}>
             <Typography variant="body1" gutterBottom>
               Looking for?
@@ -148,13 +148,13 @@ export default function FilterModal({ open, setOpen, setProfiles }) {
                 width: "80%",
                 mx: "auto",
                 "&.Mui-focused .MuiOutlinedInput-notchedOutline": {
-                  borderColor: "black", // Change the border color when focused
+                  borderColor: "black", 
                 },
                 "&:hover .MuiOutlinedInput-notchedOutline": {
-                  borderColor: "black", // Change the border color on hover
+                  borderColor: "black",
                 },
                 ".MuiSelect-select": {
-                  color: "black", // Change selected text color
+                  color: "black", 
                 },
               }}
             >
@@ -167,7 +167,6 @@ export default function FilterModal({ open, setOpen, setProfiles }) {
             </Select>
           </div>
 
-          {/* Action Buttons */}
           <div
             style={{
               display: "flex",

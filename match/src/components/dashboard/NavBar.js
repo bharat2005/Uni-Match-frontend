@@ -2,10 +2,8 @@ import React, { useEffect } from 'react';
 import { BottomNavigation, BottomNavigationAction, Badge } from '@mui/material';
 import { HeartIcon, HomeIcon, ChatBubbleOvalLeftEllipsisIcon, UserCircleIcon } from '@heroicons/react/24/solid';
 
-export default function Navbar({ value, onChange, likesBool }) {
-  useEffect(()=>{
-    console.log('refreshed')
-  },[likesBool])
+export default function Navbar({ value, onChange, likesNoti, matchesNoti }) {
+  console.log(likesNoti.length)
   return (
     <BottomNavigation
       value={value}
@@ -31,24 +29,15 @@ export default function Navbar({ value, onChange, likesBool }) {
 
       <BottomNavigationAction
         label="Likes"
-        sx={{ color: 'grey', "&.Mui-selected": { color: "black" } }}
+        sx={{ color: 'grey', "&.Mui-selected": { color: "black"} }}
         icon={
           <Badge
-            color="error"
-            variant={likesBool == 'yes' ? 'dot' : undefined} 
-            overlap="circular"
-            anchorOrigin={{
-              vertical: 'top',
-              horizontal: 'right',
-            }}
-            sx={{
-              "& .MuiBadge-badge": {
-                transform: 'translate(0%, 0%)', 
-              },
-            }}
-          >
-            <HeartIcon style={{ width: '40%' }} />
-          </Badge>
+          badgeContent={likesNoti.length > 0 ? likesNoti.length : null}
+          color="error"
+          sx={{display:'flex', justifyContent:'center',width:'40%'}}
+        >
+        <HeartIcon style={{ width: '100%'}} />
+        </Badge>
         }
       />
 
@@ -57,22 +46,13 @@ export default function Navbar({ value, onChange, likesBool }) {
         sx={{ color: 'grey', "&.Mui-selected": { color: "black" } }}
         icon={
           <Badge
+          badgeContent={matchesNoti.length > 0 ? matchesNoti.length : null}
           color="error"
-          variant={'yes' == 'yes' ? 'dot' : undefined} 
-          overlap="circular"
-          anchorOrigin={{
-            vertical: 'top',
-            horizontal: 'right',
-          }}
-          sx={{
-            "& .MuiBadge-badge": {
-              transform: 'translate(0%, 0%)', 
-            },
-          }}
+          sx={{display:'flex', justifyContent:'center', width:'40%'}}
         >
-        <ChatBubbleOvalLeftEllipsisIcon style={{ width: '40%' }} />
+        <ChatBubbleOvalLeftEllipsisIcon style={{ width: '100%' }} />
         </Badge>
-      }
+        }
       />
 
       <BottomNavigationAction

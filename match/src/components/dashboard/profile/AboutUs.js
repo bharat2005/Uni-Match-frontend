@@ -42,7 +42,7 @@ const AboutUs = ({setBool}) => {
           overflowY: "auto",
           padding: 3,
           flexGrow: 1,
-          "&::-webkit-scrollbar": { display: "none" }, // Hide scrollbar
+          "&::-webkit-scrollbar": { display: "none" }, 
         }}
       >
         <Box mb={3}>

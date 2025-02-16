@@ -1,15 +1,19 @@
 import React, { useState, useEffect } from "react";
-import { Box, Typography, Avatar, List, ListItem, ListItemAvatar, ListItemText, Tabs, Tab, CircularProgress, IconButton } from "@mui/material";
+import { Box, Typography, Avatar, Modal, List, ListItem, ListItemAvatar, ListItemText, Tabs, Tab, CircularProgress, IconButton } from "@mui/material";
 import axios from 'axios';
 import FavoriteRoundedIcon from '@mui/icons-material/FavoriteRounded';
 import CloseRoundedIcon from '@mui/icons-material/CloseRounded';
+import { ArrowBackIos, ArrowForwardIos } from "@mui/icons-material";
 
 
 
-export default function Likes({user_id, setLikesBool,}) {
+export default function Likes({user_id, setLikesNoti}) {
+  const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const [likesList, setLikesList] = useState(null); 
   const [value, setValue] = useState(0);  
   const [load, setLoad] = useState(false)
+  const [open, setOpen] = useState(false)
+  const [selected, setSelected] = useState({})
 
   useEffect(() => {
     axios
@@ -17,7 +21,6 @@ export default function Likes({user_id, setLikesBool,}) {
       .then(response => {
         console.log(response.data)
         setLikesList(response.data);
-        setLikesBool(response.data.bool)
       })
       .catch(error => {
         console.error("Error: ", error);
@@ -33,11 +36,21 @@ if (likesList){
   filteredList = value === 1 ? likesList.likedByYou : likesList.likesYou
 }
 
-
+function handleNotiClick(target_user_id){
+  axios.patch('http://127.0.0.1:5000/notidel',{user_id, target_user_id})
+  .then(response => {
+    console.log(response.data)
+    setLikesNoti(response.data.likesNoti)
+  })
+  .catch(error => {
+    console.error("Error: ",error)
+  })
+}
 
 
 function handleLikeClick(target_user_id){
   setLoad(true)
+  handleNotiClick(target_user_id)
     axios.post('http://127.0.0.1:5000/match',{user_id:user_id, target_user_id: target_user_id,swipe_action:'right' })
     .then(responce => {
       console.log(responce.data.message)
@@ -55,6 +68,7 @@ function handleLikeClick(target_user_id){
 
 function handleCrossClick(target_user_id){
   setLoad(true)
+  handleNotiClick(target_user_id)
   axios.post('http://127.0.0.1:5000/likeno',{user_id:user_id, target_user_id: target_user_id,swipe_action:'left' })
   .then(responce => {
     console.log(responce.data.message)
@@ -72,9 +86,112 @@ function handleCrossClick(target_user_id){
 }
 
 
+function emoji(){
+  switch (selected.reason){
+    case "Casual Dating":
+      return "🎉"
+    case "Short-term fun":
+      return "😍"
+    case "Long-term relationship":
+      return "💘"
+    case "New friends":
+      return "👋"
+    case "Study buddy":
+      return "📚"
+    case "Still figuring it out":
+      return "🤔"
+  }}
+
+  let list = []
+  if (selected.images){
+  list = selected.images.filter(item => item!=null)}
+  const nextImage = () => {
+    setCurrentImageIndex((prevIndex) =>
+      prevIndex === list.length - 1 ? 0 : prevIndex + 1
+    );
+  };
+
+  const prevImage = () => {
+    setCurrentImageIndex((prevIndex) =>
+      prevIndex === 0 ? list.length - 1 : prevIndex - 1
+    );
+  };
 
 
   return (
+<>
+    <Modal open={open} onClose={()=>setOpen(false)}>
+  <Box
+       sx={{
+          position: "relative",
+          backgroundColor: "white",
+          border:'2px solid black',
+          width: "275px",
+          height: "400px",
+          boxShadow: "inset 0px -20px 40px 0px black",
+          borderRadius: "8px",
+          top: "45%",
+          left: "50%",
+          transform: "translate(-50%, -50%)",
+          backgroundImage: `url(${list[currentImageIndex]})`,
+          backgroundSize: "cover",
+          backgroundPosition: "center",
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+       }}
+     >
+       
+       <IconButton
+         sx={{ position: "absolute", left: "10px", color: "white" }}
+         onPointerDown={prevImage}
+       >
+         <ArrowBackIos />
+       </IconButton>
+ 
+ 
+       <IconButton
+         sx={{ position: "absolute", right: "10px", color: "white" }}
+         onPointerDown={nextImage}
+       >
+         <ArrowForwardIos />
+       </IconButton>
+
+       <Typography
+         variant="h6"
+         sx={{
+           position: "absolute",
+           bottom: "35px",
+           left: "15px",
+           fontWeight: "bold",
+           fontSize: "25px",
+           color: "white",
+         }}
+       >
+         {selected.name}, {selected.age}
+       </Typography>
+       <Typography
+         variant="body1"
+         sx={{
+           position: "absolute",
+           bottom: "15px",
+           left: "12px",
+           fontSize: "15px",
+           color: "white",
+         }}
+       >
+         {emoji()}{selected.reason}
+       </Typography>
+     </Box>
+  </Modal>
+
+
+
+
+
+
+
+
     <Box
     sx={{
       height: "85vh",
@@ -153,7 +270,7 @@ function handleCrossClick(target_user_id){
                 }}
               >
                 <ListItemAvatar>
-                  <Avatar alt={like.name} src={like.images[0]} />
+                  <Avatar alt={like.name} src={like.images[0]} onClick={()=> {setSelected(like);setOpen(true)}}/>
                 </ListItemAvatar>
                 <ListItemText primary={like.name} secondary={like.age + " years old"} />
                 {value === 0 && <>
@@ -180,5 +297,6 @@ function handleCrossClick(target_user_id){
         )}
       </Box>
     </Box>
+    </>
   );
 }
