@@ -1,9 +1,9 @@
 import React from 'react';
-import { Box, Button, Typography, Modal, TextField, Fade } from '@mui/material';
+import { Box, Button, Typography, Modal, TextField} from '@mui/material';
 
-export default function LoginModal({ open, handleClose, handleLogin, handleLoginSubmit, lpuLogin }) {
+export default function LoginModal({ open, setOpen, handleLogin, handleLoginSubmit, lpuLogin }) {
   return (
-    <Modal open={open} onClose={handleClose}>
+    <Modal open={open} onClose={()=>setOpen(false)}>
       <Box
         sx={{
           width: "90%",

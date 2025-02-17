@@ -3,6 +3,7 @@ import { Card, CardContent, Typography, Avatar, Box, Chip } from "@mui/material"
 import AboutUs from './profile/AboutUs';
 import ProfileHome from './profile/ProfileHome';
 import EditProfile from './profile/EditProfile';
+import SupportUs from './profile/SupportUs';
 
 const ProfileSection = ({ profile, user_id }) => {
   const [bool, setBool] = useState(0);
@@ -13,7 +14,9 @@ const ProfileSection = ({ profile, user_id }) => {
       setBool(1);
     } else if (option === "About Us") {
       setBool(2);
-    } 
+    } else if(option == 'Support Us'){
+      setBool(3);
+    }
   };
 
   return (
@@ -21,6 +24,7 @@ const ProfileSection = ({ profile, user_id }) => {
     {bool === 0 && <ProfileHome handleOptionClick={handleOptionClick} profile={profile} user_id={user_id}/>}
     {bool === 1 && <EditProfile setBool={setBool} profile={profile}/>}
     {bool === 2 && <AboutUs setBool={setBool} profile={profile}/>}
+    {bool === 3 && <SupportUs setBool={setBool} profile={profile}/>}
   </>
   );
 };

@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { MobileStepper, Button, Modal, Box, Typography } from "@mui/material";
+import { MobileStepper, Button } from "@mui/material";
 import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
 import ArrowBackIosNewIcon from "@mui/icons-material/ArrowBackIosNew";
 import DoneIcon from "@mui/icons-material/Done";
@@ -15,7 +15,7 @@ export default function MyStepper({ step, setStep, validateStep, handleDone}) {
       if (validateStep()) {
         setStep((prev) => prev + 1);
       } else {
-        setErrorOpen(true); 
+        setErrorOpen(true)
       }
     } else {
       handleDone();

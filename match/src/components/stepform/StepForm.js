@@ -8,7 +8,7 @@ import Interest from "./Interest";
 import Personality from "./Personality";
 import FormStartModal from './FormStartModal';
 import axios from 'axios';
-import Dashboard from '../dashboard/Dashboard'
+
 
 export default function StepForm() {
   const [step, setStep] = useState(0);
@@ -57,6 +57,11 @@ export default function StepForm() {
 
 
   return (
+<>
+    <FormStartModal />
+
+
+    
     <Box
       sx={{
         display: "flex",
@@ -71,7 +76,7 @@ export default function StepForm() {
         "@media (min-width:600px)": { flexDirection: "row" },  
       }}
     >
-      <FormStartModal />
+      
 
       <Box
         sx={{
@@ -108,5 +113,6 @@ export default function StepForm() {
         />
       </Box>
     </Box>
-  );
+</>
+  )
 }

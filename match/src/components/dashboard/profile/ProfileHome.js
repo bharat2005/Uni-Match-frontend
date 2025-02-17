@@ -5,7 +5,6 @@ import { PencilIcon, ShareIcon ,InformationCircleIcon , ArrowLeftStartOnRectangl
 
 const ProfileSection = ({ profile, handleOptionClick, user_id}) => {
     const [open, setOpen] = useState(false)
-    const [supportOpen, setSupportOpen] = useState(false)
     const [selected, setSelected] = useState('')
 
 function handleLogoutClick(option){
@@ -17,36 +16,12 @@ function handleLogoutClick(option){
         setSelected('del')
     }
 }
-function handleSupportClick(){
-  setSupportOpen(true)
-}
 
 
 
   return (
     <>
-    <Modal open={supportOpen} onClose={()=>setSupportOpen(false)}>
-  <Box
-       sx={{
-          position: "relative",
-          backgroundColor: "white",
-          border:'2px solid black',
-          width: "250px",
-          height: "300px",
-          borderRadius: "8px",
-          top: "45%",
-          left: "50%",
-          transform: "translate(-50%, -50%)",
-          backgroundImage:'url(/signs/qr.png)',
-          backgroundSize: "cover",
-          backgroundPosition: "center",
-          display: "flex",
-          justifyContent: "center",
-          alignItems: "center",
-       }}
-     >
-     </Box>
-  </Modal>
+
 
 
       <LogoutModal open={open} onClose={() => setOpen(false)} selected={selected} user_id={user_id} />
@@ -106,7 +81,7 @@ function handleSupportClick(){
             <Chip
               icon={<CurrencyRupeeIcon style={{ color: "black", width:'13%' }} />}
               label="Support Us"
-              onClick={handleSupportClick}
+              onClick={()=> handleOptionClick("Support Us")}
               sx={{ color: "black", border: "1px solid black",  width:'45%', height:32 }}
             />
 

@@ -85,6 +85,7 @@ export default function Dashboard() {
           src={'/signs/Matchp.png'} 
           alt="Logo"
           style={{
+            marginLeft:'3%',
             maxHeight: '100%',
             maxWidth: '100%', 
             objectFit: 'contain',
