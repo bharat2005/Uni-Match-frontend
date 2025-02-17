@@ -2,10 +2,10 @@ import React, { useState } from "react";
 import { Box, Typography, Modal, Button } from "@mui/material";
 
 export default function FormStartModal() {
-  const [openModal, setOpenModal] = useState(true);
+  const [open, setOpen] = useState(true);
 
   return (
-    <Modal open={openModal}>
+    <Modal open={open}>
       <Box
         sx={{
           width: "90%", 
@@ -52,7 +52,7 @@ export default function FormStartModal() {
 
         <Button
           variant="contained"
-          onClick={() => setOpenModal(false)}
+          onClick={() => setOpen(false)}
           sx={{
             width: "100%",
             padding: "12px",

@@ -25,15 +25,17 @@ export default function Login() {
       });
   }
 
-  function handleOpen() {
-    setOpen(true);
-  }
-
-  function handleClose() {
-    setOpen(false);
-  }
-
   return (
+<>
+    <LoginModal
+    open={open}
+    setOpen={setOpen}
+    handleLogin={handleLogin}
+    handleLoginSubmit={handleLoginSubmit}
+    lpuLogin={lpuLogin}
+  />
+
+
     <Box
       sx={{
         display: 'flex',
@@ -41,7 +43,9 @@ export default function Login() {
         alignItems: 'center',
         justifyContent: 'center',
         height: '100vh',
-        backgroundColor: 'white',
+        backgroundImage: 'url(/signs/webback.png)',
+        backgroundSize: 'cover',
+        backgroundPosition: 'center',
         padding: 2,
         border:'3px solid black',
         boxSizing: 'border-box',
@@ -62,7 +66,7 @@ export default function Login() {
       
       <Button
         variant="contained"
-        onClick={handleOpen}
+        onClick={()=>setOpen(true)}
         sx={{
           backgroundImage: 'url(/signs/but.png)',
           backgroundSize: 'cover',
@@ -76,15 +80,7 @@ export default function Login() {
         }}
       >
       </Button>
-
- 
-      <LoginModal
-        open={open}
-        handleClose={handleClose}
-        handleLogin={handleLogin}
-        handleLoginSubmit={handleLoginSubmit}
-        lpuLogin={lpuLogin}
-      />
     </Box>
+    </>
   );
 }

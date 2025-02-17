@@ -7,7 +7,7 @@ import { PaperAirplaneIcon } from '@heroicons/react/24/solid';
 
 const socket = io("http://127.0.0.1:5000");
 
-const room = "f7f36072ec9f0fe5195aad91aa95c460"
+const room = "046bf0a7d0d641c527765a02816eca9f"
 
 const ChatPage = ({ onBack, match, user_id }) => {
   const [message, setMessage] = useState("");

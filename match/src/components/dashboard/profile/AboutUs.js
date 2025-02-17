@@ -1,6 +1,6 @@
 import React from "react";
 import { Card, CardContent, Typography, Box, Button } from "@mui/material";
-import { ChevronLeftIcon } from "@heroicons/react/24/solid";
+import { ChevronLeftIcon, EnvelopeIcon } from "@heroicons/react/24/solid";
 
 const AboutUs = ({setBool}) => {
   const handleContactClick = () => {
@@ -88,6 +88,7 @@ const AboutUs = ({setBool}) => {
             onClick={handleContactClick}
             sx={{ mt: 2 }}
           >
+            <EnvelopeIcon/>
             Contact Me
           </Button>
         </Box>

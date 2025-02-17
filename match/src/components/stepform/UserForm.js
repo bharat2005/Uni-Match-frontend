@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from "react";
-import { TextField, ToggleButton, ToggleButtonGroup, Grid, Typography, Box } from "@mui/material";
+import React from "react";
+import { TextField, ToggleButton, ToggleButtonGroup, Grid, Typography } from "@mui/material";
 
 export default function UserForm({ formData, setFormData }) {
 
@@ -24,7 +24,9 @@ export default function UserForm({ formData, setFormData }) {
         age: age,    
       }));
     } else {
-      setFormData({ ...formData, [e.target.name]: e.target.value });
+      setFormData((prev) => {
+        return {...prev, [e.target.name]: e.target.value }
+      })
     }
   }
 
