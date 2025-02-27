@@ -14,6 +14,7 @@ export default function FormStartModal() {
           marginTop: "60%", 
           backgroundColor: "white",
           padding: 3,
+          border:'3px solid #fd7e14',
           paddingTop:3.5,
           borderRadius: 2,
           padding:'15px',

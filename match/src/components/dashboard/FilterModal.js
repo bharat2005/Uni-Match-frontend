@@ -36,7 +36,7 @@ export default function FilterModal({ open, setOpen, setProfiles, user_id }) {
 
     
       axios
-        .post("http://127.0.0.1:5000/filtered_dashboard", filters)
+        .post("http://127.0.0.1:5000/filtered_dashboard", filters, {withCredentials: true})
         .then((response) => {
           setProfiles(response.data); 
         })

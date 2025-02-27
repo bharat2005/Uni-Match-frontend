@@ -15,9 +15,10 @@ export default function Likes({user_id, setLikesNoti}) {
   const [open, setOpen] = useState(false)
   const [selected, setSelected] = useState({})
 
+
   useEffect(() => {
     axios
-      .post('http://127.0.0.1:5000/likes', { user_id })
+      .post('http://127.0.0.1:5000/likes',{user_id},{ withCredentials: true } )
       .then(response => {
         console.log(response.data)
         setLikesList(response.data);
@@ -51,7 +52,7 @@ function handleNotiClick(target_user_id){
 function handleLikeClick(target_user_id){
   setLoad(true)
   handleNotiClick(target_user_id)
-    axios.post('http://127.0.0.1:5000/match',{user_id:user_id, target_user_id: target_user_id,swipe_action:'right' })
+    axios.post('http://127.0.0.1:5000/match',{user_id, target_user_id,swipe_action:'right' })
     .then(responce => {
       console.log(responce.data.message)
       setLikesList(prev => {
@@ -69,7 +70,7 @@ function handleLikeClick(target_user_id){
 function handleCrossClick(target_user_id){
   setLoad(true)
   handleNotiClick(target_user_id)
-  axios.post('http://127.0.0.1:5000/likeno',{user_id:user_id, target_user_id: target_user_id,swipe_action:'left' })
+  axios.post('http://127.0.0.1:5000/likeno',{user_id, target_user_id,swipe_action:'left' })
   .then(responce => {
     console.log(responce.data.message)
     setLikesList(prev => {
@@ -126,7 +127,7 @@ function emoji(){
           position: "relative",
           backgroundColor: "white",
           border:'2px solid black',
-          width: "275px",
+          width: "280px",
           height: "400px",
           boxShadow: "inset 0px -20px 40px 0px black",
           borderRadius: "8px",
@@ -288,12 +289,12 @@ function emoji(){
             </Typography>
           ) : (
             <Typography variant="h5" color="textSecondary" mt={'30vh'} align="center">
-              No likes yet. Keep swiping!
+              No likes. Keep swiping!
             </Typography>
           )}
         </List>
         ):(
-          <CircularProgress size={50} sx={{ color: 'black', marginTop:'50%' }} />
+          <CircularProgress size={50} sx={{ color: '#fd7e14', marginTop:'50%' }} />
         )}
       </Box>
     </Box>

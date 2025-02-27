@@ -41,7 +41,7 @@ export default function Card({ profile, lastDirection }) {
       sx={{
         position: "relative",
         backgroundColor: "white",
-        border:'4px solid black',
+        border:'4px solid #fd7e14',
         width: "350px",
         height: "500px",
         boxShadow: "inset 0px -80px 40px 0px black",
@@ -88,7 +88,7 @@ export default function Card({ profile, lastDirection }) {
         </Box>
       )}
 
-      {/* User Info */}
+
       <Typography
         variant="h6"
         sx={{

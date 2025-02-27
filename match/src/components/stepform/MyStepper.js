@@ -61,9 +61,9 @@ export default function MyStepper({ step, setStep, validateStep, handleDone}) {
             onClick={handleNextClick}
           >
             {step === 4 ? (
-              <DoneIcon sx={{ fontSize: { xs: "1.5rem", sm: "2rem" } }} />
+              <DoneIcon sx={{ fontSize: { xs: "1.5rem", sm: "2rem" }}} />
             ) : (
-              <ArrowForwardIosIcon sx={{ fontSize: { xs: "1.5rem", sm: "2rem" } }} />
+              <ArrowForwardIosIcon sx={{ fontSize: { xs: "1.5rem", sm: "2rem" }}} />
             )}
           </Button>
         }

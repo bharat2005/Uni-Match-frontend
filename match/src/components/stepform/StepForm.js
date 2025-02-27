@@ -23,11 +23,10 @@ export default function StepForm() {
     personality: '',
   });
 
-
   function handleDone() {
-    axios.post('http://127.0.0.1:5000/profile', formData)
+    axios.post('http://127.0.0.1:5000/profile', formData, {withCredentials: true})
       .then(response => {
-        console.log("Message from server: ", response);
+        console.log("Message from server: ", response.data.message);
       })
       .catch(error => {
         console.error("Error: ", error);
@@ -69,7 +68,7 @@ export default function StepForm() {
         height: "100vh",
         alignItems: "center",
         justifyContent: "center",
-        backgroundColor: "black",
+        backgroundColor: "#fd7e14",
         padding: 2,  
         boxSizing: "border-box",  
         flexDirection: "column", 

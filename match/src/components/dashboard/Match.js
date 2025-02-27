@@ -15,7 +15,7 @@ export default function Match({ profiles, user_id }) {
       [target_user_id]: direction
     }));
 
-    axios.post('http://127.0.0.1:5000/swipeadd',{user_id: user_id, target_user_id: target_user_id, swipe_action: direction})
+    axios.post('http://127.0.0.1:5000/swipeadd',{target_user_id, user_id, swipe_action: direction},{ withCredentials: true } )
     .then(responce => {
       console.log(responce.data.message)
     })
@@ -41,7 +41,7 @@ export default function Match({ profiles, user_id }) {
         {profiles.map((profile) => (
           <TinderCard
             className="swipe"
-            key={profile.id}
+            key={profile.user_id}
             onSwipe={(dir) => swiped(dir, profile.user_id)}
             preventSwipe={['up', 'down']}  
           >

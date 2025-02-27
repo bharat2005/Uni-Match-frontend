@@ -22,7 +22,7 @@ const SupportUs = ({setBool}) => {
           backgroundColor: "white",
           border:'2px solid black',
           width: "250px",
-          height: "300px",
+          height: "250px",
           borderRadius: "8px",
           top: "45%",
           left: "50%",
@@ -106,9 +106,8 @@ const SupportUs = ({setBool}) => {
           </Typography>
                <Button
                    variant="contained"
-                   color="primary"
+                   sx={{mt:2}}
                    onClick={handleSupportClick}
-                   sx={{ mt: 2}}
                    
                  ><CurrencyRupeeIcon/>
                    Support Us

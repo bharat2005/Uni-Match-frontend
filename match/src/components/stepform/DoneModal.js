@@ -1,9 +1,9 @@
 import React from "react";
 import { Button, Modal, Box, Typography } from "@mui/material";
-
+import { useNavigate } from "react-router-dom";
 
 export default function DoneModal({doneOpen}){
-  
+  const navigate = useNavigate();
     return (
         <Modal open={doneOpen}>
         <Box
@@ -13,6 +13,7 @@ export default function DoneModal({doneOpen}){
             marginTop: "60%",
             backgroundColor: "white",
             padding: 3,
+            border:'3px solid #fd7e14',
             paddingTop:3.5,
             borderRadius: 2,
             padding:'15px',
@@ -42,6 +43,7 @@ export default function DoneModal({doneOpen}){
           </Typography>
           <Button
             variant="contained"
+            onClick={()=> navigate("/dashboard",{ replace: true } )}
             sx={{
               width: "100%",
               padding: "10px",

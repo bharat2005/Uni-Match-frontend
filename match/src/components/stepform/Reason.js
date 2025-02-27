@@ -58,6 +58,7 @@ export default function Reason({ setFormData }) {
               backgroundImage: `url(${imagePaths[index]})`, 
               backgroundSize: "cover",
               backgroundPosition: "center",
+              margin:'0px',
               backgroundRepeat: "no-repeat",
               display: "flex",
               alignItems: "center",

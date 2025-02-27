@@ -10,28 +10,37 @@ import { AdjustmentsVerticalIcon } from '@heroicons/react/24/solid';
 import FilterModal from './FilterModal';
 
 
-const user_id = 3;
+const user_id = 1;
 
 export default function Dashboard() {
-  const [value, setValue] = useState(0);
+  const [value, setValue] = useState(() => {
+    return localStorage.getItem("value") ? parseInt(localStorage.getItem("value"), 10) : 0;
+  });
   const [profiles, setProfiles] = useState([]);
   const [open, setOpen] = useState(false)
-  const [profile, setSelfProfile] = useState(null)
+  const [profile, setSelfProfile] = useState({})
+  const [lpuselfprofile, setLpuSelfProfile] = useState({})
   const [likesNoti, setLikesNoti] = useState([])
   const [matchesNoti, setMatchesNoti] = useState([])
 
+  useEffect(() => {
+    if (value) {
+      localStorage.setItem("value", value);
+    } else {
+      localStorage.removeItem("value");
+    }
+  }, [value]);
 
   useEffect(() => {
     axios
-      .post("http://127.0.0.1:5000/dashboard", {user_id})
+      .post("http://127.0.0.1:5000/dashboard", {user_id}, { withCredentials: true })
       .then((response) => {
-        console.log("Message from server: ", response.data);
+        
         setProfiles(response.data.cards);
+        setLpuSelfProfile(response.data.lpuselfprofile)
         setSelfProfile(response.data.selfprofile);
 
-        console.log(response.data.likesNoti)
         setLikesNoti(response.data.likesNoti);
-        console.log(response.data.matchesNoti)
         setMatchesNoti(response.data.matchesNoti);
       })
       .catch((error) => {
@@ -51,7 +60,7 @@ export default function Dashboard() {
       case 2:
         return <Chats profile={profile} user_id={user_id} setMatchesNoti={setMatchesNoti}/>;
       case 3:
-        return <Profile profile={profile} user_id={user_id} />;
+        return <Profile lpuselfprofile={lpuselfprofile} profile={profile} user_id={user_id} />;
     }
   }
 

@@ -1,7 +1,7 @@
 import React from 'react';
-import { Box, Button, Typography, Modal, TextField} from '@mui/material';
+import { Box, Button, Typography, Modal, TextField, CircularProgress  } from '@mui/material';
 
-export default function LoginModal({ open, setOpen, handleLogin, handleLoginSubmit, lpuLogin }) {
+export default function LoginModal({ loading, open, setOpen, handleLogin, lpuLogin, handleLoginSubmit}) {
   return (
     <Modal open={open} onClose={()=>setOpen(false)}>
       <Box
@@ -13,7 +13,7 @@ export default function LoginModal({ open, setOpen, handleLogin, handleLoginSubm
           padding: 3,
           paddingTop:3.5,
           borderRadius: 2,
-          border:'3px solid black',
+          border:'3px solid #fd7e14',
           padding:'15px',
           boxShadow: 24,
         }}
@@ -64,8 +64,9 @@ export default function LoginModal({ open, setOpen, handleLogin, handleLoginSubm
               }}
             />
 
-            <Button
+            <Button 
               fullWidth
+              disabled={loading}
               type="submit"
               variant="contained"
               color="primary"
@@ -78,7 +79,7 @@ export default function LoginModal({ open, setOpen, handleLogin, handleLoginSubm
                 fontSize: '1rem',
               }}
             >
-              Login
+             {loading ? <CircularProgress sx={{ color: '#fd7e14', width:'10% !important' }}/>: 'Login'}
             </Button>
           </form>
         </Box>
