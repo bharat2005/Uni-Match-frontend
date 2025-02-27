@@ -10,7 +10,7 @@ export default function Navbar({ value, onChange, likesNoti, matchesNoti }) {
       onChange={onChange}
       showLabels
       sx={{
-        borderTop: '3px solid black',
+        borderTop: '1px solid #fd7e14',
         height: '60px',
         width: '640px',
         position: 'relative',

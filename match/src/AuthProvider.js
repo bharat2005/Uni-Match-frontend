@@ -1,43 +1,45 @@
-import React, { createContext, useState, useEffect } from "react";
+import React, { createContext, useContext, useState, useEffect } from "react";
+import { Navigate, BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
-export const AuthContext = createContext();
+const AuthContext = createContext();
 
-export default function AuthProvider({children}) {
-
-  const [bool, setBool] = useState(!!localStorage.getItem("authToken") );
-  const [profile, setProfile] = useState(false)
-
-
-  function login(token) {
-    localStorage.setItem("authToken", token); 
-    setBool(true);
-  }
-  function logout() {
-    localStorage.removeItem("authToken");
-    setBool(false);
-  }
-
-  function profileSetup(){
-    localStorage.setItem("profile-setup","true")
-    setProfile(true)
-  }
-
+export const AuthProvider = ({ children }) => {
+  const [loginStatus, setLoginStatus] = useState(() => {
+    return localStorage.getItem("loginStatus") ? JSON.parse(localStorage.getItem("loginStatus")) : null;
+  });
 
   useEffect(() => {
-    if (localStorage.getItem("authToken")) {
-      setBool(true);
-    
+    if (loginStatus) {
+      localStorage.setItem("loginStatus", JSON.stringify(loginStatus));
+    } else {
+      localStorage.removeItem("loginStatus");
     }
-    if (localStorage.getItem("profile-setup")){
-        setProfile(true)
+  }, [loginStatus]);
 
-    }
-    
-  }, []);
+  const login = (loginStatus) => {
+    setLoginStatus(loginStatus);
+  };
+
+  const logout = () => {
+    setLoginStatus(null);
+  };
+
 
   return (
-    <AuthContext.Provider value={{ bool, login, logout, profile, profileSetup }}>
+    <AuthContext.Provider value={{ loginStatus, login, logout }}>
       {children}
     </AuthContext.Provider>
   );
-}
+};
+
+export const useAuth = () => {
+  return useContext(AuthContext);
+};
+
+export const ProtectedRoute = ({ children }) => {
+  const { loginStatus } = useAuth();
+  return loginStatus ? children : <Navigate to="/" />;
+};
+
+
+
