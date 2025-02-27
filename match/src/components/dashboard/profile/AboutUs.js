@@ -4,7 +4,7 @@ import { ChevronLeftIcon, EnvelopeIcon } from "@heroicons/react/24/solid";
 
 const AboutUs = ({setBool}) => {
   const handleContactClick = () => {
-    window.location.href = "mailto:bharatvdeshm2005@gmail.com";
+    window.location.href = "mailto:@uni-match.in";
   };
 
 
@@ -80,7 +80,7 @@ const AboutUs = ({setBool}) => {
           </Typography>
           <Typography variant="body1" paragraph>
             Got feedback or ideas to make this app even better? I’d love to hear from you! Drop me a message at{" "}
-            <strong>bharatvdeshm2005@gmail.com</strong>, or let me know through the app.
+            <strong>@uni-match.in</strong>, or let me know through the app.
           </Typography>
           <Button
             variant="contained"
