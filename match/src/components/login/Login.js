@@ -25,7 +25,7 @@ export default function Login() {
   function handleLoginSubmit(e){
     e.preventDefault();
     setLoading(true)
-    axios.post("http://127.0.0.1:5000/login", lpuLogin, {withCredentials:true})
+    axios.post("https://api.uni-match.in/login", lpuLogin, {withCredentials:true})
     .then(response => {
 
         if (response.data.message == 'Login'){
