@@ -25,7 +25,7 @@ export default function Login() {
   function handleLoginSubmit(e){
     e.preventDefault();
     setLoading(true)
-    axios.get("api.uni-match.in/profile", {withCredentials:true})
+    axios.get("https://api.uni-match.in/profile", {withCredentials:true})
     .then(response => {
       console.log("Weird Html",response.data)
         // if (response.data.message == 'Login'){
