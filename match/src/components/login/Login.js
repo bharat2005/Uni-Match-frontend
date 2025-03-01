@@ -29,11 +29,12 @@ export default function Login() {
     .then(response => {
 
         if (response.data.message == 'Login'){
+          console.log(response.data)
         login(true)
         setOpen(false)
         setLoading(false)
         setBarOpen(true)
-        response.data.nbool ? navigate('/dashboard', { replace: true }) : navigate('/profile-setup', { replace: true })
+        //response.data.nbool ? navigate('/dashboard', { replace: true }) : navigate('/profile-setup', { replace: true })
         }
         else{
             login(false)
