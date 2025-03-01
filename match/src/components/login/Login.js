@@ -27,21 +27,20 @@ export default function Login() {
     setLoading(true)
     axios.get("https://api.uni-match.in/profile", {withCredentials:true})
     .then(response => {
-      console.log("Weird Html",response.data)
-        // if (response.data.message == 'Login'){
-        //   console.log(response.data)
-        // login(true)
-        // setOpen(false)
-        // setLoading(false)
-        // setBarOpen(true)
-        // //response.data.nbool ? navigate('/dashboard', { replace: true }) : navigate('/profile-setup', { replace: true })
-        // }
-        // else{
-        //     login(false)
-        //     setOpen(false)
-        //     setLoading(false)
-        //     setBarOpen(true)
-        // }
+        if (response.data.message == 'Login'){
+          console.log(response.data)
+        login(true)
+        setOpen(false)
+        setLoading(false)
+        setBarOpen(true)
+        response.data.nbool ? navigate('/dashboard', { replace: true }) : navigate('/profile-setup', { replace: true })
+        }
+        else{
+            login(false)
+            setOpen(false)
+            setLoading(false)
+            setBarOpen(true)
+        }
      })
     .catch(error => {
       console.error(error)
