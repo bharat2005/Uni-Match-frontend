@@ -27,7 +27,7 @@ export default function Login() {
     setLoading(true)
     axios.get("api.uni-match.in/profile", {withCredentials:true})
     .then(response => {
-      console.log(response.data)
+      console.log("Weird Html",response.data)
         // if (response.data.message == 'Login'){
         //   console.log(response.data)
         // login(true)
