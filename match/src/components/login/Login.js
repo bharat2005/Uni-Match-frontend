@@ -27,13 +27,15 @@ export default function Login() {
     setLoading(true)
     axios.post("https://api.uni-match.in/login",lpuLogin, {withCredentials:true})
     .then(response => {
+      console.log("message from server",response.data)
         if (response.data.message == 'Login'){
-          console.log(response.data)
         login(true)
         setOpen(false)
         setLoading(false)
         setBarOpen(true)
-        response.data.nbool ? navigate('/dashboard', { replace: true }) : navigate('/profile-setup', { replace: true })
+        axios.post('https://api.uni-match.in/profile',{},{withCredentials:true}).then(res => console.log(res.data)).catch(er=>console.error(er))
+        //response.data.nbool ? navigate('/dashboard', { replace: true }) : navigate('/profile-setup', { replace: true })
+    
         }
         else{
             login(false)
