@@ -17,7 +17,7 @@ export default function ImagePickerCard({ formData, setFormData }) {
       setUploading(updatedUploading);
 
       axios
-        .post("http://localhost:5000/get_presigned_url", {
+        .post("https://api.uni-match.in/get_presigned_url", {
           file_name: fileName,
           content_type: contentType,
         })
