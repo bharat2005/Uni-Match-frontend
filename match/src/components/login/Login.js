@@ -29,7 +29,7 @@ export default function Login() {
     .then(response => {
       console.log("message from server",response.data)
         if (response.data.message == 'Login'){
-        const csrfToken = response.headers["x-csrf-token"]
+        const csrfToken = response.headers["X-CSRF-TOKEN"]
         localStorage.setItem("csrfToken", csrfToken)
         console.log("🔑 CSRF Token:", csrfToken);
         login(true)
