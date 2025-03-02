@@ -24,7 +24,7 @@ export default function StepForm() {
   });
 
   function handleDone() {
-    axios.post('https://api.uni-match.in/profile', formData, {withCredentials: true})
+    axios.post('https://api.uni-match.in/profile', formData, {withCredentials: true, headers: {"X-CSRF-TOKEN": getCsrfToken()}})
       .then(response => {
         console.log("Message from server: ", response.data);
       })
@@ -32,6 +32,13 @@ export default function StepForm() {
         console.error("Error: ", error);
       });
   }
+
+  function getCsrfToken() {
+    return document.cookie
+        .split("; ")
+        .find(row => row.startsWith("csrf_access_token="))
+        ?.split("=")[1];
+}
 
   function validateStep() {
     switch (step) {
