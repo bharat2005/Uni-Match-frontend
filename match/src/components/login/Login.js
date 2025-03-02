@@ -28,17 +28,15 @@ export default function Login() {
       console.log("message from server",response.data)
         if (response.data.message == 'Login'){
 
-
-        // const csrfToken = response.headers["x-csrf-token"]
-        // localStorage.setItem("csrfToken", csrfToken)
-
+        const csrfToken = response.headers["x-csrf-token"]
+        localStorage.setItem("csrfToken", csrfToken)
 
         login(true)
         setOpen(false)
         setLoading(false)
         setBarOpen(true)
 
-        //response.data.nbool ? navigate('/dashboard', { replace: true }) : navigate('/profile-setup', { replace: true })
+        response.data.nbool ? navigate('/dashboard', { replace: true }) : navigate('/profile-setup', { replace: true })
         }
         else{
             login(false)
@@ -56,14 +54,6 @@ export default function Login() {
     })
     
   }
-
-
-  const getCsrfTokenFromCookie = () => {
-    const matches = document.cookie.match(/csrf_access_token=([^;]+)/);
-    return matches ? decodeURIComponent(matches[1]) : null;
-  };
-
-  console.log(getCsrfTokenFromCookie())
 
 
   return (
