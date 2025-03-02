@@ -4,6 +4,10 @@ import axios from 'axios';
 
 const LogoutModal = ({ open, onClose }) => {
 
+  function handleClick(){
+    axios.get('https://api.uni-match.in/dashboard',)
+  }
+
   return (
     <Dialog open={open==1?true:false} onClose={onClose}>
       <DialogTitle>Confirm Logout</DialogTitle>
@@ -16,7 +20,7 @@ const LogoutModal = ({ open, onClose }) => {
         <Button onClick={onClose} sx={{color:'black'}}>
           Cancel
         </Button>
-        <Button sx={{backgroundColor: 'black !important'}} variant="contained">
+        <Button sx={{backgroundColor: 'black !important'}} onClick={handleClick} variant="contained">
           Logout
         </Button>
       </DialogActions>
