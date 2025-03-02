@@ -57,12 +57,13 @@ export default function Login() {
     
   }
 
-  console.log(getCsrfTokenFromCookie())
 
   const getCsrfTokenFromCookie = () => {
     const matches = document.cookie.match(/csrf_access_token=([^;]+)/);
     return matches ? decodeURIComponent(matches[1]) : null;
   };
+
+  console.log(getCsrfTokenFromCookie())
 
 
   return (
