@@ -4,7 +4,8 @@ import Chat from './Chat';
 import axios from 'axios';
 import CloseRoundedIcon from '@mui/icons-material/CloseRounded';
 
-export default function Chats({ user_id, profile , setMatchesNoti}) {
+
+export default function Chats({ profile , setMatchesNoti}) {
   const [value, setValue] = useState(0)
   const [open, setOpen] = useState(false)
   const [selectedMatch, setSelectedMatch] = useState(null);
@@ -13,7 +14,7 @@ export default function Chats({ user_id, profile , setMatchesNoti}) {
 
   useEffect(() => {
     axios
-      .post('http://127.0.0.1:5000/matches',{user_id}, { withCredentials: true })
+      .get('https://api.uni-match.in/matches', {withCredentials: true, headers: { "X-CSRF-TOKEN": localStorage.getItem("csrfToken") }})
       .then(response => {
         console.log(response.data.matches)
         setMatchList(response.data.matches); 
@@ -29,8 +30,8 @@ export default function Chats({ user_id, profile , setMatchesNoti}) {
   };
 
 
-  function handleNotiClick(sender_user_id){
-    axios.patch('http://127.0.0.1:5000/notidel',{sender_user_id, user_id})
+  function handleNotiClick(sender_reg_no){
+    axios.patch('https://api.uni-match.in/notidel',{sender_reg_no},{withCredentials: true, headers: { "X-CSRF-TOKEN": localStorage.getItem("csrfToken") }} )
     .then(response => {
       console.log(response.data)
       setMatchesNoti(response.data.MatchesNoti)
@@ -42,7 +43,7 @@ export default function Chats({ user_id, profile , setMatchesNoti}) {
 
   function handleDeleteMatch(e,data){
     e.stopPropagation();
-    axios.post('http://127.0.0.1:5000/matchdel',data)
+    axios.post('https://api.uni-match.in/matchdel',data, {withCredentials: true, headers: { "X-CSRF-TOKEN": localStorage.getItem("csrfToken") }} )
     .then(response => {
       setMatchList(response.data.matches)
       setMatchesNoti(response.data.MatchesNoti)
@@ -52,9 +53,9 @@ export default function Chats({ user_id, profile , setMatchesNoti}) {
     })
   }
 
-  function handleClick(sender_id){
-    handleNotiClick(sender_id)
-    axios.post('http://127.0.0.1:5000/seen',{ user_id , sender_id})
+  function handleClick(sender_reg_no){
+    handleNotiClick(sender_reg_no)
+    axios.post('https://api.uni-match.in/seen',{ sender_reg_no},{withCredentials: true, headers: { "X-CSRF-TOKEN": localStorage.getItem("csrfToken") }}  )
     .then(responce => {
       console.log(responce.data.message)
     })
@@ -69,7 +70,7 @@ export default function Chats({ user_id, profile , setMatchesNoti}) {
   }
   
   if (selectedMatch){
-    return <Chat match={selectedMatch} user_id={user_id} profile={profile} onBack={() => setSelectedMatch(null)} />
+    return <Chat match={selectedMatch} profile={profile} onBack={() => setSelectedMatch(null)} />
   }
 
 
@@ -147,9 +148,9 @@ export default function Chats({ user_id, profile , setMatchesNoti}) {
               filteredList.map((match, index) => {
 
                 return (
-                  <React.Fragment key={match.user_id}>
+                  <React.Fragment key={match.reg_no}>
                     <ListItem
-                      onClick={() => {setSelectedMatch(match); handleClick(match.user_id)}}
+                      onClick={() => {setSelectedMatch(match); handleClick(match.reg_no)}}
                       sx={{
                         bgcolor: "#d4edda",
                         borderRadius: "8px",
@@ -157,7 +158,7 @@ export default function Chats({ user_id, profile , setMatchesNoti}) {
                       }}
                     >
                       <ListItemAvatar>
-                        <Badge badgeContent={notifications.filter((item) => item.sender_user_id == match.user_id).length}  color="error">
+                        <Badge badgeContent={notifications.filter((item) => item.sender_reg_no == match.reg_no).length}  color="error">
                         <Avatar alt={match.name} src={match.images[0]} />
                         </Badge>
                       </ListItemAvatar>
@@ -179,7 +180,7 @@ export default function Chats({ user_id, profile , setMatchesNoti}) {
                       <Button onClick={(e)=>{e.stopPropagation();setOpen(false)}} sx={{color:'black'}}>
                       Cancel
                       </Button>
-                      <Button sx={{backgroundColor: 'darkgreen !important'}} onClick={(e) => handleDeleteMatch(e,{user_1_id:user_id, user_2_id:match.user_id})} variant="contained">
+                      <Button sx={{backgroundColor: 'darkgreen !important'}} onClick={(e) => handleDeleteMatch(e,{ user_2_reg_no:match.reg_no})} variant="contained">
                       Delete
                       </Button>
                       </DialogActions>

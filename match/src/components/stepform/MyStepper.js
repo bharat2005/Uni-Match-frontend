@@ -6,6 +6,7 @@ import DoneIcon from "@mui/icons-material/Done";
 import ErrorModal from './ErrorModal';
 import DoneModal from './DoneModal';
 
+
 export default function MyStepper({ step, setStep, validateStep, handleDone}) {
   const [errorOpen, setErrorOpen] = useState(false);
   const [doneOpen, setDoneOpen] = useState(false);

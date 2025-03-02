@@ -5,19 +5,19 @@ import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import SendIcon from '@mui/icons-material/Send';
 import { PaperAirplaneIcon } from '@heroicons/react/24/solid';
 
-const socket = io("http://127.0.0.1:5000");
+const socket = io("https://api.uni-match.in");
 
 const room = "ab35e84a215f0f711ed629c2abb9efa0"
 
-const ChatPage = ({ onBack, match, user_id }) => {
+const ChatPage = ({ onBack, match }) => {
   const [message, setMessage] = useState("");
   const [messages, setMessages] = useState([]);
   const messagesEndRef = useRef(null);
 
   useEffect(() => {
-    socket.emit("join_room", { room, user_id });
+    socket.emit("join_room", { room});
 
-    socket.emit("bharat",{room, sender_id: user_id, receiver_id: match.user_id});
+    socket.emit("bharat",{room, receiver_reg_no: match.reg_no});
 
     socket.on("bharat", (data) => {
       setMessages(data)
@@ -29,7 +29,7 @@ const ChatPage = ({ onBack, match, user_id }) => {
 
   function sendMessage(){
     if (message.trim() !== "") {
-      const messageData = { sender_id: user_id, receiver_id: match.user_id , message,  room: room, type:'message', is_seen:'unseen' };
+      const messageData = { receiver_reg_no: match.reg_no , message,  room: room, type:'message', is_seen:'unseen' };
       socket.emit("bharat", messageData);
       setMessage("");
     }
@@ -68,7 +68,7 @@ const ChatPage = ({ onBack, match, user_id }) => {
             key={index}
             sx={{
               display: "flex",
-              justifyContent: msg.sender_user_id === user_id ? "flex-end" : "flex-start",
+              justifyContent: msg.sender_reg_no === 12413923 ? "flex-end" : "flex-start",
               mb: 1,
               wordWrap: "break-word",
               whiteSpace: "normal",  
@@ -77,7 +77,7 @@ const ChatPage = ({ onBack, match, user_id }) => {
             <Box sx={{ display: "flex", alignItems: "flex-start" }}>
               <Box
                 sx={{
-                  backgroundColor: msg.sender_user_id === user_id ? "black" : "darkgrey",
+                  backgroundColor: msg.sender_reg_no === 12413923 ? "black" : "darkgrey",
                   color: "white",
                   padding: "10px 15px",
                   borderRadius: "15px",

@@ -12,7 +12,8 @@ import {
 import Modal from "@mui/material/Modal";
 import axios from "axios";
 
-export default function FilterModal({ open, setOpen, setProfiles, user_id }) {
+
+export default function FilterModal({ open, setOpen, setProfiles }) {
   const [ageRange, setAgeRange] = useState([18, 24]); 
   const [gender, setGender] = useState(""); 
   const [reason, setReason] = useState(""); 
@@ -31,12 +32,12 @@ export default function FilterModal({ open, setOpen, setProfiles, user_id }) {
     e.preventDefault(); 
 
     if (gender && reason) {
-      const filters = { ageRange, gender, reason, user_id };
+      const filters = { ageRange, gender, reason };
       console.log(filters);
 
     
       axios
-        .post("http://127.0.0.1:5000/filtered_dashboard", filters, {withCredentials: true})
+        .post("https://api.uni-match.in/filtered_dashboard", filters, {withCredentials: true, headers: { "X-CSRF-TOKEN": localStorage.getItem("csrfToken") }})
         .then((response) => {
           setProfiles(response.data); 
         })

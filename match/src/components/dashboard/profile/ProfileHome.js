@@ -4,14 +4,12 @@ import LogoutModal from './LogoutModal';
 import { PencilIcon, ShareIcon ,InformationCircleIcon , ArrowLeftStartOnRectangleIcon, CurrencyRupeeIcon, TrashIcon} from '@heroicons/react/24/solid';
 import { ArrowBackIos, ArrowForwardIos } from "@mui/icons-material";
 
-const ProfileSection = ({ lpuselfprofile, profile, handleOptionClick, user_id}) => {
+const ProfileSection = ({ lpuselfprofile, profile, handleOptionClick}) => {
     const [open, setOpen] = useState(false)
     const [openx, setOpenx] = useState(false)
     const [selected, setSelected] = useState({})
     const [currentImageIndex, setCurrentImageIndex] = useState(0);
 
-    console.log('deep 1 state', lpuselfprofile)
-    console.log('deep 2 state', profile)
 function handleLogoutClick(option){
     if (option === 'Logout'){
         setOpen(true)
@@ -124,7 +122,7 @@ if (!(lpuselfprofile && profile)){
      </Box>
   </Modal>
 
-      <LogoutModal open={open} onClose={() => setOpen(false)} user_id={user_id} />
+      <LogoutModal open={open} onClose={() => setOpen(false)} />
 
       <Card
         sx={{

@@ -7,7 +7,7 @@ import { ArrowBackIos, ArrowForwardIos } from "@mui/icons-material";
 
 
 
-export default function Likes({user_id, setLikesNoti}) {
+export default function Likes({setLikesNoti}) {
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const [likesList, setLikesList] = useState(null); 
   const [value, setValue] = useState(0);  
@@ -18,7 +18,7 @@ export default function Likes({user_id, setLikesNoti}) {
 
   useEffect(() => {
     axios
-      .post('http://127.0.0.1:5000/likes',{user_id},{ withCredentials: true } )
+      .get('https://api.uni-match.in/likes',{withCredentials: true, headers: { "X-CSRF-TOKEN": localStorage.getItem("csrfToken") }})
       .then(response => {
         console.log(response.data)
         setLikesList(response.data);
@@ -37,8 +37,8 @@ if (likesList){
   filteredList = value === 1 ? likesList.likedByYou : likesList.likesYou
 }
 
-function handleNotiClick(target_user_id){
-  axios.patch('http://127.0.0.1:5000/notidel',{user_id, target_user_id})
+function handleNotiClick(target_reg_no){
+  axios.patch('https://api.uni-match.in/notidel',{target_reg_no}, {withCredentials: true, headers: { "X-CSRF-TOKEN": localStorage.getItem("csrfToken") }})
   .then(response => {
     console.log(response.data)
     setLikesNoti(response.data.likesNoti)
@@ -49,10 +49,10 @@ function handleNotiClick(target_user_id){
 }
 
 
-function handleLikeClick(target_user_id){
+function handleLikeClick(target_reg_no){
   setLoad(true)
-  handleNotiClick(target_user_id)
-    axios.post('http://127.0.0.1:5000/match',{user_id, target_user_id,swipe_action:'right' })
+  handleNotiClick(target_reg_no)
+    axios.post('https://api.uni-match.in/match',{target_reg_no,swipe_action:'right' }, {withCredentials: true, headers: { "X-CSRF-TOKEN": localStorage.getItem("csrfToken") }})
     .then(responce => {
       console.log(responce.data.message)
       setLikesList(prev => {
@@ -67,10 +67,10 @@ function handleLikeClick(target_user_id){
     })
 }
 
-function handleCrossClick(target_user_id){
+function handleCrossClick(target_reg_no){
   setLoad(true)
-  handleNotiClick(target_user_id)
-  axios.post('http://127.0.0.1:5000/likeno',{user_id, target_user_id,swipe_action:'left' })
+  handleNotiClick(target_reg_no)
+  axios.post('https://api.uni-match.in/likeno',{ target_reg_no,swipe_action:'left' }, {withCredentials: true, headers: { "X-CSRF-TOKEN": localStorage.getItem("csrfToken") }})
   .then(responce => {
     console.log(responce.data.message)
     setLikesList(prev => {

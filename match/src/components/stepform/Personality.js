@@ -10,6 +10,8 @@ const personalities = [
   'introvert',
 ];
 
+
+
 export default function Personality({ setFormData }) {
   const [selected, setSelected] = useState(0);
 

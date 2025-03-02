@@ -6,16 +6,16 @@ import Card from "./Card";
 import axios from 'axios';
 
 
-export default function Match({ profiles, user_id }) {
+export default function Match({ profiles }) {
   const [swipeStates, setSwipeStates] = useState({})
 
-  const swiped = (direction, target_user_id) => {
+  const swiped = (direction, target_reg_no) => {
     setSwipeStates((prevStates) => ({
       ...prevStates,
-      [target_user_id]: direction
+      [target_reg_no]: direction
     }));
 
-    axios.post('http://127.0.0.1:5000/swipeadd',{target_user_id, user_id, swipe_action: direction},{ withCredentials: true } )
+    axios.post('https://api.uni-match.in/swipeadd',{target_reg_no, swipe_action: direction}, {withCredentials: true, headers: { "X-CSRF-TOKEN": localStorage.getItem("csrfToken") }} )
     .then(responce => {
       console.log(responce.data.message)
     })

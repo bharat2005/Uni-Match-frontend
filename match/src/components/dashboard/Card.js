@@ -3,6 +3,7 @@ import "../../App.css";
 import { Box, Typography, IconButton } from "@mui/material";
 import { ArrowBackIos, ArrowForwardIos } from "@mui/icons-material";
 
+
 export default function Card({ profile, lastDirection }) {
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const list = profile.images.filter(item => item!=null)

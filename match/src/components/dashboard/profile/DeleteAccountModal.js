@@ -2,10 +2,10 @@ import React from "react";
 import { Dialog, DialogTitle, DialogContent, DialogActions, Button, Typography } from "@mui/material";
 import axios from 'axios';
 
-const DeleteAccountModal = ({ open, onClose, user_id }) => {
+const DeleteAccountModal = ({ open, onClose }) => {
 
   function handleDeleteClick(){
-    axios.post('http://127.0.0.1:5000/delaccount',{user_id})
+    axios.get('https://api.uni-match.in/delaccount',{withCredentials: true, headers: { "X-CSRF-TOKEN": localStorage.getItem("csrfToken") }})
     .then(response => {
       console.log(response.data.message)
     })

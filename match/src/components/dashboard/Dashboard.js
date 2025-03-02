@@ -10,8 +10,6 @@ import { AdjustmentsVerticalIcon } from '@heroicons/react/24/solid';
 import FilterModal from './FilterModal';
 
 
-const user_id = 1;
-
 export default function Dashboard() {
   const [value, setValue] = useState(() => {
     return localStorage.getItem("value") ? parseInt(localStorage.getItem("value"), 10) : 0;
@@ -33,7 +31,7 @@ export default function Dashboard() {
 
   useEffect(() => {
     axios
-      .post("http://127.0.0.1:5000/dashboard", {user_id}, { withCredentials: true })
+      .get("https://api.uni-match.in/dashboard", {withCredentials: true, headers: { "X-CSRF-TOKEN": localStorage.getItem("csrfToken") }})
       .then((response) => {
         
         setProfiles(response.data.cards);
@@ -54,13 +52,13 @@ export default function Dashboard() {
   function renderCompo() {
     switch (value) {
       case 0:
-        return <Match profiles={profiles} user_id={user_id}/>;
+        return <Match profiles={profiles}/>;
       case 1:
-        return <Likes user_id={user_id} setLikesNoti={setLikesNoti}/>;
+        return <Likes setLikesNoti={setLikesNoti}/>;
       case 2:
-        return <Chats profile={profile} user_id={user_id} setMatchesNoti={setMatchesNoti}/>;
+        return <Chats profile={profile} setMatchesNoti={setMatchesNoti}/>;
       case 3:
-        return <Profile lpuselfprofile={lpuselfprofile} profile={profile} user_id={user_id} />;
+        return <Profile lpuselfprofile={lpuselfprofile} profile={profile} />;
     }
   }
 
@@ -102,7 +100,7 @@ export default function Dashboard() {
         />
       </Box>
 
-      <FilterModal open={open} setOpen={setOpen} setProfiles={setProfiles} user_id ={user_id}/>
+      <FilterModal open={open} setOpen={setOpen} setProfiles={setProfiles}/>
 
       <Box sx={{display:'flex', width:'100%',  justifyContent:'right'}}>
       {value === 0 && <Button size="small" onClick={()=>setOpen(true)} sx={{ display:'flex', width:'1%', justifyContent:'center',color:'black !important'}}><AdjustmentsVerticalIcon style={{width:'65%'}}/></Button>}

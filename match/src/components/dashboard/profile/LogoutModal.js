@@ -2,7 +2,7 @@ import React from "react";
 import { Dialog, DialogTitle, DialogContent, DialogActions, Button, Typography } from "@mui/material";
 import axios from 'axios';
 
-const LogoutModal = ({ open, onClose, user_id }) => {
+const LogoutModal = ({ open, onClose }) => {
 
   return (
     <Dialog open={open==1?true:false} onClose={onClose}>

@@ -5,13 +5,10 @@ import { useNavigate } from "react-router-dom";
 import axios from 'axios';
 import { useAuth } from "../../AuthProvider";
 
-
-const user_id = 1;
-
 export default function Login() {
   const navigate = useNavigate();
   const  {login, loginStatus} = useAuth();
-  const [lpuLogin, setLpuLogin] = useState({ regNo: '', password: '', user_id});
+  const [lpuLogin, setLpuLogin] = useState({ regNo: '', password: ''});
   const [open, setOpen] = useState(false);
   const [barOpen, setBarOpen] = useState(false)
   const [loading, setLoading] = useState(false)
@@ -25,23 +22,21 @@ export default function Login() {
   function handleLoginSubmit(e){
     e.preventDefault();
     setLoading(true)
-    axios.post("https://api.uni-match.in/login",lpuLogin, {withCredentials:true})
+    
+    axios.post("https://api.uni-match.in/login", lpuLogin, {withCredentials:true})
     .then(response => {
       console.log("message from server",response.data)
         if (response.data.message == 'Login'){
+
         const csrfToken = response.headers["x-csrf-token"]
-
         localStorage.setItem("csrfToken", csrfToken)
-
-        console.log("🔑 CSRF Token:", csrfToken);
-
 
         login(true)
         setOpen(false)
         setLoading(false)
         setBarOpen(true)
+
         response.data.nbool ? navigate('/dashboard', { replace: true }) : navigate('/profile-setup', { replace: true })
-    
         }
         else{
             login(false)

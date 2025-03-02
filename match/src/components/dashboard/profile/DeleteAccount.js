@@ -3,7 +3,7 @@ import { Card, CardContent, Typography, Box, Button, Modal } from "@mui/material
 import { ChevronLeftIcon,  TrashIcon} from "@heroicons/react/24/solid";
 import DeleteAccountModal from './DeleteAccountModal';
 
-function DeleteAccount({setBool, user_id}){
+function DeleteAccount({setBool}){
     const [open, setOpen] = useState(false)
 
 
@@ -16,7 +16,7 @@ function DeleteAccount({setBool, user_id}){
 
 <>
 
-<DeleteAccountModal open={open} onClose={()=>setOpen(false)} user_id={user_id}/>
+<DeleteAccountModal open={open} onClose={()=>setOpen(false)}/>
 
 
     <Card
