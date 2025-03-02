@@ -33,8 +33,7 @@ export default function Login() {
         setOpen(false)
         setLoading(false)
         setBarOpen(true)
-        axios.post('https://api.uni-match.in/profile',{},{withCredentials:true}).then(res => console.log(res.data)).catch(er=>console.error(er))
-        //response.data.nbool ? navigate('/dashboard', { replace: true }) : navigate('/profile-setup', { replace: true })
+        response.data.nbool ? navigate('/dashboard', { replace: true }) : navigate('/profile-setup', { replace: true })
     
         }
         else{

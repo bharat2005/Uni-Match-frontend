@@ -24,9 +24,9 @@ export default function StepForm() {
   });
 
   function handleDone() {
-    axios.post('http://127.0.0.1:5000/profile', formData, {withCredentials: true})
+    axios.post('https://api.uni-match.in/profile', formData, {withCredentials: true})
       .then(response => {
-        console.log("Message from server: ", response.data.message);
+        console.log("Message from server: ", response.data);
       })
       .catch(error => {
         console.error("Error: ", error);
