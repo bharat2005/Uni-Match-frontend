@@ -1,11 +1,24 @@
 import React from "react";
 import { Dialog, DialogTitle, DialogContent, DialogActions, Button, Typography } from "@mui/material";
+import { useNavigate } from "react-router-dom";
 import axios from 'axios';
+import { useAuth } from "../../../AuthProvider";
 
 const LogoutModal = ({ open, onClose }) => {
+  const  {logout} = useAuth()
+  const navigate = useNavigate();
 
   function handleClick(){
-    axios.get('https://api.uni-match.in/dashboard',)
+    axios.get('https://api.uni-match.in/logout',{withCredentials: true, headers: { "X-CSRF-TOKEN": localStorage.getItem("csrfToken") }})
+    .then(response => {
+      console.log(response.data)
+      localStorage.removeItem("csrfToken")
+      logout()
+      navigate('/', { replace: true })
+    })
+    .catch(error => {
+      console.error("Error: ", error)
+    })
   }
 
   return (
