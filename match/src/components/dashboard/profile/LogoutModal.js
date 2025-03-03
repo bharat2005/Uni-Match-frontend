@@ -9,10 +9,11 @@ const LogoutModal = ({ open, onClose }) => {
   const navigate = useNavigate();
 
   function handleClick(){
-    axios.get('https://api.uni-match.in/logout',{withCredentials: true, headers: { "X-CSRF-TOKEN": localStorage.getItem("csrfToken") }})
+    axios.get('https://api.uni-match.in/logout',{withCredentials: true, headers: { "X-CSRF-TOKEN": localStorage.getItem("csrfTokenAccess") }})
     .then(response => {
       console.log(response.data)
-      localStorage.removeItem("csrfToken")
+      localStorage.removeItem("csrfTokenAccess")
+      localStorage.removeItem("csrfTokenRefresh")
       logout()
       navigate('/', { replace: true })
     })
@@ -20,17 +21,18 @@ const LogoutModal = ({ open, onClose }) => {
       console.error("Error: ", error)
       if (error.response?.status === 401) {
 
-        axios.post("/refresh", {}, { withCredentials:true })
+        axios.post("/refresh", {}, { withCredentials:true, headers: { "X-CSRF-TOKEN": localStorage.getItem("csrfTokenRefresh") }} )
   
-          .then((refreshResponse) => {
+          .then((response) => {
   
-              const csrfToken = refreshResponse.headers["x-csrf-token"]
-              localStorage.setItem("csrfToken", csrfToken)
+            const csrfTokenAccess = response.headers["x-csrf-token-access"]
+            localStorage.setItem("csrfTokenAccess", csrfTokenAccess)
   
-              axios.get("https://api.uni-match.in/logout", { withCredentials:true,  headers: { "X-CSRF-TOKEN": localStorage.getItem("csrfToken") } })
+              axios.get("https://api.uni-match.in/logout", { withCredentials:true,  headers: { "X-CSRF-TOKEN": localStorage.getItem("csrfTokenAccess") } })
               .then((response) => {
                 console.log("Protected Data (After Refresh):", response.data)
-                localStorage.removeItem("csrfToken")
+                localStorage.removeItem("csrfTokenAccess")
+                localStorage.removeItem("csrfTokenRefresh")
                 logout()
                 navigate('/', { replace: true })
               })

@@ -70,7 +70,7 @@ function handleLikeClick(target_reg_no){
 function handleCrossClick(target_reg_no){
   setLoad(true)
   handleNotiClick(target_reg_no)
-  axios.post('https://api.uni-match.in/likeno',{ target_reg_no,swipe_action:'left' }, {withCredentials: true, headers: { "X-CSRF-TOKEN": localStorage.getItem("csrfToken") }})
+  axios.post('https://api.uni-match.in/likeno',{ target_reg_no,swipe_action:'left' }, {withCredentials: true, headers: { "X-CSRF-TOKEN": localStorage.getItem("csrfTokenAccess") }})
   .then(responce => {
     console.log(responce.data.message)
     setLikesList(prev => {
@@ -81,14 +81,13 @@ function handleCrossClick(target_reg_no){
     console.error("Error: ",error)
     if (error.response?.status === 401) {
 
-      axios.post("/refresh", {}, { withCredentials:true})
+      axios.post("/refresh", {}, { withCredentials:true, headers: { "X-CSRF-TOKEN": localStorage.getItem("csrfTokenRefresh") }} )
 
-        .then((refreshResponse) => {
+        .then((response) => {
+          const csrfTokenAccess = response.headers["x-csrf-token-access"]
+          localStorage.setItem("csrfTokenAccess", csrfTokenAccess)
 
-            const csrfToken = refreshResponse.headers["x-csrf-token"]
-            localStorage.setItem("csrfToken", csrfToken)
-
-            axios.post("https://api.uni-match.in/likeno", { target_reg_no,swipe_action:'left' }, { withCredentials:true,  headers: { "X-CSRF-TOKEN": localStorage.getItem("csrfToken") } })
+            axios.post("https://api.uni-match.in/likeno", { target_reg_no,swipe_action:'left' }, { withCredentials:true,  headers: { "X-CSRF-TOKEN": localStorage.getItem("csrfTokenAccess") } })
             .then((response) => {
               console.log("Protected Data (After Refresh):", response.data)
               setLikesList(prev => {

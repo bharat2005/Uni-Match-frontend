@@ -1,7 +1,7 @@
 import { useContext, useState, useEffect} from "react";
 import { Box, Button, Snackbar, Alert} from '@mui/material';
 import LoginModal from './LoginModal';
-import { useNavigate } from "react-router-dom";
+import { replace, useNavigate } from "react-router-dom";
 import axios from 'axios';
 import { useAuth } from "../../AuthProvider";
 
@@ -14,16 +14,18 @@ export default function Login() {
   const [loading, setLoading] = useState(false)
 
   useEffect(() => {
-    axios.post("/refresh", {}, { withCredentials: true }) 
+    axios.post("/refresh", {}, { withCredentials: true, headers: { "X-CSRF-TOKEN": localStorage.getItem("csrfTokenRefresh") }}) 
     .then((response) => {
         console.log("Session restored! Navigating to dashboard...");
-        const csrfToken = response.headers["x-csrf-token"]
-        localStorage.setItem("csrfToken", csrfToken)
-        navigate("/dashboard");
+
+        const csrfTokenAccess = response.headers["x-csrf-token-access"]
+        localStorage.setItem("csrfTokenAccess", csrfTokenAccess)
+
+        navigate("/dashboard", {replace:true});
       })
       .catch(() => {
         console.log("Session expired, redirecting to login...");
-        navigate("/"); 
+        navigate("/",{replace:true}); 
       });
   }, []);
 
@@ -43,8 +45,11 @@ export default function Login() {
       console.log("message from server",response.data)
         if (response.data.message == 'Login'){
 
-        const csrfToken = response.headers["x-csrf-token"]
-        localStorage.setItem("csrfToken", csrfToken)
+        const csrfTokenAccess = response.headers["x-csrf-token-access"]
+        localStorage.setItem("csrfTokenAccess", csrfTokenAccess)
+
+        const csrfTokenRefresh = response.headers["x-csrf-token-refresh"]
+        localStorage.setItem("csrfTokenRefresh", csrfTokenRefresh)
         
         login(true)
         setOpen(false)

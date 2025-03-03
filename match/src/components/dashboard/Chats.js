@@ -14,7 +14,7 @@ export default function Chats({ profile , setMatchesNoti}) {
 
   useEffect(() => {
     axios
-      .get('https://api.uni-match.in/matches', {withCredentials: true, headers: { "X-CSRF-TOKEN": localStorage.getItem("csrfToken") }})
+      .get('https://api.uni-match.in/matches', {withCredentials: true, headers: { "X-CSRF-TOKEN": localStorage.getItem("csrfTokenAccess") }})
       .then(response => {
         console.log(response.data)
         setMatchList(response.data.matches); 
@@ -25,14 +25,14 @@ export default function Chats({ profile , setMatchesNoti}) {
 
         if (error.response?.status === 401) {
 
-          axios.post("/refresh", {}, { withCredentials:true })
+          axios.post("/refresh", {}, { withCredentials:true, headers: { "X-CSRF-TOKEN": localStorage.getItem("csrfTokenRefresh") }} )
 
             .then((refreshResponse) => {
 
                     const csrfToken = refreshResponse.headers["x-csrf-token"]
                     localStorage.setItem("csrfToken", csrfToken)
 
-                axios.get("https://api.uni-match.in/matches", { withCredentials:true,  headers: { "X-CSRF-TOKEN": localStorage.getItem("csrfToken") } })
+                axios.get("https://api.uni-match.in/matches", { withCredentials:true,  headers: { "X-CSRF-TOKEN": localStorage.getItem("csrfTokenAccess") } })
                 .then((response) => {
                   console.log("Protected Data (After Refresh):", response.data)
                   setMatchList(response.data.matches); 
