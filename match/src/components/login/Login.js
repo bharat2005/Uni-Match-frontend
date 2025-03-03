@@ -1,4 +1,4 @@
-import { useContext, useState } from "react";
+import { useContext, useState, useEffect} from "react";
 import { Box, Button, Snackbar, Alert} from '@mui/material';
 import LoginModal from './LoginModal';
 import { useNavigate } from "react-router-dom";
@@ -12,6 +12,19 @@ export default function Login() {
   const [open, setOpen] = useState(false);
   const [barOpen, setBarOpen] = useState(false)
   const [loading, setLoading] = useState(false)
+
+  useEffect(() => {
+    axios.post("/refresh", {}, { withCredentials: true }) 
+    .then(() => {
+        console.log("Session restored! Navigating to dashboard...");
+        navigate("/dashboard");
+      })
+      .catch(() => {
+        console.log("Session expired, redirecting to login...");
+        navigate("/"); 
+      });
+  }, []);
+
 
 
   function handleLogin(e) {
