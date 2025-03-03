@@ -2,7 +2,6 @@ import React, { useEffect, useState, useRef } from "react";
 import { io } from "socket.io-client";
 import { Box, TextField, Button, Typography, Paper, Avatar, IconButton } from "@mui/material";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
-import SendIcon from '@mui/icons-material/Send';
 import { PaperAirplaneIcon } from '@heroicons/react/24/solid';
 
 const socket = io("https://api.uni-match.in");
@@ -117,7 +116,7 @@ const ChatPage = ({ onBack, match }) => {
         />
         <Button
           variant="contained"
-          onClick={sendMessage}
+          //onClick={sendMessage}
           sx={{
             padding: "10px",
             borderRadius: "50%",
