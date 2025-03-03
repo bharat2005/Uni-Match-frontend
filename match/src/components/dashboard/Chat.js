@@ -5,7 +5,7 @@ import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import SendIcon from '@mui/icons-material/Send';
 import { PaperAirplaneIcon } from '@heroicons/react/24/solid';
 
-const socket = io("https://api.uni-match.in");
+//const socket = io("https://api.uni-match.in");
 
 const room = "ab35e84a215f0f711ed629c2abb9efa0"
 
@@ -14,26 +14,26 @@ const ChatPage = ({ onBack, match }) => {
   const [messages, setMessages] = useState([]);
   const messagesEndRef = useRef(null);
 
-  useEffect(() => {
-    socket.emit("join_room", { room});
+  // useEffect(() => {
+  //   socket.emit("join_room", { room});
 
-    socket.emit("bharat",{room, receiver_reg_no: match.reg_no});
+  //   socket.emit("bharat",{room, receiver_reg_no: match.reg_no});
 
-    socket.on("bharat", (data) => {
-      setMessages(data)
-    });
-    return () => {
-      socket.off("bharat");
-    };
-  }, [room]);
+  //   socket.on("bharat", (data) => {
+  //     setMessages(data)
+  //   });
+  //   return () => {
+  //     socket.off("bharat");
+  //   };
+  // }, [room]);
 
-  function sendMessage(){
-    if (message.trim() !== "") {
-      const messageData = { receiver_reg_no: match.reg_no , message,  room: room, type:'message', is_seen:'unseen' };
-      socket.emit("bharat", messageData);
-      setMessage("");
-    }
-  };
+  // function sendMessage(){
+  //   if (message.trim() !== "") {
+  //     const messageData = { receiver_reg_no: match.reg_no , message,  room: room, type:'message', is_seen:'unseen' };
+  //     socket.emit("bharat", messageData);
+  //     setMessage("");
+  //   }
+  // };
 
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
