@@ -5,7 +5,7 @@ import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import SendIcon from '@mui/icons-material/Send';
 import { PaperAirplaneIcon } from '@heroicons/react/24/solid';
 
-//const socket = io("https://api.uni-match.in");
+const socket = io("https://api.uni-match.in");
 
 const room = "ab35e84a215f0f711ed629c2abb9efa0"
 
