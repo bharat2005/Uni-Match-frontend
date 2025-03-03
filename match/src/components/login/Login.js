@@ -30,12 +30,11 @@ export default function Login() {
 
         const csrfToken = response.headers["x-csrf-token"]
         localStorage.setItem("csrfToken", csrfToken)
-
+        
         login(true)
         setOpen(false)
         setLoading(false)
         setBarOpen(true)
-
         response.data.nbool ? navigate('/dashboard', { replace: true }) : navigate('/profile-setup', { replace: true })
         }
         else{

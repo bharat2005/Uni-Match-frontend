@@ -21,6 +21,23 @@ export default function Match({ profiles }) {
     })
     .catch(error => {
       console.error("Error:",error)
+      if (error.response?.status === 401) {
+
+        axios.post("/refresh", {}, { withCredentials:true, headers: { "X-CSRF-TOKEN": localStorage.getItem("csrfToken") } })
+  
+          .then((refreshResponse) => {
+  
+              const csrfToken = refreshResponse.headers["x-csrf-token"]
+              localStorage.setItem("csrfToken", csrfToken)
+  
+              axios.post("https://api.uni-match.in/swipeadd", {target_reg_no, swipe_action: direction}, { withCredentials:true,  headers: { "X-CSRF-TOKEN": localStorage.getItem("csrfToken") } })
+              .then((response) => {
+                console.log("Protected Data (After Refresh):", response.data)
+              })
+              .catch((retryError) => console.error("Failed after refresh:", retryError));
+          })
+          .catch(() => console.error("Session expired, please log in again."));
+      }
     })
   };
 

@@ -152,7 +152,7 @@ if (!(lpuselfprofile && profile)){
             </Typography>
             <br />
             <Typography variant="body1" color="text.secondary">
-              {lpuselfprofile.id}
+              {lpuselfprofile.reg_no}
             </Typography><br/>
           </Box>
 

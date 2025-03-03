@@ -16,12 +16,32 @@ export default function Chats({ profile , setMatchesNoti}) {
     axios
       .get('https://api.uni-match.in/matches', {withCredentials: true, headers: { "X-CSRF-TOKEN": localStorage.getItem("csrfToken") }})
       .then(response => {
-        console.log(response.data.matches)
+        console.log(response.data)
         setMatchList(response.data.matches); 
         setNotifications(response.data.notifications)
       })
       .catch(error => {
         console.error("Error: ", error);
+
+        if (error.response?.status === 401) {
+
+          axios.post("/refresh", {}, { withCredentials:true, headers: { "X-CSRF-TOKEN": localStorage.getItem("csrfToken") } })
+
+            .then((refreshResponse) => {
+
+                    const csrfToken = refreshResponse.headers["x-csrf-token"]
+                    localStorage.setItem("csrfToken", csrfToken)
+
+                axios.get("https://api.uni-match.in/matches", { withCredentials:true,  headers: { "X-CSRF-TOKEN": localStorage.getItem("csrfToken") } })
+                .then((response) => {
+                  console.log("Protected Data (After Refresh):", response.data)
+                  setMatchList(response.data.matches); 
+                  setNotifications(response.data.notifications)
+                })
+                .catch((retryError) => console.error("Failed after refresh:", retryError));
+            })
+            .catch(() => console.error("Session expired, please log in again."));
+        }
       });
   }, [selectedMatch]);
 

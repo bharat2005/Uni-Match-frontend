@@ -37,12 +37,35 @@ export default function Dashboard() {
         setProfiles(response.data.cards);
         setLpuSelfProfile(response.data.lpuselfprofile)
         setSelfProfile(response.data.selfprofile);
-
         setLikesNoti(response.data.likesNoti);
         setMatchesNoti(response.data.matchesNoti);
       })
       .catch((error) => {
         console.error("Error", error);
+
+        if (error.response?.status === 401) {
+
+          axios.post("/refresh", {}, { withCredentials:true, headers: { "X-CSRF-TOKEN": localStorage.getItem("csrfToken") } })
+
+            .then((refreshResponse) => {
+
+                const csrfToken = refreshResponse.headers["x-csrf-token"]
+                localStorage.setItem("csrfToken", csrfToken)
+
+                axios.get("https://api.uni-match.in/dashboard", { withCredentials:true,  headers: { "X-CSRF-TOKEN": localStorage.getItem("csrfToken") } })
+                .then((response) => {
+                  console.log("Protected Data (After Refresh):", response.data)
+                  setProfiles(response.data.cards);
+                  setLpuSelfProfile(response.data.lpuselfprofile)
+                  setSelfProfile(response.data.selfprofile);
+                  setLikesNoti(response.data.likesNoti);
+                  setMatchesNoti(response.data.matchesNoti);
+                })
+                .catch((retryError) => console.error("Failed after refresh:", retryError));
+            })
+            .catch(() => console.error("Session expired, please log in again."));
+        }
+
       });
   }, []);
 
