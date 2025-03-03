@@ -15,8 +15,10 @@ export default function Login() {
 
   useEffect(() => {
     axios.post("/refresh", {}, { withCredentials: true }) 
-    .then(() => {
+    .then((response) => {
         console.log("Session restored! Navigating to dashboard...");
+        const csrfToken = response.headers["x-csrf-token"]
+        localStorage.setItem("csrfToken", csrfToken)
         navigate("/dashboard");
       })
       .catch(() => {

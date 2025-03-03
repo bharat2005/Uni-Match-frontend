@@ -20,7 +20,7 @@ const DeleteAccountModal = ({ open, onClose }) => {
       console.error("Error: ", error)
       if (error.response?.status === 401) {
 
-        axios.post("/refresh", {}, { withCredentials:true, headers: { "X-CSRF-TOKEN": localStorage.getItem("csrfToken") } })
+        axios.post("/refresh", {}, { withCredentials:true} )
   
           .then((refreshResponse) => {
   
