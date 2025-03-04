@@ -55,7 +55,7 @@ export default function Login() {
         setOpen(false)
         setLoading(false)
         setBarOpen(true)
-        //response.data.nbool ? navigate('/dashboard', { replace: true }) : navigate('/profile-setup', { replace: true })
+        response.data.nbool ? navigate('/dashboard', { replace: true }) : navigate('/profile-setup', { replace: true })
         }
         else{
             login(false)
