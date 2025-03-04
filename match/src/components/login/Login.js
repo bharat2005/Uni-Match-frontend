@@ -13,7 +13,8 @@ export default function Login() {
   const [barOpen, setBarOpen] = useState(false)
   const [loading, setLoading] = useState(false)
 
-  useEffect(() => {
+  // useEffect(() => {
+    function handleClick(){
     axios.post("/refresh", {}, { withCredentials: true, headers: { "X-CSRF-TOKEN": localStorage.getItem("csrfTokenRefresh") }}) 
     .then((response) => {
         console.log("Session restored! Navigating to dashboard...");
@@ -26,8 +27,8 @@ export default function Login() {
       .catch(() => {
         console.log("Session expired, redirecting to login...");
         navigate("/",{replace:true}); 
-      });
-  }, []);
+      });}
+  // }, []);
 
 
 
@@ -55,7 +56,7 @@ export default function Login() {
         setOpen(false)
         setLoading(false)
         setBarOpen(true)
-        response.data.nbool ? navigate('/dashboard', { replace: true }) : navigate('/profile-setup', { replace: true })
+        //response.data.nbool ? navigate('/dashboard', { replace: true }) : navigate('/profile-setup', { replace: true })
         }
         else{
             login(false)
@@ -132,6 +133,7 @@ export default function Login() {
         }}
       >
       </Button>
+      <Button onClick={handleClick}>MiniButton</Button>
 
 
 <Snackbar
