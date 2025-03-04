@@ -25,7 +25,7 @@ export default function StepForm() {
   });
 
   function handleDone() {
-    axios.post('https://api.uni-match.in/profile', formData, {withCredentials: true, headers: { "X-CSRF-TOKEN": localStorage.getItem("csrfToken") }})
+    axios.post('https://api.uni-match.in/profile', formData, {withCredentials: true, headers: { "X-CSRF-TOKEN": localStorage.getItem("csrfTokenAccess") }})
       .then(response => {
         console.log("Message from server: ", response.data);
       })
