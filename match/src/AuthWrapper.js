@@ -14,7 +14,7 @@ export default function AuthWrapper({ setBool }){
     
             const csrfTokenAccess = response.headers["x-csrf-token-access"]
             localStorage.setItem("csrfTokenAccess", csrfTokenAccess)
-    
+            navigate('/app', { replace: true }) 
           })
           .catch(() => {
             console.log("Session expired, redirecting to login...");
