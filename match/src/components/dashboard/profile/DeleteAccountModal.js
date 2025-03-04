@@ -21,7 +21,7 @@ const DeleteAccountModal = ({ open, onClose }) => {
       console.error("Error: ", error)
       if (error.response?.status === 401) {
 
-        axios.post("/refresh", {}, { withCredentials:true, headers: { "X-CSRF-TOKEN": localStorage.getItem("csrfTokenRefresh") }} )
+        axios.post("https://api.uni-match.in/refresh", {}, { withCredentials:true, headers: { "X-CSRF-TOKEN": localStorage.getItem("csrfTokenRefresh") }} )
   
           .then((response) => {
   
