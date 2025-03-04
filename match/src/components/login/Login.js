@@ -13,9 +13,8 @@ export default function Login() {
   const [barOpen, setBarOpen] = useState(false)
   const [loading, setLoading] = useState(false)
 
-  // useEffect(() => {
-    function handleClick(){
-    axios.post("/refresh", {}, { withCredentials: true, headers: { "X-CSRF-TOKEN": localStorage.getItem("csrfTokenRefresh") }}) 
+  useEffect(() => {
+    axios.post("https://api.uni-match.in/refresh", {}, { withCredentials: true, headers: { "X-CSRF-TOKEN": localStorage.getItem("csrfTokenRefresh") }}) 
     .then((response) => {
         console.log("Session restored! Navigating to dashboard...");
 
@@ -27,8 +26,8 @@ export default function Login() {
       .catch(() => {
         console.log("Session expired, redirecting to login...");
         navigate("/",{replace:true}); 
-      });}
-  // }, []);
+      });
+   }, []);
 
 
 
