@@ -1,11 +1,12 @@
-import React, { useEffect } from "react";
+import { useEffect } from "react";
 import axios from "axios";
-import { useAuth } from "./AuthProvider";
+import { replace, useNavigate } from "react-router-dom";
+
 
 
 
 export default function AuthWrapper({ setBool }){
-
+    const navigate = useNavigate();
 
     useEffect(() => {
         axios.post("https://api.uni-match.in/refresh", {}, { withCredentials: true, headers: { "X-CSRF-TOKEN": localStorage.getItem("csrfTokenRefresh") }}) 
