@@ -33,7 +33,7 @@ export default function Dashboard() {
     axios
       .get("https://api.uni-match.in/dashboard", {withCredentials: true, headers: { "X-CSRF-TOKEN": localStorage.getItem("csrfTokenAccess") }})
       .then((response) => {
-        
+        console.log(response.data)
         setProfiles(response.data.cards);
         setLpuSelfProfile(response.data.lpuselfprofile)
         setSelfProfile(response.data.selfprofile);
