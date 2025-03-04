@@ -132,7 +132,6 @@ export default function Login() {
         }}
       >
       </Button>
-      <Button onClick={handleClick}>MiniButton</Button>
 
 
 <Snackbar
