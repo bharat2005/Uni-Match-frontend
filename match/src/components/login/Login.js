@@ -7,28 +7,11 @@ import { useAuth } from "../../AuthProvider";
 
 export default function Login() {
   const navigate = useNavigate();
-  const  {login, loginStatus} = useAuth();
+  const  {login, bool} = useAuth();
   const [lpuLogin, setLpuLogin] = useState({ regNo: '', password: ''});
   const [open, setOpen] = useState(false);
   const [barOpen, setBarOpen] = useState(false)
   const [loading, setLoading] = useState(false)
-
-  useEffect(() => {
-    axios.post("https://api.uni-match.in/refresh", {}, { withCredentials: true, headers: { "X-CSRF-TOKEN": localStorage.getItem("csrfTokenRefresh") }}) 
-    .then((response) => {
-        console.log("Session restored! Navigating to dashboard...");
-
-        const csrfTokenAccess = response.headers["x-csrf-token-access"]
-        localStorage.setItem("csrfTokenAccess", csrfTokenAccess)
-
-        navigate("/dashboard", {replace:true});
-      })
-      .catch(() => {
-        console.log("Session expired, redirecting to login...");
-        navigate("/",{replace:true}); 
-      });
-   }, []);
-
 
 
   function handleLogin(e) {
@@ -55,7 +38,7 @@ export default function Login() {
         setOpen(false)
         setLoading(false)
         setBarOpen(true)
-        response.data.nbool ? navigate('/dashboard', { replace: true }) : navigate('/profile-setup', { replace: true })
+        response.data.nbool ? navigate('/app', { replace: true }) : navigate('/profile-setup', { replace: true })
         }
         else{
             login(false)
@@ -139,8 +122,8 @@ export default function Login() {
         autoHideDuration={1000}
         anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
       >
-        <Alert  severity={loginStatus?'success':'error'} sx={{ width: "100%" }}>
-          {loginStatus?'Login successful! Redirecting...':'Incorrect username or password. Please try again'}
+        <Alert  severity={bool?'success':'error'} sx={{ width: "100%" }}>
+          {bool?'Login successful! Redirecting...':'Incorrect username or password. Please try again'}
         </Alert>
       </Snackbar>
     </Box>

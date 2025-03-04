@@ -4,41 +4,43 @@ import { Navigate, BrowserRouter as Router, Routes, Route } from "react-router-d
 const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
-  const [loginStatus, setLoginStatus] = useState(() => {
-    return localStorage.getItem("loginStatus") ? JSON.parse(localStorage.getItem("loginStatus")) : null;
+  const [bool, setBool] = useState(() => {
+    return localStorage.getItem("bool") ? true : false;
   });
 
   useEffect(() => {
-    if (loginStatus) {
-      localStorage.setItem("loginStatus", JSON.stringify(loginStatus));
+    if (bool) {
+      localStorage.setItem("bool", 'uni-match');
     } else {
-      localStorage.removeItem("loginStatus");
+      localStorage.removeItem('bool')
     }
-  }, [loginStatus]);
+  }, [bool]);
 
-  const login = (loginStatus) => {
-    setLoginStatus(loginStatus);
+  const login = (a) => {
+    setBool(a);
   };
 
   const logout = () => {
-    setLoginStatus(null);
+    setBool(false);
   };
 
-
   return (
-    <AuthContext.Provider value={{ loginStatus, login, logout }}>
+    <AuthContext.Provider value={{ bool, login, logout }}>
       {children}
     </AuthContext.Provider>
   );
 };
 
+
 export const useAuth = () => {
   return useContext(AuthContext);
 };
 
+
+
 export const ProtectedRoute = ({ children }) => {
-  const { loginStatus } = useAuth();
-  return loginStatus ? children : <Navigate to="/" />;
+  const { bool } = useAuth();
+  return bool ? children : <Navigate to="/" />;
 };
 
 

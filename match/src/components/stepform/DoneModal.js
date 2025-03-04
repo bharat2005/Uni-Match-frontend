@@ -43,7 +43,7 @@ export default function DoneModal({doneOpen}){
           </Typography>
           <Button
             variant="contained"
-            onClick={()=> navigate("/dashboard",{ replace: true } )}
+            onClick={()=> navigate("/app",{ replace: true } )}
             sx={{
               width: "100%",
               padding: "10px",
