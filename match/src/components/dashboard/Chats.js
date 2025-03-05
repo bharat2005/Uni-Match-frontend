@@ -15,9 +15,9 @@ export default function Chats({ profile , setMatchesNoti}) {
   useEffect(() => {
     axios
       .get('https://api.uni-match.in/matches', {withCredentials: true, headers: { "X-CSRF-TOKEN": localStorage.getItem("csrfTokenAccess") }})
-      .then(response => {
+      .then(response =>{
         console.log(response.data)
-        setMatchList(response.data.matches); 
+        setMatchList(response.data.matches) 
         setNotifications(response.data.notifications)
       })
       .catch(error => {
