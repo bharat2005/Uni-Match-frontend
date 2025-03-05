@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "../../App.css";
 import { Box } from "@mui/material";
 import TinderCard from "react-tinder-card";
@@ -6,8 +6,42 @@ import Card from "./Card";
 import axios from 'axios';
 
 
-export default function Match({ profiles }) {
+export default function Match({ profiles, setProfiles }) {
   const [swipeStates, setSwipeStates] = useState({})
+
+  useEffect(() => {
+    axios
+      .get("https://api.uni-match.in/matchcomp", {withCredentials: true, headers: { "X-CSRF-TOKEN": localStorage.getItem("csrfTokenAccess") }})
+      .then((response) => {
+        console.log(response.data)
+        setProfiles(response.data.cards)
+      })
+      .catch((error) => {
+        console.error("Error", error);
+
+        if (error.response?.status === 401) {
+
+          axios.post("https://api.uni-match.in/refresh", {}, { withCredentials:true, headers: { "X-CSRF-TOKEN": localStorage.getItem("csrfTokenRefresh") }} )
+
+            .then((response) => {
+
+              const csrfTokenAccess = response.headers["x-csrf-token-access"]
+              localStorage.setItem("csrfTokenAccess", csrfTokenAccess)
+
+                axios.get("https://api.uni-match.in/matchcomp", { withCredentials:true,  headers: { "X-CSRF-TOKEN": localStorage.getItem("csrfTokenAccess") } })
+                .then((response) => {
+                  console.log("Protected Data (After Refresh):", response.data)
+                  setProfiles(response.data.cards);
+                })
+                .catch((retryError) => console.error("Failed after refresh:", retryError));
+            })
+            .catch(() => console.error("Session expired, please log in again."));
+        }
+
+      });
+  }, []);
+
+
 
   const swiped = (direction, target_reg_no) => {
     setSwipeStates((prevStates) => ({

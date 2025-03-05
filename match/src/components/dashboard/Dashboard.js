@@ -34,9 +34,6 @@ export default function Dashboard() {
       .get("https://api.uni-match.in/dashboard", {withCredentials: true, headers: { "X-CSRF-TOKEN": localStorage.getItem("csrfTokenAccess") }})
       .then((response) => {
         console.log(response.data)
-        setProfiles(response.data.cards);
-        setLpuSelfProfile(response.data.lpuselfprofile)
-        setSelfProfile(response.data.selfprofile);
         setLikesNoti(response.data.likesNoti);
         setMatchesNoti(response.data.matchesNoti);
       })
@@ -55,9 +52,6 @@ export default function Dashboard() {
                 axios.get("https://api.uni-match.in/dashboard", { withCredentials:true,  headers: { "X-CSRF-TOKEN": localStorage.getItem("csrfTokenAccess") } })
                 .then((response) => {
                   console.log("Protected Data (After Refresh):", response.data)
-                  setProfiles(response.data.cards);
-                  setLpuSelfProfile(response.data.lpuselfprofile)
-                  setSelfProfile(response.data.selfprofile);
                   setLikesNoti(response.data.likesNoti);
                   setMatchesNoti(response.data.matchesNoti);
                 })
@@ -75,13 +69,13 @@ export default function Dashboard() {
   function renderCompo() {
     switch (value) {
       case 0:
-        return <Match profiles={profiles}/>;
+        return <Match profiles={profiles} setProfiles={setProfiles}/>;
       case 1:
         return <Likes setLikesNoti={setLikesNoti}/>;
       case 2:
         return <Chats profile={profile} setMatchesNoti={setMatchesNoti}/>;
       case 3:
-        return <Profile lpuselfprofile={lpuselfprofile} profile={profile} />;
+        return <Profile lpuselfprofile={lpuselfprofile} profile={profile} setLpuSelfProfile={setLpuSelfProfile} setSelfProfile={setSelfProfile} />;
     }
   }
 
