@@ -7,7 +7,7 @@ import Likes from "./Likes";
 import Chats from "./Chats";
 import axios from "axios";
 import { AdjustmentsVerticalIcon } from '@heroicons/react/24/solid';
-import FilterModal from './FilterModal';
+import FilterModal from './FilterModal'
 
 
 export default function Dashboard() {
