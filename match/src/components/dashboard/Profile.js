@@ -62,9 +62,9 @@ const ProfileSection = ({ profile , lpuselfprofile, setLpuSelfProfile, setSelfPr
   return (
     <>
     {bool === 0 && <ProfileHome handleOptionClick={handleOptionClick} profile={profile} lpuselfprofile={lpuselfprofile} />}
-    {bool === 1 && <EditProfile setBool={setBool} profile={profile}/>}
-    {bool === 2 && <AboutUs setBool={setBool} profile={profile}/>}
-    {bool === 3 && <SupportUs setBool={setBool} profile={profile}/>}
+    {bool === 1 && <EditProfile setBool={setBool}/>}
+    {bool === 2 && <AboutUs setBool={setBool}/>}
+    {bool === 3 && <SupportUs setBool={setBool}/>}
     {bool === 4 && <DeleteAccount setBool={setBool} profile={profile} />}
   </>
   );
