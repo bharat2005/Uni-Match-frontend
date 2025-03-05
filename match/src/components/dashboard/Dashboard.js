@@ -14,10 +14,7 @@ export default function Dashboard() {
   const [value, setValue] = useState(() => {
     return localStorage.getItem("value") ? parseInt(localStorage.getItem("value"), 10) : 0;
   });
-  const [profiles, setProfiles] = useState([]);
   const [open, setOpen] = useState(false)
-  const [profile, setSelfProfile] = useState({})
-  const [lpuselfprofile, setLpuSelfProfile] = useState({})
   const [likesNoti, setLikesNoti] = useState([])
   const [matchesNoti, setMatchesNoti] = useState([])
 
@@ -69,13 +66,13 @@ export default function Dashboard() {
   function renderCompo() {
     switch (value) {
       case 0:
-        return <Match profiles={profiles} setProfiles={setProfiles}/>;
+        return <Match/>;
       case 1:
         return <Likes setLikesNoti={setLikesNoti}/>;
       case 2:
-        return <Chats profile={profile} setMatchesNoti={setMatchesNoti}/>;
+        return <Chats setMatchesNoti={setMatchesNoti}/>;
       case 3:
-        return <Profile lpuselfprofile={lpuselfprofile} profile={profile} setLpuSelfProfile={setLpuSelfProfile} setSelfProfile={setSelfProfile} />;
+        return <Profile/>;
     }
   }
 

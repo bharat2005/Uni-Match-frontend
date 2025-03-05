@@ -7,8 +7,10 @@ import SupportUs from './profile/SupportUs';
 import DeleteAccount from "./profile/DeleteAccount";
 import axios from 'axios';
 
-const ProfileSection = ({ profile , lpuselfprofile, setLpuSelfProfile, setSelfProfile}) => {
+const ProfileSection = () => {
   const [bool, setBool] = useState(0);
+  const [profile, setSelfProfile] = useState({})
+  const [lpuselfprofile, setLpuSelfProfile] = useState({})
 
   useEffect(() => {
     axios

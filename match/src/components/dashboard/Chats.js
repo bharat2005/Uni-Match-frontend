@@ -5,7 +5,7 @@ import axios from 'axios';
 import CloseRoundedIcon from '@mui/icons-material/CloseRounded';
 
 
-export default function Chats({ profile , setMatchesNoti}) {
+export default function Chats({ setMatchesNoti}) {
   const [value, setValue] = useState(0)
   const [open, setOpen] = useState(false)
   const [selectedMatch, setSelectedMatch] = useState(null);

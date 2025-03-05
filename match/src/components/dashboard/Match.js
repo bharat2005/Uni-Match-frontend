@@ -6,15 +6,16 @@ import Card from "./Card";
 import axios from 'axios';
 
 
-export default function Match({ profiles, setProfiles }) {
+export default function Match() {
   const [swipeStates, setSwipeStates] = useState({})
+  const [cards, setCards] = useState([]);
 
   useEffect(() => {
     axios
       .get("https://api.uni-match.in/matchcomp", {withCredentials: true, headers: { "X-CSRF-TOKEN": localStorage.getItem("csrfTokenAccess") }})
       .then((response) => {
         console.log(response.data)
-        setProfiles(response.data.cards)
+        setCards(response.data.cards)
       })
       .catch((error) => {
         console.error("Error", error);
@@ -31,7 +32,7 @@ export default function Match({ profiles, setProfiles }) {
                 axios.get("https://api.uni-match.in/matchcomp", { withCredentials:true,  headers: { "X-CSRF-TOKEN": localStorage.getItem("csrfTokenAccess") } })
                 .then((response) => {
                   console.log("Protected Data (After Refresh):", response.data)
-                  setProfiles(response.data.cards);
+                  setCards(response.data.cards);
                 })
                 .catch((retryError) => console.error("Failed after refresh:", retryError));
             })
@@ -89,7 +90,7 @@ export default function Match({ profiles, setProfiles }) {
       }}
     >
       <div className="cardContainer">
-        {profiles.map((profile) => (
+        {cards.map((profile) => (
           <TinderCard
             className="swipe"
             key={profile.user_id}
