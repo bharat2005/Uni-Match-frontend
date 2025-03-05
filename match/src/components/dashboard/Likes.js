@@ -18,7 +18,7 @@ export default function Likes({setLikesNoti}) {
 
   useEffect(() => {
     axios
-      .get('https://api.uni-match.in/likes',{withCredentials: true, headers: { "X-CSRF-TOKEN": localStorage.getItem("csrfToken") }})
+      .get('https://api.uni-match.in/likes',{withCredentials: true, headers: { "X-CSRF-TOKEN": localStorage.getItem("csrfTokenAccess") }})
       .then(response => {
         console.log(response.data)
         setLikesList(response.data);
@@ -38,7 +38,7 @@ if (likesList){
 }
 
 function handleNotiClick(target_reg_no){
-  axios.patch('https://api.uni-match.in/notidel',{target_reg_no}, {withCredentials: true, headers: { "X-CSRF-TOKEN": localStorage.getItem("csrfToken") }})
+  axios.patch('https://api.uni-match.in/notidel',{target_reg_no}, {withCredentials: true, headers: { "X-CSRF-TOKEN": localStorage.getItem("csrfTokenAccess") }})
   .then(response => {
     console.log(response.data)
     setLikesNoti(response.data.likesNoti)
@@ -52,7 +52,7 @@ function handleNotiClick(target_reg_no){
 function handleLikeClick(target_reg_no){
   setLoad(true)
   handleNotiClick(target_reg_no)
-    axios.post('https://api.uni-match.in/match',{target_reg_no,swipe_action:'right' }, {withCredentials: true, headers: { "X-CSRF-TOKEN": localStorage.getItem("csrfToken") }})
+    axios.post('https://api.uni-match.in/match',{target_reg_no,swipe_action:'right' }, {withCredentials: true, headers: { "X-CSRF-TOKEN": localStorage.getItem("csrfTokenAccess") }})
     .then(responce => {
       console.log(responce.data.message)
       setLikesList(prev => {
