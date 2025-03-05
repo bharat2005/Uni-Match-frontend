@@ -280,7 +280,7 @@ function emoji(){
           {filteredList.length > 0 ? (
             filteredList.map((like) => (
               <ListItem
-                key={like.user_id}
+                key={like.reg_no}
                 sx={{
                   width:'100%',
                   bgcolor: value === 1? '#cce5ff':'#f8d7da',
@@ -294,10 +294,10 @@ function emoji(){
                 </ListItemAvatar>
                 <ListItemText primary={like.name} secondary={like.age + " years old"} />
                 {value === 0 && <>
-                <IconButton onClick={() => handleLikeClick(like.user_id)}>
+                <IconButton onClick={() => handleLikeClick(like.reg_no)}>
                   <FavoriteRoundedIcon sx={{color:'red'}}/>
                   </IconButton>
-                <IconButton onClick={() => handleCrossClick(like.user_id)}>
+                <IconButton onClick={() => handleCrossClick(like.reg_no)}>
                 <CloseRoundedIcon sx={{color:'black'}}/>
                   </IconButton></>}
               </ListItem>
