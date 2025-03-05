@@ -25,7 +25,7 @@ export default function Dashboard() {
     if (value) {
       localStorage.setItem("value", value);
     } else {
-      localStorage.removeItem("value");
+      localStorage.removeItem("value")
     }
   }, [value]);
 
