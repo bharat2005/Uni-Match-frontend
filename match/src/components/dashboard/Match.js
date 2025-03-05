@@ -92,11 +92,11 @@ export default function Match({ profiles, setProfiles }) {
         {profiles.map((profile) => (
           <TinderCard
             className="swipe"
-            key={profile.user_id}
-            onSwipe={(dir) => swiped(dir, profile.user_id)}
+            key={profile.reg_no}
+            onSwipe={(dir) => swiped(dir, profile.reg_no)}
             preventSwipe={['up', 'down']}  
           >
-            <Card profile={profile} lastDirection={swipeStates[profile.user_id]} />
+            <Card profile={profile} lastDirection={swipeStates[profile.reg_no]} />
           </TinderCard>
         ))}
       </div>
