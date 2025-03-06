@@ -294,10 +294,10 @@ function emoji(){
                 </ListItemAvatar>
                 <ListItemText primary={like.name} secondary={like.age + " years old"} />
                 {value === 0 && <>
-                <IconButton onClick={() => handleLikeClick(like.reg_no)}>
+                <IconButton onClick={() => handleLikeClick(`${like.reg_no}`)}>
                   <FavoriteRoundedIcon sx={{color:'red'}}/>
                   </IconButton>
-                <IconButton onClick={() => handleCrossClick(like.reg_no)}>
+                <IconButton onClick={() => handleCrossClick(String(like.reg_no))}>
                 <CloseRoundedIcon sx={{color:'black'}}/>
                   </IconButton></>}
               </ListItem>
