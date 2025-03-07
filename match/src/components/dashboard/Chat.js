@@ -15,7 +15,12 @@ export default function ChatPage({ profile, onBack, match }){
 
   useEffect(() => {
     
-    socket = io("https://api.uni-match.in", { withCredentials: true})
+    socket = io("https://api.uni-match.in", {
+      path: "/socket.io/", 
+      transports: ["websocket", "polling"],  
+      withCredentials: true  
+  })
+
     socket.emit("join_room", {target_reg_no: match.reg_no });
 
 
