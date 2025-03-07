@@ -4,8 +4,7 @@ import { Box, TextField, Button, Typography, Paper, Avatar, IconButton } from "@
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import { PaperAirplaneIcon } from '@heroicons/react/24/solid';
 
-const socket = io("https://api.uni-match.in", { withCredentials: true})
-
+let socket;
 
 export default function ChatPage({ profile, onBack, match }){
   const [message, setMessage] = useState("");
@@ -15,6 +14,8 @@ export default function ChatPage({ profile, onBack, match }){
 
 
   useEffect(() => {
+    
+    socket = io("https://api.uni-match.in", { withCredentials: true})
     socket.emit("join_room", {target_reg_no: match.reg_no });
 
 
