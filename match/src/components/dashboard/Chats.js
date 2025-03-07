@@ -75,7 +75,7 @@ export default function Chats({ profile , setMatchesNoti}) {
 
   function handleClick(sender_reg_no){
     handleNotiClick(sender_reg_no)
-    axios.post('https://api.uni-match.in/seen',{ sender_reg_no},{withCredentials: true, headers: { "X-CSRF-TOKEN": localStorage.getItem("csrfToken") }}  )
+    axios.post('https://api.uni-match.in/seen',{ sender_reg_no},{withCredentials: true, headers: { "X-CSRF-TOKEN": localStorage.getItem("csrfTokenAccess") }}  )
     .then(responce => {
       console.log(responce.data.message)
     })
