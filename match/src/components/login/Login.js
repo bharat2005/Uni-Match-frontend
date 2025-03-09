@@ -1,132 +1,242 @@
-import { useContext, useState, useEffect} from "react";
-import { Box, Button, Snackbar, Alert} from '@mui/material';
-import LoginModal from './LoginModal';
+"use client";
+import React, { useState, useEffect } from "react";
+import {
+  Box,
+  Button,
+  Checkbox,
+  IconButton,
+  InputAdornment,
+  TextField,
+  Typography,
+  Alert,
+  Snackbar,
+} from "@mui/material";
+import SmallLoading from './SmallLoading'
+import VisibilityOff from "@mui/icons-material/VisibilityOff";
+import Visibility from "@mui/icons-material/Visibility";
 import { replace, useNavigate } from "react-router-dom";
 import axios from 'axios';
 import { useAuth } from "../../AuthProvider";
 
-export default function Login() {
+const LoginPage = () => {
   const navigate = useNavigate();
   const  {login, bool} = useAuth();
-  const [lpuLogin, setLpuLogin] = useState({ regNo: '', password: ''});
-  const [open, setOpen] = useState(false);
-  const [barOpen, setBarOpen] = useState(false)
+  const [showPassword, setShowPassword] = useState(false);
+  const [isChecked, setIsChecked] = useState(false);
+  const [lpuLogin, setLpuLogin] = useState({regNo:'', password:''})
   const [loading, setLoading] = useState(false)
+  const [isReady, setIsReady] = useState(false)
+  const [barOpen, setBarOpen] = useState(false)
 
+  const handleClickShowPassword = () => setShowPassword((show) => !show);
+ 
+  useEffect(() => {
+    console.log("typing...")
+    if (lpuLogin["regNo"].length == 8 && lpuLogin["password"].length > 0 && isChecked == true) {
+      setIsReady(true);
+    } else {
+      setIsReady(false);
+    }
+  }, [lpuLogin["regNo"], lpuLogin['password'], isChecked]);
 
-  function handleLogin(e) {
-    setLpuLogin(prev => {
-      return { ...prev, [e.target.name]: e.target.value };
-    });
-  }
   function handleLoginSubmit(e){
-    e.preventDefault();
     setLoading(true)
-    
+    e.preventDefault();
     axios.post("https://api.uni-match.in/login", lpuLogin, {withCredentials:true})
     .then(response => {
-      console.log("message from server",response.data)
+      setLoading(false)
+      console.log(response.data)
         if (response.data.message == 'Login'){
-
+            login(true)
         const csrfTokenAccess = response.headers["x-csrf-token-access"]
         localStorage.setItem("csrfTokenAccess", csrfTokenAccess)
 
         const csrfTokenRefresh = response.headers["x-csrf-token-refresh"]
         localStorage.setItem("csrfTokenRefresh", csrfTokenRefresh)
         
-        login(true)
-        setOpen(false)
-        setLoading(false)
-        setBarOpen(true)
+
         response.data.nbool ? navigate('/app', { replace: true }) : navigate('/profile-setup', { replace: true })
         }
         else{
             login(false)
-            setOpen(false)
-            setLoading(false)
             setBarOpen(true)
         }
      })
     .catch(error => {
       console.error(error)
-      login(false)
-      setOpen(false)
       setLoading(false)
+      login(false)
       setBarOpen(true)
     })
     
   }
 
-
   return (
-<>
-    <LoginModal
-    loading={loading}
-    open={open}
-    lpuLogin={lpuLogin}
-    setOpen={setOpen}
-    handleLogin={handleLogin}
-    handleLoginSubmit={handleLoginSubmit}
-  />
-
-
     <Box
       sx={{
-        display: 'flex',
-        flexDirection: 'column',
-        alignItems: 'center',
-        justifyContent: 'center',
-        height: '100vh',
-        width:'100vw',
-        backgroundImage: 'url(/signs/webback.png)',
-        backgroundSize: 'cover',
-        backgroundPosition: 'center',
-        padding: 2,
-        border:'3px solid black',
-        boxSizing: 'border-box',
+        background: "linear-gradient(32.33deg, #FEEDFB 40.6%, #FEE5EC 58.42%, #F5E6FF 79.81%, #BFEAFF 100%)",
+        minHeight: "95vh", 
+        overflow: "hidden",
+        padding: "20px",
+        fontFamily: '"Inter", sans-serif',
+        position: "relative",
       }}
     >
-    
-      <img
-        src='/signs/Match.png'
-        alt="Logo"
-        draggable='false'
-        style={{
-          width: '100%', 
-          maxWidth: '300px', 
-          marginBottom: '300px', 
-        }}
+      <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap"
+        rel="stylesheet"
       />
 
-      
-      <Button
-        variant="contained"
-        onClick={()=>{setOpen(true); setBarOpen(false)}}
+      {loading && <SmallLoading/>}
+
+      <Box
         sx={{
-          backgroundImage: 'url(/signs/but.png)',
-          backgroundSize: 'cover',
-          backgroundPosition: 'center',
-          width: '80%', 
-          maxWidth: '450px', 
-          borderRadius: '8px',
-          height: '50px',
-          textAlign: 'center',
-          display: 'block',
+          display: "flex",
+          justifyContent: "space-between",
+          alignItems: "center",
+          marginTop:'10%',
+          padding: { xs: "20px 10px", md: "40px 20px" },
+          position: "relative",
         }}
       >
-      </Button>
+        <img src="/help.png" style={{width:'100%'}} />
+      </Box>
+      <Box
+        sx={{
+          backgroundColor: "rgba(255, 255, 255, 0.5)", 
+          backdropFilter: "blur(10px)",
+          borderRadius: "20px",
+          padding: { xs: "20px", md: "30px" },
+          marginTop: { xs: "25px", md: "50px" },
+          boxShadow: "0 4px 15px rgba(0, 0, 0, 0.05)",
+        }}
+      >
+        <Typography
+          sx={{
+            fontSize: { xs: "25px", md: "28px" },
+            color: "#ff69b4",
+            fontWeight:'bold',
+            textAlign: "center",
+            marginBottom: "30px",
+          }}
+        >
+          Login with LPU
+        </Typography>
 
+        <Box
+          sx={{
+            display: "flex",
+            flexDirection: "column",
+            gap: "15px",
+          }}
+        >
+          <TextField
+            fullWidth
+            placeholder="registeration number"
+            value={lpuLogin['regNo']}
+            onChange={(e) => setLpuLogin( prev => ({...prev, regNo:e.target.value}))}
+            sx={{
+              "& .MuiOutlinedInput-root": {
+                borderRadius: "10px",
+                backgroundColor:'white',
+                "& fieldset": {
+                  borderColor: "#e0e0e0",
+                },
+              },
+            }}
+          />
 
-<Snackbar
+          <TextField
+            fullWidth
+            type={showPassword ? "text" : "password"}
+            value={lpuLogin["password"]}
+            onChange={(e) => setLpuLogin( prev => ({...prev, password:e.target.value}))}
+            placeholder="password"
+            InputProps={{
+              endAdornment: (
+                <InputAdornment position="end">
+                  <IconButton onClick={handleClickShowPassword} edge="end">
+                    {showPassword ? <Visibility /> : <VisibilityOff />}
+                  </IconButton>
+                </InputAdornment>
+              ),
+            }}
+            sx={{
+              "& .MuiOutlinedInput-root": {
+                borderRadius: "10px",
+                backgroundColor:'white',
+                "& fieldset": {
+                  borderColor: "#e0e0e0",
+                },
+              },
+            }}
+          />
+
+          <a
+            style={{
+              color: "#ff69b4",
+              alignSelf: "flex-end",
+              textTransform: "none",
+              fontSize: "14px",
+            }}
+          >
+            forget password?
+          </a>
+
+          <Button
+            fullWidth
+            onClick={handleLoginSubmit}
+            disabled={!isReady}
+            sx={{
+              backgroundColor: isReady ? "#ff69b4" : "#fed8e6",
+              color: "white !important",
+              borderRadius: "10px",
+              marginTop:'10px',
+              padding: { xs: "12px", md: "15px" },
+              fontSize: "16px",
+              "&:hover": {
+                backgroundColor:isReady ? "#ff69b4" : "#fed8e6",
+              },
+            }}
+          >
+            LOGIN
+          </Button>
+
+          <Box
+            sx={{
+              display: "flex",
+              alignItems: "center",
+            }}
+          >
+            <Checkbox
+              checked={isChecked}
+              onChange={(e) => setIsChecked(e.target.checked)}
+              sx={{
+                color: "#ff69b4",
+                "&.Mui-checked": {
+                  color: "#ff69b4",
+                },
+              }}
+            />
+            <Typography sx={{ fontSize: "12px", color: "#666" }}>
+            I agree to{" "}<a style={{color: "#ff69b4"}}>Terms</a>{" "} 
+            & <a style={{color: "#ff69b4"}}>Privacy Policy.</a>
+            </Typography>
+          </Box>
+        </Box>
+      </Box>
+
+      <Snackbar
       open={barOpen}
         autoHideDuration={1000}
         anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
       >
         <Alert  severity={bool?'success':'error'} sx={{ width: "100%" }}>
-          {bool?'Login successful! Redirecting...':'Incorrect username or password. Please try again'}
+          {bool?'Login successful! Redirecting...':'Incorrect username or password!'}
         </Alert>
-      </Snackbar>
+       </Snackbar>
     </Box>
-    </>
   );
-}
+};
+
+export default LoginPage;

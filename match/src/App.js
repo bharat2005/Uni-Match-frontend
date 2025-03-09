@@ -6,6 +6,7 @@ import StepForm from "./components/stepform/StepForm";
 import Dashboard from './components/dashboard/Dashboard';
 import { ProtectedRoute, AuthProvider } from "./AuthProvider";
 import AuthWrapper from './AuthWrapper';
+import Loading from './Loading';
 
 
 
@@ -29,7 +30,7 @@ export default function App(){
       </Routes>
 
       ):(
-      <div>Loading.....</div>
+      <Loading/>
       )}
 
     </Router>
