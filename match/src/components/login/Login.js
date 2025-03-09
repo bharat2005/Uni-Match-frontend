@@ -75,7 +75,7 @@ const LoginPage = () => {
     <Box
       sx={{
         background: "linear-gradient(32.33deg, #FEEDFB 40.6%, #FEE5EC 58.42%, #F5E6FF 79.81%, #BFEAFF 100%)",
-        minHeight: "95vh", 
+        height: "95dvh", 
         overflow: "hidden",
         padding: "20px",
         fontFamily: '"Inter", sans-serif',
@@ -173,6 +173,7 @@ const LoginPage = () => {
           />
 
           <a
+          href="https://ums.lpu.in/lpuums/forgetpassword.aspx"
             style={{
               color: "#ff69b4",
               alignSelf: "flex-end",
