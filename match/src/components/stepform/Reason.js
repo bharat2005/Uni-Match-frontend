@@ -56,7 +56,7 @@ function GenderSelectionForm({formData, setFormData, setStep}) {
             gap: { xs: 1.25, sm: 2.5 },
             // justifyContent: "center",
             // alignItems: "center",
-            margin: "30px 0 50px 0",
+            margin: "30px 0 40px 0",
           }}
         >
          { [{symbol:"🎉",label:"Casual dating"},{symbol:'💘',label:"Long-term"},{symbol:'😍',label:"Short-term"},{symbol:'👋',label:"New friends"},{symbol:'🎓',label:"Study buddy"},{symbol:'🤔',label:"Still figuring"}].map(item => { 

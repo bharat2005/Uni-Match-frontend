@@ -101,7 +101,7 @@ function LocationSelector({setStep, formData, setFormData}) {
         <Box
           sx={{
             display: "grid",
-            margin: "30px 0 50px 0",
+            margin: "30px 0 40px 0",
             gridTemplateColumns: {
               xs: "repeat(1, 1fr)",
               sm: "repeat(1, 1fr)",

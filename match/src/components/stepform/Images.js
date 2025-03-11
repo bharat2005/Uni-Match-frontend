@@ -81,7 +81,7 @@ function GenderSelectionForm({setStep,formData, setFormData, images, setImages})
           sx={{
             display: "grid",
             gridTemplateColumns: "repeat(2, 1fr)",
-            margin: "30px 0 50px 0",
+            margin: "30px 0 40px 0",
             gap: { xs: 1.25, sm: 2.5 },
             
   

@@ -68,7 +68,7 @@ const InputDesign = () => {
         height:'40px',
         borderRadius:'50%',
         position: "absolute",
-        display: !(step == 1) ? "block" : "none",
+        display: !(step == 0) ? "block" : "none",
         top: "20px",
         left: "20px",
         minWidth: "auto",
