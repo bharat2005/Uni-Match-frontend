@@ -2,14 +2,15 @@
 import * as React from "react";
 import { Box, Button, Container, Typography } from "@mui/material";
 import CheckIcon from "@mui/icons-material/Check";
+import { fontWeight } from "@mui/system";
 
 const styles = {
   container: {
     display: "flex",
     justifyContent: "center",
     alignItems: "center",
-    minHeight: "100vh",
-    background: "linear-gradient(135deg, #fce7f3, #e0f2fe)",
+    minHeight: "95dvh",
+    background: "linear-gradient(135deg, #ffe6e6, #e6f0ff)",
     padding: "20px",
   },
   wrapper: {
@@ -24,8 +25,8 @@ const styles = {
     },
   },
   checkCircle: {
-    width: "64px",
-    height: "64px",
+    width: "75px",
+    height: "75px",
     backgroundColor: "#22c55e",
     borderRadius: "50%",
     display: "flex",
@@ -35,14 +36,15 @@ const styles = {
   },
   checkIcon: {
     color: "white",
-    fontSize: "32px",
+    fontSize: "50px",
+    fontWeight:500,
   },
   statusText: {
     fontFamily: '"Noto Sans SC", sans-serif',
-    fontSize: "18px",
+    fontSize: "22px",
     color: "#333",
-    marginBottom: "40px",
-    fontWeight: "normal",
+    marginBottom: "60px",
+    fontWeight: 500,
   },
   buttonContainer: {
     display: "flex",
@@ -55,45 +57,30 @@ const styles = {
     },
   },
   confirmButton: {
-    backgroundColor: "#ec4899",
+    backgroundColor: "#ff69b4",
     color: "white",
     fontFamily: '"Noto Sans SC", sans-serif',
-    padding: "14px",
-    borderRadius: "12px",
-    fontSize: "16px",
+    padding: "12px",
+    borderRadius: "30px",
+    fontSize: "18px",
     textTransform: "none",
     "&:hover": {
-      backgroundColor: "#d946ef",
+      backgroundColor: "#ff69b4",
     },
   },
-  profileButton: {
-    backgroundColor: "white",
-    color: "#666",
-    fontFamily: '"Noto Sans SC", sans-serif',
-    padding: "14px",
-    borderRadius: "12px",
-    fontSize: "16px",
-    textTransform: "none",
-    "&:hover": {
-      backgroundColor: "#f3f4f6",
-    },
-  },
+
 };
 
 function RegistrationComplete() {
   return (
-    <>
-      <link
-        href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;700&display=swap"
-        rel="stylesheet"
-      />
+    
       <Box sx={styles.container}>
         <Container sx={styles.wrapper}>
           <Box sx={styles.checkCircle}>
             <CheckIcon sx={styles.checkIcon} />
           </Box>
           <Typography component="h1" sx={styles.statusText}>
-            恭喜你完成注册
+          Profile setup complete!
           </Typography>
           <Box sx={styles.buttonContainer}>
             <Button
@@ -102,20 +89,13 @@ function RegistrationComplete() {
               disableElevation
               sx={styles.confirmButton}
             >
-              确定
+              Continue
             </Button>
-            <Button
-              variant="contained"
-              fullWidth
-              disableElevation
-              sx={styles.profileButton}
-            >
-              个人中心
-            </Button>
+
           </Box>
         </Container>
       </Box>
-    </>
+
   );
 }
 

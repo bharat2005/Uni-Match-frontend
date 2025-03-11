@@ -179,9 +179,10 @@ const LoginPage = () => {
               alignSelf: "flex-end",
               textTransform: "none",
               fontSize: "14px",
+              textDecoration:'none',
             }}
           >
-            forget password?
+            Forget password?
           </a>
 
           <Button

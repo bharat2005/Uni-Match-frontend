@@ -6,11 +6,10 @@ import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
 import AddPhotoAlternateIcon from "@mui/icons-material/AddPhotoAlternate";
 import DeleteIcon from "@mui/icons-material/Delete";
 
-function GenderSelectionForm() {
-  const [images, setImages] = useState(Array(6).fill(null));
+function GenderSelectionForm({setStep,formData, setFormData, images, setImages}) {
   const fileInputRefs = useRef([]);
 
-  // Initialize refs array
+  
   if (fileInputRefs.current.length !== 6) {
     fileInputRefs.current = Array(6)
       .fill()
@@ -20,6 +19,10 @@ function GenderSelectionForm() {
   const handleImageSelect = (index, event) => {
     const file = event.target.files[0];
     if (file && file.type.startsWith("image/")) {
+      const newtempImages = [...formData['images']];
+      newtempImages[index] = {filename:file.name, filetype:file.type};
+      setFormData( prev => ({...prev, images: newtempImages}))
+
       const reader = new FileReader();
       reader.onload = (e) => {
         const newImages = [...images];
@@ -35,76 +38,53 @@ function GenderSelectionForm() {
     const newImages = [...images];
     newImages[index] = null;
     setImages(newImages);
+    
+    const newtempImages = [...formData['images']];
+    newtempImages[index] = null;
+    setFormData(prev => ({...prev, images: newtempImages}))
     if (fileInputRefs.current[index]) {
       fileInputRefs.current[index].current.value = "";
     }
   };
 
   return (
-    <Box
-      sx={{
-        background: "linear-gradient(135deg, #ffe6e6, #e6f0ff)",
-        minHeight: "100vh",
-        padding: "20px",
-        fontFamily: '"Noto Sans SC", sans-serif',
-      }}
-    >
-      <Button
-        startIcon={<ChevronLeftIcon />}
-        sx={{
-          position: "absolute",
-          top: "20px",
-          left: "20px",
-          fontSize: "24px",
-          color: "#000",
-          minWidth: "auto",
-          padding: 0,
-        }}
-      />
 
-      <Container
+      <Box
         maxWidth="md"
         sx={{
-          marginTop: "60px",
-          padding: "20px",
-          "@media (max-width: 640px)": {
-            padding: "10px",
-          },
+          marginTop: "20%",
+           padding: "20px",
         }}
       >
         <Typography
           variant="h1"
           sx={{
-            fontSize: "24px",
+            fontSize: 24,
             fontWeight: 500,
             textAlign: "center",
-            marginBottom: "8px",
           }}
         >
-          上传你的照片
+          Add your photos
         </Typography>
 
         <Typography
           sx={{
-            fontSize: "14px",
+            fontSize: 14,
             color: "#666",
             textAlign: "center",
-            marginBottom: "40px",
           }}
         >
-          请选择6张你的照片
+          You can upload up to 6 photos
         </Typography>
 
         <Box
           sx={{
             display: "grid",
-            gridTemplateColumns: "repeat(3, 1fr)",
-            gap: "20px",
-            marginBottom: "60px",
-            "@media (max-width: 640px)": {
-              gap: "10px",
-              gridTemplateColumns: "repeat(2, 1fr)",
-            },
+            gridTemplateColumns: "repeat(2, 1fr)",
+            margin: "30px 0 50px 0",
+            gap: { xs: 1.25, sm: 2.5 },
+            
+  
           }}
         >
           {images.map((image, index) => (
@@ -112,14 +92,14 @@ function GenderSelectionForm() {
               key={index}
               onClick={() => fileInputRefs.current[index].current.click()}
               sx={{
-                width: "100%",
-                aspectRatio: "1",
-                borderRadius: "16px",
+                width: "75%",
+                aspectRatio: "0.8",
+                borderRadius: 2,
                 display: "flex",
                 flexDirection: "column",
                 alignItems: "center",
                 justifyContent: "center",
-                cursor: "pointer",
+                margin:"auto",
                 position: "relative",
                 border: "2px dashed #ff97b5",
                 backgroundColor: "#fff",
@@ -129,14 +109,23 @@ function GenderSelectionForm() {
                   transform: "scale(1.02)",
                   backgroundColor: "#fff5f8",
                 },
+                outline: "none",  
+                userSelect: "none",
+                WebkitTapHighlightColor: "transparent",
+                "&:focus": {
+                  outline: "none",
+                  boxShadow: "none",
+                },
               }}
+              tabIndex={-1}
             >
               <input
                 type="file"
                 accept="image/*"
                 ref={fileInputRefs.current[index]}
                 onChange={(e) => handleImageSelect(index, e)}
-                style={{ display: "none" }}
+                style={{ display: "none",
+                 }}
               />
 
               {image ? (
@@ -165,7 +154,7 @@ function GenderSelectionForm() {
                       },
                     }}
                   >
-                    <DeleteIcon sx={{ fontSize: 20, color: "#ff6b98" }} />
+                    <DeleteIcon sx={{ fontSize: 20, color: "#FF4D4D" }} />
                   </Button>
                 </>
               ) : (
@@ -180,65 +169,39 @@ function GenderSelectionForm() {
                   <AddPhotoAlternateIcon
                     sx={{
                       fontSize: 40,
-                      color: "#ff97b5",
+                      color: "#FFD6E7",
                     }}
                   />
-                  <Typography
-                    sx={{
-                      fontSize: "14px",
-                      color: "#666",
-                      textAlign: "center",
-                    }}
-                  >
-                    点击上传
-                  </Typography>
+ 
                 </Box>
               )}
             </Box>
           ))}
+
+
+          
         </Box>
+        <Box sx={{display:'flex', justifyContent:'center', paddingTop:'0px'}}>
+                  <Button
+                  disabled={!formData['images'].some(img => img !== null)}
+                  onClick={()=>setStep(4)} 
+                   sx={{
+              color: "white !important",
+              padding: "12px 0",
+              width: "80%",
+              maxWidth: "300px",
+              borderRadius: "25px",
+              fontSize: { xs: "14px", sm: "16px" },
+              textTransform: "none",
+              backgroundColor: formData['images'].some(img => img !== null)? "#ff69b4" : "#fed8e6",
+              "&:hover": {
+                backgroundColor: formData['images'].some(img => img !== null)? "#ff69b4" : "#fed8e6",
+              },
+            }}>Next Step</Button>
+            </Box>
 
-        <Box sx={{ marginTop: "auto" }}>
-          <Typography
-            sx={{
-              fontSize: "14px",
-              color: "#666",
-              marginBottom: "8px",
-            }}
-          >
-            基础资料(2/14)
-          </Typography>
-
-          <Box
-            sx={{
-              width: "100%",
-              height: "4px",
-              borderRadius: "2px",
-              backgroundColor: "#e0e0e0",
-              overflow: "hidden",
-            }}
-          >
-            <Box
-              sx={{
-                width: "14%",
-                height: "100%",
-                background: "linear-gradient(90deg, #ff97b5, #ff6b98)",
-              }}
-            />
-          </Box>
-
-          <Typography
-            sx={{
-              fontSize: "12px",
-              color: "#666",
-              marginTop: "12px",
-            }}
-          >
-            为打造100%真实的交友平台，请如实填写资料，不真实的资料审核时将会被拒绝。
-          </Typography>
-        </Box>
-      </Container>
-    </Box>
+      </Box>
+    
   );
 }
 

@@ -5,13 +5,28 @@ import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
 import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
 
-const InputDesign = () => {
-  const [selectedDate, setSelectedDate] = useState(null);
 
+
+const calculateAge = (year, month, day) => {
+  const today = new Date();
+  const birthDate = new Date(year, month - 1, day);
+  let age = today.getFullYear() - birthDate.getFullYear();
+  const m = today.getMonth() - birthDate.getMonth();
+  
+  if (m < 0 || (m === 0 && today.getDate() < birthDate.getDate())) {
+    age--;
+  }
+
+  return age;
+};
+
+
+const InputDesign = ({formData, setFormData, setStep}) => {
+  const [selectedDate, setSelectedDate] = useState(new Date());
   const styles = {
     appContainer: {
-      background: "linear-gradient(135deg, #ffe5ec 0%, #e5f0ff 100%)",
-      minHeight: "100vh",
+      background: "linear-gradient(135deg, #ffe6e6, #e6f0ff)",
+      minHeight: "95dvh",
       padding: "20px",
       fontFamily: '"Noto Sans SC", sans-serif',
       position: "relative",
@@ -31,22 +46,24 @@ const InputDesign = () => {
       display: "flex",
       flexDirection: "column",
       alignItems: "center",
+      marginTop:'25%',
       paddingTop: { xs: "80px", sm: "100px" },
-      gap: "16px",
+      gap: "6px",
     },
     title: {
-      fontSize: { xs: "20px", sm: "24px" },
+      fontSize: 24,
       fontWeight: 500,
-      color: "#000",
+      textAlign: "center"
     },
     subtitle: {
-      fontSize: { xs: "14px", sm: "16px" },
+      fontSize:14,
       color: "#666",
+      textAlign: "center"
     },
     inputContainer: {
       width: "80%",
       maxWidth: "300px",
-      margin: "20px 0",
+      margin: "30px 0 50px 0",
       "& .MuiOutlinedInput-root": {
         borderRadius: "25px",
         backgroundColor: "#fff",
@@ -61,16 +78,16 @@ const InputDesign = () => {
       },
     },
     nextButton: {
-      color: "#fff",
+      color: "white !important",
       padding: "12px 0",
       width: "80%",
       maxWidth: "300px",
       borderRadius: "25px",
       fontSize: { xs: "14px", sm: "16px" },
       textTransform: "none",
-      backgroundColor: "#ff69b4",
+      backgroundColor: formData['age'] ? "#ff69b4" : "#fed8e6",
       "&:hover": {
-        backgroundColor: "#ff50a7",
+        backgroundColor: formData['age'] ? "#ff69b4" : "#fed8e6",
       },
     },
     progressContainer: {
@@ -100,28 +117,48 @@ const InputDesign = () => {
     },
   };
 
+  function handleDateSelect(newDate) {
+    if (!newDate) return; 
+  
+    setSelectedDate(newDate); 
+  
+    const year = newDate.getFullYear();
+    const month = newDate.getMonth() + 1;
+    const day = newDate.getDate();
+    const calculatedAge = calculateAge(year, month, day);
+  
+    setFormData(prev => {
+      const updatedFormData = { ...prev, age: calculatedAge };
+      return updatedFormData;
+    });
+  }
+
   return (
-    <>
-      <link
-        href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;700&display=swap"
-        rel="stylesheet"
-      />
-      <Box sx={styles.appContainer}>
-        <Button sx={styles.backButton}>
-          <ChevronLeftIcon />
-        </Button>
+
 
         <Box sx={styles.contentContainer}>
-          <Typography sx={styles.title}>填写用户名</Typography>
-          <Typography sx={styles.subtitle}>希望大家怎么称呼你</Typography>
+          <Typography variant='h1' sx={styles.title}>When's your birthday?</Typography>
+          <Typography sx={styles.subtitle}>This helps us personalize your experience</Typography>
 
           <Box sx={styles.inputContainer}>
             <LocalizationProvider dateAdapter={AdapterDateFns}>
               <DatePicker
                 value={selectedDate}
-                onChange={(newValue) => setSelectedDate(newValue)}
+                onChange={handleDateSelect}
                 sx={{
-                  width: "100%",
+                  '& .MuiOutlinedInput-root': {
+                    '& fieldset': {
+                      borderColor: 'transparent', // Default border color
+                    },
+                    '&:hover fieldset': {
+                      borderColor: 'transparent', // Border color on hover
+                    },
+                    '&.Mui-focused fieldset': {
+                      borderColor: '#b3d1ff', // Soft blue when focused
+                      boxShadow: '0 0 5px rgba(179, 209, 255, 0.5)' // Removes the blue border when focused
+                    },
+                  
+    },
                 }}
                 slotProps={{
                   textField: {
@@ -135,22 +172,10 @@ const InputDesign = () => {
             </LocalizationProvider>
           </Box>
 
-          <Button sx={styles.nextButton}>下一步</Button>
+          <Button disabled={!formData['age']} onClick={()=> {setStep(3)}} sx={styles.nextButton}>Next Step</Button>
         </Box>
 
-        <Box sx={styles.progressContainer}>
-          <Typography sx={styles.progressText}>基础资料(14/14)</Typography>
-          <LinearProgress
-            variant="determinate"
-            value={100}
-            sx={styles.progressBar}
-          />
-          <Typography sx={styles.progressNote}>
-            为打造100%真实的交友平台，请如实填写资料，不真实的资料审核时将会被拒绝。
-          </Typography>
-        </Box>
-      </Box>
-    </>
+    
   );
 };
 

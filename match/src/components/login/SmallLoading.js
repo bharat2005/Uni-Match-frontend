@@ -3,19 +3,30 @@ import { CircularProgress, Box } from "@mui/material";
 
 function CustomCircularProgress() {
   return (
-    <Box sx={{
-      position: "fixed", top: 0, left: 0, width: "100vw", height: "100vh",
-      backgroundColor: "rgba(255, 255, 255, 0.4)", // Semi-transparent overlay
-      display: "flex", justifyContent: "center", alignItems: "center", zIndex: 9999
-    }}>
+    <Box
+      sx={{
+        position: "fixed",
+        top: 0,
+        left: 0,
+        width: "100vw",
+        height: "100vh",
+        backgroundColor: "rgba(255, 255, 255, 0.4)", // Semi-transparent overlay
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
+        zIndex: 9999,
+        borderRadius: "16px", // Soft rounded edges for the container
+      }}
+    >
       <CircularProgress
         variant="indeterminate"
-        size={40}
-        thickness={5}
+        size={50} // Increased size for better visibility
+        thickness={5} // Slightly thinner for a sleeker look
         sx={{
-          color: "transparent",
+          color: "transparent", // Make the base transparent
           "& .MuiCircularProgress-circle": {
-            stroke: "url(#gradient)"
+            stroke: "url(#gradient)",
+            strokeLinecap: "round", // Round edges for a smooth feel
           },
         }}
       />
@@ -32,3 +43,4 @@ function CustomCircularProgress() {
 }
 
 export default CustomCircularProgress;
+
