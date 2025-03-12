@@ -3,10 +3,9 @@ import "../../App.css";
 import { Box, Typography, IconButton } from "@mui/material";
 import { ArrowBackIos, ArrowForwardIos } from "@mui/icons-material";
 
-
-export default function Card({ profile, lastDirection }) {
+export default function Card({ profile }) {
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
-  const list = profile.images.filter(item => item!=null)
+  const list = profile.images.filter(item => item != null);
 
   const nextImage = () => {
     setCurrentImageIndex((prevIndex) =>
@@ -20,33 +19,34 @@ export default function Card({ profile, lastDirection }) {
     );
   };
 
-  function emoji(){
-  switch (profile.reason){
-    case "Casual Dating":
-      return "🎉"
-    case "Short-term fun":
-      return "😍"
-    case "Long-term relationship":
-      return "💘"
-    case "New friends":
-      return "👋"
-    case "Study buddy":
-      return "📚"
-    case "Still figuring it out":
-      return "🤔"
-  }}
-
+  function emoji() {
+    switch (profile.reason) {
+      case "Casual Dating":
+        return "🎉";
+      case "Short-term fun":
+        return "😍";
+      case "Long-term relationship":
+        return "💘";
+      case "New friends":
+        return "👋";
+      case "Study buddy":
+        return "📚";
+      case "Still figuring it out":
+        return "🤔";
+      default:
+        return "";
+    }
+  }
 
   return (
     <Box
       sx={{
         position: "relative",
         backgroundColor: "white",
-        border:'4px solid #fd7e14',
-        width: "350px",
-        height: "500px",
+        width: "380px",
+        height: "540px",
         boxShadow: "inset 0px -80px 40px 0px black",
-        borderRadius: "8px",
+        borderRadius: "34px",
         backgroundImage: `url(${list[currentImageIndex]})`,
         backgroundSize: "cover",
         backgroundPosition: "center",
@@ -55,65 +55,52 @@ export default function Card({ profile, lastDirection }) {
         alignItems: "center",
       }}
     >
-      
+      {/* Left Arrow Button */}
       <IconButton
-        sx={{ position: "absolute", left: "10px", color: "white" }}
+        sx={{
+          position: "absolute",
+          left: "10px",
+          color: "white",
+          padding: "16px", // Increases clickable area
+          "&:hover": {
+            backgroundColor: "rgba(255, 255, 255, 0.3)", // Optional hover effect
+          },
+        }}
         onPointerDown={prevImage}
+        disableRipple // Disable ripple effect
       >
-        <ArrowBackIos />
+        <ArrowBackIos style={{visibility:'hidden'}} />
       </IconButton>
 
-
+      {/* Right Arrow Button */}
       <IconButton
-        sx={{ position: "absolute", right: "10px", color: "white" }}
+        sx={{
+          position: "absolute",
+          right: "10px",
+          color: "white",
+          padding: "16px", // Increases clickable area
+          "&:hover": {
+            backgroundColor: "rgba(255, 255, 255, 0.3)", // Optional hover effect
+          },
+        }}
         onPointerDown={nextImage}
+        disableRipple // Disable ripple effect
       >
-        <ArrowForwardIos />
+        <ArrowForwardIos  style={{visibility:'hidden'}} />
       </IconButton>
-
-    
-      {lastDirection && (
-        <Box
-          sx={{
-            position: "absolute",
-            top: "20%",
-            opacity: 1,
-            transition: "opacity 0.5s ease-in-out",
-          }}
-        >
-          <img
-            draggable="false"
-            src={lastDirection === "left" ? "/signs/cross.png" : "/signs/accept.png"}
-            style={{ width: "300px",opacity:0.5 }}
-          />
-        </Box>
-      )}
-
 
       <Typography
         variant="h6"
         sx={{
           position: "absolute",
-          bottom: "35px",
-          left: "15px",
+          bottom: "46px",
+          left: "24px",
           fontWeight: "bold",
-          fontSize: "25px",
+          fontSize: "38px",
           color: "white",
         }}
       >
         {profile.name}, {profile.age}
-      </Typography>
-      <Typography
-        variant="body1"
-        sx={{
-          position: "absolute",
-          bottom: "15px",
-          left: "12px",
-          fontSize: "15px",
-          color: "white",
-        }}
-      >
-        {emoji()}{profile.reason}
       </Typography>
     </Box>
   );

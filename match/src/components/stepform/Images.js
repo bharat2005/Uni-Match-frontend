@@ -52,7 +52,7 @@ function GenderSelectionForm({setStep,formData, setFormData, images, setImages})
       <Box
         maxWidth="md"
         sx={{
-          marginTop: "20%",
+          marginTop: "10%",
            padding: "20px",
         }}
       >
