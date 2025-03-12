@@ -3,7 +3,7 @@ import "../../App.css";
 import { Box, Typography, IconButton } from "@mui/material";
 import { ArrowBackIos, ArrowForwardIos } from "@mui/icons-material";
 
-export default function Card({ profile }) {
+export default function Card({ profile, setImageClick }) {
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const list = profile.images.filter(item => item != null);
 
@@ -45,7 +45,7 @@ export default function Card({ profile }) {
         backgroundColor: "white",
         width: "380px",
         height: "540px",
-        boxShadow: "inset 0px -80px 40px 0px black",
+        boxShadow: "inset 0px -50px 30px 0px black",
         borderRadius: "34px",
         backgroundImage: `url(${list[currentImageIndex]})`,
         backgroundSize: "cover",
@@ -69,7 +69,7 @@ export default function Card({ profile }) {
         onPointerDown={prevImage}
         disableRipple // Disable ripple effect
       >
-        <ArrowBackIos style={{visibility:'hidden'}} />
+        <ArrowBackIos style={{ visibility: 'hidden' }} />
       </IconButton>
 
       {/* Right Arrow Button */}
@@ -86,7 +86,26 @@ export default function Card({ profile }) {
         onPointerDown={nextImage}
         disableRipple // Disable ripple effect
       >
-        <ArrowForwardIos  style={{visibility:'hidden'}} />
+        <ArrowForwardIos style={{ visibility: 'hidden' }} />
+      </IconButton>
+
+      {/* Up Arrow Button */}
+      <IconButton
+      onPointerDown={()=> {setImageClick(true)}}
+        sx={{
+          position: "absolute",
+          bottom: "10%",
+          right: "5%",
+          color: "white",
+          backgroundColor: "rgba(0, 0, 0, 0.5)", // Semi-transparent background
+          padding: "12px",
+          borderRadius: "50%", // Circular button
+          "&:hover": {
+            backgroundColor: "rgba(0, 0, 0, 0.7)", // Darker on hover
+          },
+        }}
+      >
+        <i className="ti ti-arrow-up" style={{ fontSize: "24px" }}></i> {/* Tabler Up Arrow Icon */}
       </IconButton>
 
       <Typography
