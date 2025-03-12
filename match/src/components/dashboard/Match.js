@@ -4,9 +4,7 @@ import { Box, Button, IconButton } from "@mui/material";
 import TinderCard from "react-tinder-card";
 import Card from "./Card";
 import Drawer from './Drawer';
-import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
-import { ArrowBackIos, ArrowForwardIos  } from "@mui/icons-material";
-import ArrowBackIcon from '@mui/icons-material/ArrowBack';
+import { ArrowBackIos, ArrowForwardIos,  ArrowBack   } from "@mui/icons-material";
 
 const db = [
   { reg_no: '12432322', reason: 'Casual Dating', age: 19, name: 'Amit', images: [null, null, '/2.jpg', '/1.jpg', null, null] },
@@ -137,7 +135,7 @@ export default function Match({ profiles, setProfiles }) {
             setImageClick(false);
           }}
         >
-          <ArrowBackIcon  fontSize="large" />
+          <ArrowBack   fontSize="large" />
         </IconButton>
       </Box>
     )}
