@@ -1,11 +1,31 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "../../App.css";
 import { Box, Typography, IconButton } from "@mui/material";
-import { ArrowBackIos, ArrowForwardIos } from "@mui/icons-material";
+import { createPortal } from 'react-dom';
 
-export default function Card({ profile, setImageClick }) {
+import { ArrowBackIos, ArrowForwardIos, ArrowBack } from "@mui/icons-material";
+import Drawer from './Drawer';
+
+export default function Card({ profile }) {
+  const [imageClick, setImageClick] = React.useState(null);
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const list = profile.images.filter(item => item != null);
+  const [imageLoaded, setImageLoaded] = useState(false);
+
+
+  useEffect(() => {
+    if (imageClick) {
+      setTimeout(() => setImageLoaded(true), 10); // Trigger pop-in effect
+    } else {
+      setImageLoaded(false); // Trigger pop-out effect
+    }
+  }, [imageClick]);
+
+
+
+
+
+
 
   const nextImage = () => {
     setCurrentImageIndex((prevIndex) =>
@@ -38,14 +58,93 @@ export default function Card({ profile, setImageClick }) {
     }
   }
 
-  return (
+  return (<>
+
+{imageClick &&
+  createPortal(
+    <Box
+      //onClick={() => setImageClick(true)}
+      sx={{
+        position: 'fixed',
+        top: 0,
+        left: '50%',
+        transform: imageLoaded
+          ? 'translate(-50%, 0) scale(1)'
+          : 'translate(-50%, 100%) scale(0.9)',
+        width: '100vw',
+        height: '60vh',
+        zIndex: 5, // Ensure it's above everything
+        backgroundImage: `url(${list[currentImageIndex]})`,
+        backgroundSize: 'cover',
+        backgroundPosition: 'center',
+        backgroundRepeat: 'no-repeat',
+        opacity: imageLoaded ? 1 : 0,
+        transition: 'opacity 0.1s ease, transform 0.3s ease',
+      }}
+    >
+      {/* ArrowBackIos Icon */}
+      <IconButton
+        sx={{
+          position: 'absolute',
+          top: '50%',
+          left: '20px',
+          transform: 'translateY(-50%)',
+          color: '#fff',
+        }}
+        onClick={(e) => {
+          e.stopPropagation();
+          prevImage();
+        }}
+      >
+        <ArrowBackIos fontSize="medium" />
+      </IconButton>
+
+      {/* ArrowForwardIos Icon */}
+      <IconButton
+        sx={{
+          position: 'absolute',
+          top: '50%',
+          right: '20px',
+          transform: 'translateY(-50%)',
+          color: '#fff',
+        }}
+        onClick={(e) => {
+          e.stopPropagation();
+          nextImage();
+        }}
+      >
+        <ArrowForwardIos fontSize="medium" />
+      </IconButton>
+
+      {/* ChevronLeft Icon */}
+      <IconButton
+        sx={{
+          position: 'absolute',
+          top: '20px',
+          left: '20px',
+          color: '#fff',
+        }}
+        onClick={(e) => {
+          e.stopPropagation();
+          setImageClick(false);
+        }}
+      ><i className="ti ti-arrow-left" style={{ fontSize: "24px" }}></i>
+      </IconButton>
+    </Box>,
+    document.body // Attach to body, bypassing parent context
+  )
+}
+
+
+
+
     <Box
       sx={{
-        position: "relative",
+        position: "static",
         backgroundColor: "white",
         width: "380px",
         height: "540px",
-        boxShadow: "inset 0px -50px 30px 0px black",
+        boxShadow: "inset 0px -50px 60px 0px black",
         borderRadius: "34px",
         backgroundImage: `url(${list[currentImageIndex]})`,
         backgroundSize: "cover",
@@ -55,6 +154,9 @@ export default function Card({ profile, setImageClick }) {
         alignItems: "center",
       }}
     >
+
+
+
       {/* Left Arrow Button */}
       <IconButton
         sx={{
@@ -112,8 +214,8 @@ export default function Card({ profile, setImageClick }) {
         variant="h6"
         sx={{
           position: "absolute",
-          bottom: "46px",
-          left: "24px",
+          bottom: "10%",
+          left: "5%",
           fontWeight: "bold",
           fontSize: "38px",
           color: "white",
@@ -121,6 +223,8 @@ export default function Card({ profile, setImageClick }) {
       >
         {profile.name}, {profile.age}
       </Typography>
+
+      <Drawer imageClick={imageClick} profile={profile}  key={profile.reg_no}/>
     </Box>
-  );
+</>  );
 }

@@ -5,7 +5,7 @@ import { ChevronLeft } from "@mui/icons-material";
 
 
 
-const interests = [
+export const interests = [
   { emoji: "🎬", label: "Movies" },
   { emoji: "🎶", label: "Music" },
   { emoji: "🏋️‍♂️", label: "Sports" },
