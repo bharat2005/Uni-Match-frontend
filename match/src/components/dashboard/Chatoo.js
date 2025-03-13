@@ -203,6 +203,7 @@ const ChatComponent = ({setChatt}) => {
           fullWidth
           sx={{
             background:'#F5F5F5',
+            wordWrap: "break-word",
             borderRadius: "20px",
             "& .MuiOutlinedInput-root": {
               borderRadius: "20px",

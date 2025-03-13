@@ -1,7 +1,7 @@
 "use client";
 import * as React from "react";
 import { Box, IconButton } from "@mui/material";
-import Chatsoo from './Chatsoo';
+import Chatsoo from './Profilee';
 import NavBar from './NavBar2';
 
 function AppLayout({ children }) {

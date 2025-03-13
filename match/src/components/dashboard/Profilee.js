@@ -30,7 +30,7 @@ const ProfileContainer = () => {
   const isTablet = useMediaQuery("(max-width:991px)");
 
   const containerStyles = {
-    backgroundColor: "#f8f9fa",
+    background: "linear-gradient(180deg, rgba(245, 245, 245, 0) 0%, #F5F5F5 26%)",
     fontFamily: '"Inter", sans-serif',
     padding: {
       xs: "0 12px",
@@ -80,9 +80,9 @@ const ProfileContainer = () => {
 
   const menuItemStyles = {
     padding: {
-      xs: "12px",
-      sm: "14px",
-      md: "16px",
+      xs: "14px",
+      sm: "16px",
+      md: "18px",
     },
     borderBottom: "1px solid #f0f0f0",
     "&:hover": {
@@ -108,46 +108,46 @@ const ProfileContainer = () => {
   };
 
   const menuItems = [
-    { icon: <Timeline />, text: "我的动态" },
-    { icon: <AccountCircle />, text: "我的账户" },
-    { icon: <Shield />, text: "账号状态" },
-    { icon: <Rocket />, text: "推广中心" },
-    { icon: <QuestionAnswer />, text: "帮助与客服" },
-    { icon: <Settings />, text: "设置" },
+    { icon:  <i className="ti ti-edit" style={{ fontSize: "24px", color:'black' }} />, text: "Edit Profile" },
+    { icon: <i className="ti ti-share" style={{ fontSize: "24px",color:'black' }} />, text: "Share" },
+    { icon: <i className="ti ti-info-circle" style={{ fontSize: "24px",color:'black' }} />, text: "About Developer" },
+    { icon:  <i className="ti ti-heart-handshake" style={{ fontSize: "24px", color:'black' }} />, text: "Support Us" },
+
   ];
 
   return (
     <Box sx={containerStyles}>
       <Box sx={profileHeaderStyles}>
         <Avatar
-          src="https://placehold.co/200x200/e0e0e0/e0e0e0"
+          src="/5.jpg"
           alt="Profile"
           sx={{
-            width: { xs: "60px", md: "80px" },
-            height: { xs: "60px", md: "80px" },
+            width: { xs: "80px", md: "80px" },
+            height: { xs: "80px", md: "80px" },
             marginBottom: "10px",
           }}
         />
         <Typography
           sx={{
-            fontSize: { xs: "14px", md: "16px" },
-            fontWeight: 500,
+            fontSize: { xs: "18px", md: "20x" },
+            fontWeight: 600,
             color: "#333",
             marginBottom: "5px",
           }}
         >
-          手持Y鹊香
+          Bharat
         </Typography>
         <Box
           sx={{
-            backgroundColor: "#6c5ce7",
-            padding: "4px 8px",
-            borderRadius: "12px",
+            backgroundColor:"#ffc107",
+            padding: "6px 10px",
+            borderRadius: "16px",
             display: "flex",
             alignItems: "center",
+            fontSize:'14px',
           }}
-        >
-          {/* <Crown sx={{ color: "#fff", fontSize: "14px" }} /> */}
+        ><i className="ti ti-id" style={{ fontSize: "20px", marginRight:'2px' }} />
+          12413923
         </Box>
       </Box>
 
@@ -162,7 +162,7 @@ const ProfileContainer = () => {
                 primary={item.text}
                 sx={{
                   "& .MuiTypography-root": {
-                    fontSize: { xs: "13px", md: "14px" },
+                    fontSize: { xs: "14px", md: "15px" },
                     color: "#333",
                   },
                 }}
@@ -177,7 +177,7 @@ const ProfileContainer = () => {
         <Box sx={actionButtonsStyles}>
           <Button
             variant="contained"
-            startIcon={<Logout />}
+            startIcon={<i className="ti ti-logout" style={{ fontSize: "24px" }} />}
             sx={{
               backgroundColor: "#ff4757",
               borderRadius: "12px",
@@ -190,11 +190,11 @@ const ProfileContainer = () => {
               },
             }}
           >
-            退出登录
+            Logout
           </Button>
           <Button
             variant="outlined"
-            startIcon={<PersonRemove />}
+            startIcon={<i className="ti ti-trash" style={{ fontSize: "24px" }} />}
             sx={{
               backgroundColor: "#f8f9fa",
               color: "#666",
@@ -210,7 +210,7 @@ const ProfileContainer = () => {
               },
             }}
           >
-            删除账号
+            Delete Profile
           </Button>
         </Box>
       </Box>
