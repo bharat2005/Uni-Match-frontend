@@ -8,7 +8,7 @@ const NavIconButton = styled(IconButton)(({ theme, active }) => ({
     flexDirection: "column",
     alignItems: "center",
     gap: "5px",
-    color: active ? "#FF6F91            " : "black",
+    color: active ? "#FE6BA2" : "black",
     "&:hover": {
       backgroundColor: "rgba(255, 77, 109, 0.04)",
     },
@@ -17,15 +17,12 @@ const NavIconButton = styled(IconButton)(({ theme, active }) => ({
     display: "flex",
     justifyContent: "center",
     alignItems: "center",
-    width: "60px",
-    height: "60px",
+    width: "46px",
+    height: "46px",
     borderRadius: "50%",
     background:
       "linear-gradient(145deg, #ff4f8b 0%, #ff92c6 30%, #d0b3ff 70%, #98d9ff 100%)",
     transition: "background-color 0.3s ease-in-out",
-    position: "absolute", // Allow overlapping the navbar
-    bottom: "0.1px", // Move it up slightly to overlap the navbar
-    zIndex: 2, 
   }));
   
   const GradientIcon = styled("i")(({ active }) => ({
@@ -41,7 +38,7 @@ const NavIconButton = styled(IconButton)(({ theme, active }) => ({
   
   const NavText = styled("div")(({ active }) => ({
     fontSize: "12px",
-    color: active ? "#FF6F91            " : "#666",
+    color: active ? "#FE6BA2" : "#666",
     "@media (max-width: 640px)": {
       fontSize: "10px",
     },
@@ -79,8 +76,8 @@ sx={{
   bottom: 0,
   left: 0,
   right: 0,
-  borderTopLeftRadius: "20px",
-  borderTopRightRadius: "20px",
+  // borderTopLeftRadius: "20px",
+  // borderTopRightRadius: "20px",
 }}
 >
 <NavIconButton
@@ -105,7 +102,7 @@ active={activeTab === "star"}
 onClick={() => setActiveTab("star")}
 >
 <GradientIconWrapper>
-<GradientIcon className="ti ti-clover-filled" style={{ fontSize: "38px", color: activeTab=="star"?"grey":'white'}} />
+<GradientIcon className="ti ti-clover-filled" style={{ fontSize: "34px", color: activeTab=="star"?"white":'white'}} />
 </GradientIconWrapper>
 </NavIconButton>
 

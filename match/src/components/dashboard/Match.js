@@ -62,7 +62,8 @@ export default function Match({ profiles, setProfiles }) {
           height: '100%',
           display: 'flex',
           alignItems: 'center',
-          flexDirection: 'column', 
+          flexDirection: 'column',
+          //background:'linear-gradient(180deg, rgba(245, 245, 245, 0) 0%, #F5F5F5 26%)', 
           position: 'relative',
         }}
       >

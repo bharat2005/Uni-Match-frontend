@@ -66,14 +66,12 @@ const ProfileGrid = () => {
   ];
 
   const containerStyle = {
-    background: "transparent",
+    background: "linear-gradient(180deg, rgba(245, 245, 245, 0) 0%, #F5F5F5 26%)",
     minHeight: "100vh",
-    padding: "20px",
-    "@media (max-width: 991px)": {
-      padding: "15px",
-    },
-    "@media (max-width: 640px)": {
-      padding: "10px",
+    padding: {
+      xs: "10px",
+      sm: "15px",
+      md: "20px",
     },
   };
 

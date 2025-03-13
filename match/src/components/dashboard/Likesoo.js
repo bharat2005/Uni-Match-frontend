@@ -77,11 +77,10 @@ const ProfileGrid = () => {
   };
 
   const scrollableGridStyle = {
-    maxHeight: "78vh", // Adjust height as needed
+    maxHeight: "78vh",
     overflowY: "auto",
-    //border: "1px solid #ddd", // Optional for visual clarity
     "&::-webkit-scrollbar": {
-      display: "none", // For Chrome, Safari, and Opera
+      display: "none", 
     },
   };
 
@@ -123,8 +122,16 @@ const ProfileGrid = () => {
   };
 
   return (
-    <Box sx={containerStyle}>
-      {/* Scrollable Grid */}
+    <Box sx={ {
+      background: "linear-gradient(180deg, rgba(245, 245, 245, 0) 0%, #F5F5F5 26%)",
+      minHeight: "100vh",
+      padding: {
+        xs: "10px",
+        sm: "15px",
+        md: "20px",
+      },
+    }}>
+     
       <Box sx={scrollableGridStyle}>
         <Grid container spacing={{ xs: 1, sm: 2 }} columns={{ xs: 2, sm: 2 }}>
           {profiles.map((profile, index) => (
