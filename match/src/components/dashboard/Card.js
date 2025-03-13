@@ -96,7 +96,7 @@ export default function Card({ profile }) {
           prevImage();
         }}
       >
-        <ArrowBackIos fontSize="medium" />
+        <i className="ti ti-chevron-left" style={{ fontSize: "24px" }}></i>
       </IconButton>
 
       {/* ArrowForwardIos Icon */}
@@ -113,7 +113,7 @@ export default function Card({ profile }) {
           nextImage();
         }}
       >
-        <ArrowForwardIos fontSize="medium" />
+         <i className="ti ti-chevron-right" style={{ fontSize: "24px" }}></i>
       </IconButton>
 
       {/* ChevronLeft Icon */}

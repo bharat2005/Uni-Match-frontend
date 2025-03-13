@@ -8,29 +8,26 @@ import SendIcon from "@mui/icons-material/Send";
 const ChatComponent = ({setChatt}) => {
   const [messageText, setMessageText] = useState("");
   const [messages, setMessages] = useState([
-    { id: 1, text: "Hello, 你最近好吗？", sender: "other" },
-    { id: 2, text: "有时间给我打电话。", sender: "other" },
-    { id: 3, text: "15366889427", sender: "other" },
-    { id: 4, text: "好的，我最近在赶一个项目", sender: "me" },
-    { id: 5, text: "爱你么么哒", sender: "me" },
-    { id: 6, text: "集美们，冲呀！", sender: "other" },
-    { id: 6, text: "集美们，冲呀！", sender: "other" },
-    { id: 6, text: "集美们，冲呀！", sender: "other" },
-    { id: 4, text: "好的，我最近在赶一个项目", sender: "me" },
-    { id: 5, text: "爱你么么哒", sender: "me" },
-    { id: 5, text: "爱你么么哒", sender: "me" },
-    { id: 2, text: "有时间给我打电话。", sender: "other" },
-    { id: 4, text: "好的，我最近在赶一个项目", sender: "me" },
-    { id: 1, text: "Hello, 你最近好吗？", sender: "other" },
-    { id: 4, text: "好的，我最近在赶一个项目", sender: "me" },
-    { id: 4, text: "好的，我最近在赶一个项目", sender: "me" },
-    { id: 5, text: "爱你么么哒", sender: "me" },
-    { id: 2, text: "有时间给我打电话。", sender: "other" },
-    { id: 3, text: "15366889427", sender: "other" },
-    { id: 4, text: "好的，我最近在赶一个项目", sender: "me" },
-    { id: 5, text: "爱你么么哒", sender: "me" },
-    { id: 6, text: "集美们，冲呀！", sender: "other" },
-    { id: 6, text: "集美们，冲呀！", sender: "other" },
+    { id: 1, text: "Hello？", sender: "other" },
+    { id: 2, text: "are you there", sender: "other" },
+    { id: 3, text: "hey!!!1", sender: "other" },
+    { id: 4, text: "bolo?", sender: "me" },
+    { id: 5, text: "mujhe kaam hai", sender: "me" },
+    { id: 6, text: "pleaseee", sender: "other" },
+    { id: 6, text: "i wanna talk with you right now!", sender: "other" },
+    { id: 6, text: "pleaswee...", sender: "other" },
+    { id: 4, text: "thinki hsu", sender: "me" },
+    { id: 5, text: "jaldi bolo", sender: "me" },
+    { id: 5, text: "ab bol bhi do!", sender: "me" },
+    { id: 2, text: "nahi abhi nahi!!!", sender: "other" },
+    {id: 3, text: "hey!!!1", sender: "other" },
+    { id: 4, text: "bolo?", sender: "me" },
+    { id: 5, text: "mujhe kaam hai", sender: "me" },
+    { id: 6, text: "pleaseee", sender: "other" },
+    { id: 6, text: "i wanna talk with you right now!", sender: "other" },
+    { id: 6, text: "pleaswee...", sender: "other" },
+    { id: 4, text: "thinki hsu", sender: "me" },
+    { id: 5, text: "jaldi bolo", sender: "me" },
   ]);
 
   const messagesEndRef = useRef(null);
@@ -69,8 +66,9 @@ const ChatComponent = ({setChatt}) => {
         sx={{
           display: "flex",
           alignItems: "center",
-          padding: "15px",
-          borderBottom: "1px solid #eee",
+          justifyContent:'flex-end',
+          padding: "14px",
+          //borderBottom: "1px solid #eee",
           flexShrink: 0, // Prevent shrinking on small screens
           position: "sticky",
           top: 0,
@@ -78,21 +76,23 @@ const ChatComponent = ({setChatt}) => {
           zIndex: 10,
         }}
       >
-        <IconButton 
-        sx={{ padding: "5px" }}
-        onPointerDown={()=> {setChatt(false)}}
-        >
-          <ChevronLeftIcon />
-        </IconButton>
+
         <Typography
           sx={{
             flex: 1,
             textAlign: "center",
-            fontSize: "16px",
-            fontWeight: 500,
+            fontSize: "18px",
+            fontWeight: 600,
+            marginTop:'14%'
           }}
         >
-          蓉蓉
+        <IconButton 
+         sx={{ padding: "5px", position:'absolute', left:8 }}
+         onPointerDown={()=> {setChatt(false)}}
+         >
+           <i className="ti ti-chevron-left" style={{ fontSize: "24px", color:'black' }}></i>
+         </IconButton>
+          Bharat
         </Typography>
       </Box>
 
@@ -104,6 +104,7 @@ const ChatComponent = ({setChatt}) => {
           overflowY: "auto", // Only this part should be scrollable
           display: "flex",
           flexDirection: "column",
+          backgroundColor:'#F5F5F5',
           gap: "10px",
           "&::-webkit-scrollbar": {
             display: "none",
@@ -125,24 +126,27 @@ const ChatComponent = ({setChatt}) => {
           >
             {msg.sender !== "me" && (
               <Avatar
-                src="https://placehold.co/40x40/f5f5f5/f5f5f5"
+                src="5.jpg"
                 alt="Avatar"
                 sx={{
-                  width: "40px",
-                  height: "40px",
+                  width: "48px",
+                  height: "48px",
                 }}
               />
             )}
             <Box
               sx={{
-                padding: "10px 15px",
-                borderRadius: "20px",
-                fontSize: "14px",
+                padding: "13px 20px", // Bigger padding
+                borderRadius: "14px",
+                fontSize: "18px", // Bigger font size
+                lineHeight: "1.4",
                 maxWidth: "70%",
+                minHeight:'100%',
                 wordWrap: "break-word",
                 backgroundColor:
-                  msg.sender === "me" ? "#ff69b4" : "#f5f5f5",
-                color: msg.sender === "me" ? "#fff" : "#111",
+                  msg.sender === "me" ? "#FE6BA2" : "#FFFFFF",
+                color: msg.sender === "me" ? "#FFFFFF" : "#111",
+                //boxShadow: "0 4px 8px rgba(0,0,0,0.1)", // Soft shadow
                 border: msg.sender !== "me" ? "1px solid #eee" : "none",
               }}
             >
@@ -150,11 +154,11 @@ const ChatComponent = ({setChatt}) => {
             </Box>
             {msg.sender === "me" && (
               <Avatar
-                src="https://placehold.co/40x40/f5f5f5/f5f5f5"
+                src="/4.avif"
                 alt="Avatar"
                 sx={{
-                  width: "40px",
-                  height: "40px",
+                  width: "48px",
+                  height: "48px",
                 }}
               />
             )}
@@ -168,7 +172,7 @@ const ChatComponent = ({setChatt}) => {
         sx={{
           display: "flex",
           alignItems: "center",
-          padding: "10px 15px",
+          padding: "6px 12px",
           borderTop: "1px solid #eee",
           gap: "10px",
           flexShrink: 0, // Prevent resizing on small screens
@@ -178,8 +182,8 @@ const ChatComponent = ({setChatt}) => {
           zIndex: 10,
         }}
       >
-        <IconButton sx={{ padding: "10px" }}>
-          <EmojiEmotionsIcon />
+        <IconButton sx={{ padding: "10px", color:'black', margin:0, padding:0 }}>
+        <i className="ti ti-mood-smile" style={{ fontSize: "36px" }} />
         </IconButton>
         {/* TextField for input */}
         <TextField
@@ -193,16 +197,29 @@ const ChatComponent = ({setChatt}) => {
           size="small"
           fullWidth
           sx={{
+            background:'#F5F5F5',
+            borderRadius: "20px",
             "& .MuiOutlinedInput-root": {
               borderRadius: "20px",
             },
             "& .MuiOutlinedInput-input": {
               padding: "10px",
             },
+            '& .MuiOutlinedInput-root': {
+              '& fieldset': {
+                borderColor: 'transparent', // Default border color
+              },
+              '&:hover fieldset': {
+                borderColor: 'transparent', // Border color on hover
+              },
+              '&.Mui-focused fieldset': {
+                borderColor: 'transparent', // Soft blue when focused
+              },}
+
           }}
         />
-        <IconButton onClick={sendMessage} sx={{ color: "#ff69b4" }}>
-          <SendIcon />
+        <IconButton onClick={sendMessage} sx={{ color: "#FE6BA2", margin:0, padding:0 }}>
+        <i className="ti ti-send-2" style={{ fontSize: "36px" }} />
         </IconButton>
       </Box>
     </Box>
