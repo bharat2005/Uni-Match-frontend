@@ -147,7 +147,7 @@ const ProfileGrid = () => {
     alt={profile.imageAlt}
     sx={{
       width: "100%",
-      height: "200px",
+      height: "220px",
       borderRadius: "26px",
       objectFit: "cover",
     }}
@@ -169,8 +169,8 @@ const ProfileGrid = () => {
       sx={{
         background: "linear-gradient(145deg, #FF8BA7 0%, #FF6584 50%, #FF4D6D 100%)", // Softer but striking gradient
         borderRadius: "50%",
-        width: "48px",
-        height: "48px",
+        width: "52px",
+        height: "52px",
         boxShadow: "0 8px 24px rgba(255, 101, 132, 0.3)",
         backdropFilter: "blur(12px)",
         display: "flex",
@@ -188,15 +188,15 @@ const ProfileGrid = () => {
       
       }}
     >
-      <i className="ti ti-heart-filled" style={{ fontSize: "24px", color: "white" }} />
+      <i className="ti ti-heart-filled" style={{ fontSize: "26px", color: "white" }} />
     </IconButton>
     <IconButton
       aria-label="dislike"
       sx={{
         background: "linear-gradient(145deg, #A0D8FF 0%, #76B7FF 40%, #4A90E2 100%)", // Softer and more balanced blue
         borderRadius: "50%",
-        width: "48px",
-        height: "48px",
+        width: "52px",
+        height: "52px",
         boxShadow: "0 8px 24px rgba(118, 183, 255, 0.3)",
         backdropFilter: "blur(12px)",
         display: "flex",
@@ -213,7 +213,7 @@ const ProfileGrid = () => {
         },
       }}
     >
-      <i className="ti ti-x" style={{ fontSize: "24px", color: "white" }} />
+      <i className="ti ti-x" style={{ fontSize: "26px", color: "white" }} />
     </IconButton>
   </Box>
 
