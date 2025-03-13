@@ -1,7 +1,7 @@
 "use client";
 import * as React from "react";
 import { Box, IconButton } from "@mui/material";
-import Match from './Match';
+import Likesoo from './Matchesoo';
 import NavBar from './NavBar2';
 
 function AppLayout({ children }) {
@@ -28,7 +28,7 @@ function AppLayout({ children }) {
             display: "flex",
             justifyContent: "space-between",
             alignItems: "center",
-            marginBottom:'5%',
+            marginBottom:'0%',
             padding: { xs: "15px", sm: "20px" },
             color: "#000",
           }}
@@ -54,7 +54,7 @@ function AppLayout({ children }) {
 
 
         <Box sx={{ flex: 1 }}>
-          <Match/>
+          <Likesoo/>
           </Box>
 
  

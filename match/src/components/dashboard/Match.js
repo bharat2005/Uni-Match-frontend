@@ -91,64 +91,61 @@ export default function Match({ profiles, setProfiles }) {
             zIndex: 1,
           }}
         >
-          <Button
-            variant="contained"
-            onClick={() => swipe("left")}
-            sx={{
-              background: "linear-gradient(145deg, #ff7aa7 0%, #ff6a9c 50%, #ff4d74 100%)",
-              borderRadius: "50%",
-              width: "100px",
-              height: "100px",
-              boxShadow: "none",
-              display: "flex",
-              justifyContent: "center",
-              alignItems: "center",
-              transition: "all 0.3s ease-in-out",
-              "&:hover": {
-                background: "linear-gradient(145deg, #ff6a9c 0%, #ff4d74 70%)",
-                boxShadow: "0 4px 20px rgba(255, 0, 0, 0.3)",
-              },
-              "&:focus": {
-                boxShadow: "0 4px 20px rgba(255, 0, 0, 0.3)",
-              },
-              "&:active": {
-                transform: "scale(0.9)",
-                boxShadow: "0 2px 10px rgba(255, 0, 0, 0.4)",
-              },
-            }}
-          >
-            <i className="ti ti-x" style={{ fontSize: "60px", color: "white" }} />
-          </Button>
+<Button 
+  variant="contained"
+  onClick={() => swipe("left")}
+  sx={{
+    background: "linear-gradient(145deg, #FF8BA7 0%, #FF6584 50%, #FF4D6D 100%)", // Softer but striking gradient
+    borderRadius: "50%",
+    width: "100px",
+    height: "100px",
+    boxShadow: "0 8px 24px rgba(255, 101, 132, 0.3)",
+    backdropFilter: "blur(12px)",
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+    transition: "all 0.3s ease",
 
-          {/* Right Swipe Button */}
-          <Button
-            variant="contained"
-            onClick={() => swipe("right")}
-            sx={{
-              background: "linear-gradient(145deg, #94c9ff 0%, #6fafff 40%, #4a90e2 100%)",
-              borderRadius: "50%",
-              width: "100px",
-              height: "100px",
-              boxShadow: "none",
-              display: "flex",
-              justifyContent: "center",
-              alignItems: "center",
-              transition: "all 0.3s ease-in-out",
-              "&:hover": {
-                background: "linear-gradient(145deg, #6fafff 0%, #4a90e2 70%)",
-                boxShadow: "0 4px 20px rgba(0, 255, 255, 0.3)",
-              },
-              "&:focus": {
-                boxShadow: "0 4px 20px rgba(0, 255, 255, 0.3)",
-              },
-              "&:active": {
-                transform: "scale(0.9)",
-                boxShadow: "0 2px 10px rgba(0, 255, 255, 0.4)",
-              },
-            }}
-          >
-            <i className="ti ti-heart-filled" style={{ fontSize: "60px", color: "white" }} />
-          </Button>
+    "&:focus": {
+      boxShadow: "0 8px 24px rgba(255, 101, 132, 0.3)",
+    },
+    "&:active": {
+      transform: "scale(0.95)",
+      boxShadow: "0 4px 12px rgba(255, 101, 132, 0.5)",
+    },
+  }}
+>
+  <i className="ti ti-x" style={{ fontSize: "60px", color: "white" }} />
+</Button>
+
+<Button
+  variant="contained"
+  onClick={() => swipe("right")}
+  sx={{
+    background: "linear-gradient(145deg, #A0D8FF 0%, #76B7FF 40%, #4A90E2 100%)", // Softer and more balanced blue
+    borderRadius: "50%",
+    width: "100px",
+    height: "100px",
+    boxShadow: "0 8px 24px rgba(118, 183, 255, 0.3)",
+    backdropFilter: "blur(12px)",
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+    transition: "all 0.3s ease",
+
+    "&:focus": {
+      boxShadow: "0 8px 24px rgba(118, 183, 255, 0.3)",
+    },
+    "&:active": {
+      transform: "scale(0.95)",
+      boxShadow: "0 4px 12px rgba(118, 183, 255, 0.5)",
+    },
+  }}
+>
+  <i className="ti ti-heart-filled" style={{ fontSize: "60px", color: "white" }} />
+</Button>
+
+
         </Box>
       </Box>
 
