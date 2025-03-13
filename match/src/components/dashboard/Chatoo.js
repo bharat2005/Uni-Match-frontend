@@ -31,6 +31,8 @@ const ChatComponent = ({setChatt}) => {
   ]);
 
   const messagesEndRef = useRef(null);
+  const messageInputRef = useRef(null);
+
 
   // Auto-scroll to latest message
   useEffect(() => {
@@ -38,12 +40,14 @@ const ChatComponent = ({setChatt}) => {
   }, [messages]);
 
   const sendMessage = () => {
+
     if (messageText.trim()) {
       setMessages((prev) => [
         ...prev,
         { id: Date.now(), text: messageText, sender: "me" },
       ]);
       setMessageText("");
+      setTimeout(() => messageInputRef.current?.focus(), 0)
     }
   };
 
@@ -188,6 +192,7 @@ const ChatComponent = ({setChatt}) => {
         {/* TextField for input */}
         <TextField
           value={messageText}
+          inputRef={messageInputRef} 
           onChange={(e) => setMessageText(e.target.value)}
           onKeyDown={(e) => {
             if (e.key === "Enter") sendMessage();
