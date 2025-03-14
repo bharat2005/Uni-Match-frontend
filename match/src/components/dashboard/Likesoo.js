@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect , useState} from "react";
 import {
   Box,
   Typography,
@@ -6,9 +6,14 @@ import {
   CardContent,
   CardMedia,
   Grid,
+  IconButton
 } from "@mui/material";
+import ProfileModal from './ProfileModal';
+
+const profile =   { reg_no: '12413928', reason: 'Long-term relationship', age: 23, name: 'Bharat',personality:'extrovert', images: [null, '/10.avif', '/4.avif', '/5.jpg', null], bio:'Im the solo developer of this whole Uni-Match platform...😎', interests:["Gardening", "Paragliding","Puzzles", "Astronomy", "Juggling",   "Art"  ] };
 
 const ProfileGrid = () => {
+  const [open, setOpen] = useState(false)
   useEffect(() => {
     // Disable scrolling for the whole page
     document.body.style.overflow = "hidden";
@@ -125,7 +130,9 @@ const ProfileGrid = () => {
     lineHeight: 1.4,
   };
 
-  return (
+  return (<>
+
+  <ProfileModal open={open} onClose={()=> setOpen(false)} profile={profile}/>
     <Box sx={ {
       background: "linear-gradient(180deg, rgba(245, 245, 245, 0) 0%, #F5F5F5 26%)",
       minHeight: "100vh",
@@ -139,14 +146,64 @@ const ProfileGrid = () => {
       <Box sx={scrollableGridStyle}>
         <Grid container spacing={{ xs: 1, sm: 2 }} columns={{ xs: 2, sm: 2 }}>
           {profiles.map((profile, index) => (
-            <Grid item xs={1} key={index}>
-              <Card sx={cardStyle}>
+            <Grid item xs={1} key={index} onClick={()=> setOpen(profile)}>
+               <Card
+                sx={{
+                  display: "flex",
+                  flexDirection: "column",
+                  overflow: "hidden",
+                  boxShadow: "none",
+                  background: "transparent",
+                  height: "100%",
+                  position: "relative",
+                  textAlign:'left',
+                }}
+              >
                 <CardMedia
                   component="img"
                   image={profile.imageUrl}
                   alt={profile.imageAlt}
                   sx={imageStyle}
                 />
+
+<Box
+    sx={{
+      position: "absolute",
+      top: "60%", // Center vertically
+      left: "80%", // Center horizontally
+      transform: "translate(-50%, -20%)", // Adjust positioning slightly upwards
+      display: "flex",
+      gap: 2,
+    }}
+  >
+
+    <IconButton
+      aria-label="dislike"
+      sx={{
+        background: "linear-gradient(145deg, #A0D8FF 0%, #76B7FF 40%, #4A90E2 100%)", // Softer and more balanced blue
+        borderRadius: "50%",
+        width: "56px",
+        height: "56px",
+        boxShadow: "0 8px 24px rgba(118, 183, 255, 0.3)",
+        backdropFilter: "blur(12px)",
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
+        transition: "all 0.3s ease",
+    
+        "&:focus": {
+          boxShadow: "0 8px 24px rgba(118, 183, 255, 0.3)",
+        },
+        "&:active": {
+          transform: "scale(0.95)",
+          boxShadow: "0 4px 12px rgba(118, 183, 255, 0.5)",
+        },
+      }}
+    >
+      <i className="ti ti-x" style={{ fontSize: "26px", color: "white" }} />
+    </IconButton>
+  </Box>
+
                 <CardContent sx={{ paddingBottom: "12px !important", paddingTop:'6px !important'}}>
                   <Typography sx={nameStyle}>{profile.name}</Typography>
                   <Typography sx={detailsStyle}>{profile.details}</Typography>
@@ -157,7 +214,7 @@ const ProfileGrid = () => {
         </Grid>
       </Box>
     </Box>
-  );
+ </> );
 };
 
 export default ProfileGrid;

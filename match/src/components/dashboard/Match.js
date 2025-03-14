@@ -11,7 +11,7 @@ const db = [
   { reg_no: '12432322', reason: 'Casual Dating', age: 19, name: 'Amit', images: [null, '/12.avif', '/11.jpg', null, null], bio:'hgyg', personality:'extrovert', interests:[] },
   { reg_no: '12432323', reason: 'Serious Relationship', age: 21, name: 'Rahul', images: [null, '/9.jpg','/8.webp', null, null], bio:'iygyu', interests:[] }, 
   { reg_no: '12432324', reason: 'Friendship', age: 22, name: 'Ankit', images: [null, null, '/6.avif', '/7.avif', null], bio:"yguy", interests:[] },
-  { reg_no: '12413928', reason: 'Long-term relationship', age: 23, name: 'Bharat',personality:'extrovert', images: [null, '/10.avif', '/4.avif', '/5.jpg', null], bio:'Im the solo developer of this whole Uni-Match platform...😎', interests:["Gardening", "Paragliding","Puzzles"] }
+  { reg_no: '12413928', reason: 'Long-term relationship', age: 23, name: 'Bharat',personality:'extrovert', images: [null, '/10.avif', '/4.avif', '/5.jpg', null], bio:'Im the solo developer of this whole Uni-Match platform...😎', interests:["Gardening", "Paragliding","Puzzles","Juggling"] }
 ];
 
 export default function Match({ profiles, setProfiles }) {
