@@ -171,7 +171,7 @@ function AppContainer() {
   const [isDrawerOpen, setIsDrawerOpen] = React.useState(false);
   const [selectedGender, setSelectedGender] = React.useState("不限");
   const [selectedMarriage, setSelectedMarriage] = React.useState("不限");
-  const [ageRange, setAgeRange] = React.useState([20, 50]);
+  const [ageRange, setAgeRange] = React.useState([18, 23]);
 
   const handleAgeChange = (event, newValue) => {
     setAgeRange(newValue);
@@ -190,17 +190,6 @@ function AppContainer() {
 
   return (
     <Box sx={styles.appContainer}>
-      <Box sx={styles.header}>
-        <Button
-          sx={styles.locationButton}
-          startIcon={<KeyboardArrowDownIcon />}
-        >
-          北京
-        </Button>
-        <IconButton onClick={toggleDrawer(true)}>
-          <SettingsIcon />
-        </IconButton>
-      </Box>
 
       <SwipeableDrawer
         anchor="bottom"
@@ -212,7 +201,7 @@ function AppContainer() {
       >
         <Box sx={styles.searchHeader}>
           <Typography variant="h6" component="h1">
-            条件搜索
+            Filter
           </Typography>
           <IconButton sx={styles.closeButton} onClick={toggleDrawer(false)}>
             ×
@@ -221,28 +210,28 @@ function AppContainer() {
 
         <Box component="form" sx={styles.drawerContent}>
           <Box sx={styles.formGroup}>
-            <Typography sx={styles.label}>年龄</Typography>
+            <Typography sx={styles.label}>Age</Typography>
             <Box sx={styles.sliderContainer}>
               <Slider
                 value={ageRange}
                 onChange={handleAgeChange}
                 valueLabelDisplay="auto"
                 min={18}
-                max={80}
+                max={30}
                 sx={styles.slider}
               />
               <Typography
                 sx={{ textAlign: "right", color: "#333", fontSize: "14px" }}
               >
-                {ageRange[0]}-{ageRange[1]}岁
+                {ageRange[0]}-{ageRange[1]} age
               </Typography>
             </Box>
           </Box>
 
           <Box sx={styles.formGroup}>
-            <Typography sx={styles.label}>性别</Typography>
+            <Typography sx={styles.label}>Gender</Typography>
             <Box sx={styles.optionsContainer}>
-              {["不限", "男", "女"].map((option) => (
+              {["Male", "Female"].map((option) => (
                 <Chip
                   key={option}
                   label={option}
@@ -255,9 +244,9 @@ function AppContainer() {
           </Box>
 
           <Box sx={styles.formGroup}>
-            <Typography sx={styles.label}>婚况</Typography>
+            <Typography sx={styles.label}>Personality</Typography>
             <Box sx={styles.optionsContainer}>
-              {["不限", "未婚", "离异", "丧偶"].map((option) => (
+              {["Introvert", "Extrovert", "Ambivert"].map((option) => (
                 <Chip
                   key={option}
                   label={option}
@@ -270,7 +259,7 @@ function AppContainer() {
           </Box>
 
           <Box sx={styles.formGroup}>
-            <Typography sx={styles.label}>居住地</Typography>
+            <Typography sx={styles.label}>Looking For?</Typography>
             <Button
               sx={styles.locationSelector}
               endIcon={<KeyboardArrowRightIcon />}
@@ -286,13 +275,13 @@ function AppContainer() {
             onClick={() => {
               setSelectedGender("不限");
               setSelectedMarriage("不限");
-              setAgeRange([20, 50]);
+              setAgeRange([18, 23]);
             }}
           >
-            重置
+            Reset
           </Button>
           <Button sx={styles.searchButton} variant="contained">
-            搜索
+            Apply
           </Button>
         </Box>
       </SwipeableDrawer>

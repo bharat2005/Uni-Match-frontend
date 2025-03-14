@@ -64,7 +64,6 @@ const styles = {
     backgroundColor: "rgba(255, 255, 255, 1)",
     background: "linear-gradient(180deg, #FFFFFF 0%, #FDF3FD 25.5%)",
     padding: "20px 20px 20px 20px",
-    pointerEvents: "auto" 
   },
   formGroup: {
     display: "flex",
@@ -458,7 +457,7 @@ const interests = {
 
 const profile =   { reg_no: '12413928', reason: 'Long-term relationship', age: 23, name: 'Bharat',personality:'extrovert', images: [null, '/10.avif', '/4.avif', '/5.jpg', null], bio:'Im the solo developer of this whole Uni-Match platform...😎', interests:["Gardening", "Paragliding","Puzzles", "Astronomy", "Juggling",   "Art"  ] };
 
-function AppContainer({imageClick, setImageClick}) {
+function AppContainer() {
   const [isDrawerOpen, setIsDrawerOpen] = React.useState(false);
   const [selectedGender, setSelectedGender] = React.useState("不限");
   const [selectedMarriage, setSelectedMarriage] = React.useState("不限");
@@ -501,37 +500,23 @@ function AppContainer({imageClick, setImageClick}) {
 
 
   return (<>
+  <link
+  rel="stylesheet"
+  href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/dist/tabler-icons.min.css"
+/> 
+    <Box sx={styles.appContainer}>
 
       <SwipeableDrawer
         anchor="bottom"
-        open={imageClick}
-        onClose={()=> {setImageClick(false)}}
-        onOpen={()=> {setImageClick(true)}}
-        sx={{
-          "& .MuiDrawer-paper": {
-            borderTopLeftRadius: "20px",
-            borderTopRightRadius: "20px",
-            background: "white",
-            maxHeight: "90vh",
-            pointerEvents: imageClick ? "none" : "auto", // ✅ Let clicks pass through when open
-          },
-        }}
+        open={isDrawerOpen}
+        onClose={toggleDrawer(false)}
+        onOpen={toggleDrawer(true)}
+        sx={styles.drawer}
         disableSwipeToOpen={false}
-        BackdropProps={{
-          style: {
-            backgroundColor: "transparent",
-            pointerEvents: "none", // ✅ Pass clicks through backdrop
-          },
-        }}
       >
 
 
-        <Box component="form" sx={{
-           pointerEvents: "auto",
-    backgroundColor: "rgba(255, 255, 255, 1)",
-    background: "linear-gradient(180deg, #FFFFFF 0%, #FDF3FD 25.5%)",
-    padding: "20px 20px 20px 20px",
-  }}>
+        <Box component="form" sx={styles.drawerContent}>
         <Box sx={{ mb: 1.25 }}>
           <Typography sx={{ fontSize:"28px", fontWeight: 700, mb: 1.25 }}>
             {profile.name}, {profile.age}
@@ -646,7 +631,7 @@ function AppContainer({imageClick, setImageClick}) {
    </Box>
         </Box>
       </SwipeableDrawer>
-  
+    </Box>
  </> );
 }
 
