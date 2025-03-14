@@ -23,11 +23,20 @@ import {
   Logout,
   PersonRemove,
 } from "@mui/icons-material";
+import About from './About'
+import Delete from './DeleteProfile';
+import Support from './Support';
+import EditStepForm from './EditStepForm';
+
+
+
+
 
 const ProfileContainer = () => {
   const theme = useTheme();
   const isMobile = useMediaQuery("(max-width:640px)");
   const isTablet = useMediaQuery("(max-width:991px)");
+  const [open, setOpen] = React.useState(null)
 
   const containerStyles = {
     background: "linear-gradient(180deg, rgba(245, 245, 245, 0) 0%, #F5F5F5 26%)",
@@ -112,8 +121,31 @@ const ProfileContainer = () => {
     { icon: <i className="ti ti-share" style={{ fontSize: "24px",color:'black' }} />, text: "Share" },
     { icon: <i className="ti ti-info-circle" style={{ fontSize: "24px",color:'black' }} />, text: "About Developer" },
     { icon:  <i className="ti ti-heart-handshake" style={{ fontSize: "24px", color:'black' }} />, text: "Support Us" },
+    { icon:  <i className="ti ti-trash" style={{ fontSize: "24px", color:'black' }} />, text: "Delete Profile" },
 
   ];
+  
+
+  if (open){
+    switch(open){
+      case "Edit Profile":{
+        return  <EditStepForm onClose={()=> setOpen(false)}/>
+      }
+      case "Share":{
+        return "hi"
+      }
+      case "About Developer":{
+        return <About onClose={()=> setOpen(false)}/>
+      }
+      case "Support Us":{
+        return <Support onClose={()=> setOpen(false)}/>
+      }
+      case "Delete Profile":{
+        return <Delete onClose={()=> setOpen(false)}/>
+      }
+
+    }
+  }
 
   return (
     <Box sx={containerStyles}>
@@ -154,7 +186,7 @@ const ProfileContainer = () => {
       <Box sx={menuListStyles}>
         <List disablePadding>
           {menuItems.map((item, index) => (
-            <ListItem key={index} sx={menuItemStyles}>
+            <ListItem onClick={()=> setOpen(item.text)} key={index} sx={menuItemStyles}>
               <ListItemIcon sx={{ color: "#666", minWidth: "40px" }}>
                 {item.icon}
               </ListItemIcon>
@@ -191,26 +223,6 @@ const ProfileContainer = () => {
             }}
           >
             Logout
-          </Button>
-          <Button
-            variant="outlined"
-            startIcon={<i className="ti ti-trash" style={{ fontSize: "24px" }} />}
-            sx={{
-              backgroundColor: "#f8f9fa",
-              color: "#666",
-              border: "1px solid #e0e0e0",
-              borderRadius: "12px",
-              padding: { xs: "10px", md: "12px" },
-              fontSize: { xs: "13px", md: "14px" },
-              fontWeight: 500,
-              width: "100%",
-              "&:hover": {
-                backgroundColor: "#f0f0f0",
-                borderColor: "#d0d0d0",
-              },
-            }}
-          >
-            Delete Profile
           </Button>
         </Box>
       </Box>

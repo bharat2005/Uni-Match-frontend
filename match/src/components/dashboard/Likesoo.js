@@ -80,7 +80,7 @@ const ProfileGrid = () => {
   };
 
   const scrollableGridStyle = {
-    maxHeight: "78vh",
+    maxHeight: "75vh",
     overflowY: "auto",
     "&::-webkit-scrollbar": {
       display: "none", 
@@ -99,7 +99,7 @@ const ProfileGrid = () => {
 
   const imageStyle = {
     width: "100%",
-    height: "180px",
+    height: "220px",
     borderRadius: "26px",
     objectFit: "cover",
   };

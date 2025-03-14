@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { Box, Button, Badge} from "@mui/material";
-import Match from "./Match";
+import Match from "../components/dashboard/Match";
 import Navbar from "./NavBar";
-import Profile from "./Profile";
+import Profile from "../components/dashboard/Profile";
 import Likes from "./Likes";
-import Chats from "./Chats";
+import Chats from "../components/dashboard/Chats";
 import axios from "axios";
 import { AdjustmentsVerticalIcon } from '@heroicons/react/24/solid';
 import FilterModal from './FilterModal'

@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from "react";
 import { Card, CardContent, Typography, Avatar, Box, Chip } from "@mui/material";
-import AboutUs from './profile/AboutUs';
-import ProfileHome from './profile/ProfileHome';
-import EditProfile from './profile/EditProfile';
-import SupportUs from './profile/SupportUs';
-import DeleteAccount from "./profile/DeleteAccount";
+import AboutUs from '../../OldComp/profile/AboutUs';
+import ProfileHome from '../../OldComp/profile/ProfileHome';
+import EditProfile from '../../OldComp/profile/EditProfile';
+import SupportUs from '../../OldComp/profile/SupportUs';
+import DeleteAccount from "../../OldComp/profile/DeleteAccount";
 import axios from 'axios';
 
 const ProfileSection = ({ profile , lpuselfprofile, setLpuSelfProfile, setSelfProfile}) => {

@@ -76,7 +76,7 @@ const ProfileGrid = () => {
   };
 
   const scrollableGridStyle = {
-    maxHeight: "78vh", // Adjust height as needed
+    maxHeight: "75vh", // Adjust height as needed
     overflowY: "auto",
     //border: "1px solid #ddd", // Optional for visual clarity
     "&::-webkit-scrollbar": {
@@ -168,8 +168,8 @@ const ProfileGrid = () => {
       sx={{
         background: "linear-gradient(145deg, #FF8BA7 0%, #FF6584 50%, #FF4D6D 100%)", // Softer but striking gradient
         borderRadius: "50%",
-        width: "52px",
-        height: "52px",
+        width: "56px",
+        height: "56px",
         boxShadow: "0 8px 24px rgba(255, 101, 132, 0.3)",
         backdropFilter: "blur(12px)",
         display: "flex",
@@ -194,8 +194,8 @@ const ProfileGrid = () => {
       sx={{
         background: "linear-gradient(145deg, #A0D8FF 0%, #76B7FF 40%, #4A90E2 100%)", // Softer and more balanced blue
         borderRadius: "50%",
-        width: "52px",
-        height: "52px",
+        width: "56px",
+        height: "56px",
         boxShadow: "0 8px 24px rgba(118, 183, 255, 0.3)",
         backdropFilter: "blur(12px)",
         display: "flex",

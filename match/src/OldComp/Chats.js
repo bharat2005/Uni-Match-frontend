@@ -1,6 +1,6 @@
 import React, { useState, useEffect} from "react";
 import { Box, Typography, Avatar, List, ListItem, ListItemAvatar,Dialog,DialogTitle,DialogContent,DialogActions,Button, ListItemText, CircularProgress, Tabs, Tab, Badge, IconButton } from "@mui/material";
-import Chat from './Chat';
+import Chat from '../../OldComp/Chat';
 import axios from 'axios';
 import CloseRoundedIcon from '@mui/icons-material/CloseRounded';
 

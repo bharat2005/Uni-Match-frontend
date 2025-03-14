@@ -62,6 +62,27 @@ const chatData = [
     time: "16:04",
     image: "/10.avif",
   },
+  {
+    name: "Rakesh",
+    message: "baby!!!!",
+    count: 1,
+    time: "16:04",
+    image: "/8.webp",
+  },
+   {
+    name: "Samay",
+    message: "....",
+    count: 1,
+    time: "16:04",
+    image: "/9.jpg",
+  },
+    {
+    name: "Nikhil",
+    message: "fewwww.....",
+    count: 1,
+    time: "16:04",
+    image: "/10.avif",
+  },
   
 ];
 export default function ChatInterface(){
@@ -101,7 +122,7 @@ export default function ChatInterface(){
       >
         <List
           sx={{
-            maxHeight: "78vh", 
+            maxHeight: "75vh", 
             overflowY: "auto",
             background: "white",
             borderRadius:'20px',
