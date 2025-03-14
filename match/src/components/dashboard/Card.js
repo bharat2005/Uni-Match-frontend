@@ -67,7 +67,6 @@ export default function Card({ profile }) {
               src={list[currentImageIndex]}
               alt="profile"
               style={{
-                
                 display: 'none', 
               }}
               onLoad={() => setImageLoaded(true)}
@@ -84,7 +83,6 @@ export default function Card({ profile }) {
               sx={{
                 position: 'absolute',
                 top: '50%',
-                zIndex: 6, 
                 left: '20px',
                 transform: 'translateY(-50%)',
                 color: '#fff',
@@ -103,7 +101,6 @@ export default function Card({ profile }) {
                 position: 'absolute',
                 top: '50%',
                 right: '20px',
-                zIndex: 6, 
                 transform: 'translateY(-50%)',
                 color: '#fff',
               }}
@@ -121,7 +118,6 @@ export default function Card({ profile }) {
                 position: 'absolute',
                 top: '20px',
                 left: '20px',
-                zIndex: 6, 
                 color: '#fff',
               }}
               onClick={(e) => {
@@ -265,7 +261,7 @@ export default function Card({ profile }) {
           {profile.name}, {profile.age}
         </Typography>
 
-        <Drawer imageClick={imageClick} setImageClick={setImageClick} profile={profile} key={profile.reg_no} />
+        <Drawer imageClick={imageClick} profile={profile} key={profile.reg_no} />
       </Box>
     </>
   );

@@ -5,37 +5,20 @@ import {
   IconButton,
   Slider,
   Typography,
-  List,
-  ListItemButton,
-  ListItemText,
   Box,
   SwipeableDrawer,
   Chip,
+  List,
+  ListItemButton,
+  ListItemText,
 } from "@mui/material";
-import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import KeyboardArrowRightIcon from "@mui/icons-material/KeyboardArrowRight";
-import SettingsIcon from "@mui/icons-material/Settings";
 
 const styles = {
   appContainer: {
     background: "linear-gradient(135deg, #ffe5f2, #e5f0ff)",
     minHeight: "100vh",
     fontFamily: '"Noto Sans SC", sans-serif',
-  },
-  header: {
-    display: "flex",
-    justifyContent: "space-between",
-    alignItems: "center",
-    padding: "20px",
-    color: "#333",
-  },
-  locationButton: {
-    display: "flex",
-    alignItems: "center",
-    gap: "4px",
-    fontSize: "16px",
-    color: "#333",
-    textTransform: "none",
   },
   drawer: {
     "& .MuiDrawer-paper": {
@@ -44,16 +27,6 @@ const styles = {
       background: "white",
       maxHeight: "90vh",
     },
-  },
-  searchHeader: {
-    display: "flex",
-    justifyContent: "center",
-    alignItems: "center",
-    fontSize: "16px",
-    fontWeight: 500,
-    marginBottom: "30px",
-    position: "relative",
-    padding: "20px 20px 0 20px",
   },
   closeButton: {
     position: "absolute",
@@ -131,7 +104,6 @@ const styles = {
     background: "white",
     border: "1px solid #eee",
     color: "#666",
-    textTransform: "none",
     "&:hover": {
       backgroundColor: "#f5f5f5",
       borderColor: "#ddd",
@@ -144,107 +116,64 @@ const styles = {
     fontSize: "14px",
     color: "white",
     backgroundColor: "#ff6b9c",
-    textTransform: "none",
     "&:hover": {
       backgroundColor: "#ff5b8c",
-    },
-  },
-  sliderContainer: {
-    padding: "0 10px",
-  },
-  slider: {
-    color: "#ff6b9c",
-    "& .MuiSlider-thumb": {
-      backgroundColor: "white",
-      border: "2px solid #ff6b9c",
-      "&:hover, &.Mui-focusVisible": {
-        boxShadow: "0 0 0 8px rgba(255, 107, 156, 0.16)",
-      },
-    },
-    "& .MuiSlider-track": {
-      backgroundColor: "#ff6b9c",
-    },
-    "& .MuiSlider-rail": {
-      backgroundColor: "#eee",
     },
   },
 };
 
 function AppContainer() {
   const [isDrawerOpen, setIsDrawerOpen] = React.useState(false);
-  const [selectedGender, setSelectedGender] = React.useState("不限");
   const [smallDrawerOpen, setSmallDrawerOpen] = React.useState(false);
-  const [selectedMarriage, setSelectedMarriage] = React.useState("不限");
+  const [selectedGender, setSelectedGender] = React.useState("不限");
+  const [selectedPersonality, setSelectedPersonality] = React.useState("不限");
   const [ageRange, setAgeRange] = React.useState([18, 23]);
   const [selectedOption, setSelectedOption] = React.useState("");
 
-
-
-
- 
-  const toggleSmallDrawer = (open) => () => setSmallDrawerOpen(open);
-
-
-
-const handleOptionSelect = (option) => {
-    setSelectedOption(option);
-    setSmallDrawerOpen(false);
-  };
   const handleAgeChange = (event, newValue) => {
     setAgeRange(newValue);
   };
 
-  const toggleDrawer = (open) => (event) => {
-    if (
-      event &&
-      event.type === "keydown" &&
-      (event.key === "Tab" || event.key === "Shift")
-    ) {
-      return;
-    }
-    setIsDrawerOpen(open);
+  const toggleDrawer = (open) => () => setIsDrawerOpen(open);
+  const toggleSmallDrawer = (open) => () => setSmallDrawerOpen(open);
+
+  const handleOptionSelect = (option) => {
+    setSelectedOption(option);
+    setSmallDrawerOpen(false);
   };
+
+  // Generate six random values for dropdown
+  const randomOptions = React.useMemo(() => {
+    return Array.from({ length: 6 }, () =>
+      Math.random().toString(36).substring(7)
+    );
+  }, []);
 
   return (
     <Box sx={styles.appContainer}>
-
+      {/* Main Drawer */}
       <SwipeableDrawer
         anchor="bottom"
         open={isDrawerOpen}
         onClose={toggleDrawer(false)}
         onOpen={toggleDrawer(true)}
         sx={styles.drawer}
-        disableSwipeToOpen={false}
       >
-        <Box sx={styles.searchHeader}>
-          <Typography variant="h6" component="h1">
-            Filter
-          </Typography>
-          <IconButton sx={styles.closeButton} onClick={toggleDrawer(false)}>
-            ×
-          </IconButton>
-        </Box>
-
-        <Box component="form" sx={styles.drawerContent}>
+        {/* Drawer Content */}
+        <Box sx={styles.drawerContent}>
+          {/* Age Slider */}
           <Box sx={styles.formGroup}>
             <Typography sx={styles.label}>Age</Typography>
-            <Box sx={styles.sliderContainer}>
-              <Slider
-                value={ageRange}
-                onChange={handleAgeChange}
-                valueLabelDisplay="auto"
-                min={18}
-                max={30}
-                sx={styles.slider}
-              />
-              <Typography
-                sx={{ textAlign: "right", color: "#333", fontSize: "14px" }}
-              >
-                {ageRange[0]}-{ageRange[1]} age
-              </Typography>
-            </Box>
+            <Slider
+              value={ageRange}
+              onChange={handleAgeChange}
+              valueLabelDisplay="auto"
+              min={18}
+              max={30}
+            />
           </Box>
 
+          {/* Gender Selector */}
           <Box sx={styles.formGroup}>
             <Typography sx={styles.label}>Gender</Typography>
             <Box sx={styles.optionsContainer}>
@@ -260,6 +189,7 @@ const handleOptionSelect = (option) => {
             </Box>
           </Box>
 
+          {/* Personality Selector */}
           <Box sx={styles.formGroup}>
             <Typography sx={styles.label}>Personality</Typography>
             <Box sx={styles.optionsContainer}>
@@ -267,14 +197,15 @@ const handleOptionSelect = (option) => {
                 <Chip
                   key={option}
                   label={option}
-                  onClick={() => setSelectedMarriage(option)}
+                  onClick={() => setSelectedPersonality(option)}
                   sx={styles.chip}
-                  className={selectedMarriage === option ? "selected" : ""}
+                  className={selectedPersonality === option ? "selected" : ""}
                 />
               ))}
             </Box>
           </Box>
 
+          {/* Looking For (Dropdown) */}
           <Box sx={styles.formGroup}>
             <Typography sx={styles.label}>Looking For?</Typography>
             <Button
@@ -286,26 +217,9 @@ const handleOptionSelect = (option) => {
             </Button>
           </Box>
         </Box>
-
-        <Box sx={styles.buttonGroup}>
-          <Button
-            sx={styles.resetButton}
-            onClick={() => {
-              setSelectedGender(null);
-              setSelectedMarriage(null);
-              setAgeRange([18, 30]);
-            }}
-          >
-            Reset
-          </Button>
-          <Button sx={styles.searchButton} variant="contained">
-            Apply
-          </Button>
-        </Box>
       </SwipeableDrawer>
 
-
-
+      {/* Small Drawer */}
       <SwipeableDrawer
         anchor="bottom"
         open={smallDrawerOpen}
@@ -313,17 +227,13 @@ const handleOptionSelect = (option) => {
         sx={styles.drawer}
       >
         <List>
-          {["Casual Dating", "Long-term", "Short-term", "New Friends", "Study buddy", "Still Figuring Out"].map((option, index) => (
+          {randomOptions.map((option, index) => (
             <ListItemButton key={index} onClick={() => handleOptionSelect(option)}>
               <ListItemText primary={option} />
             </ListItemButton>
           ))}
         </List>
       </SwipeableDrawer>
-
-
-
-
     </Box>
   );
 }
