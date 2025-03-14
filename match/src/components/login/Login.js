@@ -86,28 +86,68 @@ const LoginPage = () => {
         href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap"
         rel="stylesheet"
       />
+      <link
+  rel="stylesheet"
+  href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/dist/tabler-icons.min.css"
+/> 
 
       {loading && <SmallLoading/>}
 
       <Box
-        sx={{
-          display: "flex",
-          justifyContent: "space-between",
-          alignItems: "center",
-          marginTop:'10%',
-          padding: { xs: "20px 10px", md: "40px 20px" },
-          position: "relative",
-        }}
-      >
-        <img src="/help.png" style={{width:'100%'}} />
-      </Box>
+  sx={{
+    display: "flex",
+    flexDirection: "column", // Stack rows vertically
+    justifyContent: "center",
+    alignItems: "center",
+    marginTop: '10%',
+    padding: { xs: "20px 10px", md: "40px 20px" },
+    position: "relative",
+  }}
+>
+  {/* First row with icon and first image */}
+  <Box
+    sx={{
+      display: "flex",
+      justifyContent: "center",
+      alignItems: "center",
+     // gap: '10px', // Space between icon and image
+      width: '100%',
+    }}
+  >
+    <i
+      className="ti ti-clover-filled"
+      style={{
+        fontSize: "36px",
+        background: "linear-gradient(145deg, #ff3c78 0%, #ff79b0 30%, #b985ff 70%, #5caeff 100%)",
+        WebkitBackgroundClip: "text",
+        WebkitTextFillColor: "transparent",
+        transition: "background 0.3s ease-in-out",
+      }}
+    />
+    <img src="/Uni-match-14-3-2025.png" style={{ width: '85%' }} />
+  </Box>
+
+  {/* Second row with second image */}
+  <Box
+    sx={{
+      display: "flex",
+      justifyContent: "center",
+     // marginTop: '20px',
+      width: '100%',
+    }}
+  >
+    <img src="/sub.png" style={{ width: '40%' }} />
+  </Box>
+</Box>
+
+     
       <Box
         sx={{
           backgroundColor: "rgba(255, 255, 255, 0.5)", 
           backdropFilter: "blur(10px)",
           borderRadius: "20px",
           padding: { xs: "20px", md: "30px" },
-          marginTop: { xs: "25px", md: "50px" },
+          //marginTop: { xs: "25px", md: "50px" },
           boxShadow: "0 4px 15px rgba(0, 0, 0, 0.05)",
         }}
       >
