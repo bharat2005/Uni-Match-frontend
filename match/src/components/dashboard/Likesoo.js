@@ -21,9 +21,9 @@ const ProfileGrid = () => {
 
   const profiles = [
     {
-      name: "Bharat, 19",
-      details: "🎉Casual Dating",
-      imageUrl: "/5.jpg",
+      name: "Rakesh, 23",
+      details: "💘Long-term ",
+      imageUrl: "/9.jpg",
       imageAlt: "Profile photo",
     },
     {
@@ -33,27 +33,9 @@ const ProfileGrid = () => {
       imageAlt: "Profile photo",
     },
     {
-      name: "Rahul, 20",
-      details: "😍Short-term",
-      imageUrl: "/7.avif",
-      imageAlt: "Profile photo",
-    },
-    {
-      name: "Deepak, 23",
+      name: "Bharat, 19",
       details: "🎉Casual Dating",
-      imageUrl: "/8.webp",
-      imageAlt: "Profile photo",
-    },
-    {
-      name: "Rakesh, 23",
-      details: "💘Long-term ",
-      imageUrl: "/9.jpg",
-      imageAlt: "Profile photo",
-    },
-    {
-      name: "Nikhil, 19",
-      details: "😍Short-term",
-      imageUrl: "/10.avif",
+      imageUrl: "/5.jpg",
       imageAlt: "Profile photo",
     },
     {
@@ -62,6 +44,27 @@ const ProfileGrid = () => {
       imageUrl: "/11.jpg",
       imageAlt: "Profile photo",
     },
+    {
+      name: "Rahul, 20",
+      details: "😍Short-term",
+      imageUrl: "/7.avif",
+      imageAlt: "Profile photo",
+    },
+
+    {
+      name: "Deepak, 23",
+      details: "🎉Casual Dating",
+      imageUrl: "/8.webp",
+      imageAlt: "Profile photo",
+    },
+
+    {
+      name: "Nikhil, 19",
+      details: "😍Short-term",
+      imageUrl: "/10.avif",
+      imageAlt: "Profile photo",
+    },
+,
   ];
 
   const containerStyle = {
@@ -91,11 +94,12 @@ const ProfileGrid = () => {
     boxShadow: "none",
     background:'transparent',
     height: "100%",
+    textAlign:'left',
   };
 
   const imageStyle = {
     width: "100%",
-    height: "220px",
+    height: "180px",
     borderRadius: "26px",
     objectFit: "cover",
   };

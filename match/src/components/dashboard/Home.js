@@ -1,11 +1,16 @@
-"use client";
+
 import * as React from "react";
 import { Box, IconButton } from "@mui/material";
-import Chatsoo from './Profilee';
+import Profilee from './Profilee';
 import NavBar from './NavBar2';
+import Chatsoo from './Chatsoo';
+import Likesoo from './Likesoo';
+import Matchesoo from './Matchesoo';
+import Match from './Match';
 
-function AppLayout({ children }) {
-  const [activeTab, setActiveTab] = React.useState("home");
+
+function AppLayout() {
+  const [activeTab, setActiveTab] = React.useState("clover");
 
   return (
     <>
@@ -54,7 +59,11 @@ function AppLayout({ children }) {
 
 
         <Box sx={{ flex: 1 }}>
-          <Chatsoo/>
+          {activeTab=="likes" && <Likesoo/>}
+          {activeTab=="match" && <Matchesoo/>}
+          {activeTab=="clover" && <Match/>}
+          {activeTab=="chats" && <Chatsoo/>}
+          {activeTab=="profile" && <Profilee/>}
           </Box>
 
  

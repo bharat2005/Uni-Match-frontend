@@ -137,6 +137,7 @@ const ProfileGrid = () => {
     background: "transparent",
     height: "100%",
     position: "relative",
+    textAlign:'left',
   }}
 >
   <CardMedia
