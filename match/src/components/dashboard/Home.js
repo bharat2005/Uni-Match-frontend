@@ -23,7 +23,7 @@ function AppLayout() {
           height: "95dvh",
           width:'100vw',
           display: "flex",
-          paddingTop:'10%',
+          paddingTop:'5%',
           flexDirection: "column",
           position: "relative",
         }}
@@ -33,19 +33,62 @@ function AppLayout() {
             display: "flex",
             justifyContent: "space-between",
             alignItems: "center",
-            marginBottom:'0%',
-            padding: { xs: "15px", sm: "20px" },
+            marginBottom:'5%',
+            padding: { xs: "16px", sm: "20px" },
             color: "#000",
           }}
         >
           <Box
-            sx={{
-              fontSize: "18px",
-              fontWeight: 500,
+                sx={{
+                  display: "flex",
+                  justifyContent: "center",
+                  alignItems: "center",
             }}
           >
-            Uni-Match
+            <IconButton
+            sx={{ margin:0,
+              padding:0,}}
+             onClick={() => setActiveTab("clover")}>
+  <Box
+    sx={{
+      display: "flex",
+      justifyContent: "center",
+      alignItems: "center",
+      width: "30px",
+      height: "46px",
+      borderRadius: "50%",
+      display: "flex",
+      justifyContent: "center",
+      alignItems: "center",
+      backgroundColor: "transparent", // Transparent background
+      transition: "background-color 0.3s ease-in-out",
+    }}
+  >
+    <i
+      className="ti ti-clover-filled"
+      style={{
+        fontSize: "24px",
+        background: "linear-gradient(145deg, #ff3c78 0%, #ff79b0 30%, #b985ff 70%, #5caeff 100%)",
+        WebkitBackgroundClip: "text", // Clip background to text
+        WebkitTextFillColor: "transparent", // Make text transparent to show gradient
+        transition: "background 0.3s ease-in-out",
+      }}
+    />
+  </Box>
+</IconButton>    <img
+onClick={() => setActiveTab("clover")}
+      src="/Uni-match-14-3-2025.png" // Replace with your image path
+      alt="clover"
+      style={{
+        height: "42px",
+        objectFit: "cover",}}
+    />
           </Box>
+
+
+
+
+
           <IconButton>
             <i
               className="ti ti-adjustments-horizontal"

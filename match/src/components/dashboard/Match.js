@@ -88,7 +88,7 @@ export default function Match({ profiles, setProfiles }) {
           gap={12}
           sx={{
             position: 'absolute',
-            bottom: '16%',
+            bottom: '12%',
             zIndex: 1,
           }}
         >
@@ -98,8 +98,8 @@ export default function Match({ profiles, setProfiles }) {
   sx={{
     background: "linear-gradient(145deg, #FF8BA7 0%, #FF6584 50%, #FF4D6D 100%)", // Softer but striking gradient
     borderRadius: "50%",
-    width: "100px",
-    height: "100px",
+    width: "120px",
+    height: "120px",
     boxShadow: "0 8px 24px rgba(255, 101, 132, 0.3)",
     backdropFilter: "blur(12px)",
     display: "flex",
@@ -111,12 +111,12 @@ export default function Match({ profiles, setProfiles }) {
       boxShadow: "0 8px 24px rgba(255, 101, 132, 0.3)",
     },
     "&:active": {
-      transform: "scale(0.95)",
+      transform: "scale(0.8)",
       boxShadow: "0 4px 12px rgba(255, 101, 132, 0.5)",
     },
   }}
 >
-  <i className="ti ti-x" style={{ fontSize: "60px", color: "white" }} />
+  <i className="ti ti-x" style={{ fontSize: "75px", color: "white" }} />
 </Button>
 
 <Button
@@ -125,8 +125,8 @@ export default function Match({ profiles, setProfiles }) {
   sx={{
     background: "linear-gradient(145deg, #A0D8FF 0%, #76B7FF 40%, #4A90E2 100%)", // Softer and more balanced blue
     borderRadius: "50%",
-    width: "100px",
-    height: "100px",
+    width: "120px",
+    height: "120px",
     boxShadow: "0 8px 24px rgba(118, 183, 255, 0.3)",
     backdropFilter: "blur(12px)",
     display: "flex",
@@ -138,12 +138,12 @@ export default function Match({ profiles, setProfiles }) {
       boxShadow: "0 8px 24px rgba(118, 183, 255, 0.3)",
     },
     "&:active": {
-      transform: "scale(0.95)",
+      transform: "scale(0.8)",
       boxShadow: "0 4px 12px rgba(118, 183, 255, 0.5)",
     },
   }}
 >
-  <i className="ti ti-heart-filled" style={{ fontSize: "60px", color: "white" }} />
+  <i className="ti ti-heart-filled" style={{ fontSize: "75px", color: "white" }} />
 </Button>
 
 
