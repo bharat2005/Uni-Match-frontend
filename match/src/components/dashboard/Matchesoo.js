@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect , useState} from "react";
 import {
   Box,
   IconButton,
@@ -8,8 +8,19 @@ import {
   CardMedia,
   Grid,
 } from "@mui/material";
+import ProfileModal from './ProfileModal';
+
+
+
+
+
+const profile =   { reg_no: '12413928', reason: 'Long-term relationship', age: 23, name: 'Bharat',personality:'extrovert', images: [null, '/10.avif', '/4.avif', '/5.jpg', null], bio:'Im the solo developer of this whole Uni-Match platform...😎', interests:["Gardening", "Paragliding","Puzzles", "Astronomy", "Juggling",   "Art"  ] };
+
+
 
 const ProfileGrid = () => {
+  const [open, setOpen] = useState(false)
+
   useEffect(() => {
     // Disable scrolling for the whole page
     document.body.style.overflow = "hidden";
@@ -121,7 +132,10 @@ const ProfileGrid = () => {
     lineHeight: 1.4,
   };
 
-  return (
+  return (<>
+
+
+  <ProfileModal open={open} onClose={()=> setOpen(false)} profile={profile}/>
     <Box sx={containerStyle}>
       {/* Scrollable Grid */}
       <Box sx={scrollableGridStyle}>
@@ -129,6 +143,7 @@ const ProfileGrid = () => {
           {profiles.map((profile, index) => (
             <Grid item xs={1} key={index}>
  <Card
+ onClick={()=> setOpen(profile)}
   sx={{
     display: "flex",
     flexDirection: "column",
@@ -165,6 +180,7 @@ const ProfileGrid = () => {
   >
     <IconButton
       aria-label="like"
+      onClick={(e) => {e.stopPropagation(); console.log("LIkeback Clicked")}}
       sx={{
         background: "linear-gradient(145deg, #FF8BA7 0%, #FF6584 50%, #FF4D6D 100%)", // Softer but striking gradient
         borderRadius: "50%",
@@ -187,10 +203,11 @@ const ProfileGrid = () => {
       
       }}
     >
-      <i className="ti ti-heart-filled" style={{ fontSize: "26px", color: "white" }} />
+      <i className="ti ti-x" style={{ fontSize: "26px", color: "white" }} />
     </IconButton>
     <IconButton
       aria-label="dislike"
+      onClick={(e) => {e.stopPropagation(); console.log("Reject Clicked")}}
       sx={{
         background: "linear-gradient(145deg, #A0D8FF 0%, #76B7FF 40%, #4A90E2 100%)", // Softer and more balanced blue
         borderRadius: "50%",
@@ -212,7 +229,7 @@ const ProfileGrid = () => {
         },
       }}
     >
-      <i className="ti ti-x" style={{ fontSize: "26px", color: "white" }} />
+      <i className="ti ti-heart-filled" style={{ fontSize: "26px", color: "white" }} />
     </IconButton>
   </Box>
 
@@ -228,7 +245,7 @@ const ProfileGrid = () => {
         </Grid>
       </Box>
     </Box>
-  );
+  </>);
 };
 
 export default ProfileGrid;

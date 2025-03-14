@@ -1,5 +1,5 @@
 import { Card, CardContent, CardMedia, Typography, Chip, Box, Avatar, IconButton, Button, Modal } from '@mui/material';
-import React from 'react';
+import React,{useState} from 'react';
 
 const interests = {
     "Movies": {
@@ -285,6 +285,20 @@ const interests = {
   
 
 export default function ProfileCard({ open, onClose, profile }) {
+    const [currentImageIndex, setCurrentImageIndex] = useState(0);
+  const list = profile.images.filter(item => item != null);
+
+  const nextImage = () => {
+    setCurrentImageIndex((prevIndex) =>
+      prevIndex === list.length - 1 ? 0 : prevIndex + 1
+    );
+  };
+
+  const prevImage = () => {
+    setCurrentImageIndex((prevIndex) =>
+      prevIndex === 0 ? list.length - 1 : prevIndex - 1
+    );
+  };
 
   function emoji() {
     switch (profile.reason) {
@@ -301,14 +315,14 @@ export default function ProfileCard({ open, onClose, profile }) {
 
   return (<>
 <Modal open={open} onClose={onClose}>
- <Box sx={{ transform: 'scale(0.7)' }}>
-    <Card sx={{ maxWidth: '100vw', maxHeight:'100vh', borderRadius: 8, overflow: 'hidden', boxShadow: 3, background: "linear-gradient(180deg, #FFFFFF 0%, #FDF3FD 25.5%)" }}>
+ <Box sx={{ transform: 'scale(0.8)' }}>
+    <Card sx={{ maxWidth: '100vw', maxHeight:'100vh', borderRadius: 8, overflow: 'hidden', background: "linear-gradient(180deg, #FFFFFF 0%, #FDF3FD 25.5%)" }}>
 
       <Box sx={{ position: 'relative' }}>
       <CardMedia
         component="img"
         height="360"
-        image={'/10.avif'}
+        image={`${list[currentImageIndex]}`}
         alt={profile.name}
         sx={{ objectFit: 'cover' }}
       />
@@ -323,7 +337,7 @@ export default function ProfileCard({ open, onClose, profile }) {
               }}
               onClick={(e) => {
                 e.stopPropagation();
-                //prevImage();
+                prevImage();
               }}
             >
               <i className="ti ti-chevron-left" style={{ fontSize: "24px" }}></i>
@@ -339,11 +353,36 @@ export default function ProfileCard({ open, onClose, profile }) {
         }}
         onClick={(e) => {
           e.stopPropagation();
-         // nextImage();
+          nextImage();
         }}
       >
          <i className="ti ti-chevron-right" style={{ fontSize: "24px" }}></i>
       </IconButton>
+
+              <Box
+                sx={{
+                  position: "absolute",
+                  top: "10px",
+                  left: "50%",
+                  transform: "translateX(-50%)",
+                  display: "flex",
+                  gap: "6px",
+                }}
+              >
+                {list.map((_, index) => (
+                  <Box
+                    key={index}
+                    sx={{
+                      width: "48px",
+                      height: "4px",
+                      borderRadius: "15%",
+                      backgroundColor: index === currentImageIndex ? "#fff" : "#888",
+                      opacity: index === currentImageIndex ? 1 : 0.5,
+                      transition: "opacity 0.3s ease",
+                    }}
+                  />
+                ))}
+              </Box>
 
 
 

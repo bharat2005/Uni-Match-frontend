@@ -11,6 +11,10 @@ import {
   Container,
 } from "@mui/material";
 import Chatoo from './Chatoo';
+import ProfileModal from './ProfileModal';
+
+const profile =   { reg_no: '12413928', reason: 'Long-term relationship', age: 23, name: 'Bharat',personality:'extrovert', images: [null, '/10.avif', '/4.avif', '/5.jpg', null], bio:'Im the solo developer of this whole Uni-Match platform...😎', interests:["Gardening", "Paragliding","Puzzles", "Astronomy", "Juggling",   "Art"  ] };
+
 
 const chatData = [
   {
@@ -87,12 +91,15 @@ const chatData = [
 ];
 export default function ChatInterface(){
    const [chatt, setChatt] = useState(false)
+   const [open, setOpen] = useState(false)
 
 
   if (chatt) {
     return <Chatoo setChatt={setChatt} />
   }
-  return (
+  return (<>
+
+      <ProfileModal open={open} onClose={()=> setOpen(false)} profile={profile}/>
     <Container
       component="main"
       sx={{
@@ -147,6 +154,7 @@ export default function ChatInterface(){
             >
               <ListItemAvatar>
                 <Avatar
+                onClick={(e)=> {e.stopPropagation();e.preventDefault();setOpen(profile)}}
                   src={chat.image}
                   alt={`${chat.name}'s profile`}
                   sx={{
@@ -240,5 +248,5 @@ export default function ChatInterface(){
         </List>
       </Container>
     </Container>
-  );
+ </> );
 };
