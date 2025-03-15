@@ -8,15 +8,15 @@ import {
   Grid,
   IconButton
 } from "@mui/material";
+import Modal from './Modal';
 import { ArrowBackIos, ArrowForwardIos } from "@mui/icons-material";
 import Drawer from './Drawer';
-import { createPortal } from 'react-dom';
 import SmallLoading from '../login/SmallLoading';
 
 const profile =   { reg_no: '12413928', reason: 'Long-term relationship', age: 23, name: 'Bharat',personality:'extrovert', images: [null, '/10.avif', '/4.avif', '/5.jpg', null], bio:'Im the solo developer of this whole Uni-Match platform...😎', interests:["Gardening", "Paragliding","Puzzles", "Astronomy", "Juggling",   "Art"  ] };
 
 const ProfileGrid = () => {
-  const [open, setOpen] = useState(false)
+  const [modalOpen, setModalOpen] = useState(false)
     const [imageClick, setImageClick] = useState(false);
     const [currentImageIndex, setCurrentImageIndex] = useState(0);
     const [imageLoaded, setImageLoaded] = useState(false);
@@ -159,9 +159,9 @@ const ProfileGrid = () => {
 
 
 
+<Modal setModalOpen={setModalOpen} modalOpen={modalOpen}/>
 
-{imageClick &&
-        createPortal(
+  {imageClick &&
           <Box
             sx={{
               position: 'fixed',
@@ -171,10 +171,10 @@ const ProfileGrid = () => {
                 ? 'translate(-50%, 0) scale(1)'
                 : 'translate(-50%, 100%) scale(0.9)',
               width: '100vw',
-              height: '100vh',
+              height: '60vh',
               zIndex: 5,
-              background: true 
-              ? "url(/10.avif)"
+              background: imageLoaded 
+              ? `url(${list[currentImageIndex]})`
               : 'linear-gradient(135deg, #e0e0e0 0%, #c0c0c0 100%)',
               backgroundSize: 'cover',
               backgroundPosition: 'center',
@@ -187,19 +187,14 @@ const ProfileGrid = () => {
             <SmallLoading/>
             )}
               <img  
-              src={'/10.avif'}
+              src={list[currentImageIndex]}
               alt="profile"
               style={{
-                //display: 'none', 
+                display: 'none', 
               }}
               onLoad={() => setImageLoaded(true)}
               onError={() => setImageLoaded(false)} // Fallback if the image fails to load
             />
-
-
-
-
-
 
             {/* Left Arrow */}
             <IconButton
@@ -276,10 +271,8 @@ const ProfileGrid = () => {
                 />
               ))}
             </Box>
-          </Box>,
-          document.body
-        )}
-
+          </Box>
+        }
 
 
     <Box sx={ {
@@ -295,7 +288,7 @@ const ProfileGrid = () => {
       <Box sx={scrollableGridStyle}>
         <Grid container spacing={{ xs: 1, sm: 2 }} columns={{ xs: 2, sm: 2 }}>
           {profiles.map((profile, index) => (
-            <Grid item xs={1} key={index} onClick={()=> setOpen(profile)}>
+            <Grid item xs={1} key={index} onClick={()=> setImageClick(true)}>
                <Card
                 sx={{
                   display: "flex",
@@ -328,7 +321,7 @@ const ProfileGrid = () => {
 
     <IconButton
       aria-label="like"
-      onClick={(e) => {e.stopPropagation(); console.log("UnLIke Clicked")}}
+      onClick={(e) => {e.stopPropagation(); console.log("UnLIke Clicked"); setModalOpen(true)}}
       sx={{
         background: "linear-gradient(145deg, #FF8BA7 0%, #FF6584 50%, #FF4D6D 100%)", // Softer but striking gradient
         borderRadius: "50%",
@@ -365,7 +358,7 @@ const ProfileGrid = () => {
         </Grid>
       </Box>
     </Box>
-    <Drawer imageClick={open} profile={profile} key={profile.reg_no} />
+    <Drawer imageClick={imageClick}  profile={profile} key={profile.reg_no} />
  </> );
 };
 

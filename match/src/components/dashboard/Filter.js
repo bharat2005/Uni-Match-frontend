@@ -120,7 +120,7 @@ const styles = {
   buttonGroup: {
     display: "flex",
     gap: "12px",
-    marginTop: "40px",
+    marginTop: "0px",
     padding: "0 20px 20px 20px",
   },
   resetButton: {
@@ -170,8 +170,8 @@ const styles = {
   },
 };
 
-function AppContainer() {
-  const [isDrawerOpen, setIsDrawerOpen] = React.useState(false);
+function AppContainer({isDrawerOpen, setIsDrawerOpen}) {
+ 
   const [selectedGender, setSelectedGender] = React.useState("不限");
   const [smallDrawerOpen, setSmallDrawerOpen] = React.useState(false);
   const [selectedMarriage, setSelectedMarriage] = React.useState("不限");
@@ -205,8 +205,8 @@ const handleOptionSelect = (option) => {
     setIsDrawerOpen(open);
   };
 
-  return (
-    <Box sx={styles.appContainer}>
+  return (<>
+   
 
       <SwipeableDrawer
         anchor="bottom"
@@ -279,6 +279,7 @@ const handleOptionSelect = (option) => {
             <Typography sx={styles.label}>Looking For?</Typography>
             <Button
               sx={styles.locationSelector}
+              
               endIcon={<KeyboardArrowRightIcon />}
               onClick={toggleSmallDrawer(true)}
             >
@@ -310,12 +311,18 @@ const handleOptionSelect = (option) => {
         anchor="bottom"
         open={smallDrawerOpen}
         onClose={toggleSmallDrawer(false)}
-        sx={styles.drawer}
+        sx={{
+          "& .MuiDrawer-paper": {
+            // borderTopLeftRadius: "20px",
+            // borderTopRightRadius: "20px",
+            background: "white",
+            maxHeight: "90vh",
+          }}}
       >
-        <List>
-          {["Casual Dating", "Long-term", "Short-term", "New Friends", "Study buddy", "Still Figuring Out"].map((option, index) => (
-            <ListItemButton key={index} onClick={() => handleOptionSelect(option)}>
-              <ListItemText primary={option} />
+        <List sx={{paddingBottom:0}}>
+          {["🎉Casual dating", "💘Long-term", "😍Short-term", "👋New friends", "🎓Study buddy", "🤔Still figuring"].map((option, index) => (
+            <ListItemButton key={index} onClick={() => handleOptionSelect(option)} sx={{borderBottom: "1px solid #f0f0f0",}}>
+              <ListItemText primary={option} sx={{textAlign:'center'}} />
             </ListItemButton>
           ))}
         </List>
@@ -324,7 +331,7 @@ const handleOptionSelect = (option) => {
 
 
 
-    </Box>
+</>
   );
 }
 

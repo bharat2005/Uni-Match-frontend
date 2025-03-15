@@ -4,6 +4,7 @@ import { Box, Button, IconButton } from "@mui/material";
 import TinderCard from "react-tinder-card";
 import Card from "./Card";
 import { Interests } from "@mui/icons-material";
+import Filter from './Filter';
 
 
 
@@ -14,8 +15,7 @@ const db = [
   { reg_no: '12413928', reason: 'Long-term relationship', age: 23, name: 'Bharat',personality:'extrovert', images: [null, '/10.avif', '/4.avif', '/5.jpg', null], bio:'Im the solo developer of this whole Uni-Match platform...😎', interests:["Gardening", "Paragliding","Puzzles","Juggling","Art", "Juggling"] }
 ];
 
-export default function Match({ profiles, setProfiles }) {
-  
+export default function Match({ profiles, setProfiles, isDrawerOpen, setIsDrawerOpen }) {
   const [currentIndex, setCurrentIndex] = useState(db.length - 1);
   const currentIndexRef = useRef(currentIndex);
   
@@ -149,7 +149,7 @@ export default function Match({ profiles, setProfiles }) {
 
         </Box>
       </Box>
-
+<Filter isDrawerOpen={isDrawerOpen} setIsDrawerOpen={setIsDrawerOpen}/>
     </>
   );
 }

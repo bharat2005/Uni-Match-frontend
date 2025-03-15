@@ -44,23 +44,23 @@ export default function Card({ profile }) {
               position: 'fixed',
               top: 0,
               left: '50%',
-              transform: imageLoaded
+              transform: true
                 ? 'translate(-50%, 0) scale(1)'
                 : 'translate(-50%, 100%) scale(0.9)',
               width: '100vw',
               height: '60vh',
               zIndex: 5,
-              background: imageLoaded 
+              background: true 
               ? `url(${list[currentImageIndex]})`
               : 'linear-gradient(135deg, #e0e0e0 0%, #c0c0c0 100%)',
               backgroundSize: 'cover',
               backgroundPosition: 'center',
               backgroundRepeat: 'no-repeat',
-              opacity: imageLoaded ? 1 : 0,
+              opacity: true ? 1 : 0,
               transition: 'opacity 0.1s ease, transform 0.3s ease',
             }}
           >
-           {!imageLoaded && (
+           {/* {!imageLoaded && (
             <SmallLoading/>
             )}
               <img  
@@ -71,7 +71,7 @@ export default function Card({ profile }) {
               }}
               onLoad={() => setImageLoaded(true)}
               onError={() => setImageLoaded(false)} // Fallback if the image fails to load
-            />
+            /> */}
 
 
 

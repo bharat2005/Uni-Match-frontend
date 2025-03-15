@@ -11,6 +11,7 @@ import Match from './Match';
 
 function AppLayout() {
   const [activeTab, setActiveTab] = React.useState("clover");
+  const [isDrawerOpen, setIsDrawerOpen] = React.useState(false);
 
   return (
     <>
@@ -91,7 +92,7 @@ onClick={() => setActiveTab("clover")}
 
 
 
-          <IconButton>
+          <IconButton  onClick={()=> setIsDrawerOpen(true)}>
             <i
               className="ti ti-adjustments-horizontal"
               style={{ fontSize: "26px", color:'black' }}
@@ -106,7 +107,7 @@ onClick={() => setActiveTab("clover")}
         <Box sx={{ flex: 1 }}>
           {activeTab=="likes" && <Likesoo/>}
           {activeTab=="match" && <Matchesoo/>}
-          {activeTab=="clover" && <Match/>}
+          {activeTab=="clover" && <Match  setIsDrawerOpen={setIsDrawerOpen} isDrawerOpen={isDrawerOpen} />}
           {activeTab=="chats" && <Chatsoo/>}
           {activeTab=="profile" && <Profilee/>}
           </Box>
