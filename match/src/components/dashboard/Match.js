@@ -144,7 +144,7 @@ onClick={() => setActiveTab("clover")}
             onSwipe={(dir) => swiped(dir, profile.name, index)}
             onCardLeftScreen={() => outOfFrame(profile.name, index)}
             swipeRequirementType="position"
-            swipeThreshold={200}
+            swipeThreshold={150}
             flickOnSwipe={true}
           >
             <Card profile={profile}   />
