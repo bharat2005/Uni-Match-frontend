@@ -140,9 +140,12 @@ onClick={() => setActiveTab("clover")}
             className="swipe"
             key={profile.reg_no}
             ref={childRefs[index]}
-            preventSwipe={['up', 'down', 'left', 'right']}
+            preventSwipe={['up', 'down']}
             onSwipe={(dir) => swiped(dir, profile.name, index)}
             onCardLeftScreen={() => outOfFrame(profile.name, index)}
+            swipeRequirementType="position"
+            swipeThreshold={200}
+            flickOnSwipe={true}
           >
             <Card profile={profile}   />
           </TinderCard>
