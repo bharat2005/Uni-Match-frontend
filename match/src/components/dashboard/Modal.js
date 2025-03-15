@@ -62,7 +62,7 @@ const Container = ({ setModalOpen, modalOpen }) => {
       <Player
     autoplay
     loop
-    src={'/update.json'}
+    src={'/accept.json'}
    style={{ height: '130px'}}
   />
 
