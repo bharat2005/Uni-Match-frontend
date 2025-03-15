@@ -214,7 +214,6 @@ const handleOptionSelect = (option) => {
         onClose={toggleDrawer(false)}
         onOpen={toggleDrawer(true)}
         sx={styles.drawer}
-        disableSwipeToOpen={false}
       >
         <Box sx={styles.searchHeader}>
           <Typography variant="h6" component="h1">

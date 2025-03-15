@@ -26,7 +26,8 @@ import {
 import About from './About'
 import Delete from './DeleteProfile';
 import Support from './Support';
-import EditStepForm from './EditStepForm';
+import EditStepForm from './Edit';
+import Modal from './Modal2.0';
 
 
 
@@ -36,7 +37,8 @@ const ProfileContainer = () => {
   const theme = useTheme();
   const isMobile = useMediaQuery("(max-width:640px)");
   const isTablet = useMediaQuery("(max-width:991px)");
-  const [open, setOpen] = React.useState(null)
+  const [open, setOpen] = React.useState(null);
+  const [modalOpen, setModalOpen] = React.useState(false)
 
   const containerStyles = {
     background: "linear-gradient(180deg, rgba(245, 245, 245, 0) 0%, #F5F5F5 26%)",
@@ -131,9 +133,6 @@ const ProfileContainer = () => {
       case "Edit Profile":{
         return  <EditStepForm onClose={()=> setOpen(false)}/>
       }
-      case "Share":{
-        return "hi"
-      }
       case "About Developer":{
         return <About onClose={()=> setOpen(false)}/>
       }
@@ -147,8 +146,12 @@ const ProfileContainer = () => {
     }
   }
 
-  return (
+  return (<>
+
+  <Modal modalOpen={modalOpen} setModalOpen={setModalOpen} name={"share"}/>
+
     <Box sx={containerStyles}>
+    
       <Box sx={profileHeaderStyles}>
         <Avatar
           src="/5.jpg"
@@ -186,7 +189,7 @@ const ProfileContainer = () => {
       <Box sx={menuListStyles}>
         <List disablePadding>
           {menuItems.map((item, index) => (
-            <ListItem onClick={()=> setOpen(item.text)} key={index} sx={menuItemStyles}>
+            <ListItem onClick={()=> { item.text == "Share" ? setModalOpen(true) : setOpen(item.text)}} key={index} sx={menuItemStyles}>
               <ListItemIcon sx={{ color: "#666", minWidth: "40px" }}>
                 {item.icon}
               </ListItemIcon>
@@ -227,6 +230,7 @@ const ProfileContainer = () => {
         </Box>
       </Box>
     </Box>
+    </>
   );
 };
 

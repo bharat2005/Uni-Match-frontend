@@ -22,7 +22,7 @@ const DeleteProfile = ({ onClose }) => {
         height: "100vh",
         backgroundColor: "#FAFAFA",
         fontFamily: '"Inter", sans-serif',
-        zIndex: 9999,
+        zIndex: 9,
         display: "flex",
         flexDirection: "column",
       }}
@@ -33,7 +33,7 @@ const DeleteProfile = ({ onClose }) => {
           display: "flex",
           alignItems: "center",
           justifyContent: "center",
-          padding: "12px 20px",
+          padding: "28px 20px 12px 20px",
           position: "sticky",
           top: 0,
           backgroundColor: "#FFFFFF",

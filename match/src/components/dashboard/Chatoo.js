@@ -77,7 +77,7 @@ const ChatComponent = ({ setChatt }) => {
         sx={{
           display: "flex",
           alignItems: "center",
-          padding: "14px",
+          padding: "28px 20px 12px 20px",
           justifyContent:'center',
           position: "sticky",
           top: 0,

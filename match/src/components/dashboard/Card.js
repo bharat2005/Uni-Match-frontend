@@ -157,22 +157,24 @@ export default function Card({ profile }) {
           document.body
         )}
 
-      <Box
-        sx={{
-          position: "relative",
-          backgroundColor: "white",
-          width: "380px",
-          height: "540px",
-          boxShadow: "inset 0px -50px 60px 0px black",
-          borderRadius: "34px",
-          backgroundImage: `url(${list[currentImageIndex]})`,
-          backgroundSize: "cover",
-          backgroundPosition: "center",
-          display: "flex",
-          justifyContent: "center",
-          alignItems: "center",
-        }}
-      >
+<Box
+  sx={{
+    position: "relative",
+    backgroundColor: "white",
+    width: "380px",
+    height: "80vh",
+    boxShadow: "inset 0px -140px 60px 0px black",
+    borderRadius: "24px",
+    backgroundImage: `url(${list[currentImageIndex]})`,
+    backgroundSize: "cover",
+    backgroundPosition: `center bottom 80px`, // Offset from the bottom
+    backgroundRepeat: "repeat", // Repeat the image
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+  }}
+>
+
         {/* Left Arrow */}
         <IconButton
           sx={{
@@ -206,18 +208,18 @@ export default function Card({ profile }) {
           onPointerDown={() => setImageClick(true)}
           sx={{
             position: "absolute",
-            bottom: "12%",
-            right: "6%",
-            color: "white",
-            backgroundColor: "rgba(0, 0, 0, 0.5)",
-            padding: "12px",
+            bottom: "18%",
+            right: "8%",
+            color: "black",
+            backgroundColor: "rgb(255, 255, 255)",
+            padding: "6px",
             borderRadius: "50%",
             "&:hover": {
               backgroundColor: "rgba(0, 0, 0, 0.7)",
             },
           }}
         >
-          <i className="ti ti-arrow-up" style={{ fontSize: "26px" }}></i>
+          <i className="ti ti-arrow-up" style={{ fontSize: "28px" }}></i>
         </IconButton>
 
         {/* ✅ Dots Indicator */}
@@ -251,10 +253,10 @@ export default function Card({ profile }) {
           variant="h6"
           sx={{
             position: "absolute",
-            bottom: "10%",
+            bottom: "15%",
             left: "5%",
             fontWeight: "bold",
-            fontSize: "28px",
+            fontSize: "34px",
             color: "white",
           }}
         >

@@ -7,9 +7,10 @@ import {
   CardContent,
   CardMedia,
   Grid,
+  Modal
 } from "@mui/material";
-import ProfileModal from './ProfileModal';
 import { ArrowBackIos, ArrowForwardIos } from "@mui/icons-material";
+import Modall from './Modal';
 import Drawer from './Drawer';
 import SmallLoading from '../login/SmallLoading';
 
@@ -22,6 +23,7 @@ const profile =   { reg_no: '12413928', reason: 'Long-term relationship', age: 2
 
 const ProfileGrid = () => {
   const [open, setOpen] = useState(false)
+  const [name, setName] = useState(false);
       const [imageClick, setImageClick] = useState(false);
       const [currentImageIndex, setCurrentImageIndex] = useState(0);
       const [imageLoaded, setImageLoaded] = useState(false);
@@ -160,7 +162,7 @@ const ProfileGrid = () => {
 
   return (<>
 
-  
+<Modall setModalOpen={setName} modalOpen={name} name={name}/>
 
 {imageClick &&
           <Box
@@ -318,8 +320,8 @@ const ProfileGrid = () => {
     }}
   >
     <IconButton
-      aria-label="like"
-      onClick={(e) => {e.stopPropagation(); console.log("LIkeback Clicked")}}
+      aria-label="unlike"
+      onClick={(e) => {e.stopPropagation(); setName("reject")}}
       sx={{
         background: "linear-gradient(145deg, #FF8BA7 0%, #FF6584 50%, #FF4D6D 100%)", // Softer but striking gradient
         borderRadius: "50%",
@@ -345,8 +347,8 @@ const ProfileGrid = () => {
       <i className="ti ti-x" style={{ fontSize: "26px", color: "white" }} />
     </IconButton>
     <IconButton
-      aria-label="dislike"
-      onClick={(e) => {e.stopPropagation(); console.log("Reject Clicked")}}
+      aria-label="like"
+      onClick={(e) => {e.stopPropagation(); setName("accept")}}
       sx={{
         background: "linear-gradient(145deg, #A0D8FF 0%, #76B7FF 40%, #4A90E2 100%)", // Softer and more balanced blue
         borderRadius: "50%",

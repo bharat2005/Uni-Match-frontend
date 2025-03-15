@@ -1,20 +1,27 @@
 
 import * as React from "react";
-import { Box, IconButton } from "@mui/material";
+import { Box, IconButton, Modal } from "@mui/material";
 import Profilee from './Profilee';
 import NavBar from './NavBar2';
 import Chatsoo from './Chatsoo';
 import Likesoo from './Likesoo';
 import Matchesoo from './Matchesoo';
 import Match from './Match';
+import Modall from './Modal';
 
 
 function AppLayout() {
   const [activeTab, setActiveTab] = React.useState("clover");
   const [isDrawerOpen, setIsDrawerOpen] = React.useState(false);
+  const [name, setName] = React.useState(false);
+
+  React.useEffect(()=> {
+    setName("noti");
+  },[]);
 
   return (
     <>
+    <Modall setModalOpen={setName} modalOpen={name} name={name}/>
 <link
   rel="stylesheet"
   href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/dist/tabler-icons.min.css"
@@ -24,82 +31,12 @@ function AppLayout() {
           height: "95dvh",
           width:'100vw',
           display: "flex",
-          paddingTop:'5%',
+          //paddingTop:'5%',
           flexDirection: "column",
           position: "relative",
         }}
       >
-        <Box
-          sx={{
-            display: "flex",
-            justifyContent: "space-between",
-            alignItems: "center",
-            marginBottom:'5%',
-            padding: { xs: "16px", sm: "20px" },
-            color: "#000",
-          }}
-        >
-          <Box
-                sx={{
-                  display: "flex",
-                  justifyContent: "center",
-                  alignItems: "center",
-            }}
-          >
-            <IconButton
-            sx={{ margin:0,
-              padding:0,}}
-           
-             >
-  <Box
-    sx={{
-      display: "flex",
-      justifyContent: "center",
-      alignItems: "center",
-      width: "30px",
-      height: "46px",
-      borderRadius: "50%",
-      display: "flex",
-      justifyContent: "center",
-      alignItems: "center",
-      backgroundColor: "transparent", // Transparent background
-      transition: "background-color 0.3s ease-in-out",
-    }}
-  >
-    <i
-      className="ti ti-clover-filled"
-      style={{
-        fontSize: "24px",
-        background: "linear-gradient(145deg, #ff3c78 0%, #ff79b0 30%, #b985ff 70%, #5caeff 100%)",
-        WebkitBackgroundClip: "text", // Clip background to text
-        WebkitTextFillColor: "transparent", // Make text transparent to show gradient
-        transition: "background 0.3s ease-in-out",
-      }}
-    />
-  </Box>
-</IconButton>    
-<img
-onClick={() => setActiveTab("clover")}
-      src="/Uni-match-14-3-2025.png" // Replace with your image path
-      alt="clover"
-      style={{
-        height: "42px",
-        objectFit: "cover",}}
-    />
-          </Box>
-
-
-
-
-
-          <IconButton  onClick={()=> setIsDrawerOpen(true)}>
-            <i
-              className="ti ti-adjustments-horizontal"
-              style={{ fontSize: "26px", color:'black' }}
-            />
-          </IconButton>
-        </Box>
-
+ 
 
 
 
@@ -107,7 +44,7 @@ onClick={() => setActiveTab("clover")}
         <Box sx={{ flex: 1 }}>
           {activeTab=="likes" && <Likesoo/>}
           {activeTab=="match" && <Matchesoo/>}
-          {activeTab=="clover" && <Match  setIsDrawerOpen={setIsDrawerOpen} isDrawerOpen={isDrawerOpen} />}
+          {activeTab=="clover" && <Match  setIsDrawerOpen={setIsDrawerOpen} isDrawerOpen={isDrawerOpen} setActiveTab={setActiveTab}/>}
           {activeTab=="chats" && <Chatsoo/>}
           {activeTab=="profile" && <Profilee/>}
           </Box>

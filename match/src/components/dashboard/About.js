@@ -28,7 +28,7 @@ const TextBoard = ({ onClose }) => {
           display: "flex",
           alignItems: "center",
           justifyContent: "center",
-          padding: "10px 16px",
+          padding: "28px 20px 12px 20px",
           position: "sticky",
           top: 0,
           backgroundColor: "#FFFFFF",
@@ -218,26 +218,25 @@ const TextBoard = ({ onClose }) => {
           justifyContent: "center",
         }}
       >
-        <Button
-          variant="contained"
-          onClick={handleContactClick}
-          sx={{
-            backgroundColor: "#1976D2",
-            color: "#FFFFFF",
-            padding: "8px 20px",
-            fontSize: "14px",
-            fontWeight: 500,
-            borderRadius: "20px",
-            textTransform: "none",
-            "&:hover": {
-              backgroundColor: "#1565C0",
-            },
-            boxShadow: "0 2px 6px rgba(0,0,0,0.1)",
-          }}
-        >
-          <i className="ti ti-mail-filled" style={{ fontSize: "18px" }} />
-          Contact Us
-        </Button>
+            <Button
+              variant="contained"
+              sx={{
+                py: 1.5,
+                width:'40%',
+                borderRadius: "25px",
+                bgcolor: "#ff6b9c",
+                fontSize: "14px",
+                "&:hover": {
+                  bgcolor: "#ff5c8f",
+                },
+                textTransform: "none",
+                boxShadow: "none",
+                transition: "all 0.2s ease",
+              }}
+            >
+              <i className="ti ti-mail-filled" style={{ fontSize: "18px" }} />{" "}
+              Contact Us
+            </Button>
       </Box>
     </Box>
   );

@@ -6,9 +6,10 @@ import {
   CardContent,
   CardMedia,
   Grid,
-  IconButton
+  IconButton,
+  Modal
 } from "@mui/material";
-import Modal from './Modal';
+import Modall from './Modal';
 import { ArrowBackIos, ArrowForwardIos } from "@mui/icons-material";
 import Drawer from './Drawer';
 import SmallLoading from '../login/SmallLoading';
@@ -129,7 +130,7 @@ const ProfileGrid = () => {
 
   const imageStyle = {
     width: "100%",
-    height: "220px",
+    height: "200px",
     borderRadius: "26px",
     objectFit: "cover",
   };
@@ -159,7 +160,28 @@ const ProfileGrid = () => {
 
 
 
-<Modal setModalOpen={setModalOpen} modalOpen={modalOpen}/>
+<Modall setModalOpen={setModalOpen} modalOpen={modalOpen} name={"unlike"}/>
+
+
+   <Box
+          sx={{
+            display: "flex",
+            justifyContent: "space-between",
+            alignItems: "center",
+            //marginBottom:'5%',
+            padding: { xs: "16px", sm: "20px" },
+            color: "#000",
+            fontSize:'38px',
+            fontWeight:700,
+          }}
+        >
+
+       Likes
+        </Box>
+
+
+
+
 
   {imageClick &&
           <Box
@@ -279,13 +301,19 @@ const ProfileGrid = () => {
       background: "linear-gradient(180deg, rgba(245, 245, 245, 0) 0%, #F5F5F5 26%)",
       minHeight: "100vh",
       padding: {
-        xs: "10px",
-        sm: "15px",
-        md: "20px",
+        xs: "18px",
+        sm: "18px",
+        md: "24px",
       },
     }}>
      
-      <Box sx={scrollableGridStyle}>
+      <Box sx={{
+    maxHeight: "75vh",
+    overflowY: "auto",
+    "&::-webkit-scrollbar": {
+      display: "none", 
+    },
+  }}>
         <Grid container spacing={{ xs: 1, sm: 2 }} columns={{ xs: 2, sm: 2 }}>
           {profiles.map((profile, index) => (
             <Grid item xs={1} key={index} onClick={()=> setImageClick(true)}>
@@ -305,7 +333,12 @@ const ProfileGrid = () => {
                   component="img"
                   image={profile.imageUrl}
                   alt={profile.imageAlt}
-                  sx={imageStyle}
+                  sx={{
+                    width: "100%",
+                    height: "200px",
+                    borderRadius: "26px",
+                    objectFit: "cover",
+                  }}
                 />
 
 <Box
@@ -318,34 +351,22 @@ const ProfileGrid = () => {
       gap: 2,
     }}
   >
-
-    <IconButton
-      aria-label="like"
-      onClick={(e) => {e.stopPropagation(); console.log("UnLIke Clicked"); setModalOpen(true)}}
-      sx={{
-        background: "linear-gradient(145deg, #FF8BA7 0%, #FF6584 50%, #FF4D6D 100%)", // Softer but striking gradient
-        borderRadius: "50%",
-        width: "56px",
-        height: "56px",
-        boxShadow: "0 8px 24px rgba(255, 101, 132, 0.3)",
-        backdropFilter: "blur(12px)",
-        display: "flex",
-        justifyContent: "center",
-        alignItems: "center",
-        transition: "all 0.3s ease",
-    
-        "&:focus": {
-          boxShadow: "0 8px 24px rgba(255, 101, 132, 0.3)",
-        },
-        "&:active": {
-          transform: "scale(0.95)",
-          boxShadow: "0 4px 12px rgba(255, 101, 132, 0.5)",
-        },
-      
-      }}
-    >
-      <i className="ti ti-x" style={{ fontSize: "26px", color: "white" }} />
-    </IconButton>
+         <IconButton
+           onClick={(e) => {e.stopPropagation(); console.log("UnLIke Clicked"); setModalOpen(true)}}
+           sx={{
+            width:'42px',
+            height:'42px',
+             color: "white",
+             backgroundColor: "rgba(0, 0, 0, 0.5)",
+             padding: "12px",
+             borderRadius: "50%",
+             "&:hover": {
+               backgroundColor: "rgba(0, 0, 0, 0.7)",
+             },
+           }}
+         >
+           <i className="ti ti-x" style={{ fontSize: "24px" }}></i>
+         </IconButton>
   </Box>
 
                 <CardContent sx={{ paddingBottom: "12px !important", paddingTop:'6px !important'}}>

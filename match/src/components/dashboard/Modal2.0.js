@@ -3,16 +3,9 @@ import * as React from "react";
 import { Player } from '@lottiefiles/react-lottie-player';
 import { Box, Typography, Button, Modal } from "@mui/material";
 
-const Container = ({ setModalOpen, modalOpen, name="accept" }) => {
-  const handleUnlock = () => {
-    console.log("Unlock clicked");
-    setModalOpen(false); // Close modal after unlock
-  };
+const Container = ({ modalOpen, setModalOpen, name }) => {
 
-  const handleLater = () => {
-    console.log("Later clicked");
-    setModalOpen(false); // Close modal after later
-  };
+
 
   return (
     <Modal
@@ -62,7 +55,7 @@ const Container = ({ setModalOpen, modalOpen, name="accept" }) => {
       <Player
     autoplay
     loop
-    src={name == "unlike" ? "/unlike.json" : name == "reject" ? "/reject.json" : name == "accept" ? "/accept.json" : name == "noti" ? "/noti.json" : null }
+    src={name == "share" ? "/share.json" : name == "update" ? "/update.json" : null }
    style={{ height: '130px'}}
   />
 
@@ -98,10 +91,8 @@ const Container = ({ setModalOpen, modalOpen, name="accept" }) => {
               // },
             }}
           >
-            {name ==="unlike" && "Are you sure about this?"}
-            {name ==="reject" && "Not quite feeling it?"}
-            {name ==="accept" && "Feeling the connection?"}
-            {name ==="noti" && "You’ve got a match!"}
+            {name ==="share" && "Spread the love at LPU!"}
+            {name ==="update" && "Not quite feeling it?"}
           </Typography>
           <Typography
             id="modal-description"
@@ -111,7 +102,7 @@ const Container = ({ setModalOpen, modalOpen, name="accept" }) => {
               fontFamily: '"Inter", sans-serif',
               fontSize: "16px",
               fontWeight: 400,
-              lineHeight: "40px",
+              lineHeight: "20px",
               width: "100%",
               // "@media (max-width: 991px)": {
               //   fontSize: "26px",
@@ -123,10 +114,8 @@ const Container = ({ setModalOpen, modalOpen, name="accept" }) => {
               // },
             }}
           >
-          {name === "unlike" && "Want to undo the like?"}
-          {name === "reject" && "Wanna move on?"}
-          {name === "accept" && "Wanna say yes?"}
-          {name === "noti" && "Wanna see who it is?"}
+          {name === "share" && "Help your friends find meaningful connections — share Uni-Match and grow the LPU community into a place where real bonds and relationships thrive!"}
+          {name === "update" && "Wanna move on?"}
           </Typography>
         </Box>
 
@@ -142,7 +131,7 @@ const Container = ({ setModalOpen, modalOpen, name="accept" }) => {
           }}
         >
           <Button
-            onClick={handleUnlock}
+            //onClick={handleUnlock}
             aria-label="解锁互动"
             sx={{
               height: "50px",
@@ -170,45 +159,8 @@ const Container = ({ setModalOpen, modalOpen, name="accept" }) => {
               // },
             }}
           >
-         {name === "unlike" && "Undo"}
-         {name === "reject" && "Move on"}
-         {name === "accept" && "Say yes"}
-         {name === "noti" && "See now"}
-          </Button>
-          <Button
-            onClick={handleLater}
-            aria-label="稍后解锁"
-            sx={{
-              height: "50px",
-              padding: "0 40px",
-              width: "95%",
-              borderRadius: "50px",
-              color: "#5c595b",
-              textAlign: "center",
-              fontFamily: '"Inter", sans-serif',
-              fontSize: "16px",
-              fontWeight: 500,
-              cursor: "pointer",
-              backgroundColor: "transparent",
-              textTransform: "none",
-              "&:hover": {
-                backgroundColor: "transparent",
-              },
-              // "@media (max-width: 991px)": {
-              //   height: "80px",
-              //   fontSize: "28px",
-              // },
-              // "@media (max-width: 640px)": {
-              //   height: "60px",
-              //   fontSize: "24px",
-              //   padding: "0 20px",
-              // },
-            }}
-          >
-            {name === "unlike" && "Keep it"}
-            {name === "reject" && "Think more"}
-            {name === "accept" && "Not now"}
-            {name === "noti" && "Later"}
+         {name === "share" && "Share"}
+         {name === "update" && "Continue"}
           </Button>
         </Box>
       </Box>
