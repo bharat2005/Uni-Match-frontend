@@ -1,7 +1,9 @@
 import React from "react";
 import { Box, IconButton } from "@mui/material";
+import { NavLink } from "react-router-dom";
 
-export default function Stepper({ activeTab, setActiveTab }) {
+
+export default function Stepper() {
   return (
     <Box
       sx={{
@@ -14,17 +16,21 @@ export default function Stepper({ activeTab, setActiveTab }) {
         bottom: 0,
         left: 0,
         right: 0,
+        height: "52px", // Fixed height for the navbar
+        boxShadow: "0 -2px 4px rgba(0,0,0,0.1)",
+        zIndex:5,
       }}
     >
-      {/* Likes */}
+          <NavLink to="/app/likes" style={{ textDecoration: "none" }}>
+          {({ isActive }) => (
       <IconButton
-        onClick={() => setActiveTab("likes")}
+        //onClick={() => setActiveTab("likes")}
         sx={{
           display: "flex",
           flexDirection: "column",
           alignItems: "center",
           gap: "5px",
-          color: activeTab === "likes" ? "#FE6BA2" : "black",
+          color: isActive ? "#FE6BA2" : "black",
           "&:hover": {
             backgroundColor: "rgba(255, 77, 109, 0.04)",
           },
@@ -34,22 +40,23 @@ export default function Stepper({ activeTab, setActiveTab }) {
         <Box
           sx={{
             fontSize: { xs: "10px", sm: "12px" },
-            color: activeTab === "likes" ? "#FE6BA2" : "#666",
+            color: isActive ? "#FE6BA2" : "#666",
           }}
         >
           Likes
         </Box>
-      </IconButton>
+      </IconButton>)}</NavLink>
 
-      {/* Match */}
+      <NavLink to="/app/matches" style={{ textDecoration: "none" }}>
+      {({ isActive }) => (
       <IconButton
-        onClick={() => setActiveTab("match")}
+        //onClick={() => setActiveTab("match")}
         sx={{
           display: "flex",
           flexDirection: "column",
           alignItems: "center",
           gap: "5px",
-          color: activeTab === "match" ? "#FE6BA2" : "black",
+          color: isActive ? "#FE6BA2" : "black",
           "&:hover": {
             backgroundColor: "rgba(255, 77, 109, 0.04)",
           },
@@ -59,15 +66,18 @@ export default function Stepper({ activeTab, setActiveTab }) {
         <Box
           sx={{
             fontSize: { xs: "10px", sm: "12px" },
-            color: activeTab === "match" ? "#FE6BA2" : "#666",
+            color: isActive  ? "#FE6BA2" : "#666",
           }}
         >
           Match
         </Box>
-      </IconButton>
+      </IconButton>)}</NavLink>
 
-      {/* Star */}
-      <IconButton onClick={() => setActiveTab("clover")}>
+      <NavLink to="/app" style={{ textDecoration: "none" }}>
+      {({ isActive }) => (
+      <IconButton 
+      //onClick={() => setActiveTab("clover")}
+      >
         <Box
           sx={{
             display: "flex",
@@ -85,22 +95,23 @@ export default function Stepper({ activeTab, setActiveTab }) {
             className="ti ti-clover-filled"
             style={{
               fontSize: "34px",
-              color: activeTab === "clover" ? "white" : "white",
+              color: isActive ? "white" : "white",
               transition: "color 0.3s ease-in-out",
             }}
           />
         </Box>
-      </IconButton>
+      </IconButton>)}</NavLink>
 
-      {/* Chats */}
+      <NavLink to="/app/chats" style={{ textDecoration: "none" }}>
+      {({ isActive }) => (
       <IconButton
-        onClick={() => setActiveTab("chats")}
+        //onClick={() => setActiveTab("chats")}
         sx={{
           display: "flex",
           flexDirection: "column",
           alignItems: "center",
           gap: "5px",
-          color: activeTab === "chats" ? "#FE6BA2" : "black",
+          color: isActive ? "#FE6BA2" : "black",
           "&:hover": {
             backgroundColor: "rgba(255, 77, 109, 0.04)",
           },
@@ -110,22 +121,23 @@ export default function Stepper({ activeTab, setActiveTab }) {
         <Box
           sx={{
             fontSize: { xs: "10px", sm: "12px" },
-            color: activeTab === "chats" ? "#FE6BA2" : "#666",
+            color: isActive  ? "#FE6BA2" : "#666",
           }}
         >
           Chats
         </Box>
-      </IconButton>
+      </IconButton>)}</NavLink>
 
-      {/* Profile */}
+      <NavLink to="/app/profile" style={{ textDecoration: "none" }}>
+      {({ isActive }) => (
       <IconButton
-        onClick={() => setActiveTab("profile")}
+        //onClick={() => setActiveTab("profile")}
         sx={{
           display: "flex",
           flexDirection: "column",
           alignItems: "center",
           gap: "5px",
-          color: activeTab === "profile" ? "#FE6BA2" : "black",
+          color: isActive  ? "#FE6BA2" : "black",
           "&:hover": {
             backgroundColor: "rgba(255, 77, 109, 0.04)",
           },
@@ -135,12 +147,12 @@ export default function Stepper({ activeTab, setActiveTab }) {
         <Box
           sx={{
             fontSize: { xs: "10px", sm: "12px" },
-            color: activeTab === "profile" ? "#FE6BA2" : "#666",
+            color: isActive ? "#FE6BA2" : "#666",
           }}
         >
           Profile
         </Box>
-      </IconButton>
+      </IconButton>)}</NavLink>
     </Box>
   );
 }

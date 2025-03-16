@@ -12,7 +12,7 @@ import {
 import Modall from './Modal';
 import { ArrowBackIos, ArrowForwardIos } from "@mui/icons-material";
 import Drawer from './Drawer';
-import SmallLoading from '../login/SmallLoading';
+import ImagePart from './ImagePart';
 
 const profile =   { reg_no: '12413928', reason: 'Long-term relationship', age: 23, name: 'Bharat',personality:'extrovert', images: [null, '/10.jpg', '/4.jpg', '/5.jpg', null], bio:'Im the solo developer of this whole Uni-Match platform...😎', interests:["Gardening", "Paragliding","Puzzles", "Astronomy", "Juggling",   "Art"  ] };
 
@@ -163,137 +163,15 @@ const ProfileGrid = () => {
 <Modall setModalOpen={setModalOpen} modalOpen={modalOpen} name={"unlike"}/>
 
 
-   <Box
-          sx={{
-            display: "flex",
-            justifyContent: "space-between",
-            alignItems: "center",
-            //marginBottom:'5%',
-            padding: { xs: "16px", sm: "20px" },
-            color: "#000",
-            fontSize:'38px',
-            fontWeight:700,
-          }}
-        >
-
-       Likes
-        </Box>
-
-
-
-
-
   {imageClick &&
-          <Box
-            sx={{
-              position: 'fixed',
-              top: 0,
-              left: '50%',
-              transform: imageLoaded
-                ? 'translate(-50%, 0) scale(1)'
-                : 'translate(-50%, 100%) scale(0.9)',
-              width: '100vw',
-              height: '60vh',
-              zIndex: 5,
-              background: imageLoaded 
-              ? `url(${list[currentImageIndex]})`
-              : 'linear-gradient(135deg, #e0e0e0 0%, #c0c0c0 100%)',
-              backgroundSize: 'cover',
-              backgroundPosition: 'center',
-              backgroundRepeat: 'no-repeat',
-              opacity: imageLoaded ? 1 : 0,
-              transition: 'opacity 0.1s ease, transform 0.3s ease',
-            }}
-          >
-           {!imageLoaded && (
-            <SmallLoading/>
-            )}
-              <img  
-              src={list[currentImageIndex]}
-              alt="profile"
-              style={{
-                display: 'none', 
-              }}
-              onLoad={() => setImageLoaded(true)}
-              onError={() => setImageLoaded(false)} // Fallback if the image fails to load
-            />
-
-            {/* Left Arrow */}
-            <IconButton
-              sx={{
-                position: 'absolute',
-                top: '50%',
-                left: '20px',
-                transform: 'translateY(-50%)',
-                color: '#fff',
-              }}
-              onClick={(e) => {
-                e.stopPropagation();
-                prevImage();
-              }}
-            >
-              <ArrowBackIos />
-            </IconButton>
-
-            {/* Right Arrow */}
-            <IconButton
-              sx={{
-                position: 'absolute',
-                top: '50%',
-                right: '20px',
-                transform: 'translateY(-50%)',
-                color: '#fff',
-              }}
-              onClick={(e) => {
-                e.stopPropagation();
-                nextImage();
-              }}
-            >
-              <ArrowForwardIos />
-            </IconButton>
-
-            {/* Close Button */}
-            <IconButton
-              sx={{
-                position: 'absolute',
-                top: '20px',
-                left: '20px',
-                color: '#fff',
-              }}
-              onClick={(e) => {
-                e.stopPropagation();
-                setImageClick(false);
-              }}
-            >
-              <i className="ti ti-arrow-left" style={{ fontSize: "24px" }}></i>
-            </IconButton>
-
-            {/* ✅ Dots Indicator */}
-            <Box
-              sx={{
-                position: 'absolute',
-                top: '10px',
-                left: '50%',
-                transform: 'translateX(-50%)',
-                display: 'flex',
-                gap: '6px',
-              }}
-            >
-              {list.map((_, index) => (
-                <Box
-                  key={index}
-                  sx={{
-                    width: "48px",
-                    height: "4px",
-                    borderRadius: "15%",
-                    backgroundColor: index === currentImageIndex ? '#fff' : '#888',
-                    opacity: index === currentImageIndex ? 1 : 0.5,
-                    transition: 'opacity 0.3s ease',
-                  }}
-                />
-              ))}
-            </Box>
-          </Box>
+                    <ImagePart  
+                     imageLoaded ={imageLoaded} 
+                     setImageLoaded={setImageLoaded}  
+                     list={list} 
+                     currentImageIndex={currentImageIndex} 
+                     setImageClick={setImageClick} 
+                     prevImage={prevImage} 
+                     nextImage={nextImage} />
         }
 
 
@@ -301,15 +179,36 @@ const ProfileGrid = () => {
       background: "linear-gradient(180deg, rgba(245, 245, 245, 0) 0%, #F5F5F5 26%)",
       minHeight: "100vh",
       padding: {
-        xs: "18px",
-        sm: "18px",
-        md: "24px",
+        xs: "12px",
+        sm: "14px",
+        md: "18px",
       },
     }}>
+
+<Box sx={{ 
+    marginBottom: "16px" 
+  }}>
+    <Typography 
+      sx={{
+        textAlign: 'left',
+        fontSize: { xs: '24px', sm: '28px' }, // Responsive font size
+        fontWeight: 600, // Bold for clear hierarchy
+        color: '#333', // Subtle but clear color
+        letterSpacing: '0.5px', // Improve readability
+        //paddingBottom: "8px", // Space between subheading and content
+       // borderBottom: "2px solid #eee", // Light separator for clarity
+      }}
+    >
+      Likes
+    </Typography>
+  </Box>
+     
      
       <Box sx={{
-    maxHeight: "75vh",
+    height: `calc(100vh - 42px - 46px - 16px)`,
     overflowY: "auto",
+    padding:'8px',
+    
     "&::-webkit-scrollbar": {
       display: "none", 
     },
@@ -357,12 +256,16 @@ const ProfileGrid = () => {
             width:'42px',
             height:'42px',
              color: "white",
-             backgroundColor: "rgba(0, 0, 0, 0.5)",
+             backgroundColor: "rgba(0, 0, 0, 0.8)",
              padding: "12px",
              borderRadius: "50%",
              "&:hover": {
-               backgroundColor: "rgba(0, 0, 0, 0.7)",
+               backgroundColor: "rgba(0, 0, 0, 1)",
              },
+             "&:active": {
+              transform: "scale(0.8)", // Less shrink to feel more natural
+              boxShadow: "0 4px 12px rgba(255, 0, 110, 0.9)", // More intense active shadow
+            },
            }}
          >
            <i className="ti ti-x" style={{ fontSize: "24px" }}></i>
@@ -370,13 +273,36 @@ const ProfileGrid = () => {
   </Box>
 
                 <CardContent sx={{ paddingBottom: "12px !important", paddingTop:'6px !important'}}>
-                  <Typography sx={nameStyle}>{profile.name}</Typography>
-                  <Typography sx={detailsStyle}>{profile.details}</Typography>
+                  <Typography sx={{
+    fontFamily: '"Inter", sans-serif',
+    fontSize: {
+      xs: "20px",
+      sm: "26px",
+    },
+    fontWeight: 600,
+    color: "#333",
+    marginBottom: "0px",
+  }}>{profile.name}</Typography>
+                  <Typography sx={{
+    fontFamily: '"Inter", sans-serif',
+    fontSize: {
+      xs: "12px",
+      sm: "14px",
+    },
+    color: "#666",
+    lineHeight: 1.4,
+  }}>{profile.details}</Typography>
                 </CardContent>
               </Card>
             </Grid>
           ))}
         </Grid>
+        <Box
+    sx={{
+      height: "40px", // Same as or slightly more than the navbar height
+      backgroundColor: "transparent", // Invisible, just for spacing
+    }}
+  />
       </Box>
     </Box>
     <Drawer imageClick={imageClick}  profile={profile} key={profile.reg_no} />

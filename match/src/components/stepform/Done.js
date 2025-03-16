@@ -3,6 +3,7 @@ import * as React from "react";
 import { Box, Button, Container, Typography } from "@mui/material";
 import CheckIcon from "@mui/icons-material/Check";
 import { fontWeight } from "@mui/system";
+import { replace, useNavigate } from "react-router-dom";
 
 const styles = {
   container: {
@@ -10,6 +11,7 @@ const styles = {
     justifyContent: "center",
     alignItems: "center",
     minHeight: "95dvh",
+    width:'100vw',
     background: "linear-gradient(135deg, #ffe6e6, #e6f0ff)",
     padding: "20px",
   },
@@ -72,6 +74,8 @@ const styles = {
 };
 
 function RegistrationComplete() {
+  const navigate = useNavigate();
+
   return (
     
       <Box sx={styles.container}>
@@ -87,6 +91,7 @@ function RegistrationComplete() {
               variant="contained"
               fullWidth
               disableElevation
+              onClick={()=> navigate('/app', { replace: true })}
               sx={styles.confirmButton}
             >
               Continue

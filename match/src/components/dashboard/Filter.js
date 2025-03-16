@@ -72,8 +72,8 @@ const styles = {
     marginBottom: "24px",
   },
   label: {
-    color: "#333",
-    fontSize: "14px",
+    color: "black",
+    fontSize: "16px",
     fontWeight: 500,
   },
   optionsContainer: {
@@ -82,9 +82,9 @@ const styles = {
     flexWrap: "wrap",
   },
   chip: {
-    borderRadius: "20px",
+    borderRadius: "18px",
     fontSize: "14px",
-    padding: "8px 12px",
+    padding: "18px 12px",
     backgroundColor: "white",
     border: "1px solid #eee",
     color: "#666",
@@ -94,7 +94,7 @@ const styles = {
     "&.selected": {
       backgroundColor: "#ff6b9c",
       color: "white",
-      borderColor: "#ff6b9c",
+      //borderColor: "#ff6b9c",
       boxShadow: "0 2px 4px rgba(255, 107, 156, 0.2)",
       "&:hover": {
         backgroundColor: "#ff5b8c",
@@ -121,16 +121,16 @@ const styles = {
     display: "flex",
     gap: "12px",
     marginTop: "0px",
-    padding: "0 20px 20px 20px",
+   padding: "0 20px 20px 20px",
   },
   resetButton: {
     flex: 1,
-    padding: "12px",
+    padding: "10px",
     borderRadius: "25px",
-    fontSize: "14px",
+    fontSize: "16px",
     background: "white",
     border: "1px solid #eee",
-    color: "#666",
+    color: "black",
     textTransform: "none",
     "&:hover": {
       backgroundColor: "#f5f5f5",
@@ -139,14 +139,16 @@ const styles = {
   },
   searchButton: {
     flex: 1,
-    padding: "12px",
+    padding: "10px",
     borderRadius: "25px",
-    fontSize: "14px",
+    fontSize: "16px",
     color: "white",
     backgroundColor: "#ff6b9c",
     textTransform: "none",
+    boxShadow:'none',
     "&:hover": {
       backgroundColor: "#ff5b8c",
+      boxShadow:'none',
     },
   },
   sliderContainer: {
@@ -172,10 +174,10 @@ const styles = {
 
 function AppContainer({isDrawerOpen, setIsDrawerOpen}) {
  
-  const [selectedGender, setSelectedGender] = React.useState("不限");
+  const [selectedGender, setSelectedGender] = React.useState("");
   const [smallDrawerOpen, setSmallDrawerOpen] = React.useState(false);
-  const [selectedMarriage, setSelectedMarriage] = React.useState("不限");
-  const [ageRange, setAgeRange] = React.useState([18, 23]);
+  const [selectedMarriage, setSelectedMarriage] = React.useState("");
+  const [ageRange, setAgeRange] = React.useState([18, 30]);
   const [selectedOption, setSelectedOption] = React.useState("");
 
 
@@ -216,16 +218,26 @@ const handleOptionSelect = (option) => {
         sx={styles.drawer}
       >
         <Box sx={styles.searchHeader}>
-          <Typography variant="h6" component="h1">
+          <Typography variant="h5" component="h1" sx={{color:'black'}}>
             Filter
           </Typography>
-          <IconButton sx={styles.closeButton} onClick={toggleDrawer(false)}>
-            ×
+          <IconButton sx={{
+    position: "absolute",
+    right: 10,
+    top: 10,
+    color: "#999",
+  }} onClick={toggleDrawer(false)}>
+           <i className="ti ti-x" style={{ fontSize: "24px" }}></i>
           </IconButton>
         </Box>
 
         <Box component="form" sx={styles.drawerContent}>
-          <Box sx={styles.formGroup}>
+          <Box sx={{
+    display: "flex",
+    flexDirection: "column",
+    gap: "16px",
+    marginBottom: "12px",
+  }}>
             <Typography sx={styles.label}>Age</Typography>
             <Box sx={styles.sliderContainer}>
               <Slider

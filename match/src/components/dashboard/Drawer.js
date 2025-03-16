@@ -339,7 +339,7 @@ createPortal(
           willChange: "transform",
           "&::-webkit-scrollbar": { display: "none" },
           scrollbarWidth: "none",
-          zIndex: 10,
+          zIndex: 13,
         }}
       >
         <Box sx={{ mb: 1.25 }}>

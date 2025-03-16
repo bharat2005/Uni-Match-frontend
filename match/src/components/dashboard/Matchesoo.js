@@ -12,12 +12,12 @@ import {
 import { ArrowBackIos, ArrowForwardIos } from "@mui/icons-material";
 import Modall from './Modal';
 import Drawer from './Drawer';
-import SmallLoading from '../login/SmallLoading';
+import ImagePart from './ImagePart';
 
 
 
 
-const profile =   { reg_no: '12413928', reason: 'Long-term relationship', age: 23, name: 'Bharat',personality:'extrovert', images: [null, '/10.avif', '/4.avif', '/5.jpg', null], bio:'Im the solo developer of this whole Uni-Match platform...😎', interests:["Gardening", "Paragliding","Puzzles", "Astronomy", "Juggling",   "Art"  ] };
+const profile =    { reg_no: '12413928', reason: 'Long-term relationship', age: 20, name: 'Jisoo',personality:'extrovert', images: ["/2.jpg", '/3.jpg', '/1.jpg', null, null], bio:'Im the solo developer of this whole Uni-Match platform...😎', interests:["Gardening", "Paragliding","Puzzles","Juggling","Art", "Juggling"] }
 
 
 
@@ -108,15 +108,16 @@ const ProfileGrid = () => {
     background: "linear-gradient(180deg, rgba(245, 245, 245, 0) 0%, #F5F5F5 26%)",
     minHeight: "100vh",
     padding: {
-      xs: "10px",
-      sm: "15px",
-      md: "20px",
+      xs: "12px",
+      sm: "14px",
+      md: "18px",
     },
   };
 
   const scrollableGridStyle = {
-    maxHeight: "75vh", // Adjust height as needed
+    height: `calc(100vh - 42px - 46px - 16px)`, // Adjust height as needed
     overflowY: "auto",
+    padding:'8px',
     //border: "1px solid #ddd", // Optional for visual clarity
     "&::-webkit-scrollbar": {
       display: "none", // For Chrome, Safari, and Opera
@@ -165,119 +166,35 @@ const ProfileGrid = () => {
 <Modall setModalOpen={setName} modalOpen={name} name={name}/>
 
 {imageClick &&
-          <Box
-            sx={{
-              position: 'fixed',
-              top: 0,
-              left: '50%',
-              transform: imageLoaded
-                ? 'translate(-50%, 0) scale(1)'
-                : 'translate(-50%, 100%) scale(0.9)',
-              width: '100vw',
-              height: '60vh',
-              zIndex: 5,
-              background: imageLoaded 
-              ? `url(${list[currentImageIndex]})`
-              : 'linear-gradient(135deg, #e0e0e0 0%, #c0c0c0 100%)',
-              backgroundSize: 'cover',
-              backgroundPosition: 'center',
-              backgroundRepeat: 'no-repeat',
-              opacity: imageLoaded ? 1 : 0,
-              transition: 'opacity 0.1s ease, transform 0.3s ease',
-            }}
-          >
-           {!imageLoaded && (
-            <SmallLoading/>
-            )}
-              <img  
-              src={list[currentImageIndex]}
-              alt="profile"
-              style={{
-                display: 'none', 
-              }}
-              onLoad={() => setImageLoaded(true)}
-              onError={() => setImageLoaded(false)} // Fallback if the image fails to load
-            />
-
-            {/* Left Arrow */}
-            <IconButton
-              sx={{
-                position: 'absolute',
-                top: '50%',
-                left: '20px',
-                transform: 'translateY(-50%)',
-                color: '#fff',
-              }}
-              onClick={(e) => {
-                e.stopPropagation();
-                prevImage();
-              }}
-            >
-              <ArrowBackIos />
-            </IconButton>
-
-            {/* Right Arrow */}
-            <IconButton
-              sx={{
-                position: 'absolute',
-                top: '50%',
-                right: '20px',
-                transform: 'translateY(-50%)',
-                color: '#fff',
-              }}
-              onClick={(e) => {
-                e.stopPropagation();
-                nextImage();
-              }}
-            >
-              <ArrowForwardIos />
-            </IconButton>
-
-            {/* Close Button */}
-            <IconButton
-              sx={{
-                position: 'absolute',
-                top: '20px',
-                left: '20px',
-                color: '#fff',
-              }}
-              onClick={(e) => {
-                e.stopPropagation();
-                setImageClick(false);
-              }}
-            >
-              <i className="ti ti-arrow-left" style={{ fontSize: "24px" }}></i>
-            </IconButton>
-
-            {/* ✅ Dots Indicator */}
-            <Box
-              sx={{
-                position: 'absolute',
-                top: '10px',
-                left: '50%',
-                transform: 'translateX(-50%)',
-                display: 'flex',
-                gap: '6px',
-              }}
-            >
-              {list.map((_, index) => (
-                <Box
-                  key={index}
-                  sx={{
-                    width: "48px",
-                    height: "4px",
-                    borderRadius: "15%",
-                    backgroundColor: index === currentImageIndex ? '#fff' : '#888',
-                    opacity: index === currentImageIndex ? 1 : 0.5,
-                    transition: 'opacity 0.3s ease',
-                  }}
-                />
-              ))}
-            </Box>
-          </Box>
+                     <ImagePart  
+                      imageLoaded ={imageLoaded} 
+                      setImageLoaded={setImageLoaded}  
+                      list={list} 
+                      currentImageIndex={currentImageIndex} 
+                      setImageClick={setImageClick} 
+                      prevImage={prevImage} 
+                      nextImage={nextImage} />
         }
 
     <Box sx={containerStyle}>
+      
+      <Box sx={{ 
+          marginBottom: "16px" 
+        }}>
+          <Typography 
+            sx={{
+              textAlign: 'left',
+              fontSize: { xs: '24px', sm: '28px' }, // Responsive font size
+              fontWeight: 600, // Bold for clear hierarchy
+              color: '#333', // Subtle but clear color
+              letterSpacing: '0.5px', // Improve readability
+              //paddingBottom: "8px", // Space between subheading and content
+             // borderBottom: "2px solid #eee", // Light separator for clarity
+            }}
+          >
+            Matches
+          </Typography>
+        </Box>
       {/* Scrollable Grid */}
       <Box sx={scrollableGridStyle}>
         <Grid container spacing={{ xs: 1, sm: 2 }} columns={{ xs: 2, sm: 2 }}>
@@ -302,7 +219,7 @@ const ProfileGrid = () => {
     alt={profile.imageAlt}
     sx={{
       width: "100%",
-      height: "220px",
+      height: "200px",
       borderRadius: "26px",
       objectFit: "cover",
     }}
@@ -316,61 +233,79 @@ const ProfileGrid = () => {
       left: "50%", // Center horizontally
       transform: "translate(-50%, -20%)", // Adjust positioning slightly upwards
       display: "flex",
-      gap: 2,
+      gap: 6,
     }}
   >
-    <IconButton
-      aria-label="unlike"
-      onClick={(e) => {e.stopPropagation(); setName("reject")}}
-      sx={{
-        background: "linear-gradient(145deg, #FF8BA7 0%, #FF6584 50%, #FF4D6D 100%)", // Softer but striking gradient
-        borderRadius: "50%",
-        width: "56px",
-        height: "56px",
-        boxShadow: "0 8px 24px rgba(255, 101, 132, 0.3)",
-        backdropFilter: "blur(12px)",
-        display: "flex",
-        justifyContent: "center",
-        alignItems: "center",
-        transition: "all 0.3s ease",
+  <IconButton
+  aria-label="unlike"
+  onClick={(e) => { e.stopPropagation(); setName("reject"); }}
+  sx={{
+    width: '42px',
+    height: '42px',
+    color: "transparent", // Make the text transparent to allow gradient to show
+    backgroundColor: "rgba(0, 0, 0, 0.8)", // Inverted background color
+    padding: "12px",
+    borderRadius: "50%",
+    "&:hover": {
+      backgroundColor: "#rgba(0, 0, 0, 1)", // Subtle hover effect
+    },
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
     
-        "&:focus": {
-          boxShadow: "0 8px 24px rgba(255, 101, 132, 0.3)",
-        },
-        "&:active": {
-          transform: "scale(0.95)",
-          boxShadow: "0 4px 12px rgba(255, 101, 132, 0.5)",
-        },
-      
-      }}
-    >
-      <i className="ti ti-x" style={{ fontSize: "26px", color: "white" }} />
-    </IconButton>
+      boxShadow: "0 8px 24px rgba(255, 0, 110, 0.8)", // Stronger focus effect
+    
+    "&:active": {
+      transform: "scale(0.8)", // Less shrink to feel more natural
+      boxShadow: "0 4px 12px rgba(255, 0, 110, 0.9)", // More intense active shadow
+    },
+  }}
+>
+  <i
+    className="ti ti-x"
+    style={{
+      fontSize: "26px",
+      background: "linear-gradient(145deg, #FF006E 0%, #FB5607 50%, #FFBE0B 100%)",
+      WebkitBackgroundClip: "text", // Clip gradient to text
+      WebkitTextFillColor: "transparent", // Make text transparent
+      transition: "background 0.3s ease",
+    }}
+  />
+</IconButton>
+
     <IconButton
       aria-label="like"
       onClick={(e) => {e.stopPropagation(); setName("accept")}}
       sx={{
-        background: "linear-gradient(145deg, #A0D8FF 0%, #76B7FF 40%, #4A90E2 100%)", // Softer and more balanced blue
-        borderRadius: "50%",
-        width: "56px",
-        height: "56px",
-        boxShadow: "0 8px 24px rgba(118, 183, 255, 0.3)",
-        backdropFilter: "blur(12px)",
-        display: "flex",
-        justifyContent: "center",
-        alignItems: "center",
-        transition: "all 0.3s ease",
-    
-        "&:focus": {
-          boxShadow: "0 8px 24px rgba(118, 183, 255, 0.3)",
-        },
+        width:'42px',
+        height:'42px',
+         color: "transparent",
+         background: "rgba(0, 0, 0, 0.8)",
+         padding: "12px",
+         borderRadius: "50%",
+         "&:hover": {
+          backgroundColor: "#rgba(0, 0, 0, 1)",
+         },
+         display: 'flex',
+         justifyContent: 'center',
+         alignItems: 'center',
+         
+          boxShadow: "0 8px 24px rgba(0, 200, 83, 0.8)", // Strong green glow on focus
+        
         "&:active": {
-          transform: "scale(0.95)",
-          boxShadow: "0 4px 12px rgba(118, 183, 255, 0.5)",
+          transform: "scale(0.8)", // Consistent shrink effect
+          boxShadow: "0 4px 12px rgba(0, 200, 83, 0.9)", // Punchy feedback
         },
-      }}
+       }}
     >
-      <i className="ti ti-heart-filled" style={{ fontSize: "26px", color: "white" }} />
+      <i className="ti ti-heart-filled" 
+      style={{
+        fontSize: "26px",
+        background: "linear-gradient(145deg, #00C853 0%, #B2FF59 50%, #FFD600 100%)",
+        WebkitBackgroundClip: "text", // Clip gradient to text
+        WebkitTextFillColor: "transparent", // Make text transparent
+        transition: "background 0.3s ease",
+          }} />
     </IconButton>
   </Box>
 
@@ -384,6 +319,12 @@ const ProfileGrid = () => {
             </Grid>
           ))}
         </Grid>
+              <Box
+            sx={{
+              height: "40px", // Same as or slightly more than the navbar height
+              backgroundColor: "transparent", // Invisible, just for spacing
+            }}
+          />
       </Box>
     </Box>
 

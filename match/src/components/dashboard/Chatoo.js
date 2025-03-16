@@ -1,9 +1,10 @@
 "use client";
 import React, { useState, useEffect, useRef } from "react";
 import { Box, Typography, TextField, IconButton, Avatar } from "@mui/material";
-
+import { useNavigate } from 'react-router-dom';
 const ChatComponent = ({ setChatt }) => {
   const [messageText, setMessageText] = useState("");
+  const navigate = useNavigate();
   const [messages, setMessages] = useState([
     { id: 1, text: "Hello？", sender: "other" },
     { id: 2, text: "Are you there?", sender: "other" },
@@ -79,16 +80,17 @@ const ChatComponent = ({ setChatt }) => {
           alignItems: "center",
           padding: "28px 20px 12px 20px",
           justifyContent:'center',
-          position: "sticky",
+          position: "fixed",
+          width:'100vw',
           top: 0,
           backgroundColor: "#FFFFFF",
-          zIndex: 10,
+          zIndex: 15,
           borderBottom: "1px solid #eee",
         }}
       >
         <IconButton
           sx={{ padding: "5px", marginLeft: "8px", position:'absolute', left:0 }}
-          onPointerDown={() => setChatt(false)}
+          onPointerDown={() => navigate(-1)}
         >
           <i
             className="ti ti-chevron-left"

@@ -41,7 +41,7 @@ const ProfileContainer = () => {
   const [modalOpen, setModalOpen] = React.useState(false)
 
   const containerStyles = {
-    background: "linear-gradient(180deg, rgba(245, 245, 245, 0) 0%, #F5F5F5 26%)",
+   background: "linear-gradient(180deg, rgba(245, 245, 245, 0) 0%, #F5F5F5 26%)",
     fontFamily: '"Inter", sans-serif',
     padding: {
       xs: "0 12px",

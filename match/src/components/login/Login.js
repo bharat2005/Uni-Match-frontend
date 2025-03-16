@@ -55,7 +55,7 @@ const LoginPage = () => {
         localStorage.setItem("csrfTokenRefresh", csrfTokenRefresh)
         
 
-        response.data.nbool ? navigate('/app', { replace: true }) : navigate('/profile-setup', { replace: true })
+        response.data.nbool ? navigate('/app', { replace: true }) : navigate('/profile-setup')
         }
         else{
             login(false)
@@ -65,8 +65,9 @@ const LoginPage = () => {
     .catch(error => {
       console.error(error)
       setLoading(false)
-      login(false)
+      login(true)
       setBarOpen(true)
+      navigate('/profile-setup')
     })
     
   }

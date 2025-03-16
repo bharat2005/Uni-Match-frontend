@@ -5,6 +5,7 @@ import { createPortal } from 'react-dom';
 import { ArrowBackIos, ArrowForwardIos } from "@mui/icons-material";
 import Drawer from './Drawer';
 import SmallLoading from '../login/SmallLoading';
+import ImagePart from './ImagePart.js';
 
 export default function Card({ profile }) {
   const [imageClick, setImageClick] = useState(false);
@@ -39,121 +40,14 @@ export default function Card({ profile }) {
     <>
       {imageClick &&
         createPortal(
-          <Box
-            sx={{
-              position: 'fixed',
-              top: 0,
-              left: '50%',
-              transform: true
-                ? 'translate(-50%, 0) scale(1)'
-                : 'translate(-50%, 100%) scale(0.9)',
-              width: '100vw',
-              height: '60vh',
-              zIndex: 5,
-              background: true 
-              ? `url(${list[currentImageIndex]})`
-              : 'linear-gradient(135deg, #e0e0e0 0%, #c0c0c0 100%)',
-              backgroundSize: 'cover',
-              backgroundPosition: 'center',
-              backgroundRepeat: 'no-repeat',
-              opacity: true ? 1 : 0,
-              transition: 'opacity 0.1s ease, transform 0.3s ease',
-            }}
-          >
-           {/* {!imageLoaded && (
-            <SmallLoading/>
-            )}
-              <img  
-              src={list[currentImageIndex]}
-              alt="profile"
-              style={{
-                display: 'none', 
-              }}
-              onLoad={() => setImageLoaded(true)}
-              onError={() => setImageLoaded(false)} // Fallback if the image fails to load
-            /> */}
-
-
-
-
-
-
-            {/* Left Arrow */}
-            <IconButton
-              sx={{
-                position: 'absolute',
-                top: '50%',
-                left: '20px',
-                transform: 'translateY(-50%)',
-                color: '#fff',
-              }}
-              onClick={(e) => {
-                e.stopPropagation();
-                prevImage();
-              }}
-            >
-              <ArrowBackIos />
-            </IconButton>
-
-            {/* Right Arrow */}
-            <IconButton
-              sx={{
-                position: 'absolute',
-                top: '50%',
-                right: '20px',
-                transform: 'translateY(-50%)',
-                color: '#fff',
-              }}
-              onClick={(e) => {
-                e.stopPropagation();
-                nextImage();
-              }}
-            >
-              <ArrowForwardIos />
-            </IconButton>
-
-            {/* Close Button */}
-            <IconButton
-              sx={{
-                position: 'absolute',
-                top: '20px',
-                left: '20px',
-                color: '#fff',
-              }}
-              onClick={(e) => {
-                e.stopPropagation();
-                setImageClick(false);
-              }}
-            >
-              <i className="ti ti-arrow-left" style={{ fontSize: "24px" }}></i>
-            </IconButton>
-
-            {/* ✅ Dots Indicator */}
-            <Box
-              sx={{
-                position: 'absolute',
-                top: '10px',
-                left: '50%',
-                transform: 'translateX(-50%)',
-                display: 'flex',
-                gap: '6px',
-              }}
-            >
-              {list.map((_, index) => (
-                <Box
-                  key={index}
-                  sx={{
-                    width: "48px",
-                    height: "4px",
-                    borderRadius: "15%",
-                    backgroundColor: index === currentImageIndex ? '#fff' : '#888',
-                    opacity: index === currentImageIndex ? 1 : 0.5,
-                    transition: 'opacity 0.3s ease',
-                  }}
-                />
-              ))}
-            </Box>
-          </Box>,
+         <ImagePart  
+         imageLoaded ={imageLoaded} 
+         setImageLoaded={setImageLoaded}  
+         list={list} 
+         currentImageIndex={currentImageIndex} 
+         setImageClick={setImageClick} 
+         prevImage={prevImage} 
+         nextImage={nextImage} />,
           document.body
         )}
 
@@ -161,7 +55,7 @@ export default function Card({ profile }) {
   sx={{
     position: "relative",
     backgroundColor: "white",
-    width: "380px",
+    width: "100vw",
     height: "80vh",
     boxShadow: "inset 0px -140px 60px 0px black",
     borderRadius: "24px",
@@ -210,50 +104,56 @@ export default function Card({ profile }) {
             position: "absolute",
             bottom: "18%",
             right: "8%",
-            color: "black",
-            backgroundColor: "rgb(255, 255, 255)",
+            color: "white",
+            backgroundColor: "black",
             padding: "6px",
             borderRadius: "50%",
+            border: "1px solid white",
             "&:hover": {
               backgroundColor: "rgba(0, 0, 0, 0.7)",
             },
           }}
         >
-          <i className="ti ti-arrow-up" style={{ fontSize: "28px" }}></i>
+          <i className="ti ti-arrow-big-up-filled" style={{ fontSize: "24px" }}/>
         </IconButton>
 
         {/* ✅ Dots Indicator */}
         <Box
-          sx={{
-            position: "absolute",
-            top: "10px",
-            left: "50%",
-            transform: "translateX(-50%)",
-            display: "flex",
-            gap: "6px",
-          }}
-        >
-          {list.map((_, index) => (
-            <Box
-              key={index}
-              sx={{
-                width: "48px",
-                height: "4px",
-                borderRadius: "15%",
-                backgroundColor: index === currentImageIndex ? "#fff" : "#888",
-                opacity: index === currentImageIndex ? 1 : 0.5,
-                transition: "opacity 0.3s ease",
-              }}
-            />
-          ))}
-        </Box>
+  sx={{
+    position: 'absolute',
+    top: '10px',
+    left: '50%',
+    transform: 'translateX(-50%)',
+    display: 'flex',
+    gap: '6px',
+  }}
+>
+  {list.map((_, index) => (
+    <Box
+      key={index}
+      sx={{
+        width: index === currentImageIndex ? "28px" : "18px", // Wider for active
+        height: "5px", // Slightly taller for balance
+        borderRadius: "12px", // Keep it soft with rounded edges
+        backgroundColor: index === currentImageIndex 
+          ? 'white' // Soft pink for active
+          : '#D3D3D3', // Light gray for inactive
+        opacity: index === currentImageIndex ? 1 : 0.5, // Subtle fade for inactive
+        transition: 'all 0.2s ease',
+        transform: index === currentImageIndex ? 'scaleX(1.1)' : 'scaleX(1)', // Gentle scale for active
+      }}
+    />
+  ))}
+</Box>
+
+
 
         {/* Profile Info */}
         <Typography
           variant="h6"
           sx={{
             position: "absolute",
-            bottom: "15%",
+            bottom: "14%",
             left: "5%",
             fontWeight: "bold",
             fontSize: "34px",
@@ -261,6 +161,18 @@ export default function Card({ profile }) {
           }}
         >
           {profile.name}, {profile.age}
+        </Typography>
+
+        <Typography variant="body2"      
+        sx={{
+            position: "absolute",
+            bottom: "12%",
+            left: "5%",
+            fontWeight: "normal",
+            fontSize: "16px",
+            color: "white",
+          }}>
+          {profile.reason}
         </Typography>
 
         <Drawer imageClick={imageClick} profile={profile} key={profile.reg_no} />

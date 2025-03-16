@@ -1,5 +1,6 @@
 "use client";
 import React, {useState} from "react";
+import { useNavigate } from 'react-router-dom';
 import {
   Avatar,
   Badge,
@@ -13,152 +14,119 @@ import {
   IconButton
 } from "@mui/material";
 import Chatoo from './Chatoo';
+import ImagePart from './ImagePart'
 import { ArrowBackIos, ArrowForwardIos } from "@mui/icons-material";
 import Drawer from './Drawer';
 import SmallLoading from '../login/SmallLoading';
 
-const profile =   { reg_no: '12413928', reason: 'Long-term relationship', age: 23, name: 'Bharat',personality:'extrovert', images: [null, '/10.avif', '/4.avif', '/5.jpg', null], bio:'Im the solo developer of this whole Uni-Match platform...😎', interests:["Gardening", "Paragliding","Puzzles", "Astronomy", "Juggling",   "Art"  ] };
+const profile =     { reg_no: '12413928', reason: 'Long-term relationship', age: 20, name: 'Jisoo',personality:'extrovert', images: ["/2.jpg", '/3.jpg', '/1.jpg', null, null], bio:'Im the solo developer of this whole Uni-Match platform...😎', interests:["Gardening", "Paragliding","Puzzles","Juggling","Art", "Juggling"] }
 
 
 const chatData = [
   {
     name: "Bharat",
     message: "hi",
+    id:0,
     count: 8,
     time: "16:04",
     image: "/4.jpg",
-  },
+  }, 
   {
-    name: "Amit",
-    message: "good bye",
-    count: 1,
+    name: "Bharat",
+    message: "hi",
+    id:1,
+    count: 8,
     time: "16:04",
     image: "/5.jpg",
-  },
+  }, 
   {
-    name: "Rajesh",
-    message: "what are you doing?",
-    count: 1,
+    name: "Bharat",
+    message: "hi",
+    id:2,
+    count: 8,
     time: "16:04",
     image: "/6.jpg",
-  },
+  }, 
   {
-    name: "Tanmay",
-    message: "I love you!",
-    count: 1,
+    name: "Bharat",
+    message: "hi",
+    id:3,
+    count: 8,
     time: "16:04",
     image: "/7.jpg",
-  },
-     {
-    name: "Rakesh",
-    message: "baby!!!!",
-    count: 1,
-    time: "16:04",
-    image: "/8.jpg",
-  },
-   {
-    name: "Samay",
-    message: "....",
-    count: 1,
-    time: "16:04",
-    image: "/9.jpg",
-  },
-    {
-    name: "Nikhil",
-    message: "fewwww.....",
-    count: 1,
-    time: "16:04",
-    image: "/10.jpg",
-  },
+  }, 
   {
-    name: "Rakesh",
-    message: "baby!!!!",
-    count: 1,
+    name: "Bharat",
+    message: "hi",
+    id:0,
+    count: 8,
     time: "16:04",
-    image: "/8.jpg",
-  },
-   {
-    name: "Samay",
-    message: "....",
-    count: 1,
-    time: "16:04",
-    image: "/9.jpg",
-  },
-    {
-    name: "Nikhil",
-    message: "fewwww.....",
-    count: 1,
-    time: "16:04",
-    image: "/10.jpg",
-  },
+    image: "/4.jpg",
+  }, 
   {
-    name: "Amit",
-    message: "good bye",
-    count: 1,
+    name: "Bharat",
+    message: "hi",
+    id:1,
+    count: 8,
     time: "16:04",
     image: "/5.jpg",
-  },
+  }, 
   {
-    name: "Rajesh",
-    message: "what are you doing?",
-    count: 1,
+    name: "Bharat",
+    message: "hi",
+    id:2,
+    count: 8,
     time: "16:04",
     image: "/6.jpg",
-  },
+  }, 
   {
-    name: "Tanmay",
-    message: "I love you!",
-    count: 1,
+    name: "Bharat",
+    message: "hi",
+    id:3,
+    count: 8,
     time: "16:04",
     image: "/7.jpg",
-  },
-     {
-    name: "Rakesh",
-    message: "baby!!!!",
-    count: 1,
-    time: "16:04",
-    image: "/8.jpg",
-  },
-   {
-    name: "Samay",
-    message: "....",
-    count: 1,
-    time: "16:04",
-    image: "/9.jpg",
-  },
-    {
-    name: "Nikhil",
-    message: "fewwww.....",
-    count: 1,
-    time: "16:04",
-    image: "/10.jpg",
-  },
+  }, 
+  
   {
-    name: "Rakesh",
-    message: "baby!!!!",
-    count: 1,
+    name: "Bharat",
+    message: "hi",
+    id:0,
+    count: 8,
     time: "16:04",
-    image: "/8.jpg",
-  },
-   {
-    name: "Samay",
-    message: "....",
-    count: 1,
+    image: "/4.jpg",
+  }, 
+  {
+    name: "Bharat",
+    message: "hi",
+    id:1,
+    count: 8,
     time: "16:04",
-    image: "/9.jpg",
-  },
-    {
-    name: "Nikhil",
-    message: "fewwww.....",
-    count: 1,
+    image: "/5.jpg",
+  }, 
+  {
+    name: "Bharat",
+    message: "hi",
+    id:2,
+    count: 8,
     time: "16:04",
-    image: "/10.jpg",
-  },
+    image: "/6.jpg",
+  }, 
+  {
+    name: "Bharat",
+    message: "hi",
+    id:3,
+    count: 8,
+    time: "16:04",
+    image: "/7.jpg",
+  }, 
+  
+
   
 ];
 export default function ChatInterface(){
-   const [chatt, setChatt] = useState(false)
 
+const navigate = useNavigate();
        const [imageClick, setImageClick] = useState(false);
        const [currentImageIndex, setCurrentImageIndex] = useState(0);
        const [imageLoaded, setImageLoaded] = useState(false);
@@ -179,121 +147,17 @@ export default function ChatInterface(){
     setImageLoaded(false);
   };
 
-  if (chatt) {
-    return <Chatoo setChatt={setChatt} />
-  }
+
   return (<>
  {imageClick &&
-          <Box
-            sx={{
-              position: 'fixed',
-              top: 0,
-              left: '50%',
-              transform: imageLoaded
-                ? 'translate(-50%, 0) scale(1)'
-                : 'translate(-50%, 100%) scale(0.9)',
-              width: '100vw',
-              height: '60vh',
-              zIndex: 5,
-              background: imageLoaded 
-              ? `url(${list[currentImageIndex]})`
-              : 'linear-gradient(135deg, #e0e0e0 0%, #c0c0c0 100%)',
-              backgroundSize: 'cover',
-              backgroundPosition: 'center',
-              backgroundRepeat: 'no-repeat',
-              opacity: imageLoaded ? 1 : 0,
-              transition: 'opacity 0.1s ease, transform 0.3s ease',
-            }}
-          >
-           {!imageLoaded && (
-            <SmallLoading/>
-            )}
-              <img  
-              src={list[currentImageIndex]}
-              alt="profile"
-              style={{
-                display: 'none', 
-              }}
-              onLoad={() => setImageLoaded(true)}
-              onError={() => setImageLoaded(false)} // Fallback if the image fails to load
-            />
-
-            {/* Left Arrow */}
-            <IconButton
-              sx={{
-                position: 'absolute',
-                top: '50%',
-                left: '20px',
-                transform: 'translateY(-50%)',
-                color: '#fff',
-              }}
-              onClick={(e) => {
-                e.stopPropagation();
-                prevImage();
-              }}
-            >
-              <ArrowBackIos />
-            </IconButton>
-
-            {/* Right Arrow */}
-            <IconButton
-              sx={{
-                position: 'absolute',
-                top: '50%',
-                right: '20px',
-                transform: 'translateY(-50%)',
-                color: '#fff',
-              }}
-              onClick={(e) => {
-                e.stopPropagation();
-                nextImage();
-              }}
-            >
-              <ArrowForwardIos />
-            </IconButton>
-
-            {/* Close Button */}
-            <IconButton
-              sx={{
-                position: 'absolute',
-                top: '20px',
-                left: '20px',
-                color: '#fff',
-              }}
-              onClick={(e) => {
-                e.stopPropagation();
-                setImageClick(false);
-              }}
-            >
-              <i className="ti ti-arrow-left" style={{ fontSize: "24px" }}></i>
-            </IconButton>
-
-            {/* ✅ Dots Indicator */}
-            <Box
-              sx={{
-                position: 'absolute',
-                top: '10px',
-                left: '50%',
-                transform: 'translateX(-50%)',
-                display: 'flex',
-                gap: '6px',
-              }}
-            >
-              {list.map((_, index) => (
-                <Box
-                  key={index}
-                  sx={{
-                    width: "48px",
-                    height: "4px",
-                    borderRadius: "15%",
-                    backgroundColor: index === currentImageIndex ? '#fff' : '#888',
-                    opacity: index === currentImageIndex ? 1 : 0.5,
-                    transition: 'opacity 0.3s ease',
-                  }}
-                />
-              ))}
-            </Box>
-          </Box>
+           <ImagePart  
+            imageLoaded ={imageLoaded} 
+            setImageLoaded={setImageLoaded}  
+            list={list} 
+            currentImageIndex={currentImageIndex} 
+            setImageClick={setImageClick} 
+            prevImage={prevImage} 
+            nextImage={nextImage} />
         }
 
  
@@ -302,12 +166,30 @@ export default function ChatInterface(){
       sx={{
         background: "linear-gradient(180deg, rgba(245, 245, 245, 0) 0%, #F5F5F5 26%)",
         padding: {
-          xs: "10px",
-          sm: "15px",
-          md: "20px",
+          xs: "12px",
+          sm: "14px",
+          md: "18px",
         },
       }}
     >
+
+
+<Box sx={{ 
+    marginBottom: "16px" 
+  }}>
+    <Typography 
+      sx={{
+        textAlign: 'left',
+        fontSize: { xs: '24px', sm: '28px' }, 
+        fontWeight: 600, 
+        color: '#333', 
+        letterSpacing: '0.5px',
+      }}
+    >
+      Chats
+    </Typography>
+  </Box>
+
       {/* Fix the height here */}
       <Container
         component="section"
@@ -326,7 +208,7 @@ export default function ChatInterface(){
       >
         <List
           sx={{
-            maxHeight: "75vh", 
+            height: `calc(100vh - 42px - 46px - 16px)`,
             overflowY: "auto",
             background: "white",
             borderRadius:'20px',
@@ -337,7 +219,7 @@ export default function ChatInterface(){
         >
           {chatData.map((chat, index) => (
             <ListItem
-            onClick={()=>{setChatt(true)}}
+            onClick={() => navigate(`/app/${chat.id}`)}
               key={index}
               sx={{
                 padding: {
@@ -442,6 +324,12 @@ export default function ChatInterface(){
               </Typography>
             </ListItem>
           ))}
+                  <Box
+              sx={{
+                height: "40px", // Same as or slightly more than the navbar height
+                backgroundColor: "transparent", // Invisible, just for spacing
+              }}
+            />
         </List>
       </Container>
     </Container>

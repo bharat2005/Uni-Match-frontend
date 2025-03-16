@@ -15,7 +15,7 @@ import axios from 'axios';
 import Stepper from '../../OldComp/Stepper';
 import SmallLoading from '../login/SmallLoading'
 import { InformationCircleIcon } from '@heroicons/react/24/solid';
-import { fontSize } from "@mui/system";
+import { fontSize, width } from "@mui/system";
 
 
 
@@ -59,6 +59,7 @@ const InputDesign = () => {
     appContainer: {
         background: "linear-gradient(135deg, #ffe6e6, #e6f0ff)",
       minHeight: "95dvh",
+      width:'100vw',
       padding: "20px",
       fontFamily: '"Noto Sans SC", sans-serif',
       position: "relative",
