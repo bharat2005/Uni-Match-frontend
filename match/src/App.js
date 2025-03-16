@@ -22,14 +22,24 @@ export default function App(){
 
 
   useEffect(() => {
-    const preventRefresh = (e) => {
-      if (e.touches.length === 1) e.preventDefault();
+    // Fix viewport height based on window height
+    const resizeHandler = () => {
+      document.documentElement.style.setProperty(
+        '--vh',
+        `${window.innerHeight * 0.01}px`
+      );
     };
 
-    document.addEventListener('touchmove', preventRefresh, { passive: false });
+    window.addEventListener('resize', resizeHandler);
+    resizeHandler();
+
+    // Prevent pull-to-refresh and bounce scrolling
+    const preventScroll = (e) => e.preventDefault();
+    document.addEventListener('touchmove', preventScroll, { passive: false });
 
     return () => {
-      document.removeEventListener('touchmove', preventRefresh);
+      window.removeEventListener('resize', resizeHandler);
+      document.removeEventListener('touchmove', preventScroll);
     };
   }, []);
 

@@ -15,10 +15,14 @@ code {
 
 
 html, body {
-  overscroll-behavior: none; /* Disable pull-to-refresh */
-  -webkit-overflow-scrolling: touch; /* Enable smooth touch scrolling */
-  overflow: hidden; /* Disable rubber band scrolling */
+  overscroll-behavior: none;
   height: 100%;
   margin: 0;
   padding: 0;
+  overflow: hidden;
+}
+
+#root {
+  height: calc(var(--vh) * 100);
+  overflow: auto;
 }
