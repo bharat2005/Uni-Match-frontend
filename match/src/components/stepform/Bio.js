@@ -8,8 +8,7 @@ import {
 } from "@mui/material";
 import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
 
-const InputDesign = ({setStep, formData, setFormData}) => {
-
+const InputDesign = ({ setStep, formData, setFormData }) => {
   const styles = {
     appContainer: {
       background: "linear-gradient(135deg, #ffe5ec 0%, #e5f0ff 100%)",
@@ -31,7 +30,7 @@ const InputDesign = ({setStep, formData, setFormData}) => {
     },
     contentContainer: {
       display: "flex",
-      marginTop:'25%',
+      marginTop: "25%",
       flexDirection: "column",
       alignItems: "center",
       paddingTop: { xs: "80px", sm: "100px" },
@@ -40,12 +39,12 @@ const InputDesign = ({setStep, formData, setFormData}) => {
     title: {
       fontSize: 24,
       fontWeight: 500,
-      textAlign: "center"
+      textAlign: "center",
     },
     subtitle: {
-      fontSize:14,
+      fontSize: 14,
       color: "#666",
-      textAlign: "center"
+      textAlign: "center",
     },
     inputContainer: {
       width: "80%",
@@ -73,57 +72,63 @@ const InputDesign = ({setStep, formData, setFormData}) => {
       borderRadius: "25px",
       fontSize: { xs: "14px", sm: "16px" },
       textTransform: "none",
-      backgroundColor: formData['bio'] ? "#ff69b4" : "#fed8e6",
+      backgroundColor: formData["bio"] ? "#ff69b4" : "#fed8e6",
       "&:hover": {
-        backgroundColor: formData['bio'] ? "#ff69b4" : "#fed8e6",
+        backgroundColor: formData["bio"] ? "#ff69b4" : "#fed8e6",
       },
     },
   };
 
   return (
+    <Box sx={styles.contentContainer}>
+      <Typography variant="h1" sx={styles.title}>
+        Tell us about yourself{" "}
+      </Typography>
+      <Typography sx={styles.subtitle}>
+        Introduce yourself in a few words
+      </Typography>
 
+      <Box sx={styles.inputContainer}>
+        <TextField
+          fullWidth
+          sx={{
+            "& .MuiOutlinedInput-root": {
+              "& fieldset": {
+                borderColor: "transparent", // Default border color
+              },
+              "&:hover fieldset": {
+                borderColor: "transparent", // Border color on hover
+              },
+              "&.Mui-focused fieldset": {
+                borderColor: "#b3d1ff", // Soft blue when focused
+                boxShadow: "0 0 5px rgba(179, 209, 255, 0.5)", // Removes the blue border when focused
+              },
+            },
+          }}
+          placeholder="A few words about yourself..."
+          multiline
+          rows={3}
+          value={formData["bio"]}
+          onChange={(e) =>
+            setFormData((prev) => ({ ...prev, bio: e.target.value }))
+          }
+          variant="outlined"
+          InputProps={{
+            style: {
+              alignItems: "flex-start",
+            },
+          }}
+        />
+      </Box>
 
-        <Box sx={styles.contentContainer}>
-          <Typography variant="h1" sx={styles.title}>Tell us about yourself          </Typography>
-          <Typography sx={styles.subtitle}>Introduce yourself in a few words</Typography>
-
-          <Box sx={styles.inputContainer}>
-            <TextField
-              fullWidth
-              sx={{
-        
-                '& .MuiOutlinedInput-root': {
-                  '& fieldset': {
-                    borderColor: 'transparent', // Default border color
-                  },
-                  '&:hover fieldset': {
-                    borderColor: 'transparent', // Border color on hover
-                  },
-                  '&.Mui-focused fieldset': {
-                    borderColor: '#b3d1ff', // Soft blue when focused
-                    boxShadow: '0 0 5px rgba(179, 209, 255, 0.5)' // Removes the blue border when focused
-                  },
-                
-  },
-              }}
-              placeholder="A few words about yourself..."
-              multiline
-              rows={3}
-              value={formData['bio']}
-              onChange={(e) => setFormData( prev => ({ ...prev, bio:e.target.value}))}
-              variant="outlined"
-              InputProps={{
-                style: {
-                  alignItems: "flex-start",
-
-                },
-              }}
-            />
-          </Box>
-
-          <Button disabled={!formData['bio']} onClick={()=> setStep(6)} sx={styles.nextButton}>Next Step</Button>
-        </Box>
-
+      <Button
+        disabled={!formData["bio"]}
+        onClick={() => setStep(6)}
+        sx={styles.nextButton}
+      >
+        Next Step
+      </Button>
+    </Box>
   );
 };
 

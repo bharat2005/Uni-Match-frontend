@@ -20,7 +20,6 @@ import AddIcon from "@mui/icons-material/Add";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import CloseIcon from "@mui/icons-material/Close";
 
-
 const styles = {
   appContainer: {
     background: "linear-gradient(135deg, #ffe5f2, #e5f0ff)",
@@ -175,7 +174,7 @@ const styles = {
   },
 };
 
-function SearchContainer({onClose, setIsDrawerOpen }) {
+function SearchContainer({ onClose, setIsDrawerOpen }) {
   const [gender, setGender] = React.useState("any");
   const [education, setEducation] = React.useState("");
 
@@ -183,14 +182,12 @@ function SearchContainer({onClose, setIsDrawerOpen }) {
 
   const [selectedOption, setSelectedOption] = React.useState("");
 
- 
   const toggleSmallDrawer = (open) => () => setSmallDrawerOpen(open);
 
   const handleOptionSelect = (option) => {
     setSelectedOption(option);
     setSmallDrawerOpen(false);
   };
-
 
   const toggleDrawer = (open) => (event) => {
     if (
@@ -202,8 +199,6 @@ function SearchContainer({onClose, setIsDrawerOpen }) {
     }
     setIsDrawerOpen(open);
   };
-
-
 
   const containerStyle = {
     bgcolor: "white",
@@ -288,8 +283,8 @@ function SearchContainer({onClose, setIsDrawerOpen }) {
   };
 
   return (
-   
-      <Box sx={{
+    <Box
+      sx={{
         position: "absolute",
         top: 0,
         left: 0,
@@ -300,274 +295,269 @@ function SearchContainer({onClose, setIsDrawerOpen }) {
         zIndex: 9,
         display: "flex",
         flexDirection: "column",
-      }}>
-         <Box
-                sx={{
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "center",
-                  padding: "28px 20px 12px 20px",
-                  position: "sticky",
-                  top: 0,
-                  backgroundColor: "#FFFFFF",
-                  zIndex: 10,
-                 
-                  borderBottom: "1px solid #E0E0E0",
-                  boxShadow: "0 1px 4px rgba(0,0,0,0.05)",
-                }}
-              >
-                <IconButton
-                  sx={{
-                    position: "absolute",
-                    left: 16,
-                    color: "#333",
-                    "&:hover": {
-                      backgroundColor: "#F5F5F5",
-                    },
-                  }}
-                  onClick={onClose}
-                >
-                  <i className="ti ti-chevron-left" style={{ fontSize: "20px", color: "#555" }} />
-                </IconButton>
-                <Typography
-                  sx={{
-                    fontSize: "18px",
-                    fontWeight: 500,
-                    color: "#212121",
-                  }}
-                >
-                  Edit Profile
-                </Typography>
-              </Box>
+      }}
+    >
+      <Box
+        sx={{
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          padding: "28px 20px 12px 20px",
+          position: "sticky",
+          top: 0,
+          backgroundColor: "#FFFFFF",
+          zIndex: 10,
 
-        <Box
-          component="form"
+          borderBottom: "1px solid #E0E0E0",
+          boxShadow: "0 1px 4px rgba(0,0,0,0.05)",
+        }}
+      >
+        <IconButton
           sx={{
-            flex: 1,
-            padding: "24px",
-            overflowY: "auto",
-            textAlign:'left',
-            backgroundColor: "#FFFFFF",
-            "&::-webkit-scrollbar": { display: "none" },
-            scrollbarWidth: "none",
+            position: "absolute",
+            left: 16,
+            color: "#333",
+            "&:hover": {
+              backgroundColor: "#F5F5F5",
+            },
+          }}
+          onClick={onClose}
+        >
+          <i
+            className="ti ti-chevron-left"
+            style={{ fontSize: "20px", color: "#555" }}
+          />
+        </IconButton>
+        <Typography
+          sx={{
+            fontSize: "18px",
+            fontWeight: 500,
+            color: "#212121",
           }}
         >
-          <Box sx={formGroupStyle}>
-            <Typography
-              sx={{
-                color: "#333",
-                fontSize: "14px",
-                fontWeight: 500,
-              }}
-            >
-              Name
-            </Typography>
-            <TextField
-              fullWidth
-              placeholder="enter name"
-              size="small"
-              sx={inputBaseStyle}
-            />
-          </Box>
+          Edit Profile
+        </Typography>
+      </Box>
 
-          <Box sx={formGroupStyle}>
-            <Typography
-              sx={{
-                color: "#333",
-                fontSize: "14px",
-                fontWeight: 500,
-              }}
-            >
-              Photos
-            </Typography>
-            <Box sx={imageGridStyle}>
-              {Array(6)
-                .fill(0)
-                .map((_, index) => (
-                  <Box
-                    key={index}
-                    sx={uploadBoxStyle}
-                    role="button"
-                    tabIndex={0}
-                  >
-                    <AddIcon
-                      sx={{
-                        fontSize: 24,
-                        color: "#999",
-                        transition: "color 0.2s ease",
-                        "&:hover": {
-                          color: "#666",
-                        },
-                      }}
-                    />
-                  </Box>
-                ))}
-            </Box>
-          </Box>
-
-          <Box sx={formGroupStyle}>
-            <Typography
-              sx={{
-                color: "#333",
-                fontSize: "14px",
-                fontWeight: 500,
-              }}
-            >
-              Personality
-            </Typography>
-            <Box sx={{ display: "flex", gap: 1.5 }}>
-              {[
-                { value: "any", label: "Introvert" },
-                { value: "male", label: "Extrovert" },
-                { value: "female", label: "Ambivert" },
-              ].map((option) => (
-                <Button
-                  key={option.value}
-                  variant="outlined"
-                  sx={genderButtonStyle(gender === option.value)}
-                  onClick={() => setGender(option.value)}
-                >
-                  {option.label}
-                </Button>
-              ))}
-            </Box>
-          </Box>
-
-          <Box sx={formGroupStyle}>
-            <Typography
-              sx={{
-                color: "#333",
-                fontSize: "14px",
-                fontWeight: 500,
-              }}
-            >
-              Here for?
-            </Typography>
-
-            <Button
-              sx={styles.locationSelector}
-              
-             endIcon={<KeyboardArrowDownIcon />}
-              onClick={toggleSmallDrawer(true)}
-            >
-              {selectedOption || "Select an option"}
-            </Button>
-          </Box>
-
-          <Box sx={formGroupStyle}>
-            <Typography
-              sx={{
-                color: "#333",
-                fontSize: "14px",
-                fontWeight: 500,
-              }}
-            >
-              About
-            </Typography>
-            <TextareaAutosize
-              minRows={4}
-              placeholder="A few words about yourself..."
-              style={{
-                //width: "100%",
-                padding: "12px",
-                borderRadius: "8px",
-                border: "1px solid #eee",
-                fontSize: "14px",
-                color: "#666",
-                resize: "vertical",
-                fontFamily: "inherit",
-                outline: "none",
-                transition: "border-color 0.2s ease",
-              }}
-              onFocus={(e) => {
-                e.target.style.borderColor = "#ff6b9c";
-              }}
-              onBlur={(e) => {
-                e.target.style.borderColor = "#eee";
-              }}
-            />
-          </Box>
-
-          <Box sx={formGroupStyle}>
-            <Typography
-              sx={{
-                color: "#333",
-                fontSize: "14px",
-                fontWeight: 500,
-              }}
-            >
-              Interests
-            </Typography>
-            <Button
-              sx={styles.locationSelector}
-              
-             endIcon={<KeyboardArrowDownIcon />}
-              onClick={toggleSmallDrawer(true)}
-            >
-              {selectedOption || "Select an option"}
-            </Button>
-          </Box>
-
-
-        </Box>
-        <Box
+      <Box
+        component="form"
+        sx={{
+          flex: 1,
+          padding: "24px",
+          overflowY: "auto",
+          textAlign: "left",
+          backgroundColor: "#FFFFFF",
+          "&::-webkit-scrollbar": { display: "none" },
+          scrollbarWidth: "none",
+        }}
+      >
+        <Box sx={formGroupStyle}>
+          <Typography
             sx={{
-              boxSizing: "border-box", 
-              display: "flex",
-              width:'100%',
-
-              gap: 1,
-              position: "sticky",
-              bottom: 0,
-              backgroundColor: "#FFFFFF",
-              padding: "12px 16px",
-              boxShadow: "0 -1px 3px rgba(0,0,0,0.05)",
-              borderTop: "1px solid #E0E0E0",
-              justifyContent: "center",
+              color: "#333",
+              fontSize: "14px",
+              fontWeight: 500,
             }}
           >
-            <Button
-              fullWidth
-              variant="outlined"
-              sx={{
-                padding: "8px 20px",
-                py: 1.5,
-                borderRadius: "25px",
-                borderColor: "#eee",
-                color: "#666",
-                fontSize: "14px",
-                "&:hover": {
-                  borderColor: "#ddd",
-                  bgcolor: "#fafafa",
-                },
-                textTransform: "none",
-                transition: "all 0.2s ease",
-              }}
-            >
-              Cancel
-            </Button>
-            <Button
-              fullWidth
-              variant="contained"
-              sx={{
-                py: 1.5,
-                
-                borderRadius: "25px",
-                bgcolor: "#ff6b9c",
-                fontSize: "14px",
-                "&:hover": {
-                  bgcolor: "#ff5c8f",
-                },
-                textTransform: "none",
-                boxShadow: "none",
-                transition: "all 0.2s ease",
-              }}
-            >
-              Save
-            </Button>
-          </Box>
+            Name
+          </Typography>
+          <TextField
+            fullWidth
+            placeholder="enter name"
+            size="small"
+            sx={inputBaseStyle}
+          />
+        </Box>
 
-        <SwipeableDrawer
+        <Box sx={formGroupStyle}>
+          <Typography
+            sx={{
+              color: "#333",
+              fontSize: "14px",
+              fontWeight: 500,
+            }}
+          >
+            Photos
+          </Typography>
+          <Box sx={imageGridStyle}>
+            {Array(6)
+              .fill(0)
+              .map((_, index) => (
+                <Box key={index} sx={uploadBoxStyle} role="button" tabIndex={0}>
+                  <AddIcon
+                    sx={{
+                      fontSize: 24,
+                      color: "#999",
+                      transition: "color 0.2s ease",
+                      "&:hover": {
+                        color: "#666",
+                      },
+                    }}
+                  />
+                </Box>
+              ))}
+          </Box>
+        </Box>
+
+        <Box sx={formGroupStyle}>
+          <Typography
+            sx={{
+              color: "#333",
+              fontSize: "14px",
+              fontWeight: 500,
+            }}
+          >
+            Personality
+          </Typography>
+          <Box sx={{ display: "flex", gap: 1.5 }}>
+            {[
+              { value: "any", label: "Introvert" },
+              { value: "male", label: "Extrovert" },
+              { value: "female", label: "Ambivert" },
+            ].map((option) => (
+              <Button
+                key={option.value}
+                variant="outlined"
+                sx={genderButtonStyle(gender === option.value)}
+                onClick={() => setGender(option.value)}
+              >
+                {option.label}
+              </Button>
+            ))}
+          </Box>
+        </Box>
+
+        <Box sx={formGroupStyle}>
+          <Typography
+            sx={{
+              color: "#333",
+              fontSize: "14px",
+              fontWeight: 500,
+            }}
+          >
+            Here for?
+          </Typography>
+
+          <Button
+            sx={styles.locationSelector}
+            endIcon={<KeyboardArrowDownIcon />}
+            onClick={toggleSmallDrawer(true)}
+          >
+            {selectedOption || "Select an option"}
+          </Button>
+        </Box>
+
+        <Box sx={formGroupStyle}>
+          <Typography
+            sx={{
+              color: "#333",
+              fontSize: "14px",
+              fontWeight: 500,
+            }}
+          >
+            About
+          </Typography>
+          <TextareaAutosize
+            minRows={4}
+            placeholder="A few words about yourself..."
+            style={{
+              //width: "100%",
+              padding: "12px",
+              borderRadius: "8px",
+              border: "1px solid #eee",
+              fontSize: "14px",
+              color: "#666",
+              resize: "vertical",
+              fontFamily: "inherit",
+              outline: "none",
+              transition: "border-color 0.2s ease",
+            }}
+            onFocus={(e) => {
+              e.target.style.borderColor = "#ff6b9c";
+            }}
+            onBlur={(e) => {
+              e.target.style.borderColor = "#eee";
+            }}
+          />
+        </Box>
+
+        <Box sx={formGroupStyle}>
+          <Typography
+            sx={{
+              color: "#333",
+              fontSize: "14px",
+              fontWeight: 500,
+            }}
+          >
+            Interests
+          </Typography>
+          <Button
+            sx={styles.locationSelector}
+            endIcon={<KeyboardArrowDownIcon />}
+            onClick={toggleSmallDrawer(true)}
+          >
+            {selectedOption || "Select an option"}
+          </Button>
+        </Box>
+      </Box>
+      <Box
+        sx={{
+          boxSizing: "border-box",
+          display: "flex",
+          width: "100%",
+
+          gap: 1,
+          position: "sticky",
+          bottom: 0,
+          backgroundColor: "#FFFFFF",
+          padding: "12px 16px",
+          boxShadow: "0 -1px 3px rgba(0,0,0,0.05)",
+          borderTop: "1px solid #E0E0E0",
+          justifyContent: "center",
+        }}
+      >
+        <Button
+          fullWidth
+          variant="outlined"
+          sx={{
+            padding: "8px 20px",
+            py: 1.5,
+            borderRadius: "25px",
+            borderColor: "#eee",
+            color: "#666",
+            fontSize: "14px",
+            "&:hover": {
+              borderColor: "#ddd",
+              bgcolor: "#fafafa",
+            },
+            textTransform: "none",
+            transition: "all 0.2s ease",
+          }}
+        >
+          Cancel
+        </Button>
+        <Button
+          fullWidth
+          variant="contained"
+          sx={{
+            py: 1.5,
+
+            borderRadius: "25px",
+            bgcolor: "#ff6b9c",
+            fontSize: "14px",
+            "&:hover": {
+              bgcolor: "#ff5c8f",
+            },
+            textTransform: "none",
+            boxShadow: "none",
+            transition: "all 0.2s ease",
+          }}
+        >
+          Save
+        </Button>
+      </Box>
+
+      <SwipeableDrawer
         anchor="bottom"
         open={smallDrawerOpen}
         onClose={toggleSmallDrawer(false)}
@@ -577,25 +567,29 @@ function SearchContainer({onClose, setIsDrawerOpen }) {
             // borderTopRightRadius: "20px",
             background: "white",
             maxHeight: "90vh",
-          }}}
+          },
+        }}
       >
-        <List sx={{paddingBottom:0}}>
-          {["🎉Casual dating", "💘Long-term", "😍Short-term", "👋New friends", "🎓Study buddy", "🤔Still figuring"].map((option, index) => (
-            <ListItemButton key={index} onClick={() => handleOptionSelect(option)} sx={{borderBottom: "1px solid #f0f0f0",}}>
-              <ListItemText primary={option} sx={{textAlign:'center'}} />
+        <List sx={{ paddingBottom: 0 }}>
+          {[
+            "🎉Casual dating",
+            "💘Long-term",
+            "😍Short-term",
+            "👋New friends",
+            "🎓Study buddy",
+            "🤔Still figuring",
+          ].map((option, index) => (
+            <ListItemButton
+              key={index}
+              onClick={() => handleOptionSelect(option)}
+              sx={{ borderBottom: "1px solid #f0f0f0" }}
+            >
+              <ListItemText primary={option} sx={{ textAlign: "center" }} />
             </ListItemButton>
           ))}
         </List>
       </SwipeableDrawer>
-
-
-
-
-
-      </Box>
-
-
-
+    </Box>
   );
 }
 

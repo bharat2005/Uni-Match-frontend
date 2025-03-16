@@ -12,11 +12,10 @@ import {
 import Modal from "@mui/material/Modal";
 import axios from "axios";
 
-
 export default function FilterModal({ open, setOpen, setProfiles }) {
-  const [ageRange, setAgeRange] = useState([18, 24]); 
-  const [gender, setGender] = useState(""); 
-  const [reason, setReason] = useState(""); 
+  const [ageRange, setAgeRange] = useState([18, 24]);
+  const [gender, setGender] = useState("");
+  const [reason, setReason] = useState("");
 
   const reasons = [
     "Casual Dating",
@@ -27,43 +26,69 @@ export default function FilterModal({ open, setOpen, setProfiles }) {
     "Still figuring it out",
   ];
 
-  
   const handleApplyFilters = (e) => {
-    e.preventDefault(); 
+    e.preventDefault();
 
     if (gender && reason) {
       const filters = { ageRange, gender, reason };
       console.log(filters);
 
-    
       axios
-        .post("https://api.uni-match.in/filtered_dashboard", filters, {withCredentials: true, headers: { "X-CSRF-TOKEN": localStorage.getItem("csrfTokenAccess") }})
+        .post("https://api.uni-match.in/filtered_dashboard", filters, {
+          withCredentials: true,
+          headers: { "X-CSRF-TOKEN": localStorage.getItem("csrfTokenAccess") },
+        })
         .then((response) => {
-          setProfiles(response.data); 
+          setProfiles(response.data);
         })
         .catch((error) => {
           console.error("Error: ", error);
-          
-        if (error.response?.status === 401) {
 
-          axios.post("https://api.uni-match.in/refresh", {}, { withCredentials:true, headers: { "X-CSRF-TOKEN": localStorage.getItem("csrfTokenRefresh") }} )
+          if (error.response?.status === 401) {
+            axios
+              .post(
+                "https://api.uni-match.in/refresh",
+                {},
+                {
+                  withCredentials: true,
+                  headers: {
+                    "X-CSRF-TOKEN": localStorage.getItem("csrfTokenRefresh"),
+                  },
+                },
+              )
 
-            .then((response) => {
+              .then((response) => {
+                const csrfTokenAccess = response.headers["x-csrf-token-access"];
+                localStorage.setItem("csrfTokenAccess", csrfTokenAccess);
 
-              const csrfTokenAccess = response.headers["x-csrf-token-access"]
-              localStorage.setItem("csrfTokenAccess", csrfTokenAccess)
-
-                axios.post("https://api.uni-match.in/filtered_dashboard", filters, { withCredentials:true,  headers: { "X-CSRF-TOKEN": localStorage.getItem("csrfTokenAccess") } })
-                .then((response) => {
-                  console.log("Protected Data (After Refresh):", response.data)
-                  setProfiles(response.data); 
-                })
-                .catch((retryError) => console.error("Failed after refresh:", retryError));
-            })
-            .catch(() => console.error("Session expired, please log in again."));
-        }
+                axios
+                  .post(
+                    "https://api.uni-match.in/filtered_dashboard",
+                    filters,
+                    {
+                      withCredentials: true,
+                      headers: {
+                        "X-CSRF-TOKEN": localStorage.getItem("csrfTokenAccess"),
+                      },
+                    },
+                  )
+                  .then((response) => {
+                    console.log(
+                      "Protected Data (After Refresh):",
+                      response.data,
+                    );
+                    setProfiles(response.data);
+                  })
+                  .catch((retryError) =>
+                    console.error("Failed after refresh:", retryError),
+                  );
+              })
+              .catch(() =>
+                console.error("Session expired, please log in again."),
+              );
+          }
         });
-      setOpen(false); 
+      setOpen(false);
     } else {
       alert("Please fill all fields before applying the filters.");
     }
@@ -82,7 +107,7 @@ export default function FilterModal({ open, setOpen, setProfiles }) {
           borderRadius: "10px",
           boxShadow: 24,
           p: 4,
-          textAlign: "center", 
+          textAlign: "center",
         }}
       >
         <Typography variant="h5" sx={{ mb: 2 }}>
@@ -90,7 +115,6 @@ export default function FilterModal({ open, setOpen, setProfiles }) {
         </Typography>
 
         <form onSubmit={handleApplyFilters}>
-          
           <div style={{ marginBottom: "20px" }}>
             <Typography variant="body1" gutterBottom>
               Age Range (18-24)
@@ -110,7 +134,6 @@ export default function FilterModal({ open, setOpen, setProfiles }) {
             />
           </div>
 
-        
           <div style={{ marginBottom: "20px" }}>
             <Typography variant="body1" gutterBottom>
               Gender
@@ -153,7 +176,6 @@ export default function FilterModal({ open, setOpen, setProfiles }) {
             </ToggleButtonGroup>
           </div>
 
-         
           <div style={{ marginBottom: "30px" }}>
             <Typography variant="body1" gutterBottom>
               Looking for?
@@ -168,13 +190,13 @@ export default function FilterModal({ open, setOpen, setProfiles }) {
                 width: "80%",
                 mx: "auto",
                 "&.Mui-focused .MuiOutlinedInput-notchedOutline": {
-                  borderColor: "black", 
+                  borderColor: "black",
                 },
                 "&:hover .MuiOutlinedInput-notchedOutline": {
                   borderColor: "black",
                 },
                 ".MuiSelect-select": {
-                  color: "black", 
+                  color: "black",
                 },
               }}
             >

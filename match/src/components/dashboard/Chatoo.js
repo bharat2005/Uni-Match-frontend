@@ -1,7 +1,7 @@
 "use client";
 import React, { useState, useEffect, useRef } from "react";
 import { Box, Typography, TextField, IconButton, Avatar } from "@mui/material";
-import { useNavigate } from 'react-router-dom';
+import { useNavigate } from "react-router-dom";
 const ChatComponent = ({ setChatt }) => {
   const [messageText, setMessageText] = useState("");
   const navigate = useNavigate();
@@ -79,9 +79,8 @@ const ChatComponent = ({ setChatt }) => {
           display: "flex",
           alignItems: "center",
           padding: "28px 20px 12px 20px",
-          justifyContent:'center',
-          position: "fixed",
-          width:'100vw',
+          justifyContent: "center",
+          position: "sticky",
           top: 0,
           backgroundColor: "#FFFFFF",
           zIndex: 15,
@@ -89,7 +88,12 @@ const ChatComponent = ({ setChatt }) => {
         }}
       >
         <IconButton
-          sx={{ padding: "5px", marginLeft: "8px", position:'absolute', left:0 }}
+          sx={{
+            padding: "5px",
+            marginLeft: "8px",
+            position: "absolute",
+            left: 0,
+          }}
           onPointerDown={() => navigate(-1)}
         >
           <i
@@ -127,8 +131,7 @@ const ChatComponent = ({ setChatt }) => {
             key={msg.id}
             sx={{
               display: "flex",
-              justifyContent:
-                msg.sender === "me" ? "flex-end" : "flex-start",
+              justifyContent: msg.sender === "me" ? "flex-end" : "flex-start",
               gap: "10px",
             }}
           >
@@ -149,12 +152,10 @@ const ChatComponent = ({ setChatt }) => {
                 fontSize: "16px",
                 lineHeight: "1.4",
                 maxWidth: "70%",
-                backgroundColor:
-                  msg.sender === "me" ? "#FE6BA2" : "#FFFFFF",
+                backgroundColor: msg.sender === "me" ? "#FE6BA2" : "#FFFFFF",
                 color: msg.sender === "me" ? "#FFFFFF" : "#111",
                 boxShadow: "0 2px 4px rgba(0,0,0,0.1)",
-                border:
-                  msg.sender !== "me" ? "1px solid #eee" : "none",
+                border: msg.sender !== "me" ? "1px solid #eee" : "none",
                 wordBreak: "break-word",
               }}
             >

@@ -1,9 +1,9 @@
 "use client";
 import * as React from "react";
-import { Player } from '@lottiefiles/react-lottie-player';
+import { Player } from "@lottiefiles/react-lottie-player";
 import { Box, Typography, Button, Modal } from "@mui/material";
 
-const Container = ({ setModalOpen, modalOpen, name="accept" }) => {
+const Container = ({ setModalOpen, modalOpen, name = "accept" }) => {
   const handleUnlock = () => {
     console.log("Unlock clicked");
     setModalOpen(false); // Close modal after unlock
@@ -26,15 +26,12 @@ const Container = ({ setModalOpen, modalOpen, name="accept" }) => {
         alignItems: "center",
       }}
     >
-
-
-  
       <Box
         component="section"
         sx={{
           display: "flex",
           flexDirection: "column",
-          width:'75vw',
+          width: "75vw",
           justifyContent: "center",
           alignItems: "center",
           gap: "70px",
@@ -56,26 +53,32 @@ const Container = ({ setModalOpen, modalOpen, name="accept" }) => {
           },
         }}
       >
-
-
-<Box sx={{position:'relative', bottom:'28%'}}>
-      <Player
-    autoplay
-    loop
-    src={name == "unlike" ? "/unlike.json" : name == "reject" ? "/reject.json" : name == "accept" ? "/accept.json" : name == "noti" ? "/noti.json" : null }
-   style={{ height: '130px'}}
-  />
-
-      </Box>
-
+        <Box sx={{ position: "relative", bottom: "28%" }}>
+          <Player
+            autoplay
+            loop
+            src={
+              name == "unlike"
+                ? "/unlike.json"
+                : name == "reject"
+                  ? "/reject.json"
+                  : name == "accept"
+                    ? "/accept.json"
+                    : name == "noti"
+                      ? "/noti.json"
+                      : null
+            }
+            style={{ height: "130px" }}
+          />
+        </Box>
 
         <Box
           sx={{
             display: "flex",
             flexDirection: "column",
             justifyContent: "center",
-            position:'relative',
-            bottom:'40%',
+            position: "relative",
+            bottom: "40%",
             alignItems: "center",
             gap: "8px",
             width: "100%",
@@ -98,10 +101,10 @@ const Container = ({ setModalOpen, modalOpen, name="accept" }) => {
               // },
             }}
           >
-            {name ==="unlike" && "Are you sure about this?"}
-            {name ==="reject" && "Not quite feeling it?"}
-            {name ==="accept" && "Feeling the connection?"}
-            {name ==="noti" && "You’ve got a match!"}
+            {name === "unlike" && "Are you sure about this?"}
+            {name === "reject" && "Not quite feeling it?"}
+            {name === "accept" && "Feeling the connection?"}
+            {name === "noti" && "You’ve got a match!"}
           </Typography>
           <Typography
             id="modal-description"
@@ -123,10 +126,10 @@ const Container = ({ setModalOpen, modalOpen, name="accept" }) => {
               // },
             }}
           >
-          {name === "unlike" && "Want to undo the like?"}
-          {name === "reject" && "Wanna move on?"}
-          {name === "accept" && "Wanna say yes?"}
-          {name === "noti" && "Wanna see who it is?"}
+            {name === "unlike" && "Want to undo the like?"}
+            {name === "reject" && "Wanna move on?"}
+            {name === "accept" && "Wanna say yes?"}
+            {name === "noti" && "Wanna see who it is?"}
           </Typography>
         </Box>
 
@@ -137,8 +140,8 @@ const Container = ({ setModalOpen, modalOpen, name="accept" }) => {
             justifyContent: "center",
             alignItems: "center",
             width: "100%",
-            position:'relative',
-            bottom:'40%',
+            position: "relative",
+            bottom: "40%",
           }}
         >
           <Button
@@ -170,10 +173,10 @@ const Container = ({ setModalOpen, modalOpen, name="accept" }) => {
               // },
             }}
           >
-         {name === "unlike" && "Undo"}
-         {name === "reject" && "Move on"}
-         {name === "accept" && "Say yes"}
-         {name === "noti" && "See now"}
+            {name === "unlike" && "Undo"}
+            {name === "reject" && "Move on"}
+            {name === "accept" && "Say yes"}
+            {name === "noti" && "See now"}
           </Button>
           <Button
             onClick={handleLater}

@@ -33,7 +33,6 @@ function PulsatingHeart() {
         : "all 0.2s cubic-bezier(0.4, 0, 0.2, 1)",
   };
 
-
   const contentStyle = {
     width: "120px",
     height: "120px",
@@ -50,7 +49,7 @@ function PulsatingHeart() {
     width: "72px",
     height: "72px",
     objectFit: "contain",
-    backgroundColor:'transparent',
+    backgroundColor: "transparent",
     transform:
       beat === 1 ? "scale(1.12)" : beat === 2 ? "scale(1.06)" : "scale(1)",
     transition:

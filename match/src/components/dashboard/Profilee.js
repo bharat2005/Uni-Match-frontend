@@ -23,25 +23,22 @@ import {
   Logout,
   PersonRemove,
 } from "@mui/icons-material";
-import About from './About'
-import Delete from './DeleteProfile';
-import Support from './Support';
-import EditStepForm from './Edit';
-import Modal from './Modal2.0';
-
-
-
-
+import About from "./About";
+import Delete from "./DeleteProfile";
+import Support from "./Support";
+import EditStepForm from "./Edit";
+import Modal from "./Modal2.0";
 
 const ProfileContainer = () => {
   const theme = useTheme();
   const isMobile = useMediaQuery("(max-width:640px)");
   const isTablet = useMediaQuery("(max-width:991px)");
   const [open, setOpen] = React.useState(null);
-  const [modalOpen, setModalOpen] = React.useState(false)
+  const [modalOpen, setModalOpen] = React.useState(false);
 
   const containerStyles = {
-   background: "linear-gradient(180deg, rgba(245, 245, 245, 0) 0%, #F5F5F5 26%)",
+    background:
+      "linear-gradient(180deg, rgba(245, 245, 245, 0) 0%, #F5F5F5 26%)",
     fontFamily: '"Inter", sans-serif',
     padding: {
       xs: "0 12px",
@@ -119,117 +116,167 @@ const ProfileContainer = () => {
   };
 
   const menuItems = [
-    { icon:  <i className="ti ti-edit" style={{ fontSize: "24px", color:'black' }} />, text: "Edit Profile" },
-    { icon: <i className="ti ti-share" style={{ fontSize: "24px",color:'black' }} />, text: "Share" },
-    { icon: <i className="ti ti-info-circle" style={{ fontSize: "24px",color:'black' }} />, text: "About Developer" },
-    { icon:  <i className="ti ti-heart-handshake" style={{ fontSize: "24px", color:'black' }} />, text: "Support Us" },
-    { icon:  <i className="ti ti-trash" style={{ fontSize: "24px", color:'black' }} />, text: "Delete Profile" },
-
+    {
+      icon: (
+        <i
+          className="ti ti-edit"
+          style={{ fontSize: "24px", color: "black" }}
+        />
+      ),
+      text: "Edit Profile",
+    },
+    {
+      icon: (
+        <i
+          className="ti ti-share"
+          style={{ fontSize: "24px", color: "black" }}
+        />
+      ),
+      text: "Share",
+    },
+    {
+      icon: (
+        <i
+          className="ti ti-info-circle"
+          style={{ fontSize: "24px", color: "black" }}
+        />
+      ),
+      text: "About Developer",
+    },
+    {
+      icon: (
+        <i
+          className="ti ti-heart-handshake"
+          style={{ fontSize: "24px", color: "black" }}
+        />
+      ),
+      text: "Support Us",
+    },
+    {
+      icon: (
+        <i
+          className="ti ti-trash"
+          style={{ fontSize: "24px", color: "black" }}
+        />
+      ),
+      text: "Delete Profile",
+    },
   ];
-  
 
-  if (open){
-    switch(open){
-      case "Edit Profile":{
-        return  <EditStepForm onClose={()=> setOpen(false)}/>
+  if (open) {
+    switch (open) {
+      case "Edit Profile": {
+        return <EditStepForm onClose={() => setOpen(false)} />;
       }
-      case "About Developer":{
-        return <About onClose={()=> setOpen(false)}/>
+      case "About Developer": {
+        return <About onClose={() => setOpen(false)} />;
       }
-      case "Support Us":{
-        return <Support onClose={()=> setOpen(false)}/>
+      case "Support Us": {
+        return <Support onClose={() => setOpen(false)} />;
       }
-      case "Delete Profile":{
-        return <Delete onClose={()=> setOpen(false)}/>
+      case "Delete Profile": {
+        return <Delete onClose={() => setOpen(false)} />;
       }
-
     }
   }
 
-  return (<>
+  return (
+    <>
+      <Modal modalOpen={modalOpen} setModalOpen={setModalOpen} name={"share"} />
 
-  <Modal modalOpen={modalOpen} setModalOpen={setModalOpen} name={"share"}/>
-
-    <Box sx={containerStyles}>
-    
-      <Box sx={profileHeaderStyles}>
-        <Avatar
-          src="/5.jpg"
-          alt="Profile"
-          sx={{
-            width: { xs: "80px", md: "80px" },
-            height: { xs: "80px", md: "80px" },
-            marginBottom: "10px",
-          }}
-        />
-        <Typography
-          sx={{
-            fontSize: { xs: "18px", md: "20x" },
-            fontWeight: 600,
-            color: "#333",
-            marginBottom: "5px",
-          }}
-        >
-          Bharat
-        </Typography>
-        <Box
-          sx={{
-            backgroundColor:"#ffc107",
-            padding: "6px 10px",
-            borderRadius: "16px",
-            display: "flex",
-            alignItems: "center",
-            fontSize:'14px',
-          }}
-        ><i className="ti ti-id" style={{ fontSize: "20px", marginRight:'2px' }} />
-          12413923
-        </Box>
-      </Box>
-
-      <Box sx={menuListStyles}>
-        <List disablePadding>
-          {menuItems.map((item, index) => (
-            <ListItem onClick={()=> { item.text == "Share" ? setModalOpen(true) : setOpen(item.text)}} key={index} sx={menuItemStyles}>
-              <ListItemIcon sx={{ color: "#666", minWidth: "40px" }}>
-                {item.icon}
-              </ListItemIcon>
-              <ListItemText
-                primary={item.text}
-                sx={{
-                  "& .MuiTypography-root": {
-                    fontSize: { xs: "14px", md: "15px" },
-                    color: "#333",
-                  },
-                }}
-              />
-              <ListItemSecondaryAction>
-                <ChevronRight sx={{ color: "#999" }} />
-              </ListItemSecondaryAction>
-            </ListItem>
-          ))}
-        </List>
-
-        <Box sx={actionButtonsStyles}>
-          <Button
-            variant="contained"
-            startIcon={<i className="ti ti-logout" style={{ fontSize: "24px" }} />}
+      <Box sx={containerStyles}>
+        <Box sx={profileHeaderStyles}>
+          <Avatar
+            src="/5.jpg"
+            alt="Profile"
             sx={{
-              backgroundColor: "#ff4757",
-              borderRadius: "12px",
-              padding: { xs: "10px", md: "12px" },
-              fontSize: { xs: "13px", md: "14px" },
-              fontWeight: 500,
-              width: "100%",
-              "&:hover": {
-                backgroundColor: "#ff3747",
-              },
+              width: { xs: "80px", md: "80px" },
+              height: { xs: "80px", md: "80px" },
+              marginBottom: "10px",
+            }}
+          />
+          <Typography
+            sx={{
+              fontSize: { xs: "18px", md: "20x" },
+              fontWeight: 600,
+              color: "#333",
+              marginBottom: "5px",
             }}
           >
-            Logout
-          </Button>
+            Bharat
+          </Typography>
+          <Box
+            sx={{
+              backgroundColor: "#ffc107",
+              padding: "6px 10px",
+              borderRadius: "16px",
+              display: "flex",
+              alignItems: "center",
+              fontSize: "14px",
+            }}
+          >
+            <i
+              className="ti ti-id"
+              style={{ fontSize: "20px", marginRight: "2px" }}
+            />
+            12413923
+          </Box>
+        </Box>
+
+        <Box sx={menuListStyles}>
+          <List disablePadding>
+            {menuItems.map((item, index) => (
+              <ListItem
+                onClick={() => {
+                  item.text == "Share"
+                    ? setModalOpen(true)
+                    : setOpen(item.text);
+                }}
+                key={index}
+                sx={menuItemStyles}
+              >
+                <ListItemIcon sx={{ color: "#666", minWidth: "40px" }}>
+                  {item.icon}
+                </ListItemIcon>
+                <ListItemText
+                  primary={item.text}
+                  sx={{
+                    "& .MuiTypography-root": {
+                      fontSize: { xs: "14px", md: "15px" },
+                      color: "#333",
+                    },
+                  }}
+                />
+                <ListItemSecondaryAction>
+                  <ChevronRight sx={{ color: "#999" }} />
+                </ListItemSecondaryAction>
+              </ListItem>
+            ))}
+          </List>
+
+          <Box sx={actionButtonsStyles}>
+            <Button
+              variant="contained"
+              startIcon={
+                <i className="ti ti-logout" style={{ fontSize: "24px" }} />
+              }
+              sx={{
+                backgroundColor: "#ff4757",
+                borderRadius: "12px",
+                padding: { xs: "10px", md: "12px" },
+                fontSize: { xs: "13px", md: "14px" },
+                fontWeight: 500,
+                width: "100%",
+                "&:hover": {
+                  backgroundColor: "#ff3747",
+                },
+              }}
+            >
+              Logout
+            </Button>
+          </Box>
         </Box>
       </Box>
-    </Box>
     </>
   );
 };

@@ -13,7 +13,6 @@
 //   const [barOpen, setBarOpen] = useState(false)
 //   const [loading, setLoading] = useState(false)
 
-
 //   // function handleLogin(e) {
 //   //   setLpuLogin(prev => {
 //   //     return { ...prev, [e.target.name]: e.target.value };
@@ -22,7 +21,7 @@
 //   function handleLoginSubmit(e){
 //     e.preventDefault();
 //     setLoading(true)
-    
+
 //     axios.post("https://api.uni-match.in/login", lpuLogin, {withCredentials:true})
 //     .then(response => {
 //       console.log("message from server",response.data)
@@ -33,7 +32,7 @@
 
 //         const csrfTokenRefresh = response.headers["x-csrf-token-refresh"]
 //         localStorage.setItem("csrfTokenRefresh", csrfTokenRefresh)
-        
+
 //         login(true)
 //         setOpen(false)
 //         setLoading(false)
@@ -54,9 +53,8 @@
 //       setLoading(false)
 //       setBarOpen(true)
 //     })
-    
-//   }
 
+//   }
 
 //   return (
 // <>
@@ -68,7 +66,6 @@
 //     handleLogin={handleLogin}
 //     handleLoginSubmit={handleLoginSubmit}
 //   />
-
 
 //     <Box
 //       sx={{
@@ -86,19 +83,18 @@
 //         boxSizing: 'border-box',
 //       }}
 //     >
-    
+
 //       <img
 //         src='/signs/Match.png'
 //         alt="Logo"
 //         draggable='false'
 //         style={{
-//           width: '100%', 
-//           maxWidth: '300px', 
-//           marginBottom: '300px', 
+//           width: '100%',
+//           maxWidth: '300px',
+//           marginBottom: '300px',
 //         }}
 //       />
 
-      
 //       <Button
 //         variant="contained"
 //         onClick={()=>{setOpen(true); setBarOpen(false)}}
@@ -106,8 +102,8 @@
 //           backgroundImage: 'url(/signs/but.png)',
 //           backgroundSize: 'cover',
 //           backgroundPosition: 'center',
-//           width: '80%', 
-//           maxWidth: '450px', 
+//           width: '80%',
+//           maxWidth: '450px',
 //           borderRadius: '8px',
 //           height: '50px',
 //           textAlign: 'center',
@@ -115,7 +111,6 @@
 //         }}
 //       >
 //       </Button>
-
 
 // <Snackbar
 //       open={barOpen}

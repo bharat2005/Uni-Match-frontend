@@ -1,18 +1,23 @@
 import React from "react";
-import { TextField, ToggleButton, ToggleButtonGroup, Grid, Typography } from "@mui/material";
+import {
+  TextField,
+  ToggleButton,
+  ToggleButtonGroup,
+  Grid,
+  Typography,
+} from "@mui/material";
 
 export default function UserForm({ formData, setFormData }) {
-
-  function calculateAge(day, month, year){
+  function calculateAge(day, month, year) {
     const today = new Date();
-    const birthDate = new Date(year, month - 1, day); 
+    const birthDate = new Date(year, month - 1, day);
     let age = today.getFullYear() - birthDate.getFullYear();
     const m = today.getMonth() - birthDate.getMonth();
     if (m < 0 || (m === 0 && today.getDate() < birthDate.getDate())) {
       age--;
     }
     return age;
-  };
+  }
 
   function handleInputChange(e) {
     if (["day", "month", "year"].includes(e.target.name)) {
@@ -20,13 +25,13 @@ export default function UserForm({ formData, setFormData }) {
       const age = calculateAge(newDob.day, newDob.month, newDob.year);
       setFormData((prev) => ({
         ...prev,
-        dob: newDob, 
-        age: age,    
+        dob: newDob,
+        age: age,
       }));
     } else {
       setFormData((prev) => {
-        return {...prev, [e.target.name]: e.target.value }
-      })
+        return { ...prev, [e.target.name]: e.target.value };
+      });
     }
   }
 
@@ -37,14 +42,22 @@ export default function UserForm({ formData, setFormData }) {
   }
 
   return (
-    <div style={{ paddingTop: 40, paddingLeft: 20, paddingRight: 20 }}> 
-      <Typography variant="h4" gutterBottom sx={{ fontSize: { xs: "1.5rem", sm: "2rem" } }}>
+    <div style={{ paddingTop: 40, paddingLeft: 20, paddingRight: 20 }}>
+      <Typography
+        variant="h4"
+        gutterBottom
+        sx={{ fontSize: { xs: "1.5rem", sm: "2rem" } }}
+      >
         Introduce yourself
       </Typography>
 
       <Grid container mt={2} spacing={3}>
         <Grid item xs={12}>
-          <Typography variant="body1" gutterBottom sx={{ fontSize: { xs: "1rem", sm: "1.25rem" } }}>
+          <Typography
+            variant="body1"
+            gutterBottom
+            sx={{ fontSize: { xs: "1rem", sm: "1.25rem" } }}
+          >
             What should we call you?✨
           </Typography>
           <TextField
@@ -58,8 +71,12 @@ export default function UserForm({ formData, setFormData }) {
               "& label": { color: "black" },
               "& label.Mui-focused": { color: "black" },
               "& .MuiOutlinedInput-root": {
-                "&:hover .MuiOutlinedInput-notchedOutline": { borderColor: "#ccc" },
-                "&.Mui-focused .MuiOutlinedInput-notchedOutline": { borderColor: "black" },
+                "&:hover .MuiOutlinedInput-notchedOutline": {
+                  borderColor: "#ccc",
+                },
+                "&.Mui-focused .MuiOutlinedInput-notchedOutline": {
+                  borderColor: "black",
+                },
               },
               marginBottom: 2,
             }}
@@ -67,7 +84,11 @@ export default function UserForm({ formData, setFormData }) {
         </Grid>
 
         <Grid item xs={12}>
-          <Typography variant="body1" gutterBottom sx={{ fontSize: { xs: "1rem", sm: "1.25rem" } }}>
+          <Typography
+            variant="body1"
+            gutterBottom
+            sx={{ fontSize: { xs: "1rem", sm: "1.25rem" } }}
+          >
             What’s your gender?🚻
           </Typography>
           <ToggleButtonGroup
@@ -81,13 +102,17 @@ export default function UserForm({ formData, setFormData }) {
                 key={gender}
                 value={gender}
                 sx={{
-                  backgroundColor: formData.gender === gender ? "black" : "transparent",
+                  backgroundColor:
+                    formData.gender === gender ? "black" : "transparent",
                   color: formData.gender === gender ? "white" : "black",
                   border: "1px solid #ccc",
                   "&:hover": { backgroundColor: "rgba(0, 0, 0, 0.1)" },
-                  "&.Mui-selected": { backgroundColor: "black !important", color: "white !important" },
+                  "&.Mui-selected": {
+                    backgroundColor: "black !important",
+                    color: "white !important",
+                  },
                   marginBottom: 3,
-                  padding: { xs: "8px", sm: "12px" }, 
+                  padding: { xs: "8px", sm: "12px" },
                 }}
               >
                 {gender.toUpperCase()}
@@ -97,7 +122,11 @@ export default function UserForm({ formData, setFormData }) {
         </Grid>
 
         <Grid item xs={12}>
-          <Typography variant="body1" gutterBottom sx={{ fontSize: { xs: "1rem", sm: "1.25rem" } }}>
+          <Typography
+            variant="body1"
+            gutterBottom
+            sx={{ fontSize: { xs: "1rem", sm: "1.25rem" } }}
+          >
             What's your birthdate? 🎂
           </Typography>
           <Grid container spacing={2}>
@@ -107,7 +136,7 @@ export default function UserForm({ formData, setFormData }) {
                   label={field.charAt(0).toUpperCase() + field.slice(1)}
                   variant="outlined"
                   name={field}
-                  value={formData.dob[field] || ''}
+                  value={formData.dob[field] || ""}
                   onChange={handleInputChange}
                   inputProps={{ maxLength: field === "year" ? 4 : 2 }}
                   fullWidth
@@ -115,8 +144,12 @@ export default function UserForm({ formData, setFormData }) {
                     "& label": { color: "black" },
                     "& label.Mui-focused": { color: "black" },
                     "& .MuiOutlinedInput-root": {
-                      "&:hover .MuiOutlinedInput-notchedOutline": { borderColor: "#ccc" },
-                      "&.Mui-focused .MuiOutlinedInput-notchedOutline": { borderColor: "black" },
+                      "&:hover .MuiOutlinedInput-notchedOutline": {
+                        borderColor: "#ccc",
+                      },
+                      "&.Mui-focused .MuiOutlinedInput-notchedOutline": {
+                        borderColor: "black",
+                      },
                     },
                     marginBottom: 2,
                   }}

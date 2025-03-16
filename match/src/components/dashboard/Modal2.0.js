@@ -1,12 +1,9 @@
 "use client";
 import * as React from "react";
-import { Player } from '@lottiefiles/react-lottie-player';
+import { Player } from "@lottiefiles/react-lottie-player";
 import { Box, Typography, Button, Modal } from "@mui/material";
 
 const Container = ({ modalOpen, setModalOpen, name }) => {
-
-
-
   return (
     <Modal
       open={modalOpen}
@@ -19,15 +16,12 @@ const Container = ({ modalOpen, setModalOpen, name }) => {
         alignItems: "center",
       }}
     >
-
-
-  
       <Box
         component="section"
         sx={{
           display: "flex",
           flexDirection: "column",
-          width:'75vw',
+          width: "75vw",
           justifyContent: "center",
           alignItems: "center",
           gap: "70px",
@@ -49,26 +43,28 @@ const Container = ({ modalOpen, setModalOpen, name }) => {
           },
         }}
       >
-
-
-<Box sx={{position:'relative', bottom:'28%'}}>
-      <Player
-    autoplay
-    loop
-    src={name == "share" ? "/share.json" : name == "update" ? "/update.json" : null }
-   style={{ height: '130px'}}
-  />
-
-      </Box>
-
+        <Box sx={{ position: "relative", bottom: "28%" }}>
+          <Player
+            autoplay
+            loop
+            src={
+              name == "share"
+                ? "/share.json"
+                : name == "update"
+                  ? "/update.json"
+                  : null
+            }
+            style={{ height: "130px" }}
+          />
+        </Box>
 
         <Box
           sx={{
             display: "flex",
             flexDirection: "column",
             justifyContent: "center",
-            position:'relative',
-            bottom:'40%',
+            position: "relative",
+            bottom: "40%",
             alignItems: "center",
             gap: "8px",
             width: "100%",
@@ -91,8 +87,8 @@ const Container = ({ modalOpen, setModalOpen, name }) => {
               // },
             }}
           >
-            {name ==="share" && "Spread the love at LPU!"}
-            {name ==="update" && "Not quite feeling it?"}
+            {name === "share" && "Spread the love at LPU!"}
+            {name === "update" && "Not quite feeling it?"}
           </Typography>
           <Typography
             id="modal-description"
@@ -114,8 +110,9 @@ const Container = ({ modalOpen, setModalOpen, name }) => {
               // },
             }}
           >
-          {name === "share" && "Help your friends find meaningful connections — share Uni-Match and grow the LPU community into a place where real bonds and relationships thrive!"}
-          {name === "update" && "Wanna move on?"}
+            {name === "share" &&
+              "Help your friends find meaningful connections — share Uni-Match and grow the LPU community into a place where real bonds and relationships thrive!"}
+            {name === "update" && "Wanna move on?"}
           </Typography>
         </Box>
 
@@ -126,8 +123,8 @@ const Container = ({ modalOpen, setModalOpen, name }) => {
             justifyContent: "center",
             alignItems: "center",
             width: "100%",
-            position:'relative',
-            bottom:'40%',
+            position: "relative",
+            bottom: "40%",
           }}
         >
           <Button
@@ -159,8 +156,8 @@ const Container = ({ modalOpen, setModalOpen, name }) => {
               // },
             }}
           >
-         {name === "share" && "Share"}
-         {name === "update" && "Continue"}
+            {name === "share" && "Share"}
+            {name === "update" && "Continue"}
           </Button>
         </Box>
       </Box>

@@ -48,7 +48,10 @@ const TextBoard = ({ onClose }) => {
           }}
           onClick={onClose}
         >
-          <i className="ti ti-chevron-left" style={{ fontSize: "20px", color: "#555" }} />
+          <i
+            className="ti ti-chevron-left"
+            style={{ fontSize: "20px", color: "#555" }}
+          />
         </IconButton>
         <Typography
           sx={{
@@ -82,7 +85,10 @@ const TextBoard = ({ onClose }) => {
             marginBottom: "16px",
           }}
         >
-          Hey there! I'm Bharat Deshmukh, a student at <strong>Lovely Professional University (LPU)</strong>. I'm excited to introduce you to <strong>Uni-Match</strong> — a dating app crafted exclusively for the LPU community.
+          Hey there! I'm Bharat Deshmukh, a student at{" "}
+          <strong>Lovely Professional University (LPU)</strong>. I'm excited to
+          introduce you to <strong>Uni-Match</strong> — a dating app crafted
+          exclusively for the LPU community.
         </Typography>
 
         <Typography
@@ -94,7 +100,14 @@ const TextBoard = ({ onClose }) => {
             marginBottom: "24px",
           }}
         >
-          College life is full of opportunities — but let's be honest, meeting new people isn’t always easy. Between managing classes, assignments, and personal life, there’s barely time to expand your circle. That’s where Uni-Match comes in. It’s more than a dating app — it’s a platform where students can connect, make friends, and potentially find something meaningful. Whether you're looking for casual conversations, lifelong friendships, or even love — Uni-Match is designed to make those moments happen effortlessly.
+          College life is full of opportunities — but let's be honest, meeting
+          new people isn’t always easy. Between managing classes, assignments,
+          and personal life, there’s barely time to expand your circle. That’s
+          where Uni-Match comes in. It’s more than a dating app — it’s a
+          platform where students can connect, make friends, and potentially
+          find something meaningful. Whether you're looking for casual
+          conversations, lifelong friendships, or even love — Uni-Match is
+          designed to make those moments happen effortlessly.
         </Typography>
 
         {/* WHY I BUILT THIS SECTION */}
@@ -118,10 +131,17 @@ const TextBoard = ({ onClose }) => {
             marginBottom: "24px",
           }}
         >
-          The idea behind Uni-Match came from my own experiences. As students, we often stick to familiar friend groups, missing out on countless potential connections around us. It’s not about lacking social skills — it’s about the lack of a comfortable platform to meet new people in a natural way.
+          The idea behind Uni-Match came from my own experiences. As students,
+          we often stick to familiar friend groups, missing out on countless
+          potential connections around us. It’s not about lacking social skills
+          — it’s about the lack of a comfortable platform to meet new people in
+          a natural way.
           <br />
-          <br />
-          I wanted to create something that breaks down those barriers. With Uni-Match, you're not swiping through strangers — you're connecting with fellow students who share your campus, your experiences, and your lifestyle. It’s about building a sense of community where genuine relationships can thrive. 
+          <br />I wanted to create something that breaks down those barriers.
+          With Uni-Match, you're not swiping through strangers — you're
+          connecting with fellow students who share your campus, your
+          experiences, and your lifestyle. It’s about building a sense of
+          community where genuine relationships can thrive.
         </Typography>
 
         {/* HOW IT WORKS SECTION */}
@@ -146,11 +166,23 @@ const TextBoard = ({ onClose }) => {
           }}
         >
           Uni-Match is simple and intuitive!
-          <ul style={{textAlign:'left'}}>
-            <li>Sign up with your LPU credentials — ensuring a trusted environment.</li>
-            <li>Create a profile that reflects your personality — your interests, goals, and vibe.</li>
-            <li>Start matching with fellow students based on shared interests and preferences.</li>
-            <li>Message, connect, and meet up — all within a secure and private platform.</li>
+          <ul style={{ textAlign: "left" }}>
+            <li>
+              Sign up with your LPU credentials — ensuring a trusted
+              environment.
+            </li>
+            <li>
+              Create a profile that reflects your personality — your interests,
+              goals, and vibe.
+            </li>
+            <li>
+              Start matching with fellow students based on shared interests and
+              preferences.
+            </li>
+            <li>
+              Message, connect, and meet up — all within a secure and private
+              platform.
+            </li>
           </ul>
           No spam, no awkward setups — just authentic connections.
         </Typography>
@@ -176,7 +208,12 @@ const TextBoard = ({ onClose }) => {
             marginBottom: "24px",
           }}
         >
-          Developing Uni-Match as a student has been an incredible journey. From countless late nights of coding to testing and refining the platform — it’s been a labor of love. But maintaining an app isn’t easy. Your support — whether it’s feedback, spreading the word, or financial backing — will help me keep the app running smoothly and introduce new features to make it even better.
+          Developing Uni-Match as a student has been an incredible journey. From
+          countless late nights of coding to testing and refining the platform —
+          it’s been a labor of love. But maintaining an app isn’t easy. Your
+          support — whether it’s feedback, spreading the word, or financial
+          backing — will help me keep the app running smoothly and introduce new
+          features to make it even better.
         </Typography>
 
         {/* LET'S CONNECT SECTION */}
@@ -201,7 +238,11 @@ const TextBoard = ({ onClose }) => {
           }}
         >
           Got feedback or ideas? I’d love to hear from you. Reach out to me at{" "}
-          <strong style={{ color: "#1976D2", fontWeight: 500 }}>@uni-match.in</strong>. Whether it's feature suggestions or just a friendly chat — I'm all ears.
+          <strong style={{ color: "#1976D2", fontWeight: 500 }}>
+            @uni-match.in
+          </strong>
+          . Whether it's feature suggestions or just a friendly chat — I'm all
+          ears.
         </Typography>
       </Box>
 
@@ -218,29 +259,28 @@ const TextBoard = ({ onClose }) => {
           justifyContent: "center",
         }}
       >
-            <Button
-              variant="contained"
-              sx={{
-                py: 1.5,
-                width:'40%',
-                borderRadius: "25px",
-                bgcolor: "#ff6b9c",
-                fontSize: "14px",
-                "&:hover": {
-                  bgcolor: "#ff5c8f",
-                },
-                textTransform: "none",
-                boxShadow: "none",
-                transition: "all 0.2s ease",
-              }}
-            >
-              <i className="ti ti-mail-filled" style={{ fontSize: "18px" }} />{" "}
-              Contact Us
-            </Button>
+        <Button
+          variant="contained"
+          sx={{
+            py: 1.5,
+            width: "40%",
+            borderRadius: "25px",
+            bgcolor: "#ff6b9c",
+            fontSize: "14px",
+            "&:hover": {
+              bgcolor: "#ff5c8f",
+            },
+            textTransform: "none",
+            boxShadow: "none",
+            transition: "all 0.2s ease",
+          }}
+        >
+          <i className="ti ti-mail-filled" style={{ fontSize: "18px" }} />{" "}
+          Contact Us
+        </Button>
       </Box>
     </Box>
   );
 };
 
 export default TextBoard;
-

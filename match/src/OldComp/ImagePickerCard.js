@@ -1,6 +1,12 @@
 import React, { useState } from "react";
-import { Card, Box, Typography, CircularProgress, CardActionArea } from "@mui/material";
-import AddAPhotoIcon from '@mui/icons-material/AddAPhoto';
+import {
+  Card,
+  Box,
+  Typography,
+  CircularProgress,
+  CardActionArea,
+} from "@mui/material";
+import AddAPhotoIcon from "@mui/icons-material/AddAPhoto";
 import axios from "axios";
 
 export default function ImagePickerCard({ formData, setFormData }) {
@@ -63,7 +69,7 @@ export default function ImagePickerCard({ formData, setFormData }) {
     <div style={{ paddingLeft: 40, paddingRight: 40, paddingTop: 40 }}>
       <Typography
         variant="h4"
-        sx={{ marginBottom: '40px', fontSize: { xs: '1.5rem', sm: '1.75rem' } }} 
+        sx={{ marginBottom: "40px", fontSize: { xs: "1.5rem", sm: "1.75rem" } }}
         gutterBottom
       >
         Add your best photos
@@ -71,13 +77,12 @@ export default function ImagePickerCard({ formData, setFormData }) {
 
       <Box
         sx={{
-          
           display: "grid",
           gridTemplateColumns: "repeat(auto-fill, minmax(120px, 1fr))",
-          gap: "20px", 
-          justifyItems: "center", 
+          gap: "20px",
+          justifyItems: "center",
           alignItems: "center",
-          columnGap:'20px',
+          columnGap: "20px",
           width: "100%",
           margin: "auto",
         }}
@@ -87,17 +92,17 @@ export default function ImagePickerCard({ formData, setFormData }) {
             key={index}
             sx={{
               width: "100%",
-              maxWidth: "120px", 
+              maxWidth: "120px",
               height: "160px",
               display: "flex",
               alignItems: "center",
               justifyContent: "center",
               border: "2px dashed gray",
               cursor: "pointer",
-              backgroundImage: image ? `url(${image})` : 'none',
-              backgroundSize: 'cover',
-              backgroundPosition: 'center',
-              backgroundRepeat: 'no-repeat'
+              backgroundImage: image ? `url(${image})` : "none",
+              backgroundSize: "cover",
+              backgroundPosition: "center",
+              backgroundRepeat: "no-repeat",
             }}
             onClick={() => handleCardClick(index)}
           >
@@ -121,7 +126,7 @@ export default function ImagePickerCard({ formData, setFormData }) {
                     backgroundColor: "rgba(255, 255, 255, 0.7)",
                   }}
                 >
-                  <CircularProgress size={30} sx={{ color: 'black' }} />
+                  <CircularProgress size={30} sx={{ color: "black" }} />
                 </Box>
               ) : (
                 !image && (

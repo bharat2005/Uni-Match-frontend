@@ -8,7 +8,7 @@ export default function ErrorModal({ errorOpen, setErrorOpen }) {
         sx={{
           width: { xs: 320, sm: 400 },
           margin: "auto",
-          marginTop: '70%', 
+          marginTop: "70%",
           backgroundColor: "white",
           padding: 3,
           borderRadius: 2,
@@ -21,7 +21,7 @@ export default function ErrorModal({ errorOpen, setErrorOpen }) {
           sx={{
             marginBottom: 2,
             color: "red",
-            fontSize: { xs: "1rem", sm: "1.25rem" }, 
+            fontSize: { xs: "1rem", sm: "1.25rem" },
           }}
         >
           ⚠️ Missing Information!
@@ -45,7 +45,7 @@ export default function ErrorModal({ errorOpen, setErrorOpen }) {
             color: "white",
             borderRadius: "8px",
             "&:hover": { backgroundColor: "#ffbf00" },
-            fontSize: { xs: "0.875rem", sm: "1rem" }, 
+            fontSize: { xs: "0.875rem", sm: "1rem" },
           }}
         >
           Okay

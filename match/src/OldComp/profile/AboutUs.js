@@ -2,11 +2,10 @@ import React from "react";
 import { Card, CardContent, Typography, Box, Button } from "@mui/material";
 import { ChevronLeftIcon, EnvelopeIcon } from "@heroicons/react/24/solid";
 
-const AboutUs = ({setBool}) => {
+const AboutUs = ({ setBool }) => {
   const handleContactClick = () => {
     window.location.href = "mailto:@uni-match.in";
   };
-
 
   return (
     <Card
@@ -14,7 +13,7 @@ const AboutUs = ({setBool}) => {
         maxWidth: 600,
         margin: "0px auto",
         padding: 0,
-        boxShadow:'none',
+        boxShadow: "none",
         backgroundColor: "#f9f9f9",
         height: "80vh",
         display: "flex",
@@ -31,9 +30,12 @@ const AboutUs = ({setBool}) => {
       >
         <ChevronLeftIcon
           style={{ width: "24px", height: "24px", cursor: "pointer" }}
-          onClick={()=>setBool(0)}
+          onClick={() => setBool(0)}
         />
-        <Typography variant="h6" sx={{ fontWeight: "bold", marginLeft: "16px" }}>
+        <Typography
+          variant="h6"
+          sx={{ fontWeight: "bold", marginLeft: "16px" }}
+        >
           About Developer
         </Typography>
       </Box>
@@ -42,17 +44,22 @@ const AboutUs = ({setBool}) => {
           overflowY: "auto",
           padding: 3,
           flexGrow: 1,
-          "&::-webkit-scrollbar": { display: "none" }, 
+          "&::-webkit-scrollbar": { display: "none" },
         }}
       >
         <Box mb={3}>
           <Typography variant="body1" paragraph>
             Hi there! I’m <strong>Bharat Deshmukh</strong>, a student of{" "}
-            <strong>Lovely Professional University</strong>, and I’m excited to introduce you to{" "}
-            <strong>Uni-Match</strong> a dating web app made exclusively for our LPU community. 🎉
+            <strong>Lovely Professional University</strong>, and I’m excited to
+            introduce you to <strong>Uni-Match</strong> a dating web app made
+            exclusively for our LPU community. 🎉
           </Typography>
           <Typography variant="body1" paragraph>
-            Being a student myself, I’ve always felt there’s something special about the connections we build during our college years. That’s what inspired me to create this web app a platform where you can meet, connect, and build meaningful relationships with fellow students, all within the comfort of our campus community.
+            Being a student myself, I’ve always felt there’s something special
+            about the connections we build during our college years. That’s what
+            inspired me to create this web app a platform where you can meet,
+            connect, and build meaningful relationships with fellow students,
+            all within the comfort of our campus community.
           </Typography>
         </Box>
 
@@ -61,7 +68,11 @@ const AboutUs = ({setBool}) => {
             Why I Built This App
           </Typography>
           <Typography variant="body1" paragraph>
-            College life can get busy, and meeting new people outside of our usual friend circles isn’t always easy. I wanted to solve that by creating a space where everyone feels welcome to make new connections, whether you’re looking for love, friendship, or just someone to hang out with.
+            College life can get busy, and meeting new people outside of our
+            usual friend circles isn’t always easy. I wanted to solve that by
+            creating a space where everyone feels welcome to make new
+            connections, whether you’re looking for love, friendship, or just
+            someone to hang out with.
           </Typography>
         </Box>
 
@@ -70,7 +81,11 @@ const AboutUs = ({setBool}) => {
             Support Us
           </Typography>
           <Typography variant="body1" paragraph>
-            As a student developer, building and maintaining this app has been an exciting but challenging journey. If you like what I’ve built and want to support me, consider donating. Your support will help me keep the app running smoothly and bring you cool new features in the future! 🙌
+            As a student developer, building and maintaining this app has been
+            an exciting but challenging journey. If you like what I’ve built and
+            want to support me, consider donating. Your support will help me
+            keep the app running smoothly and bring you cool new features in the
+            future! 🙌
           </Typography>
         </Box>
 
@@ -79,8 +94,9 @@ const AboutUs = ({setBool}) => {
             Let’s Connect
           </Typography>
           <Typography variant="body1" paragraph>
-            Got feedback or ideas to make this app even better? I’d love to hear from you! Drop me a message at{" "}
-            <strong>@uni-match.in</strong>, or let me know through the app.
+            Got feedback or ideas to make this app even better? I’d love to hear
+            from you! Drop me a message at <strong>@uni-match.in</strong>, or
+            let me know through the app.
           </Typography>
           <Button
             variant="contained"
@@ -88,7 +104,7 @@ const AboutUs = ({setBool}) => {
             onClick={handleContactClick}
             sx={{ mt: 2 }}
           >
-            <EnvelopeIcon/>
+            <EnvelopeIcon />
             Contact Me
           </Button>
         </Box>

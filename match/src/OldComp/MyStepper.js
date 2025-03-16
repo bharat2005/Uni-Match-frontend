@@ -3,11 +3,10 @@ import { MobileStepper, Button } from "@mui/material";
 import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
 import ArrowBackIosNewIcon from "@mui/icons-material/ArrowBackIosNew";
 import DoneIcon from "@mui/icons-material/Done";
-import ErrorModal from './ErrorModal';
-import DoneModal from './DoneModal';
+import ErrorModal from "./ErrorModal";
+import DoneModal from "./DoneModal";
 
-
-export default function MyStepper({ step, setStep, validateStep, handleDone}) {
+export default function MyStepper({ step, setStep, validateStep, handleDone }) {
   const [errorOpen, setErrorOpen] = useState(false);
   const [doneOpen, setDoneOpen] = useState(false);
 
@@ -16,11 +15,11 @@ export default function MyStepper({ step, setStep, validateStep, handleDone}) {
       if (validateStep()) {
         setStep((prev) => prev + 1);
       } else {
-        setErrorOpen(true)
+        setErrorOpen(true);
       }
     } else {
       handleDone();
-      setDoneOpen(true); 
+      setDoneOpen(true);
     }
   }
 
@@ -52,7 +51,7 @@ export default function MyStepper({ step, setStep, validateStep, handleDone}) {
               color: "white",
               backgroundColor: "black",
               borderRadius: "50px",
-              '&:hover':{backgroundColor:'black'},
+              "&:hover": { backgroundColor: "black" },
               boxShadow: "none",
               padding: { xs: "8px", sm: "12px" },
               minWidth: { xs: "40px", sm: "50px" },
@@ -62,9 +61,11 @@ export default function MyStepper({ step, setStep, validateStep, handleDone}) {
             onClick={handleNextClick}
           >
             {step === 4 ? (
-              <DoneIcon sx={{ fontSize: { xs: "1.5rem", sm: "2rem" }}} />
+              <DoneIcon sx={{ fontSize: { xs: "1.5rem", sm: "2rem" } }} />
             ) : (
-              <ArrowForwardIosIcon sx={{ fontSize: { xs: "1.5rem", sm: "2rem" }}} />
+              <ArrowForwardIosIcon
+                sx={{ fontSize: { xs: "1.5rem", sm: "2rem" } }}
+              />
             )}
           </Button>
         }
@@ -76,16 +77,18 @@ export default function MyStepper({ step, setStep, validateStep, handleDone}) {
               backgroundColor: "black",
               borderRadius: "50px",
               boxShadow: "none",
-              padding: { xs: "8px", sm: "12px" }, 
-              minWidth: { xs: "40px", sm: "50px" }, 
+              padding: { xs: "8px", sm: "12px" },
+              minWidth: { xs: "40px", sm: "50px" },
               height: { xs: "40px", sm: "50px" },
-              "&:hover": { backgroundColor: step===0?"":"black" }
+              "&:hover": { backgroundColor: step === 0 ? "" : "black" },
             }}
             size="small"
             onClick={() => setStep((prev) => prev - 1)}
             disabled={step === 0}
           >
-            <ArrowBackIosNewIcon sx={{ fontSize: { xs: "1.5rem", sm: "2rem" } }} />
+            <ArrowBackIosNewIcon
+              sx={{ fontSize: { xs: "1.5rem", sm: "2rem" } }}
+            />
           </Button>
         }
       />

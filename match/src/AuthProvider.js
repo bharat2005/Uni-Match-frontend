@@ -1,5 +1,10 @@
 import React, { createContext, useContext, useState, useEffect } from "react";
-import { Navigate, BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import {
+  Navigate,
+  BrowserRouter as Router,
+  Routes,
+  Route,
+} from "react-router-dom";
 
 const AuthContext = createContext();
 
@@ -10,9 +15,9 @@ export const AuthProvider = ({ children }) => {
 
   useEffect(() => {
     if (bool) {
-      localStorage.setItem("bool", 'uni-match');
+      localStorage.setItem("bool", "uni-match");
     } else {
-      localStorage.removeItem('bool')
+      localStorage.removeItem("bool");
     }
   }, [bool]);
 
@@ -31,17 +36,11 @@ export const AuthProvider = ({ children }) => {
   );
 };
 
-
 export const useAuth = () => {
   return useContext(AuthContext);
 };
-
-
 
 export const ProtectedRoute = ({ children }) => {
   const { bool } = useAuth();
   return bool ? children : <Navigate to="/" />;
 };
-
-
-

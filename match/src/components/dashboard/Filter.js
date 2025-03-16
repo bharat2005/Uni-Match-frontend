@@ -121,7 +121,7 @@ const styles = {
     display: "flex",
     gap: "12px",
     marginTop: "0px",
-   padding: "0 20px 20px 20px",
+    padding: "0 20px 20px 20px",
   },
   resetButton: {
     flex: 1,
@@ -145,10 +145,10 @@ const styles = {
     color: "white",
     backgroundColor: "#ff6b9c",
     textTransform: "none",
-    boxShadow:'none',
+    boxShadow: "none",
     "&:hover": {
       backgroundColor: "#ff5b8c",
-      boxShadow:'none',
+      boxShadow: "none",
     },
   },
   sliderContainer: {
@@ -172,23 +172,16 @@ const styles = {
   },
 };
 
-function AppContainer({isDrawerOpen, setIsDrawerOpen}) {
- 
+function AppContainer({ isDrawerOpen, setIsDrawerOpen }) {
   const [selectedGender, setSelectedGender] = React.useState("");
   const [smallDrawerOpen, setSmallDrawerOpen] = React.useState(false);
   const [selectedMarriage, setSelectedMarriage] = React.useState("");
   const [ageRange, setAgeRange] = React.useState([18, 30]);
   const [selectedOption, setSelectedOption] = React.useState("");
 
-
-
-
- 
   const toggleSmallDrawer = (open) => () => setSmallDrawerOpen(open);
 
-
-
-const handleOptionSelect = (option) => {
+  const handleOptionSelect = (option) => {
     setSelectedOption(option);
     setSmallDrawerOpen(false);
   };
@@ -207,9 +200,8 @@ const handleOptionSelect = (option) => {
     setIsDrawerOpen(open);
   };
 
-  return (<>
-   
-
+  return (
+    <>
       <SwipeableDrawer
         anchor="bottom"
         open={isDrawerOpen}
@@ -219,26 +211,31 @@ const handleOptionSelect = (option) => {
         sx={styles.drawer}
       >
         <Box sx={styles.searchHeader}>
-          <Typography variant="h5" component="h1" sx={{color:'black'}}>
+          <Typography variant="h5" component="h1" sx={{ color: "black" }}>
             Filter
           </Typography>
-          <IconButton sx={{
-    position: "absolute",
-    right: 10,
-    top: 10,
-    color: "#999",
-  }} onClick={toggleDrawer(false)}>
-           <i className="ti ti-x" style={{ fontSize: "24px" }}></i>
+          <IconButton
+            sx={{
+              position: "absolute",
+              right: 10,
+              top: 10,
+              color: "#999",
+            }}
+            onClick={toggleDrawer(false)}
+          >
+            <i className="ti ti-x" style={{ fontSize: "24px" }}></i>
           </IconButton>
         </Box>
 
         <Box component="form" sx={styles.drawerContent}>
-          <Box sx={{
-    display: "flex",
-    flexDirection: "column",
-    gap: "16px",
-    marginBottom: "12px",
-  }}>
+          <Box
+            sx={{
+              display: "flex",
+              flexDirection: "column",
+              gap: "16px",
+              marginBottom: "12px",
+            }}
+          >
             <Typography sx={styles.label}>Age</Typography>
             <Box sx={styles.sliderContainer}>
               <Slider
@@ -291,7 +288,6 @@ const handleOptionSelect = (option) => {
             <Typography sx={styles.label}>Looking For?</Typography>
             <Button
               sx={styles.locationSelector}
-              
               endIcon={<KeyboardArrowRightIcon />}
               onClick={toggleSmallDrawer(true)}
             >
@@ -317,8 +313,6 @@ const handleOptionSelect = (option) => {
         </Box>
       </SwipeableDrawer>
 
-
-
       <SwipeableDrawer
         anchor="bottom"
         open={smallDrawerOpen}
@@ -330,21 +324,29 @@ const handleOptionSelect = (option) => {
             // borderTopRightRadius: "20px",
             background: "white",
             maxHeight: "90vh",
-          }}}
+          },
+        }}
       >
-        <List sx={{paddingBottom:0}}>
-          {["🎉Casual dating", "💘Long-term", "😍Short-term", "👋New friends", "🎓Study buddy", "🤔Still figuring"].map((option, index) => (
-            <ListItemButton key={index} onClick={() => handleOptionSelect(option)} sx={{borderBottom: "1px solid #f0f0f0",}}>
-              <ListItemText primary={option} sx={{textAlign:'center'}} />
+        <List sx={{ paddingBottom: 0 }}>
+          {[
+            "🎉Casual dating",
+            "💘Long-term",
+            "😍Short-term",
+            "👋New friends",
+            "🎓Study buddy",
+            "🤔Still figuring",
+          ].map((option, index) => (
+            <ListItemButton
+              key={index}
+              onClick={() => handleOptionSelect(option)}
+              sx={{ borderBottom: "1px solid #f0f0f0" }}
+            >
+              <ListItemText primary={option} sx={{ textAlign: "center" }} />
             </ListItemButton>
           ))}
         </List>
       </SwipeableDrawer>
-
-
-
-
-</>
+    </>
   );
 }
 

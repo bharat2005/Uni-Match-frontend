@@ -6,30 +6,32 @@ import ImagePickerCard from "./ImagePickerCard";
 import Reason from "./Reason";
 import Interest from "./Interest";
 import Personality from "./Personality";
-import FormStartModal from './FormStartModal';
-import axios from 'axios';
-
-
+import FormStartModal from "./FormStartModal";
+import axios from "axios";
 
 export default function StepForm() {
   const [step, setStep] = useState(0);
   const [formData, setFormData] = useState({
     name: "",
     gender: "",
-    dob: { day: '', month: '', year: '' },
+    dob: { day: "", month: "", year: "" },
     age: "",
     images: [null, null, null, null],
     reason: "",
     interests: [],
-    personality: '',
+    personality: "",
   });
 
   function handleDone() {
-    axios.post('https://api.uni-match.in/profile', formData, {withCredentials: true, headers: { "X-CSRF-TOKEN": localStorage.getItem("csrfTokenAccess") }})
-      .then(response => {
+    axios
+      .post("https://api.uni-match.in/profile", formData, {
+        withCredentials: true,
+        headers: { "X-CSRF-TOKEN": localStorage.getItem("csrfTokenAccess") },
+      })
+      .then((response) => {
         console.log("Message from server: ", response.data);
       })
-      .catch(error => {
+      .catch((error) => {
         console.error("Error: ", error);
       });
   }
@@ -53,66 +55,71 @@ export default function StepForm() {
       case 4:
         return formData.personality !== "";
     }
-  };
-
+  }
 
   return (
-<>
-    <FormStartModal />
-
-
-    
-    <Box
-      sx={{
-        display: "flex",
-        width: "100%",
-        height: "100vh",
-        alignItems: "center",
-        justifyContent: "center",
-        backgroundColor: "#fd7e14",
-        padding: 2,  
-        boxSizing: "border-box",  
-        flexDirection: "column", 
-        "@media (min-width:600px)": { flexDirection: "row" },  
-      }}
-    >
-      
+    <>
+      <FormStartModal />
 
       <Box
         sx={{
-          width: "100%",
-          maxWidth: "640px",
-          height:'90%',  
-          textAlign: "center",
-          backgroundColor: "white",
           display: "flex",
+          width: "100%",
+          height: "100vh",
+          alignItems: "center",
+          justifyContent: "center",
+          backgroundColor: "#fd7e14",
+          padding: 2,
+          boxSizing: "border-box",
           flexDirection: "column",
-          justifyContent: "space-between",
-          padding: 2,  
-          borderRadius: 2,  
-          boxShadow: 3, 
-          "@media (min-width:600px)": {
-            padding: 3, 
-            borderRadius: 3, 
-          },
+          "@media (min-width:600px)": { flexDirection: "row" },
         }}
       >
-        <Box sx={{ flex: 1 }}>
-          {step === 0 && <UserForm formData={formData} setFormData={setFormData} />}
-          {step === 1 && <ImagePickerCard formData={formData} setFormData={setFormData} />}
-          {step === 2 && <Reason formData={formData} setFormData={setFormData} />}
-          {step === 3 && <Interest formData={formData} setFormData={setFormData} />}
-          {step === 4 && <Personality formData={formData} setFormData={setFormData} />}
-        </Box>
+        <Box
+          sx={{
+            width: "100%",
+            maxWidth: "640px",
+            height: "90%",
+            textAlign: "center",
+            backgroundColor: "white",
+            display: "flex",
+            flexDirection: "column",
+            justifyContent: "space-between",
+            padding: 2,
+            borderRadius: 2,
+            boxShadow: 3,
+            "@media (min-width:600px)": {
+              padding: 3,
+              borderRadius: 3,
+            },
+          }}
+        >
+          <Box sx={{ flex: 1 }}>
+            {step === 0 && (
+              <UserForm formData={formData} setFormData={setFormData} />
+            )}
+            {step === 1 && (
+              <ImagePickerCard formData={formData} setFormData={setFormData} />
+            )}
+            {step === 2 && (
+              <Reason formData={formData} setFormData={setFormData} />
+            )}
+            {step === 3 && (
+              <Interest formData={formData} setFormData={setFormData} />
+            )}
+            {step === 4 && (
+              <Personality formData={formData} setFormData={setFormData} />
+            )}
+          </Box>
 
-        <MyStepper
-          step={step}
-          setStep={setStep}
-          validateStep={validateStep}
-          handleDone={handleDone}
-        />
+          <MyStepper
+            step={step}
+            setStep={setStep}
+            validateStep={validateStep}
+            handleDone={handleDone}
+          />
+        </Box>
       </Box>
-    </Box>
-</>
-  )
+    </>
+  );
 }

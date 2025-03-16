@@ -53,7 +53,10 @@ const DeleteProfile = ({ onClose }) => {
           }}
           onClick={onClose}
         >
-          <i className="ti ti-chevron-left" style={{ fontSize: "20px", color: "#555" }} />
+          <i
+            className="ti ti-chevron-left"
+            style={{ fontSize: "20px", color: "#555" }}
+          />
         </IconButton>
         <Typography
           sx={{
@@ -100,10 +103,13 @@ const DeleteProfile = ({ onClose }) => {
             marginBottom: "24px",
           }}
         >
-          Deleting your profile will permanently erase all your data, including matches, conversations, and settings. This action <strong>cannot be undone</strong>.
+          Deleting your profile will permanently erase all your data, including
+          matches, conversations, and settings. This action{" "}
+          <strong>cannot be undone</strong>.
           <br />
           <br />
-          If you have any concerns or need assistance, feel free to contact us before proceeding.
+          If you have any concerns or need assistance, feel free to contact us
+          before proceeding.
         </Typography>
 
         {/* WARNING SECTION */}
@@ -120,7 +126,10 @@ const DeleteProfile = ({ onClose }) => {
             gap: "8px",
           }}
         >
-          <i className="ti ti-alert-triangle" style={{ fontSize: "20px", color: "#856404" }} />
+          <i
+            className="ti ti-alert-triangle"
+            style={{ fontSize: "20px", color: "#856404" }}
+          />
           <Typography
             variant="body2"
             sx={{
@@ -129,7 +138,8 @@ const DeleteProfile = ({ onClose }) => {
               lineHeight: "1.5",
             }}
           >
-            Once deleted, your profile and all associated data cannot be recovered.
+            Once deleted, your profile and all associated data cannot be
+            recovered.
           </Typography>
         </Box>
 
@@ -158,10 +168,7 @@ const DeleteProfile = ({ onClose }) => {
       </Box>
 
       {/* CONFIRMATION MODAL */}
-      <Modal
-        open={open}
-        onClose={handleClose}
-      >
+      <Modal open={open} onClose={handleClose}>
         <Box
           sx={{
             position: "absolute",
@@ -197,7 +204,8 @@ const DeleteProfile = ({ onClose }) => {
               marginBottom: "24px",
             }}
           >
-            Are you absolutely sure you want to delete your profile? This action is permanent and cannot be undone.
+            Are you absolutely sure you want to delete your profile? This action
+            is permanent and cannot be undone.
           </Typography>
           <Box
             sx={{

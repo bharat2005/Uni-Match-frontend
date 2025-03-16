@@ -11,7 +11,7 @@ const styles = {
     justifyContent: "center",
     alignItems: "center",
     minHeight: "95dvh",
-    width:'100vw',
+    width: "100vw",
     background: "linear-gradient(135deg, #ffe6e6, #e6f0ff)",
     padding: "20px",
   },
@@ -39,7 +39,7 @@ const styles = {
   checkIcon: {
     color: "white",
     fontSize: "50px",
-    fontWeight:500,
+    fontWeight: 500,
   },
   statusText: {
     fontFamily: '"Noto Sans SC", sans-serif',
@@ -70,37 +70,33 @@ const styles = {
       backgroundColor: "#ff69b4",
     },
   },
-
 };
 
 function RegistrationComplete() {
   const navigate = useNavigate();
 
   return (
-    
-      <Box sx={styles.container}>
-        <Container sx={styles.wrapper}>
-          <Box sx={styles.checkCircle}>
-            <CheckIcon sx={styles.checkIcon} />
-          </Box>
-          <Typography component="h1" sx={styles.statusText}>
+    <Box sx={styles.container}>
+      <Container sx={styles.wrapper}>
+        <Box sx={styles.checkCircle}>
+          <CheckIcon sx={styles.checkIcon} />
+        </Box>
+        <Typography component="h1" sx={styles.statusText}>
           Profile setup complete!
-          </Typography>
-          <Box sx={styles.buttonContainer}>
-            <Button
-              variant="contained"
-              fullWidth
-              disableElevation
-              onClick={()=> navigate('/app', { replace: true })}
-              sx={styles.confirmButton}
-            >
-              Continue
-            </Button>
-
-          </Box>
-        </Container>
-      </Box>
-
+        </Typography>
+        <Box sx={styles.buttonContainer}>
+          <Button
+            variant="contained"
+            fullWidth
+            disableElevation
+            onClick={() => navigate("/app", { replace: true })}
+            sx={styles.confirmButton}
+          >
+            Continue
+          </Button>
+        </Box>
+      </Container>
+    </Box>
   );
 }
 

@@ -1,4 +1,4 @@
-import React, { useEffect , useState} from "react";
+import React, { useEffect, useState } from "react";
 import {
   Box,
   IconButton,
@@ -7,42 +7,52 @@ import {
   CardContent,
   CardMedia,
   Grid,
-  Modal
+  Modal,
 } from "@mui/material";
 import { ArrowBackIos, ArrowForwardIos } from "@mui/icons-material";
-import Modall from './Modal';
-import Drawer from './Drawer';
-import ImagePart from './ImagePart';
+import Modall from "./Modal";
+import Drawer from "./Drawer";
+import ImagePart from "./ImagePart";
 
-
-
-
-const profile =    { reg_no: '12413928', reason: 'Long-term relationship', age: 20, name: 'Jisoo',personality:'extrovert', images: ["/2.jpg", '/3.jpg', '/1.jpg', null, null], bio:'Im the solo developer of this whole Uni-Match platform...😎', interests:["Gardening", "Paragliding","Puzzles","Juggling","Art", "Juggling"] }
-
-
+const profile = {
+  reg_no: "12413928",
+  reason: "Long-term relationship",
+  age: 20,
+  name: "Jisoo",
+  personality: "extrovert",
+  images: ["/2.jpg", "/3.jpg", "/1.jpg", null, null],
+  bio: "Im the solo developer of this whole Uni-Match platform...😎",
+  interests: [
+    "Gardening",
+    "Paragliding",
+    "Puzzles",
+    "Juggling",
+    "Art",
+    "Juggling",
+  ],
+};
 
 const ProfileGrid = () => {
-  const [open, setOpen] = useState(false)
+  const [open, setOpen] = useState(false);
   const [name, setName] = useState(false);
-      const [imageClick, setImageClick] = useState(false);
-      const [currentImageIndex, setCurrentImageIndex] = useState(0);
-      const [imageLoaded, setImageLoaded] = useState(false);
-      const list = profile.images.filter(item => item != null);
+  const [imageClick, setImageClick] = useState(false);
+  const [currentImageIndex, setCurrentImageIndex] = useState(0);
+  const [imageLoaded, setImageLoaded] = useState(false);
+  const list = profile.images.filter((item) => item != null);
 
   useEffect(() => {
     // Disable scrolling for the whole page
     document.body.style.overflow = "hidden";
-    
+
     // Cleanup when component unmounts
     return () => {
       document.body.style.overflow = "auto";
     };
   }, []);
 
-
   const nextImage = () => {
     setCurrentImageIndex((prevIndex) =>
-      prevIndex === list.length - 1 ? 0 : prevIndex + 1
+      prevIndex === list.length - 1 ? 0 : prevIndex + 1,
     );
 
     setImageLoaded(false);
@@ -50,14 +60,10 @@ const ProfileGrid = () => {
 
   const prevImage = () => {
     setCurrentImageIndex((prevIndex) =>
-      prevIndex === 0 ? list.length - 1 : prevIndex - 1
+      prevIndex === 0 ? list.length - 1 : prevIndex - 1,
     );
     setImageLoaded(false);
   };
-
-
-
-
 
   const profiles = [
     {
@@ -105,7 +111,8 @@ const ProfileGrid = () => {
   ];
 
   const containerStyle = {
-    background: "linear-gradient(180deg, rgba(245, 245, 245, 0) 0%, #F5F5F5 26%)",
+    background:
+      "linear-gradient(180deg, rgba(245, 245, 245, 0) 0%, #F5F5F5 26%)",
     minHeight: "100vh",
     padding: {
       xs: "12px",
@@ -117,7 +124,7 @@ const ProfileGrid = () => {
   const scrollableGridStyle = {
     height: `calc(100vh - 42px - 46px - 16px)`, // Adjust height as needed
     overflowY: "auto",
-    padding:'8px',
+    padding: "8px",
     //border: "1px solid #ddd", // Optional for visual clarity
     "&::-webkit-scrollbar": {
       display: "none", // For Chrome, Safari, and Opera
@@ -129,7 +136,7 @@ const ProfileGrid = () => {
     flexDirection: "column",
     overflow: "hidden",
     boxShadow: "none",
-    background:'transparent',
+    background: "transparent",
     height: "100%",
   };
 
@@ -161,175 +168,191 @@ const ProfileGrid = () => {
     lineHeight: 1.4,
   };
 
-  return (<>
+  return (
+    <>
+      <Modall setModalOpen={setName} modalOpen={name} name={name} />
 
-<Modall setModalOpen={setName} modalOpen={name} name={name}/>
+      {imageClick && (
+        <ImagePart
+          imageLoaded={imageLoaded}
+          setImageLoaded={setImageLoaded}
+          list={list}
+          currentImageIndex={currentImageIndex}
+          setImageClick={setImageClick}
+          prevImage={prevImage}
+          nextImage={nextImage}
+        />
+      )}
 
-{imageClick &&
-                     <ImagePart  
-                      imageLoaded ={imageLoaded} 
-                      setImageLoaded={setImageLoaded}  
-                      list={list} 
-                      currentImageIndex={currentImageIndex} 
-                      setImageClick={setImageClick} 
-                      prevImage={prevImage} 
-                      nextImage={nextImage} />
-        }
-
-    <Box sx={containerStyle}>
-      
-      <Box sx={{ 
-          marginBottom: "16px" 
-        }}>
-          <Typography 
+      <Box sx={containerStyle}>
+        <Box
+          sx={{
+            marginBottom: "16px",
+          }}
+        >
+          <Typography
             sx={{
-              textAlign: 'left',
-              fontSize: { xs: '24px', sm: '28px' }, // Responsive font size
+              textAlign: "left",
+              fontSize: { xs: "24px", sm: "28px" }, // Responsive font size
               fontWeight: 600, // Bold for clear hierarchy
-              color: '#333', // Subtle but clear color
-              letterSpacing: '0.5px', // Improve readability
+              color: "#333", // Subtle but clear color
+              letterSpacing: "0.5px", // Improve readability
               //paddingBottom: "8px", // Space between subheading and content
-             // borderBottom: "2px solid #eee", // Light separator for clarity
+              // borderBottom: "2px solid #eee", // Light separator for clarity
             }}
           >
             Matches
           </Typography>
         </Box>
-      {/* Scrollable Grid */}
-      <Box sx={scrollableGridStyle}>
-        <Grid container spacing={{ xs: 1, sm: 2 }} columns={{ xs: 2, sm: 2 }}>
-          {profiles.map((profile, index) => (
-            <Grid item xs={1} key={index}>
- <Card
- onClick={()=> setImageClick(true)}
-  sx={{
-    display: "flex",
-    flexDirection: "column",
-    overflow: "hidden",
-    boxShadow: "none",
-    background: "transparent",
-    height: "100%",
-    position: "relative",
-    textAlign:'left',
-  }}
->
-  <CardMedia
-    component="img"
-    image={profile.imageUrl}
-    alt={profile.imageAlt}
-    sx={{
-      width: "100%",
-      height: "200px",
-      borderRadius: "26px",
-      objectFit: "cover",
-    }}
-  />
+        {/* Scrollable Grid */}
+        <Box sx={scrollableGridStyle}>
+          <Grid container spacing={{ xs: 1, sm: 2 }} columns={{ xs: 2, sm: 2 }}>
+            {profiles.map((profile, index) => (
+              <Grid item xs={1} key={index}>
+                <Card
+                  onClick={() => setImageClick(true)}
+                  sx={{
+                    display: "flex",
+                    flexDirection: "column",
+                    overflow: "hidden",
+                    boxShadow: "none",
+                    background: "transparent",
+                    height: "100%",
+                    position: "relative",
+                    textAlign: "left",
+                  }}
+                >
+                  <CardMedia
+                    component="img"
+                    image={profile.imageUrl}
+                    alt={profile.imageAlt}
+                    sx={{
+                      width: "100%",
+                      height: "200px",
+                      borderRadius: "26px",
+                      objectFit: "cover",
+                    }}
+                  />
 
-  {/* Heart and Cross Buttons */}
-  <Box
-    sx={{
-      position: "absolute",
-      top: "60%", // Center vertically
-      left: "50%", // Center horizontally
-      transform: "translate(-50%, -20%)", // Adjust positioning slightly upwards
-      display: "flex",
-      gap: 6,
-    }}
-  >
-  <IconButton
-  aria-label="unlike"
-  onClick={(e) => { e.stopPropagation(); setName("reject"); }}
-  sx={{
-    width: '42px',
-    height: '42px',
-    color: "transparent", // Make the text transparent to allow gradient to show
-    backgroundColor: "rgba(0, 0, 0, 0.8)", // Inverted background color
-    padding: "12px",
-    borderRadius: "50%",
-    "&:hover": {
-      backgroundColor: "#rgba(0, 0, 0, 1)", // Subtle hover effect
-    },
-    display: 'flex',
-    justifyContent: 'center',
-    alignItems: 'center',
-    
-      boxShadow: "0 8px 24px rgba(255, 0, 110, 0.8)", // Stronger focus effect
-    
-    "&:active": {
-      transform: "scale(0.8)", // Less shrink to feel more natural
-      boxShadow: "0 4px 12px rgba(255, 0, 110, 0.9)", // More intense active shadow
-    },
-  }}
->
-  <i
-    className="ti ti-x"
-    style={{
-      fontSize: "26px",
-      background: "linear-gradient(145deg, #FF006E 0%, #FB5607 50%, #FFBE0B 100%)",
-      WebkitBackgroundClip: "text", // Clip gradient to text
-      WebkitTextFillColor: "transparent", // Make text transparent
-      transition: "background 0.3s ease",
-    }}
-  />
-</IconButton>
+                  {/* Heart and Cross Buttons */}
+                  <Box
+                    sx={{
+                      position: "absolute",
+                      top: "60%", // Center vertically
+                      left: "50%", // Center horizontally
+                      transform: "translate(-50%, -20%)", // Adjust positioning slightly upwards
+                      display: "flex",
+                      gap: 6,
+                    }}
+                  >
+                    <IconButton
+                      aria-label="unlike"
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        setName("reject");
+                      }}
+                      sx={{
+                        width: "42px",
+                        height: "42px",
+                        color: "transparent", // Make the text transparent to allow gradient to show
+                        backgroundColor: "rgba(0, 0, 0, 0.8)", // Inverted background color
+                        padding: "12px",
+                        borderRadius: "50%",
+                        "&:hover": {
+                          backgroundColor: "#rgba(0, 0, 0, 1)", // Subtle hover effect
+                        },
+                        display: "flex",
+                        justifyContent: "center",
+                        alignItems: "center",
 
-    <IconButton
-      aria-label="like"
-      onClick={(e) => {e.stopPropagation(); setName("accept")}}
-      sx={{
-        width:'42px',
-        height:'42px',
-         color: "transparent",
-         background: "rgba(0, 0, 0, 0.8)",
-         padding: "12px",
-         borderRadius: "50%",
-         "&:hover": {
-          backgroundColor: "#rgba(0, 0, 0, 1)",
-         },
-         display: 'flex',
-         justifyContent: 'center',
-         alignItems: 'center',
-         
-          boxShadow: "0 8px 24px rgba(0, 200, 83, 0.8)", // Strong green glow on focus
-        
-        "&:active": {
-          transform: "scale(0.8)", // Consistent shrink effect
-          boxShadow: "0 4px 12px rgba(0, 200, 83, 0.9)", // Punchy feedback
-        },
-       }}
-    >
-      <i className="ti ti-heart-filled" 
-      style={{
-        fontSize: "26px",
-        background: "linear-gradient(145deg, #00C853 0%, #B2FF59 50%, #FFD600 100%)",
-        WebkitBackgroundClip: "text", // Clip gradient to text
-        WebkitTextFillColor: "transparent", // Make text transparent
-        transition: "background 0.3s ease",
-          }} />
-    </IconButton>
-  </Box>
+                        boxShadow: "0 8px 24px rgba(255, 0, 110, 0.8)", // Stronger focus effect
 
-  <CardContent sx={{ paddingBottom: "12px !important", paddingTop: "6px !important" }}>
-    <Typography sx={nameStyle}>{profile.name}</Typography>
-    <Typography sx={detailsStyle}>{profile.details}</Typography>
-  </CardContent>
-</Card>
+                        "&:active": {
+                          transform: "scale(0.8)", // Less shrink to feel more natural
+                          boxShadow: "0 4px 12px rgba(255, 0, 110, 0.9)", // More intense active shadow
+                        },
+                      }}
+                    >
+                      <i
+                        className="ti ti-x"
+                        style={{
+                          fontSize: "26px",
+                          background:
+                            "linear-gradient(145deg, #FF006E 0%, #FB5607 50%, #FFBE0B 100%)",
+                          WebkitBackgroundClip: "text", // Clip gradient to text
+                          WebkitTextFillColor: "transparent", // Make text transparent
+                          transition: "background 0.3s ease",
+                        }}
+                      />
+                    </IconButton>
 
+                    <IconButton
+                      aria-label="like"
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        setName("accept");
+                      }}
+                      sx={{
+                        width: "42px",
+                        height: "42px",
+                        color: "transparent",
+                        background: "rgba(0, 0, 0, 0.8)",
+                        padding: "12px",
+                        borderRadius: "50%",
+                        "&:hover": {
+                          backgroundColor: "#rgba(0, 0, 0, 1)",
+                        },
+                        display: "flex",
+                        justifyContent: "center",
+                        alignItems: "center",
 
-            </Grid>
-          ))}
-        </Grid>
-              <Box
+                        boxShadow: "0 8px 24px rgba(0, 200, 83, 0.8)", // Strong green glow on focus
+
+                        "&:active": {
+                          transform: "scale(0.8)", // Consistent shrink effect
+                          boxShadow: "0 4px 12px rgba(0, 200, 83, 0.9)", // Punchy feedback
+                        },
+                      }}
+                    >
+                      <i
+                        className="ti ti-heart-filled"
+                        style={{
+                          fontSize: "26px",
+                          background:
+                            "linear-gradient(145deg, #00C853 0%, #B2FF59 50%, #FFD600 100%)",
+                          WebkitBackgroundClip: "text", // Clip gradient to text
+                          WebkitTextFillColor: "transparent", // Make text transparent
+                          transition: "background 0.3s ease",
+                        }}
+                      />
+                    </IconButton>
+                  </Box>
+
+                  <CardContent
+                    sx={{
+                      paddingBottom: "12px !important",
+                      paddingTop: "6px !important",
+                    }}
+                  >
+                    <Typography sx={nameStyle}>{profile.name}</Typography>
+                    <Typography sx={detailsStyle}>{profile.details}</Typography>
+                  </CardContent>
+                </Card>
+              </Grid>
+            ))}
+          </Grid>
+          <Box
             sx={{
               height: "40px", // Same as or slightly more than the navbar height
               backgroundColor: "transparent", // Invisible, just for spacing
             }}
           />
+        </Box>
       </Box>
-    </Box>
 
-    <Drawer imageClick={imageClick}  profile={profile} key={profile.reg_no} />
-  </>);
+      <Drawer imageClick={imageClick} profile={profile} key={profile.reg_no} />
+    </>
+  );
 };
 
 export default ProfileGrid;

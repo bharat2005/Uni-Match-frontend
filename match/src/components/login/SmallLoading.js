@@ -43,4 +43,3 @@ function CustomCircularProgress() {
 }
 
 export default CustomCircularProgress;
-

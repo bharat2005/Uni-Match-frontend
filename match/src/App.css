@@ -5,12 +5,9 @@
   width: 100vw;
   min-height: 100vh;
   overflow: hidden;
-} 
-
+}
 
 .swipe {
   position: absolute;
   transition: transform 0.25s cubic-bezier(0.25, 0.1, 0.25, 1);
 }
-
-

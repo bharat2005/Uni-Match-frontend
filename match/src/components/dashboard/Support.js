@@ -49,7 +49,10 @@ const SupportUs = ({ onClose }) => {
           }}
           onClick={onClose}
         >
-          <i className="ti ti-chevron-left" style={{ fontSize: "20px", color: "#555" }} />
+          <i
+            className="ti ti-chevron-left"
+            style={{ fontSize: "20px", color: "#555" }}
+          />
         </IconButton>
         <Typography
           sx={{
@@ -96,10 +99,14 @@ const SupportUs = ({ onClose }) => {
             marginBottom: "24px",
           }}
         >
-        Uni-Match is created to make it easier for students to connect and build meaningful relationships within the campus community.
+          Uni-Match is created to make it easier for students to connect and
+          build meaningful relationships within the campus community.
           <br />
           <br />
-          Your support will help us keep the app running smoothly, introduce new features, and improve the overall experience. If you’ve enjoyed using Uni-Match, consider supporting us through a donation — every bit helps!
+          Your support will help us keep the app running smoothly, introduce new
+          features, and improve the overall experience. If you’ve enjoyed using
+          Uni-Match, consider supporting us through a donation — every bit
+          helps!
         </Typography>
 
         {/* HIGHLIGHT SECTION */}
@@ -116,7 +123,10 @@ const SupportUs = ({ onClose }) => {
             gap: "8px",
           }}
         >
-          <i className="ti ti-heart" style={{ fontSize: "20px", color: "#1565C0" }} />
+          <i
+            className="ti ti-heart"
+            style={{ fontSize: "20px", color: "#1565C0" }}
+          />
           <Typography
             variant="body2"
             sx={{
@@ -125,7 +135,8 @@ const SupportUs = ({ onClose }) => {
               lineHeight: "1.5",
             }}
           >
-            Your contributions directly help us maintain and grow Uni-Match. Thank you for being part of our community!
+            Your contributions directly help us maintain and grow Uni-Match.
+            Thank you for being part of our community!
           </Typography>
         </Box>
 
@@ -154,10 +165,7 @@ const SupportUs = ({ onClose }) => {
       </Box>
 
       {/* CONFIRMATION MODAL */}
-      <Modal
-        open={open}
-        onClose={handleClose}
-      >
+      <Modal open={open} onClose={handleClose}>
         <Box
           sx={{
             position: "absolute",

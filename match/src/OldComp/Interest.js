@@ -36,7 +36,7 @@ const interests = [
   "Road trips 🚗",
   "Pet care 🐾",
   "Fashion styling 👗",
-  "Web design 💻"
+  "Web design 💻",
 ];
 
 const selectedColor = { backgroundColor: "grey", color: "white" };
@@ -66,15 +66,15 @@ export default function Interest({ formData, setFormData }) {
         What are you into?
       </Typography>
       <Box
-      mt={4}
+        mt={4}
         sx={{
           display: "flex",
-          padding:'8px',
-          flexDirection:'column',
+          padding: "8px",
+          flexDirection: "column",
           overflowY: "auto",
           height: "80%",
           gap: 1,
-          alignItems:'center',
+          alignItems: "center",
           justifyContent: "center",
           "&::-webkit-scrollbar": {
             display: "none",
@@ -92,10 +92,9 @@ export default function Interest({ formData, setFormData }) {
               variant={bool ? "filled" : "outlined"}
               sx={{
                 fontSize: { xs: "0.75rem", sm: "0.9rem" },
-                padding: { xs: "6px", sm: "8px" }, 
-                maxWidth: "180px", 
-                minWidth: "120px", 
-               
+                padding: { xs: "6px", sm: "8px" },
+                maxWidth: "180px",
+                minWidth: "120px",
               }}
               aria-label={item}
             />

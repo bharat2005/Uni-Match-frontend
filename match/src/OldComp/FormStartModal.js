@@ -1,4 +1,4 @@
-import React, { useState } from "react"; 
+import React, { useState } from "react";
 import { Box, Typography, Modal, Button } from "@mui/material";
 
 export default function FormStartModal() {
@@ -8,16 +8,16 @@ export default function FormStartModal() {
     <Modal open={open}>
       <Box
         sx={{
-          width: "90%", 
-       
+          width: "90%",
+
           margin: "auto",
-          marginTop: "60%", 
+          marginTop: "60%",
           backgroundColor: "white",
           padding: 3,
-          border:'3px solid #fd7e14',
-          paddingTop:3.5,
+          border: "3px solid #fd7e14",
+          paddingTop: 3.5,
           borderRadius: 2,
-          padding:'15px',
+          padding: "15px",
           boxShadow: 24,
         }}
       >
@@ -26,7 +26,7 @@ export default function FormStartModal() {
           sx={{
             marginBottom: 2,
             textAlign: "center",
-            fontSize: { xs: "1.5rem", sm: "1.75rem" }, 
+            fontSize: { xs: "1.5rem", sm: "1.75rem" },
           }}
         >
           Let’s Begin!
@@ -41,9 +41,8 @@ export default function FormStartModal() {
           }}
         >
           <br />
-          The details you provide here will be used
-          to create your profile and will help us to recommend the perfect matches
-          for you.💕
+          The details you provide here will be used to create your profile and
+          will help us to recommend the perfect matches for you.💕
           <br />
           <br />
           Please fill them out truthfully! 💛
@@ -61,7 +60,7 @@ export default function FormStartModal() {
             color: "white",
             borderRadius: "8px",
             "&:hover": { backgroundColor: "black" },
-            fontSize: { xs: "1rem", sm: "1.2rem" }, 
+            fontSize: { xs: "1rem", sm: "1.2rem" },
           }}
         >
           Let's go

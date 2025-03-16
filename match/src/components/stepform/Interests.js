@@ -3,8 +3,6 @@ import * as React from "react";
 import { Box, Button, Typography, Container } from "@mui/material";
 import { ChevronLeft } from "@mui/icons-material";
 
-
-
 export const interests = [
   { emoji: "🎬", label: "Movies" },
   { emoji: "🎶", label: "Music" },
@@ -51,23 +49,23 @@ export const interests = [
   { emoji: "🤹", label: "Juggling" },
   { emoji: "🪂", label: "Paragliding" },
   { emoji: "📡", label: "Tech" },
-  { emoji: "🧪", label: "Science" }
+  { emoji: "🧪", label: "Science" },
 ];
 
-
-
-
-
-function LocationSelector({setStep, formData, setFormData}) {
-
+function LocationSelector({ setStep, formData, setFormData }) {
   const handleLocationSelect = (location) => {
     setFormData((prev) => {
-      return {...prev, interests: prev['interests'].includes(location) ? prev['interests'].filter((loc) => loc !== location) :  [...prev['interests'], location]}})}
+      return {
+        ...prev,
+        interests: prev["interests"].includes(location)
+          ? prev["interests"].filter((loc) => loc !== location)
+          : [...prev["interests"], location],
+      };
+    });
+  };
 
   return (
-  <>
-
-
+    <>
       <Box
         maxWidth="md"
         sx={{
@@ -91,13 +89,11 @@ function LocationSelector({setStep, formData, setFormData}) {
             fontSize: 14,
             color: "#666",
             textAlign: "center",
-
           }}
         >
-         Let us know what you like
+          Let us know what you like
         </Typography>
 
-     
         <Box
           sx={{
             display: "grid",
@@ -122,57 +118,66 @@ function LocationSelector({setStep, formData, setFormData}) {
               key={location.label}
               onClick={() => handleLocationSelect(location.label)}
               sx={{
-                background: formData['interests'].includes(location.label)
+                background: formData["interests"].includes(location.label)
                   ? "rgba(255, 105, 190, 0.4)"
                   : "white",
                 borderRadius: "25px",
                 padding: { xs: "10px", sm: "12px" },
                 textAlign: "center",
                 fontSize: { xs: "14px", sm: "16px" },
-                color: formData['interests'].includes(location.label) ? "white" : "black",
+                color: formData["interests"].includes(location.label)
+                  ? "white"
+                  : "black",
                 transition: "all 0.3s ease",
                 "&:hover": {
-                  background: formData['interests'].includes(location.label)
+                  background: formData["interests"].includes(location.label)
                     ? "rgba(255, 105, 190, 0.4)"
                     : "white",
                 },
                 fontFamily: "inherit",
-                boxShadow: formData['interests'].includes(location.label)
+                boxShadow: formData["interests"].includes(location.label)
                   ? "0 2px 6px rgba(255, 70, 162, 0.3)"
                   : "none",
-                transform: formData['interests'].includes(location.label)
+                transform: formData["interests"].includes(location.label)
                   ? "scale(1.02)"
                   : "scale(1)",
               }}
             >
-              {location.emoji}{location.label}
+              {location.emoji}
+              {location.label}
             </Button>
           ))}
         </Box>
-      
 
-                    
-                  
-                  <Box sx={{display:'flex', justifyContent:'center', paddingTop:'0px'}}>
-                            <Button disabled={!formData['interests'].length} onClick={()=> setStep(7)} sx={{
-                        color: "white !important",
-                        padding: "12px 0",
-                        width: "80%",
-                        maxWidth: "300px",
-                        borderRadius: "25px",
-                        fontSize: { xs: "14px", sm: "16px" },
-                        textTransform: "none",
-                        backgroundColor: formData['interests'].length? "#ff69b4" : "#fed8e6",
-                        "&:hover": {
-                          backgroundColor: formData['interests'].length? "#ff69b4" : "#fed8e6",
-                        },
-                      }}>Next Step</Button>
-                      </Box>
-
-      
+        <Box
+          sx={{ display: "flex", justifyContent: "center", paddingTop: "0px" }}
+        >
+          <Button
+            disabled={!formData["interests"].length}
+            onClick={() => setStep(7)}
+            sx={{
+              color: "white !important",
+              padding: "12px 0",
+              width: "80%",
+              maxWidth: "300px",
+              borderRadius: "25px",
+              fontSize: { xs: "14px", sm: "16px" },
+              textTransform: "none",
+              backgroundColor: formData["interests"].length
+                ? "#ff69b4"
+                : "#fed8e6",
+              "&:hover": {
+                backgroundColor: formData["interests"].length
+                  ? "#ff69b4"
+                  : "#fed8e6",
+              },
+            }}
+          >
+            Next Step
+          </Button>
+        </Box>
       </Box>
-
-     </>
+    </>
   );
 }
 
