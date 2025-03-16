@@ -69,19 +69,19 @@ const ProfileGrid = () => {
     {
       name: "Amit, 18",
       details: "💘Long-term",
-      imageUrl: "/6.avif",
+      imageUrl: "/6.jpg",
       imageAlt: "Profile photo",
     },
     {
       name: "Rahul, 20",
       details: "😍Short-term",
-      imageUrl: "/7.avif",
+      imageUrl: "/7.jpg",
       imageAlt: "Profile photo",
     },
     {
       name: "Deepak, 23",
       details: "🎉Casual Dating",
-      imageUrl: "/8.webp",
+      imageUrl: "/8.jpg",
       imageAlt: "Profile photo",
     },
     {
@@ -93,7 +93,7 @@ const ProfileGrid = () => {
     {
       name: "Nikhil, 19",
       details: "😍Short-term",
-      imageUrl: "/10.avif",
+      imageUrl: "/10.jpg",
       imageAlt: "Profile photo",
     },
     {

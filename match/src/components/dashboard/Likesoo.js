@@ -14,7 +14,7 @@ import { ArrowBackIos, ArrowForwardIos } from "@mui/icons-material";
 import Drawer from './Drawer';
 import SmallLoading from '../login/SmallLoading';
 
-const profile =   { reg_no: '12413928', reason: 'Long-term relationship', age: 23, name: 'Bharat',personality:'extrovert', images: [null, '/10.avif', '/4.avif', '/5.jpg', null], bio:'Im the solo developer of this whole Uni-Match platform...😎', interests:["Gardening", "Paragliding","Puzzles", "Astronomy", "Juggling",   "Art"  ] };
+const profile =   { reg_no: '12413928', reason: 'Long-term relationship', age: 23, name: 'Bharat',personality:'extrovert', images: [null, '/10.jpg', '/4.jpg', '/5.jpg', null], bio:'Im the solo developer of this whole Uni-Match platform...😎', interests:["Gardening", "Paragliding","Puzzles", "Astronomy", "Juggling",   "Art"  ] };
 
 const ProfileGrid = () => {
   const [modalOpen, setModalOpen] = useState(false)
@@ -60,7 +60,7 @@ const ProfileGrid = () => {
     {
       name: "Amit, 18",
       details: "💘Long-term ",
-      imageUrl: "/6.avif",
+      imageUrl: "/6.jpg",
       imageAlt: "Profile photo",
     },
     {
@@ -78,21 +78,21 @@ const ProfileGrid = () => {
     {
       name: "Rahul, 20",
       details: "😍Short-term",
-      imageUrl: "/7.avif",
+      imageUrl: "/7.jpg",
       imageAlt: "Profile photo",
     },
 
     {
       name: "Deepak, 23",
       details: "🎉Casual Dating",
-      imageUrl: "/8.webp",
+      imageUrl: "/8.jpg",
       imageAlt: "Profile photo",
     },
 
     {
       name: "Nikhil, 19",
       details: "😍Short-term",
-      imageUrl: "/10.avif",
+      imageUrl: "/10.jpg",
       imageAlt: "Profile photo",
     },
 ,
