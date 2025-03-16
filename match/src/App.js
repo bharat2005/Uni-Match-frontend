@@ -33,12 +33,12 @@ export default function App(){
     resizeHandler();
 
     // Prevent pull-to-refresh and bounce scrolling
-    const preventScroll = (e) => e.preventDefault();
-    document.addEventListener('touchmove', preventScroll, { passive: false });
+    // const preventScroll = (e) => e.preventDefault();
+    // document.addEventListener('touchmove', preventScroll, { passive: false });
 
     return () => {
       window.removeEventListener('resize', resizeHandler);
-      document.removeEventListener('touchmove', preventScroll);
+     // document.removeEventListener('touchmove', preventScroll);
     };
   }, []);
 

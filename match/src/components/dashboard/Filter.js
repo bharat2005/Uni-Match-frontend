@@ -215,6 +215,7 @@ const handleOptionSelect = (option) => {
         open={isDrawerOpen}
         onClose={toggleDrawer(false)}
         onOpen={toggleDrawer(true)}
+        disableSwipeToOpen={true}
         sx={styles.drawer}
       >
         <Box sx={styles.searchHeader}>
@@ -322,6 +323,7 @@ const handleOptionSelect = (option) => {
         anchor="bottom"
         open={smallDrawerOpen}
         onClose={toggleSmallDrawer(false)}
+        disableSwipeToOpen={true}
         sx={{
           "& .MuiDrawer-paper": {
             // borderTopLeftRadius: "20px",
