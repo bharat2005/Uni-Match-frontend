@@ -42,7 +42,7 @@ const LoginPage = () => {
   function handleLoginSubmit(e){
     setLoading(true)
     e.preventDefault();
-    axios.post("https://api.uni-match.in/login", lpuLogin, {withCredentials:true})
+    axios.post("https://api.uni-match.in/login/hi", lpuLogin, {withCredentials:true})
     .then(response => {
       setLoading(false)
       console.log(response.data)
