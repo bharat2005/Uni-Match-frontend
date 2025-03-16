@@ -21,6 +21,19 @@ export default function App(){
   const [bool, setBool] = useState(false);
 
 
+  useEffect(() => {
+    const preventRefresh = (e) => {
+      if (e.touches.length === 1) e.preventDefault();
+    };
+
+    document.addEventListener('touchmove', preventRefresh, { passive: false });
+
+    return () => {
+      document.removeEventListener('touchmove', preventRefresh);
+    };
+  }, []);
+
+
   return (
     
     <AuthProvider>

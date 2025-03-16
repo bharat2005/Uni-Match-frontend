@@ -5,9 +5,20 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+ 
 }
 
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
+}
+
+
+html, body {
+  overscroll-behavior: none; /* Disable pull-to-refresh */
+  -webkit-overflow-scrolling: touch; /* Enable smooth touch scrolling */
+  overflow: hidden; /* Disable rubber band scrolling */
+  height: 100%;
+  margin: 0;
+  padding: 0;
 }

@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.css';
-import App from './components/dashboard/Match';
+import App from './components/dashboard/Home';
 import reportWebVitals from './reportWebVitals';
 
 
