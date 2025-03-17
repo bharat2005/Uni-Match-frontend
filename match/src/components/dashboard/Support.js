@@ -1,12 +1,15 @@
 "use client";
-import React, { useState } from "react";
+import React from "react";
 import { Box, Typography, IconButton, Button, Modal } from "@mui/material";
 
 const SupportUs = ({ onClose }) => {
-  const [open, setOpen] = useState(false);
-
-  const handleSupportClick = () => setOpen(true);
-  const handleClose = () => setOpen(false);
+  const [open, setOpen] = React.useState(false)
+  const handleContactClick = () => {
+    console.log("Contact button clicked");
+  };
+  function handleClose(){
+    setOpen(false)
+  }
 
   return (
     <Box
@@ -18,7 +21,7 @@ const SupportUs = ({ onClose }) => {
         height: "100vh",
         backgroundColor: "#FAFAFA",
         fontFamily: '"Inter", sans-serif',
-        zIndex: 9,
+        zIndex: 10,
         display: "flex",
         flexDirection: "column",
       }}
@@ -35,7 +38,7 @@ const SupportUs = ({ onClose }) => {
           backgroundColor: "#FFFFFF",
           zIndex: 10,
           borderBottom: "1px solid #E0E0E0",
-          boxShadow: "0 1px 4px rgba(0,0,0,0.05)",
+          boxShadow: "0 1px 3px rgba(0,0,0,0.05)",
         }}
       >
         <IconButton
@@ -65,102 +68,81 @@ const SupportUs = ({ onClose }) => {
         </Typography>
       </Box>
 
-      {/* MAIN CONTENT */}
+      {/* SCROLLABLE CONTENT */}
       <Box
         sx={{
           flex: 1,
-          padding: "24px",
+          padding: "20px",
           overflowY: "auto",
           backgroundColor: "#FFFFFF",
           "&::-webkit-scrollbar": { display: "none" },
           scrollbarWidth: "none",
         }}
       >
-        {/* TITLE */}
+        {/* INTRO SECTION */}
         <Typography
-          variant="subtitle1"
-          sx={{
-            fontSize: "18px",
-            fontWeight: 600,
-            color: "#212121",
-            marginBottom: "12px",
-          }}
-        >
-          Help Us Keep Uni-Match Running 🚀
-        </Typography>
+  variant="subtitle1"
+  sx={{
+    fontSize: "16px",
+    fontWeight: 600,
+    color: "#212121",
+    marginBottom: "8px",
+  }}
+>
+  Support Uni-Match
+</Typography>
+<Typography
+  variant="body2"
+  sx={{
+    fontSize: "15px",
+    color: "#555",
+    lineHeight: "1.7",
+    marginBottom: "24px",
+  }}
+>
+  Building <strong>Uni-Match</strong> has been a rewarding but challenging journey. 
+  From countless late nights of coding to testing and refining the platform — it’s been a true labor of love. But maintaining and improving an app isn’t easy.
+  <br />
+  <br />
+  Your support can make a real difference! Whether it’s through valuable feedback, spreading the word, or even a financial contribution — every bit of help allows me to keep Uni-Match running smoothly and introduce exciting new features.
+  <br />
+  <br />
+  If Uni-Match has helped you connect with someone special or simply made your campus life a little easier — consider showing your support. Together, we can make Uni-Match even better for the entire LPU community.
+</Typography>
+</Box>
 
-        {/* DESCRIPTION */}
-        <Typography
-          variant="body2"
-          sx={{
-            fontSize: "15px",
-            color: "#555",
-            lineHeight: "1.7",
-            marginBottom: "24px",
-          }}
-        >
-          Uni-Match is created to make it easier for students to connect and
-          build meaningful relationships within the campus community.
-          <br />
-          <br />
-          Your support will help us keep the app running smoothly, introduce new
-          features, and improve the overall experience. If you’ve enjoyed using
-          Uni-Match, consider supporting us through a donation — every bit
-          helps!
-        </Typography>
-
-        {/* HIGHLIGHT SECTION */}
-        <Box
-          sx={{
-            padding: "12px",
-            backgroundColor: "#E3F2FD",
-            borderRadius: "8px",
-            border: "1px solid #BBDEFB",
-            color: "#1565C0",
-            marginBottom: "24px",
-            display: "flex",
-            alignItems: "center",
-            gap: "8px",
-          }}
-        >
-          <i
-            className="ti ti-heart"
-            style={{ fontSize: "20px", color: "#1565C0" }}
-          />
-          <Typography
-            variant="body2"
-            sx={{
-              fontSize: "14px",
-              color: "#1565C0",
-              lineHeight: "1.5",
-            }}
-          >
-            Your contributions directly help us maintain and grow Uni-Match.
-            Thank you for being part of our community!
-          </Typography>
-        </Box>
-
-        {/* SUPPORT BUTTON */}
+      {/* FOOTER */}
+      <Box
+        sx={{
+          position: "sticky",
+          bottom: 0,
+          backgroundColor: "#FFFFFF",
+          padding: "12px 16px",
+          boxShadow: "0 -1px 3px rgba(0,0,0,0.05)",
+          borderTop: "1px solid #E0E0E0",
+          display: "flex",
+          justifyContent: "center",
+        }}
+      >
         <Button
-          fullWidth
+        onClick={()=> setOpen(true)}
           variant="contained"
-          color="primary"
-          onClick={handleSupportClick}
           sx={{
-            backgroundColor: "#1976D2",
-            color: "#FFFFFF",
-            padding: "10px 24px",
-            fontSize: "15px",
-            fontWeight: 500,
-            borderRadius: "8px",
-            textTransform: "none",
-            boxShadow: "0 2px 6px rgba(0,0,0,0.1)",
+            py: 1.5,
+            width: "40%",
+            borderRadius: "25px",
+            bgcolor: "#ff6b9c",
+            fontSize: "14px",
             "&:hover": {
-              backgroundColor: "#1565C0",
+              bgcolor: "#ff5c8f",
             },
+            textTransform: "none",
+            boxShadow: "none",
+            transition: "all 0.2s ease",
           }}
         >
-          Support Uni-Match ❤️
+          <i className="ti ti-heart-handshake" style={{ fontSize: "20px" }} />{" "}
+          Support
         </Button>
       </Box>
 
@@ -173,6 +155,7 @@ const SupportUs = ({ onClose }) => {
             left: "50%",
             transform: "translate(-50%, -50%)",
             width: 320,
+            zindex:11,
             backgroundColor: "#FFFFFF",
             borderRadius: "12px",
             boxShadow: "0 4px 12px rgba(0,0,0,0.1)",
@@ -191,7 +174,7 @@ const SupportUs = ({ onClose }) => {
               marginBottom: "12px",
             }}
           >
-            Support Uni-Match ❤️
+            Support Uni-Match❣️
           </Typography>
 
           {/* QR CODE */}
@@ -200,18 +183,16 @@ const SupportUs = ({ onClose }) => {
               width: "160px",
               height: "160px",
               margin: "0 auto 16px",
-              backgroundColor: "#F5F5F5",
+              backgroundImage: "url(/qr.png)",
+              backgroundPosition:'center',
+              backgroundSize:'cover',
+              backgroundRepeat:"no-repeat",
               borderRadius: "8px",
               display: "flex",
               alignItems: "center",
               justifyContent: "center",
             }}
-          >
-            {/* Replace with actual QR code */}
-            <Typography sx={{ fontSize: "14px", color: "#888" }}>
-              QR Code Here
-            </Typography>
-          </Box>
+       />
 
           {/* UPI ID */}
           <Typography
@@ -222,7 +203,7 @@ const SupportUs = ({ onClose }) => {
               marginBottom: "16px",
             }}
           >
-            UPI ID: <strong>bharatdeshmukh@upi</strong>
+            UPI ID: <strong>bharatvdeshm2005-1@okhdfcbank</strong>
           </Typography>
 
           {/* BUTTONS */}
@@ -242,7 +223,7 @@ const SupportUs = ({ onClose }) => {
                 padding: "8px",
                 fontSize: "14px",
                 fontWeight: 500,
-                borderRadius: "6px",
+                borderRadius: "24px",
                 "&:hover": {
                   backgroundColor: "#E0E0E0",
                 },
@@ -259,9 +240,10 @@ const SupportUs = ({ onClose }) => {
                 padding: "8px",
                 fontSize: "14px",
                 fontWeight: 500,
-                borderRadius: "6px",
+                borderRadius: "24px",
+                bgcolor: "#ff6b9c",
                 "&:hover": {
-                  backgroundColor: "#1565C0",
+                  bgcolor: "#ff5c8f",
                 },
               }}
             >

@@ -36,6 +36,29 @@ const ProfileContainer = () => {
   const [open, setOpen] = React.useState(null);
   const [modalOpen, setModalOpen] = React.useState(false);
 
+
+
+
+  const handleShare = () => {
+    if (navigator.share) {
+      navigator
+        .share({
+          title: 'Uni-Match - Find Meaningful Connections',
+          text: 'Check out Uni-Match — the best way to meet new people at LPU!',
+          url: window.location.href,
+        })
+        .then(() => {
+          console.log('Content shared successfully');
+        })
+        .catch((error) => {
+          console.error('Error sharing content:', error);
+        });
+    } else {
+      alert('Your browser does not support the share feature');
+    }
+  };
+  
+
   const containerStyles = {
     background:
       "linear-gradient(180deg, rgba(245, 245, 245, 0) 0%, #F5F5F5 26%)",
@@ -182,7 +205,7 @@ const ProfileContainer = () => {
 
   return (
     <>
-      <Modal modalOpen={modalOpen} setModalOpen={setModalOpen} name={"share"} />
+      <Modal modalOpen={modalOpen} setModalOpen={setModalOpen} name={"share"} handleShare={handleShare} />
 
       <Box sx={containerStyles}>
         <Box sx={profileHeaderStyles}>

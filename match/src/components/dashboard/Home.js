@@ -48,7 +48,7 @@ function AppLayout() {
               justifyContent: "space-between",
               alignItems: "center",
               backgroundColor: "white",
-              zIndex: 11,
+              zIndex: 0,
               padding:"4px",
             }}
           >

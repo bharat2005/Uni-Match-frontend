@@ -252,8 +252,8 @@ const ProfileGrid = () => {
                         setName("reject");
                       }}
                       sx={{
-                        width: "42px",
-                        height: "42px",
+                        width: "44px",
+                        height: "44px",
                         color: "transparent", // Make the text transparent to allow gradient to show
                         backgroundColor: "rgba(0, 0, 0, 0.8)", // Inverted background color
                         padding: "12px",
@@ -293,8 +293,8 @@ const ProfileGrid = () => {
                         setName("accept");
                       }}
                       sx={{
-                        width: "42px",
-                        height: "42px",
+                        width: "44px",
+                        height: "44px",
                         color: "transparent",
                         background: "rgba(0, 0, 0, 0.8)",
                         padding: "12px",

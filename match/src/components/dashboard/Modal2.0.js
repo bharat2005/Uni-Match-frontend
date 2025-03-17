@@ -3,7 +3,7 @@ import * as React from "react";
 import { Player } from "@lottiefiles/react-lottie-player";
 import { Box, Typography, Button, Modal } from "@mui/material";
 
-const Container = ({ modalOpen, setModalOpen, name }) => {
+const Container = ({ modalOpen, setModalOpen, name , handleShare}) => {
   return (
     <Modal
       open={modalOpen}
@@ -128,7 +128,7 @@ const Container = ({ modalOpen, setModalOpen, name }) => {
           }}
         >
           <Button
-            //onClick={handleUnlock}
+            onClick={name=="share"? handleShare : null}
             aria-label="解锁互动"
             sx={{
               height: "50px",

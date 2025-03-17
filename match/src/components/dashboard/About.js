@@ -4,9 +4,8 @@ import { Box, Typography, IconButton, Button } from "@mui/material";
 
 const TextBoard = ({ onClose }) => {
   const handleContactClick = () => {
-    console.log("Contact button clicked");
+    window.location.href = `mailto:support@uni-match.in?subject=Feedback%20for%20Uni-Match`;
   };
-
   return (
     <Box
       sx={{
@@ -260,6 +259,7 @@ const TextBoard = ({ onClose }) => {
         }}
       >
         <Button
+        onClick={handleContactClick}
           variant="contained"
           sx={{
             py: 1.5,
