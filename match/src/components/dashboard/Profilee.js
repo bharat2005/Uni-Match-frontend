@@ -39,35 +39,24 @@ const ProfileContainer = () => {
 
 
 
-  const handleShare = async () => {
-    try {
-      const response = await fetch('/qr.png');
-      const blob = await response.blob();
-      const file = new File([blob], 'uni-match.jpg', { type: blob.type });
-  
-      if (navigator.canShare && navigator.canShare({ files: [file] })) {
-        // Share with image if supported
-        await navigator.share({
-          title: 'Uni-Match - Find Meaningful Connections',
-          text: 'Check out Uni-Match — the best way to meet new people at LPU!',
-          url: window.location.href,
-          files: [file],
+  const handleShare = () => {
+    if (navigator.share) {
+      navigator
+        .share({
+          title: 'Uni-Match - Connecting ❤️ of LPU',
+          text: "✨ Ready to meet new people at LPU? Uni-Match makes it easy to connect with fellow students — whether you're looking for friendship, love, or just someone to vibe with! ❤️",
+          url:'https://uni-match.in',
+        })
+        .then(() => {
+          console.log('Content shared successfully');
+        })
+        .catch((error) => {
+          console.error('Error sharing content:', error);
         });
-        console.log('Shared with image!');
-      } else {
-        // Fallback to text + URL only
-        await navigator.share({
-          title: 'Uni-Match - Find Meaningful Connections',
-          text: 'Check out Uni-Match — the best way to meet new people at LPU!',
-          url: window.location.href,
-        });
-        console.log('Shared with text and URL!');
-      }
-    } catch (error) {
-      console.error('Error sharing:', error);
+    } else {
+      alert('Your browser does not support the share feature');
     }
   };
-  
   
 
   const containerStyles = {
