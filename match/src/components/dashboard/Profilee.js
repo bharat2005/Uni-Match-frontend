@@ -50,7 +50,7 @@ const ProfileContainer = () => {
         await navigator.share({
           title: 'Uni-Match - Find Meaningful Connections',
           text: 'Check out Uni-Match — the best way to meet new people at LPU!',
-          url: "https://uni-match.in",
+          url: window.location.href,
           files: [file],
         });
         console.log('Shared with image!');
@@ -59,7 +59,7 @@ const ProfileContainer = () => {
         await navigator.share({
           title: 'Uni-Match - Find Meaningful Connections',
           text: 'Check out Uni-Match — the best way to meet new people at LPU!',
-          url: "https://uni-match.in",
+          url: window.location.href,
         });
         console.log('Shared with text and URL!');
       }
