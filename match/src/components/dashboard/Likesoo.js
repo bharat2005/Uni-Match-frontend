@@ -48,6 +48,30 @@ const ProfileGrid = () => {
     };
   }, []);
 
+  useEffect(() => {
+    if (imageClick) {
+      // Push new state into history when opening drawer
+      window.history.pushState({ modalOpen: true }, '');
+      
+      setTimeout(() => setImageLoaded(true), 10);
+  
+      // Handle the back button to close the drawer instead of navigating back
+      const handlePopState = (event) => {
+        if (event.state?.modalOpen) {
+          setImageClick(false);
+        }
+      };
+  
+      window.addEventListener('popstate', handlePopState);
+  
+      // Cleanup
+      return () => {
+        window.removeEventListener('popstate', handlePopState);
+      };
+    }
+  }, [imageClick]);
+  
+
   const nextImage = () => {
     setCurrentImageIndex((prevIndex) =>
       prevIndex === list.length - 1 ? 0 : prevIndex + 1,

@@ -18,23 +18,26 @@ export default function ImagePart({
         position: "fixed",
         top: 0,
         left: "50%",
-        transform: imageLoaded
-          ? "translate(-50%, 0) scale(1)"
-          : "translate(-50%, 100%) scale(0.9)",
+        // transform: imageLoaded
+        //   ? "translate(-50%, 0) scale(1)"
+        //   : "translate(-50%, 100%) scale(0.9)",
+        transform: "translate(-50%, 0) scale(1)",
         width: "100vw",
         height: "55vh",
         zIndex: 12,
-        background: imageLoaded
-          ? `url(${list[currentImageIndex]})`
-          : "linear-gradient(135deg, #e0e0e0 0%, #c0c0c0 100%)",
+        // background: imageLoaded
+        //   ? `url(${list[currentImageIndex]})`
+        //   : "linear-gradient(135deg, #e0e0e0 0%, #c0c0c0 100%)",
+        background: `url(${list[currentImageIndex]})`,
         backgroundSize: "cover",
         backgroundPosition: "center",
         backgroundRepeat: "no-repeat",
-        opacity: imageLoaded ? 1 : 0,
+        // opacity: imageLoaded ? 1 : 0,
+        opacity: 1,
         transition: "opacity 0.1s ease, transform 0.3s ease",
       }}
     >
-      {!imageLoaded && <SmallLoading />}
+      {/* {!imageLoaded && <SmallLoading />}
       <img
         src={list[currentImageIndex]}
         alt="profile"
@@ -43,7 +46,7 @@ export default function ImagePart({
         }}
         onLoad={() => setImageLoaded(true)}
         onError={() => setImageLoaded(false)} // Fallback if the image fails to load
-      />
+      /> */}
 
       {/* Left Arrow */}
       <IconButton

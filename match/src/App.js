@@ -18,6 +18,10 @@ import Match from "./components/dashboard/Match";
 import Profilee from "./components/dashboard/Profilee";
 import Chatsoo from "./components/dashboard/Chatsoo";
 import Chatoo from "./components/dashboard/Chatoo";
+import Edit from './components/dashboard/Edit';
+import About from './components/dashboard/About';
+import Support from './components/dashboard/Support';
+import DeleteProfile from './components/dashboard/DeleteProfile';
 
 export default function App() {
   const [bool, setBool] = useState(false);
@@ -71,10 +75,18 @@ export default function App() {
             >
               <Route path="likes" element={<Likesoo />} />
               <Route path="matches" element={<Matchesoo />} />
-              <Route index element={<Match />} />
+              <Route index element={<Match />}/ >
               <Route path="chats" element={<Chatsoo />} />
               <Route path=":chatId" element={<Chatoo />} />
-              <Route path="profile" element={<Profilee />} />
+
+
+              <Route path="profile" element={<Profilee />} >
+                    <Route path="edit" element={<Edit/>}/>
+                    <Route path="about" element={<About/>}/>
+                    <Route path="support" element={<Support/>}/>
+                    <Route path="delete" element={<DeleteProfile/>}/>
+              </Route>
+
             </Route>
           </Routes>
         ) : (

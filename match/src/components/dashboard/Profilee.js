@@ -12,6 +12,9 @@ import {
   useTheme,
   useMediaQuery,
 } from "@mui/material";
+import { useNavigate } from "react-router-dom";
+import { Outlet } from "react-router-dom";
+import LogOutModal from './LogOutModal';
 import {
   Timeline,
   AccountCircle,
@@ -30,9 +33,11 @@ import EditStepForm from "./Edit";
 import Modal from "./Modal2.0";
 
 const ProfileContainer = () => {
+  const navigate = useNavigate();
   const theme = useTheme();
   const isMobile = useMediaQuery("(max-width:640px)");
   const isTablet = useMediaQuery("(max-width:991px)");
+  const [logOutModalOpen, setLogOutModalOpen] = React.useState(false)
   const [open, setOpen] = React.useState(null);
   const [modalOpen, setModalOpen] = React.useState(false);
 
@@ -96,7 +101,7 @@ const ProfileContainer = () => {
       md: "24px 32px",
     },
     borderRadius: "20px",
-    margin: "16px 0",
+    margin: "34px 0",
     background: "transparent",
     overflow: "hidden",
   };
@@ -206,6 +211,8 @@ const ProfileContainer = () => {
   return (
     <>
       <Modal modalOpen={modalOpen} setModalOpen={setModalOpen} name={"share"} handleShare={handleShare} />
+      <LogOutModal open={logOutModalOpen} handleClose={()=> setLogOutModalOpen(false)}/>
+
 
       <Box sx={containerStyles}>
         <Box sx={profileHeaderStyles}>
@@ -251,11 +258,20 @@ const ProfileContainer = () => {
           <List disablePadding>
             {menuItems.map((item, index) => (
               <ListItem
-                onClick={() => {
-                  item.text == "Share"
-                    ? setModalOpen(true)
-                    : setOpen(item.text);
-                }}
+              onClick={() => {
+                if (item.text === "Share") {
+                  setModalOpen(true);
+                } else if (item.text === "Edit Profile") {
+                  navigate('/app/profile/edit');
+                } else if (item.text === "About Developer") {
+                  navigate('/app/profile/about');
+                } else if (item.text === "Support Us") {
+                  navigate('/app/profile/support');
+                } else if (item.text === "Delete Profile") {
+                  navigate('/app/profile/delete');
+                }
+              }}
+              
                 key={index}
                 sx={menuItemStyles}
               >
@@ -280,13 +296,14 @@ const ProfileContainer = () => {
 
           <Box sx={actionButtonsStyles}>
             <Button
+            onClick={()=> setLogOutModalOpen(true)}
               variant="contained"
               startIcon={
                 <i className="ti ti-logout" style={{ fontSize: "24px" }} />
               }
               sx={{
                 backgroundColor: "#ff4757",
-                borderRadius: "12px",
+                borderRadius: "24px",
                 padding: { xs: "10px", md: "12px" },
                 fontSize: { xs: "13px", md: "14px" },
                 fontWeight: 500,
@@ -301,6 +318,7 @@ const ProfileContainer = () => {
           </Box>
         </Box>
       </Box>
+      <Outlet/>
     </>
   );
 };

@@ -1,10 +1,11 @@
 "use client";
 import React, { useState } from "react";
 import { Box, Typography, IconButton, Button, Modal } from "@mui/material";
+import { useNavigate } from "react-router-dom";
 
 const DeleteProfile = ({ onClose }) => {
   const [open, setOpen] = useState(false);
-
+  const navigate = useNavigate();
   const handleDeleteClick = () => setOpen(true);
   const handleClose = () => setOpen(false);
   const handleConfirm = () => {
@@ -51,7 +52,7 @@ const DeleteProfile = ({ onClose }) => {
               backgroundColor: "#F5F5F5",
             },
           }}
-          onClick={onClose}
+          onClick={()=> navigate(-1)}
         >
           <i
             className="ti ti-chevron-left"
@@ -104,7 +105,7 @@ const DeleteProfile = ({ onClose }) => {
           }}
         >
           Deleting your profile will permanently erase all your data, including
-          matches, conversations, and settings. This action{" "}
+          likes, matches and conversations. This action{" "}
           <strong>cannot be undone</strong>.
           <br />
           <br />
@@ -155,7 +156,7 @@ const DeleteProfile = ({ onClose }) => {
             padding: "10px 24px",
             fontSize: "15px",
             fontWeight: 500,
-            borderRadius: "8px",
+            borderRadius: "24px",
             textTransform: "none",
             boxShadow: "0 2px 6px rgba(0,0,0,0.1)",
             "&:hover": {
@@ -223,7 +224,7 @@ const DeleteProfile = ({ onClose }) => {
                 padding: "8px",
                 fontSize: "14px",
                 fontWeight: 500,
-                borderRadius: "6px",
+                borderRadius: "24px",
                 "&:hover": {
                   backgroundColor: "#E0E0E0",
                 },
@@ -240,7 +241,7 @@ const DeleteProfile = ({ onClose }) => {
                 padding: "8px",
                 fontSize: "14px",
                 fontWeight: 500,
-                borderRadius: "6px",
+                borderRadius: "24px",
                 "&:hover": {
                   backgroundColor: "#B71C1C",
                 },

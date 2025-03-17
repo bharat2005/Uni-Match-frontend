@@ -19,6 +19,7 @@ import {
 import AddIcon from "@mui/icons-material/Add";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import CloseIcon from "@mui/icons-material/Close";
+import { useNavigate } from "react-router-dom";
 
 const styles = {
   appContainer: {
@@ -175,6 +176,7 @@ const styles = {
 };
 
 function SearchContainer({ onClose, setIsDrawerOpen }) {
+  const navigate = useNavigate();
   const [gender, setGender] = React.useState("any");
   const [education, setEducation] = React.useState("");
 
@@ -321,7 +323,7 @@ function SearchContainer({ onClose, setIsDrawerOpen }) {
               backgroundColor: "#F5F5F5",
             },
           }}
-          onClick={onClose}
+          onClick={()=> navigate(-1)}
         >
           <i
             className="ti ti-chevron-left"

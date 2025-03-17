@@ -1,8 +1,10 @@
 "use client";
 import React from "react";
 import { Box, Typography, IconButton, Button, Modal } from "@mui/material";
+import { useNavigate } from "react-router-dom";
 
 const SupportUs = ({ onClose }) => {
+  const navigate = useNavigate();
   const [open, setOpen] = React.useState(false)
   const handleContactClick = () => {
     console.log("Contact button clicked");
@@ -50,7 +52,7 @@ const SupportUs = ({ onClose }) => {
               backgroundColor: "#F5F5F5",
             },
           }}
-          onClick={onClose}
+          onClick={()=> navigate(-1)}
         >
           <i
             className="ti ti-chevron-left"

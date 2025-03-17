@@ -1,8 +1,10 @@
 "use client";
 import React from "react";
 import { Box, Typography, IconButton, Button } from "@mui/material";
+import { useNavigate } from "react-router-dom";
 
 const TextBoard = ({ onClose }) => {
+  const navigate = useNavigate();
   const handleContactClick = () => {
     window.location.href = `mailto:support@uni-match.in?subject=Feedback%20for%20Uni-Match`;
   };
@@ -45,7 +47,7 @@ const TextBoard = ({ onClose }) => {
               backgroundColor: "#F5F5F5",
             },
           }}
-          onClick={onClose}
+          onClick={()=> navigate(-1)}
         >
           <i
             className="ti ti-chevron-left"

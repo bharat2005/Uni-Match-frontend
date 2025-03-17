@@ -94,7 +94,7 @@ export default function Match() {
   const canSwipe = currentIndex >= 0;
   const swiped = (direction, nameToDelete, index) => {
     updateCurrentIndex(index - 1);
-    console.log("gygy");
+    
   };
 
   const outOfFrame = (name, idx) => {
@@ -133,7 +133,7 @@ export default function Match() {
             onSwipe={(dir) => swiped(dir, profile.name, index)}
             onCardLeftScreen={() => outOfFrame(profile.name, index)}
             swipeRequirementType="position"
-            swipeThreshold={150}
+            swipeThreshold={200}
             flickOnSwipe={true}
           >
             <Card profile={profile} />

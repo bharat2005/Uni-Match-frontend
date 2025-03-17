@@ -5,9 +5,12 @@ import { createPortal } from "react-dom";
 import { ArrowBackIos, ArrowForwardIos } from "@mui/icons-material";
 import Drawer from "./Drawer";
 import SmallLoading from "../login/SmallLoading";
+import { useNavigate } from 'react-router-dom';
 import ImagePart from "./ImagePart.js";
 
+
 export default function Card({ profile }) {
+  const navigate = useNavigate();
   const [imageClick, setImageClick] = useState(false);
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const list = profile.images.filter((item) => item != null);
@@ -15,11 +18,27 @@ export default function Card({ profile }) {
 
   useEffect(() => {
     if (imageClick) {
-      setTimeout(() => setImageLoaded(true), 10); // Trigger pop-in effect
-    } else {
-      setImageLoaded(false); // Trigger pop-out effect
+      // Push new state into history when opening drawer
+      window.history.pushState({ modalOpen: true }, '');
+      
+      setTimeout(() => setImageLoaded(true), 10);
+  
+      // Handle the back button to close the drawer instead of navigating back
+      const handlePopState = (event) => {
+        if (event.state?.modalOpen) {
+          setImageClick(false);
+        }
+      };
+  
+      window.addEventListener('popstate', handlePopState);
+  
+      // Cleanup
+      return () => {
+        window.removeEventListener('popstate', handlePopState);
+      };
     }
   }, [imageClick]);
+  
 
   const nextImage = () => {
     setCurrentImageIndex((prevIndex) =>
@@ -51,6 +70,8 @@ export default function Card({ profile }) {
           />,
           document.body,
         )}
+
+
 
       <Box
         sx={{
@@ -99,7 +120,7 @@ export default function Card({ profile }) {
 
         {/* Open in Modal */}
         <IconButton
-          onPointerDown={() => setImageClick(true)}
+          onPointerDown={() => {setImageClick(true);}}
           sx={{
             position: "absolute",
             bottom: "18%",
