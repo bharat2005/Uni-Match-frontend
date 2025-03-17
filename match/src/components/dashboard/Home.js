@@ -49,6 +49,7 @@ function AppLayout() {
               alignItems: "center",
               backgroundColor: "white",
               zIndex: 11,
+              padding:"4px",
             }}
           >
             <Box
@@ -100,7 +101,7 @@ function AppLayout() {
             <IconButton onClick={() => setIsDrawerOpen(true)}>
               <i
                 className="ti ti-adjustments-horizontal"
-                style={{ fontSize: "26px", color: "black" }}
+                style={{ fontSize: "28px", color: "black" }}
               />
             </IconButton>
           </Box>

@@ -49,19 +49,29 @@ const ChatComponent = ({ setChatt }) => {
 
   // Auto-scroll to latest message
   useEffect(() => {
-    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+    setTimeout(() => {
+      messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+    }, 10);
   }, [messages]);
+  
 
-  const sendMessage = () => {
+  const sendMessage = (e) => {
+    e.preventDefault(); // Prevent default action
+  
     if (messageText.trim()) {
       setMessages((prev) => [
         ...prev,
         { id: Date.now(), text: messageText, sender: "me" },
       ]);
       setMessageText("");
-      setTimeout(() => messageInputRef.current?.focus(), 0);
+  
+      // Delay the focus to avoid input flickering
+      setTimeout(() => {
+        messageInputRef.current?.focus();
+      }, 10);
     }
   };
+  
 
   return (
     <Box
@@ -78,13 +88,14 @@ const ChatComponent = ({ setChatt }) => {
         sx={{
           display: "flex",
           alignItems: "center",
-          padding: "28px 20px 12px 20px",
           justifyContent: "center",
+          padding: "28px 20px 12px 20px",
           position: "sticky",
           top: 0,
           backgroundColor: "#FFFFFF",
-          zIndex: 15,
-          borderBottom: "1px solid #eee",
+          zIndex: 10,
+          borderBottom: "1px solid #E0E0E0",
+          boxShadow: "0 1px 4px rgba(0,0,0,0.05)",
         }}
       >
         <IconButton
@@ -104,7 +115,7 @@ const ChatComponent = ({ setChatt }) => {
         <Typography
           sx={{
             fontSize: "18px",
-            fontWeight: 600,
+            fontWeight: 500,
             color: "#212121",
           }}
         >

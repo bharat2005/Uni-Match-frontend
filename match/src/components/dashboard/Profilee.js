@@ -41,9 +41,9 @@ const ProfileContainer = () => {
       "linear-gradient(180deg, rgba(245, 245, 245, 0) 0%, #F5F5F5 26%)",
     fontFamily: '"Inter", sans-serif',
     padding: {
-      xs: "0 12px",
-      sm: "0 16px",
-      md: "0 20px",
+      xs: "40px 12px",
+      sm: "40px 16px",
+      md: "40px 20px",
     },
     minHeight: {
       xs: "calc(100vh - env(safe-area-inset-bottom))",
@@ -190,9 +190,10 @@ const ProfileContainer = () => {
             src="/5.jpg"
             alt="Profile"
             sx={{
-              width: { xs: "80px", md: "80px" },
-              height: { xs: "80px", md: "80px" },
+              width: { xs: "90px", md: "90px" },
+              height: { xs: "90px", md: "90px" },
               marginBottom: "10px",
+              border:'2px solid #fd7e14'
             }}
           />
           <Typography

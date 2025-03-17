@@ -24,8 +24,6 @@ export default function Stepper() {
         to="/app/likes"
         style={{
           textDecoration: "none",
-          textDecoration: "none",
-          textDecoration: "none",
           outline: "none", // ✅ Removes focus outline from the <a> element
           WebkitTapHighlightColor: "transparent",
         }}
@@ -59,8 +57,6 @@ export default function Stepper() {
       <NavLink
         to="/app/matches"
         style={{
-          textDecoration: "none",
-          textDecoration: "none",
           textDecoration: "none",
           outline: "none", // ✅ Removes focus outline from the <a> element
           WebkitTapHighlightColor: "transparent",
@@ -96,8 +92,6 @@ export default function Stepper() {
         to="/app"
         style={{
           textDecoration: "none",
-          textDecoration: "none",
-          textDecoration: "none",
           outline: "none", // ✅ Removes focus outline from the <a> element
           WebkitTapHighlightColor: "transparent",
         }}
@@ -130,11 +124,9 @@ export default function Stepper() {
         )}
       </NavLink>
 
-      <NavLink
+      <NavLink 
         to="/app/chats"
         style={{
-          textDecoration: "none",
-          textDecoration: "none",
           textDecoration: "none",
           outline: "none", // ✅ Removes focus outline from the <a> element
           WebkitTapHighlightColor: "transparent",
@@ -172,7 +164,6 @@ export default function Stepper() {
       <NavLink
         to="/app/profile"
         style={{
-          textDecoration: "none",
           textDecoration: "none",
           outline: "none", // ✅ Removes focus outline from the <a> element
           WebkitTapHighlightColor: "transparent",
