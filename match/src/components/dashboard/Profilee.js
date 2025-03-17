@@ -39,24 +39,35 @@ const ProfileContainer = () => {
 
 
 
-  const handleShare = () => {
-    if (navigator.share) {
-      navigator
-        .share({
+  const handleShare = async () => {
+    try {
+      const response = await fetch('/qr.png');
+      const blob = await response.blob();
+      const file = new File([blob], 'uni-match.jpg', { type: blob.type });
+  
+      if (navigator.canShare && navigator.canShare({ files: [file] })) {
+        // Share with image if supported
+        await navigator.share({
           title: 'Uni-Match - Find Meaningful Connections',
           text: 'Check out Uni-Match — the best way to meet new people at LPU!',
-          url: window.location.href,
-        })
-        .then(() => {
-          console.log('Content shared successfully');
-        })
-        .catch((error) => {
-          console.error('Error sharing content:', error);
+          url: "https://uni-match.in",
+          files: [file],
         });
-    } else {
-      alert('Your browser does not support the share feature');
+        console.log('Shared with image!');
+      } else {
+        // Fallback to text + URL only
+        await navigator.share({
+          title: 'Uni-Match - Find Meaningful Connections',
+          text: 'Check out Uni-Match — the best way to meet new people at LPU!',
+          url: "https://uni-match.in",
+        });
+        console.log('Shared with text and URL!');
+      }
+    } catch (error) {
+      console.error('Error sharing:', error);
     }
   };
+  
   
 
   const containerStyles = {
