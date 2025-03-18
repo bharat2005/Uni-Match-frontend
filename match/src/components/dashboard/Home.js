@@ -41,8 +41,8 @@ function AppLayout() {
           position: "relative",
         }}
       >
-        {shouldShowHeader && (
-          <Box
+      
+          {/* <Box
             sx={{
               display: "flex",
               justifyContent: "space-between",
@@ -105,7 +105,7 @@ function AppLayout() {
               />
             </IconButton>
           </Box>
-        )}
+         */}
 
         <Box sx={{ flex: 1 }}>
           <Outlet />

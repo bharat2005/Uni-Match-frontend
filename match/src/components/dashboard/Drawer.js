@@ -324,7 +324,7 @@ export default function Drawer({ imageClick, profile }) {
         willChange: "transform",
         "&::-webkit-scrollbar": { display: "none" },
         scrollbarWidth: "none",
-        zIndex: 13,
+        zIndex: 15,
       }}
     >
       <Box sx={{ mb: 1.25 }}>

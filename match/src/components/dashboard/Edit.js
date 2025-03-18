@@ -10,6 +10,7 @@ import {
   MenuItem,
   TextareaAutosize,
   List,
+  Chip,
   ListItem,
   ListItemButton,
   ListItemText,
@@ -20,6 +21,57 @@ import AddIcon from "@mui/icons-material/Add";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import CloseIcon from "@mui/icons-material/Close";
 import { useNavigate } from "react-router-dom";
+
+
+const interests = [
+  { emoji: "🎬", label: "Movies" },
+  { emoji: "🎶", label: "Music" },
+  { emoji: "🏋️‍♂️", label: "Sports" },
+  { emoji: "🎮", label: "Gaming" },
+  { emoji: "✈️", label: "Travel" },
+  { emoji: "🍽️", label: "Cooking" },
+  { emoji: "🎨", label: "Art" },
+  { emoji: "📖", label: "Reading" },
+  { emoji: "🥾", label: "Hiking" },
+  { emoji: "🖌️", label: "Painting" },
+  { emoji: "🧘‍♀️", label: "Yoga" },
+  { emoji: "⛺", label: "Camping" },
+  { emoji: "🎣", label: "Fishing" },
+  { emoji: "💃", label: "Dancing" },
+  { emoji: "🏃‍♀️", label: "Running" },
+  { emoji: "🚴‍♂️", label: "Cycling" },
+  { emoji: "✍️", label: "Writing" },
+  { emoji: "🎧", label: "Podcasts" },
+  { emoji: "🛍️", label: "Shopping" },
+  { emoji: "🏊‍♂️", label: "Swimming" },
+  { emoji: "🎲", label: "Boardgames" },
+  { emoji: "🕹️", label: "Arcade" },
+  { emoji: "💄", label: "Makeup" },
+  { emoji: "🌱", label: "Gardening" },
+  { emoji: "🏃‍♂️", label: "Fitness" },
+  { emoji: "🍰", label: "Baking" },
+  { emoji: "🎿", label: "Skiing" },
+  { emoji: "🍷", label: "Tasting" },
+  { emoji: "🚗", label: "Roadtrip" },
+  { emoji: "🐾", label: "Pets" },
+  { emoji: "👗", label: "Fashion" },
+  { emoji: "💻", label: "Coding" },
+  { emoji: "📷", label: "Photography" },
+  { emoji: "📺", label: "Streaming" },
+  { emoji: "🚢", label: "Cruising" },
+  { emoji: "🏕️", label: "Adventure" },
+  { emoji: "🛩️", label: "Skydiving" },
+  { emoji: "🏎️", label: "Racing" },
+  { emoji: "🎭", label: "Acting" },
+  { emoji: "🧩", label: "Puzzles" },
+  { emoji: "🔭", label: "Astronomy" },
+  { emoji: "🎤", label: "Singing" },
+  { emoji: "🤹", label: "Juggling" },
+  { emoji: "🪂", label: "Paragliding" },
+  { emoji: "📡", label: "Tech" },
+  { emoji: "🧪", label: "Science" },
+];
+
 
 const styles = {
   appContainer: {
@@ -177,55 +229,57 @@ const styles = {
 
 function SearchContainer({ onClose, setIsDrawerOpen }) {
   const navigate = useNavigate();
+    const [selectedGender, setSelectedGender] = React.useState("");
   const [gender, setGender] = React.useState("any");
   const [education, setEducation] = React.useState("");
+  const [formData, setFormData] = React.useState({
+    reg_no: "12413928",
+    reason: "Long-term relationship",
+    age: 20,
+    name: "Jisoo",
+    personality: "extrovert",
+    images: ["/2.jpg", "/3.jpg", "/1.jpg", null, null],
+    bio: "Im the solo developer of this whole Uni-Match platform...😎",
+    interests: [
+      "Gardening",
+      "Paragliding",
+      "Puzzles",
+      "Juggling",
+      "Art",
+      "Juggling",
+    ],
+  })
 
   const [smallDrawerOpen, setSmallDrawerOpen] = React.useState(false);
+   const [bigDrawerOpen, setBigDrawerOpen] = React.useState(false);
 
   const [selectedOption, setSelectedOption] = React.useState("");
 
   const toggleSmallDrawer = (open) => () => setSmallDrawerOpen(open);
+  const toggleBigDrawer = (open) => () => setBigDrawerOpen(open);
 
   const handleOptionSelect = (option) => {
     setSelectedOption(option);
     setSmallDrawerOpen(false);
   };
 
-  const toggleDrawer = (open) => (event) => {
-    if (
-      event &&
-      event.type === "keydown" &&
-      (event.key === "Tab" || event.key === "Shift")
-    ) {
-      return;
-    }
-    setIsDrawerOpen(open);
+  const handleLocationSelect = (location) => {
+    setFormData((prev) => {
+      return {
+        ...prev,
+        interests: prev["interests"].includes(location)
+          ? prev["interests"].filter((loc) => loc !== location)
+          : [...prev["interests"], location],
+      };
+    });
   };
 
-  const containerStyle = {
-    bgcolor: "white",
-    borderRadius: "20px 20px 0 0",
-    p: { xs: "16px", sm: "20px" },
-    position: "relative",
-    maxWidth: "600px",
-    mx: "auto",
-    boxShadow: "0 -4px 12px rgba(0, 0, 0, 0.05)",
-  };
-
-  const headerStyle = {
-    display: "flex",
-    justifyContent: "center",
-    alignItems: "center",
-    position: "relative",
-    mb: { xs: 3, sm: 3.75 },
-    height: "44px",
-  };
 
   const formGroupStyle = {
     display: "flex",
     flexDirection: "column",
     gap: { xs: 1.5, sm: 2 },
-    mb: { xs: 2.5, sm: 3 },
+    mb: { xs: 3, sm: 3 },
   };
 
   const imageGridStyle = {
@@ -357,17 +411,33 @@ function SearchContainer({ onClose, setIsDrawerOpen }) {
           <Typography
             sx={{
               color: "#333",
-              fontSize: "14px",
+              fontSize: "16px",
               fontWeight: 500,
             }}
           >
             Name
           </Typography>
-          <TextField
-            fullWidth
+          <TextareaAutosize
+           minRows={1}
             placeholder="enter name"
-            size="small"
-            sx={inputBaseStyle}
+            style={{
+              //width: "100%",
+              padding: "12px",
+              borderRadius: "8px",
+              border: "1px solid #eee",
+              fontSize: "16px",
+             // color: "#666",
+              resize: "vertical",
+              fontFamily: "inherit",
+              outline: "none",
+              transition: "border-color 0.2s ease",
+            }}
+            onFocus={(e) => {
+              e.target.style.borderColor = "#ff6b9c";
+            }}
+            onBlur={(e) => {
+              e.target.style.borderColor = "#eee";
+            }}
           />
         </Box>
 
@@ -375,7 +445,7 @@ function SearchContainer({ onClose, setIsDrawerOpen }) {
           <Typography
             sx={{
               color: "#333",
-              fontSize: "14px",
+              fontSize: "16px",
               fontWeight: 500,
             }}
           >
@@ -405,7 +475,7 @@ function SearchContainer({ onClose, setIsDrawerOpen }) {
           <Typography
             sx={{
               color: "#333",
-              fontSize: "14px",
+              fontSize: "16px",
               fontWeight: 500,
             }}
           >
@@ -413,18 +483,36 @@ function SearchContainer({ onClose, setIsDrawerOpen }) {
           </Typography>
           <Box sx={{ display: "flex", gap: 1.5 }}>
             {[
-              { value: "any", label: "Introvert" },
-              { value: "male", label: "Extrovert" },
-              { value: "female", label: "Ambivert" },
+              "Introvert",
+              "Extrovert",
+              "Ambivert",
             ].map((option) => (
-              <Button
-                key={option.value}
-                variant="outlined"
-                sx={genderButtonStyle(gender === option.value)}
-                onClick={() => setGender(option.value)}
-              >
-                {option.label}
-              </Button>
+              <Chip
+              key={option}
+              label={option}
+              onClick={() => setSelectedGender(option)}
+              sx={{
+                borderRadius: "18px",
+                fontSize: "14px",
+                padding: "18px 12px",
+                backgroundColor: "white",
+                border: "1px solid #eee",
+                color: "#666",
+                "&:hover": {
+                  backgroundColor: "#f5f5f5",
+                },
+                "&.selected": {
+                  backgroundColor: "#ff6b9c",
+                  color: "white",
+                  //borderColor: "#ff6b9c",
+                  boxShadow: "0 2px 4px rgba(255, 107, 156, 0.2)",
+                  "&:hover": {
+                    backgroundColor: "#ff5b8c",
+                  },
+                },
+              }}
+              className={selectedGender === option ? "selected" : ""}
+            />
             ))}
           </Box>
         </Box>
@@ -433,7 +521,7 @@ function SearchContainer({ onClose, setIsDrawerOpen }) {
           <Typography
             sx={{
               color: "#333",
-              fontSize: "14px",
+              fontSize: "16px",
               fontWeight: 500,
             }}
           >
@@ -449,18 +537,60 @@ function SearchContainer({ onClose, setIsDrawerOpen }) {
           </Button>
         </Box>
 
+     <SwipeableDrawer
+        anchor="bottom"
+        open={smallDrawerOpen}
+        onClose={toggleSmallDrawer(false)}
+        sx={{
+          "& .MuiDrawer-paper": {
+            // borderTopLeftRadius: "20px",
+            // borderTopRightRadius: "20px",
+            background: "white",
+            maxHeight: "90vh",
+          },
+        }}
+      >
+        <List sx={{ paddingBottom: 0 }}>
+          {[
+            "🎉Casual dating",
+            "💘Long-term",
+            "😍Short-term",
+            "👋New friends",
+            "🎓Study buddy",
+            "🤔Still figuring",
+          ].map((option, index) => (
+            <ListItemButton
+              key={index}
+              onClick={() => handleOptionSelect(option)}
+              sx={{ borderBottom: "1px solid #f0f0f0" }}
+            >
+              <ListItemText primary={option} sx={{ textAlign: "center" }} />
+            </ListItemButton>
+          ))}
+        </List>
+      </SwipeableDrawer>
+
+
+
+
+
+
+
+
+
+
         <Box sx={formGroupStyle}>
           <Typography
             sx={{
               color: "#333",
-              fontSize: "14px",
+              fontSize: "16px",
               fontWeight: 500,
             }}
           >
             About
           </Typography>
           <TextareaAutosize
-            minRows={4}
+            minRows={6}
             placeholder="A few words about yourself..."
             style={{
               //width: "100%",
@@ -487,7 +617,7 @@ function SearchContainer({ onClose, setIsDrawerOpen }) {
           <Typography
             sx={{
               color: "#333",
-              fontSize: "14px",
+              fontSize: "16px",
               fontWeight: 500,
             }}
           >
@@ -496,9 +626,9 @@ function SearchContainer({ onClose, setIsDrawerOpen }) {
           <Button
             sx={styles.locationSelector}
             endIcon={<KeyboardArrowDownIcon />}
-            onClick={toggleSmallDrawer(true)}
+            onClick={toggleBigDrawer(true)}
           >
-            {selectedOption || "Select an option"}
+            your interests
           </Button>
         </Box>
       </Box>
@@ -561,8 +691,8 @@ function SearchContainer({ onClose, setIsDrawerOpen }) {
 
       <SwipeableDrawer
         anchor="bottom"
-        open={smallDrawerOpen}
-        onClose={toggleSmallDrawer(false)}
+        open={bigDrawerOpen}
+        onClose={toggleBigDrawer(false)}
         sx={{
           "& .MuiDrawer-paper": {
             // borderTopLeftRadius: "20px",
@@ -572,24 +702,60 @@ function SearchContainer({ onClose, setIsDrawerOpen }) {
           },
         }}
       >
-        <List sx={{ paddingBottom: 0 }}>
-          {[
-            "🎉Casual dating",
-            "💘Long-term",
-            "😍Short-term",
-            "👋New friends",
-            "🎓Study buddy",
-            "🤔Still figuring",
-          ].map((option, index) => (
-            <ListItemButton
-              key={index}
-              onClick={() => handleOptionSelect(option)}
-              sx={{ borderBottom: "1px solid #f0f0f0" }}
-            >
-              <ListItemText primary={option} sx={{ textAlign: "center" }} />
-            </ListItemButton>
-          ))}
-        </List>
+          <Box
+             sx={{
+               display: "grid",
+               margin: "30px 0 40px 0",
+               gridTemplateColumns: {
+                 xs: "repeat(1, 1fr)",
+                 sm: "repeat(1, 1fr)",
+               },
+               gap: { xs: "10px", sm: "15px" },
+               padding: "0 25%",
+               maxHeight: "",
+               overflowY: "auto",
+               msOverflowStyle: "none",
+               scrollbarWidth: "none",
+               "&::-webkit-scrollbar": {
+                 display: "none",
+               },
+             }}
+           >
+             {interests.map((location) => (
+               <Button
+                 key={location.label}
+                 onClick={() => handleLocationSelect(location.label)}
+                 sx={{
+                   background: formData["interests"].includes(location.label)
+                     ? "rgba(255, 105, 190, 0.4)"
+                     : "white",
+                   borderRadius: "25px",
+                   padding: { xs: "10px", sm: "12px" },
+                   textAlign: "center",
+                   fontSize: { xs: "14px", sm: "16px" },
+                   color: formData["interests"].includes(location.label)
+                     ? "white"
+                     : "black",
+                   transition: "all 0.3s ease",
+                   "&:hover": {
+                     background: formData["interests"].includes(location.label)
+                       ? "rgba(255, 105, 190, 0.4)"
+                       : "white",
+                   },
+                   fontFamily: "inherit",
+                   boxShadow: formData["interests"].includes(location.label)
+                     ? "0 2px 6px rgba(255, 70, 162, 0.3)"
+                     : "none",
+                   transform: formData["interests"].includes(location.label)
+                     ? "scale(1.02)"
+                     : "scale(1)",
+                 }}
+               >
+                 {location.emoji}
+                 {location.label}
+               </Button>
+             ))}
+           </Box>
       </SwipeableDrawer>
     </Box>
   );

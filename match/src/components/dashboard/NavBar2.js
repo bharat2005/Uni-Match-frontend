@@ -89,7 +89,7 @@ export default function Stepper() {
       </NavLink>
 
       <NavLink
-        to="/app"
+        to="/app/home"
         style={{
           textDecoration: "none",
           outline: "none", // ✅ Removes focus outline from the <a> element

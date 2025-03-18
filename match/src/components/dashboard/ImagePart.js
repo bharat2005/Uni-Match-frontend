@@ -2,42 +2,64 @@ import { useState } from "react";
 import { Box, Typography, IconButton } from "@mui/material";
 import SmallLoading from "../login/SmallLoading";
 import { ArrowBackIos, ArrowForwardIos } from "@mui/icons-material";
+import Drawer from './Drawer';
+import { createPortal } from "react-dom";
+import { useNavigate, useOutletContext } from "react-router-dom";
 
-export default function ImagePart({
-  imageLoaded,
-  setImageLoaded,
-  list,
-  currentImageIndex,
-  setImageClick,
-  prevImage,
-  nextImage,
-}) {
-  return (
-    <Box
+export default function ImagePart() {
+  const {
+    profile,
+   setImageClick,
+    // imageClick
+  } = useOutletContext();
+    const navigate = useNavigate();
+    const [currentImageIndex, setCurrentImageIndex] = useState(0);
+     const [imageLoaded, setImageLoaded] = useState(false);
+    const list = profile.images.filter((item) => item != null);
+
+
+  const nextImage = () => {
+    setCurrentImageIndex((prevIndex) =>
+      prevIndex === list.length - 1 ? 0 : prevIndex + 1,
+    );
+
+    setImageLoaded(false);
+  };
+
+  const prevImage = () => {
+    setCurrentImageIndex((prevIndex) =>
+      prevIndex === 0 ? list.length - 1 : prevIndex - 1,
+    );
+    setImageLoaded(false);
+  };
+
+
+
+
+  return (<>
+    createPortal(
+      <Box
       sx={{
         position: "fixed",
         top: 0,
         left: "50%",
-        // transform: imageLoaded
-        //   ? "translate(-50%, 0) scale(1)"
-        //   : "translate(-50%, 100%) scale(0.9)",
-        transform: "translate(-50%, 0) scale(1)",
+        transform: imageLoaded
+          ? "translate(-50%, 0) scale(1)"
+          : "translate(-50%, 100%) scale(0.9)",
         width: "100vw",
         height: "55vh",
-        zIndex: 12,
-        // background: imageLoaded
-        //   ? `url(${list[currentImageIndex]})`
-        //   : "linear-gradient(135deg, #e0e0e0 0%, #c0c0c0 100%)",
-        background: `url(${list[currentImageIndex]})`,
+        zIndex: 55,
+        background: imageLoaded
+          ? `url(${list[currentImageIndex]})`
+          : "linear-gradient(135deg, #e0e0e0 0%, #c0c0c0 100%)",
         backgroundSize: "cover",
         backgroundPosition: "center",
         backgroundRepeat: "no-repeat",
-        // opacity: imageLoaded ? 1 : 0,
-        opacity: 1,
+         opacity: imageLoaded ? 1 : 0,
         transition: "opacity 0.1s ease, transform 0.3s ease",
       }}
     >
-      {/* {!imageLoaded && <SmallLoading />}
+      {!imageLoaded && <SmallLoading />}
       <img
         src={list[currentImageIndex]}
         alt="profile"
@@ -46,7 +68,7 @@ export default function ImagePart({
         }}
         onLoad={() => setImageLoaded(true)}
         onError={() => setImageLoaded(false)} // Fallback if the image fails to load
-      /> */}
+      />
 
       {/* Left Arrow */}
       <IconButton
@@ -125,7 +147,8 @@ export default function ImagePart({
         }}
         onClick={(e) => {
           e.stopPropagation();
-          setImageClick(false);
+          console.log("hi")
+          navigate(-1);
         }}
       >
         <i className="ti ti-arrow-left" style={{ fontSize: "24px" }}></i>
@@ -160,6 +183,11 @@ export default function ImagePart({
           />
         ))}
       </Box>
-    </Box>
+    </Box>, document.body)
+    <Drawer 
+   imageClick={true}
+    profile={profile}
+    />
+    </>
   );
 }

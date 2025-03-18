@@ -20,6 +20,7 @@ import Chatsoo from "./components/dashboard/Chatsoo";
 import Chatoo from "./components/dashboard/Chatoo";
 import Edit from './components/dashboard/Edit';
 import About from './components/dashboard/About';
+import Drawer2 from './components/dashboard/Drawer2';
 import Support from './components/dashboard/Support';
 import DeleteProfile from './components/dashboard/DeleteProfile';
 
@@ -75,7 +76,13 @@ export default function App() {
             >
               <Route path="likes" element={<Likesoo />} />
               <Route path="matches" element={<Matchesoo />} />
-              <Route index element={<Match />}/ >
+
+              <Route path='home' element={<Match />} >
+                    <Route path='info' element={<Drawer2 />}/ >
+              </Route>
+
+
+
               <Route path="chats" element={<Chatsoo />} />
               <Route path=":chatId" element={<Chatoo />} />
 

@@ -89,7 +89,7 @@ function RegistrationComplete() {
             variant="contained"
             fullWidth
             disableElevation
-            onClick={() => navigate("/app", { replace: true })}
+            onClick={() => navigate("/app/home", { replace: true })}
             sx={styles.confirmButton}
           >
             Continue

@@ -3,75 +3,35 @@ import "../../App.css";
 import { Box, Typography, IconButton } from "@mui/material";
 import { createPortal } from "react-dom";
 import { ArrowBackIos, ArrowForwardIos } from "@mui/icons-material";
-import Drawer from "./Drawer";
+import Drawer from "./Drawer.js";
 import SmallLoading from "../login/SmallLoading";
 import { useNavigate } from 'react-router-dom';
 import ImagePart from "./ImagePart.js";
+import { Outlet } from "react-router-dom";
 
 
 export default function Card({ profile }) {
   const navigate = useNavigate();
-  const [imageClick, setImageClick] = useState(false);
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const list = profile.images.filter((item) => item != null);
-  const [imageLoaded, setImageLoaded] = useState(false);
 
-  useEffect(() => {
-    if (imageClick) {
-      // Push new state into history when opening drawer
-      window.history.pushState({ modalOpen: true }, '');
-      
-      setTimeout(() => setImageLoaded(true), 10);
   
-      // Handle the back button to close the drawer instead of navigating back
-      const handlePopState = (event) => {
-        if (event.state?.modalOpen) {
-          setImageClick(false);
-        }
-      };
-  
-      window.addEventListener('popstate', handlePopState);
-  
-      // Cleanup
-      return () => {
-        window.removeEventListener('popstate', handlePopState);
-      };
-    }
-  }, [imageClick]);
-  
-
   const nextImage = () => {
     setCurrentImageIndex((prevIndex) =>
       prevIndex === list.length - 1 ? 0 : prevIndex + 1,
     );
-
-    setImageLoaded(false);
   };
 
   const prevImage = () => {
     setCurrentImageIndex((prevIndex) =>
       prevIndex === 0 ? list.length - 1 : prevIndex - 1,
     );
-    setImageLoaded(false);
   };
 
   return (
     <>
-      {imageClick &&
-        createPortal(
-          <ImagePart
-            imageLoaded={imageLoaded}
-            setImageLoaded={setImageLoaded}
-            list={list}
-            currentImageIndex={currentImageIndex}
-            setImageClick={setImageClick}
-            prevImage={prevImage}
-            nextImage={nextImage}
-          />,
-          document.body,
-        )}
-
-
+        
+       <Outlet/>
 
       <Box
         sx={{
@@ -120,7 +80,7 @@ export default function Card({ profile }) {
 
         {/* Open in Modal */}
         <IconButton
-          onPointerDown={() => {setImageClick(true);}}
+          onPointerDown={() => navigate('/app/home/info')}
           sx={{
             position: "absolute",
             bottom: "18%",
@@ -201,11 +161,6 @@ export default function Card({ profile }) {
           {profile.reason}
         </Typography>
 
-        <Drawer
-          imageClick={imageClick}
-          profile={profile}
-          key={profile.reg_no}
-        />
       </Box>
     </>
   );
