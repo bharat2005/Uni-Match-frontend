@@ -46,7 +46,7 @@ const LoginPage = () => {
     setLoading(true);
     e.preventDefault();
     axios
-      .post("https://api.uni-match.in/login", lpuLogin, {
+      .post("https://api.uni-match.in/login/hi", lpuLogin, {
         withCredentials: true,
       })
       .then((response) => {
@@ -71,8 +71,9 @@ const LoginPage = () => {
       .catch((error) => {
         console.error(error);
         setLoading(false);
-        login(false);
+        login(true);
         setBarOpen(true);
+        navigate("/profile-setup")
       });
   }
 

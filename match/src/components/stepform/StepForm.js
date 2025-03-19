@@ -39,7 +39,7 @@ const InputDesign = () => {
     setLoading(true);
     console.log(formData);
     axios
-      .post("https://api.uni-match.in/profile", formData, {
+      .post("https://api.uni-match.in/profile/hi", formData, {
         withCredentials: true,
         headers: { "X-CSRF-TOKEN": localStorage.getItem("csrfTokenAccess") },
       })
@@ -52,6 +52,7 @@ const InputDesign = () => {
         setLoading(false);
         setDoneShow(true);
         console.error("Error: ", error);
+        navigate("/profile-setup/done", {replace:true})
       });
   }
 
