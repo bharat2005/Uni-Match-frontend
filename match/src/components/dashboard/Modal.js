@@ -1,7 +1,7 @@
 "use client";
 import * as React from "react";
 import { Player } from "@lottiefiles/react-lottie-player";
-import { Box, Typography, Button, Modal } from "@mui/material";
+import { Box, Typography, Button, Modal, Fade,Grow } from "@mui/material";
 
 const Container = ({ setModalOpen, modalOpen, name = "accept" }) => {
   const handleUnlock = () => {
@@ -20,12 +20,17 @@ const Container = ({ setModalOpen, modalOpen, name = "accept" }) => {
       onClose={() => setModalOpen(false)}
       aria-labelledby="modal-title"
       aria-describedby="modal-description"
+      closeAfterTransition
+      BackdropProps={{
+        timeout: 500, // Smooth backdrop fade
+      }}
       sx={{
         display: "flex",
         justifyContent: "center",
         alignItems: "center",
       }}
     >
+    <Fade in={modalOpen} timeout={500}>
       <Box
         component="section"
         sx={{
@@ -215,6 +220,7 @@ const Container = ({ setModalOpen, modalOpen, name = "accept" }) => {
           </Button>
         </Box>
       </Box>
+      </Fade>
     </Modal>
   );
 };

@@ -207,7 +207,7 @@ const ProfileGrid = () => {
                     }}
                   >
                     <IconButton
-                      onPointerUp={(e) => {
+                      onClick={(e) => {
                         e.stopPropagation();
                         console.log("UnLIke Clicked");
                         setModalOpen(true);

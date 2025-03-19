@@ -15,8 +15,6 @@ import { useNavigate, useOutletContext } from "react-router-dom";
 import { createPortal } from "react-dom";
 import {interests} from './Data'
 
-
-
                                           
 
 function Drawer() {
