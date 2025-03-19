@@ -1,19 +1,8 @@
 "use client";
 import * as React from "react";
-import { useState, useEffect } from "react";
 import { Box } from "@mui/material";
 
 function SpinningLoader() {
-  const [rotation, setRotation] = useState(0);
-
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setRotation((prevRotation) => (prevRotation + 30) % 360);
-    }, 100); // Adjust the interval for smoother or faster rotation
-
-    return () => clearInterval(interval);
-  }, []);
-
   const containerStyle = {
     display: "flex",
     alignItems: "center",
@@ -40,8 +29,7 @@ function SpinningLoader() {
     height: "72px",
     objectFit: "contain",
     backgroundColor: "transparent",
-    transform: `rotate(${rotation}deg)`,
-    transition: "transform 0.1s linear",
+    animation: "spin 1.5s linear infinite", // Continuous spin
   };
 
   return (
@@ -54,6 +42,19 @@ function SpinningLoader() {
           style={imageStyle}
         />
       </Box>
+      {/* Define the keyframes using a global style */}
+      <style>
+        {`
+          @keyframes spin {
+            from {
+              transform: rotate(0deg);
+            }
+            to {
+              transform: rotate(360deg);
+            }
+          }
+        `}
+      </style>
     </Box>
   );
 }
