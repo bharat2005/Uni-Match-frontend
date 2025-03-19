@@ -7,23 +7,6 @@ import { Interests } from "@mui/icons-material";
 
 const db = [
   {
-    reg_no: "12432322",
-    reason: "Casual Dating",
-    age: 19,
-    name: "Yuki",
-    images: [null, "9.jpg", "/10.jpg", "/11.jpg", null],
-    bio: "I love sunny days all time!!!",
-    personality: "extrovert",
-    interests: [
-      "Gardening",
-      "Paragliding",
-      "Puzzles",
-      "Juggling",
-      "Art",
-      "Juggling",
-    ],
-  },
-  {
     reg_no: "12432323",
     reason: "Serious Relationship",
     age: 19,
@@ -55,6 +38,7 @@ const db = [
       "Juggling",
     ],
   },
+
   {
     reg_no: "12413928",
     reason: "💘Long-term relationship",
@@ -72,11 +56,15 @@ const db = [
       "Juggling",
     ],
   },
+
 ];
 
 export default function Match() {
   const [currentIndex, setCurrentIndex] = useState(db.length - 1);
   const currentIndexRef = useRef(currentIndex);
+  const [cardStates, setCardStates] = useState(Array(db.length).fill(null));
+
+
 
   const childRefs = useMemo(
     () =>
@@ -92,8 +80,23 @@ export default function Match() {
   };
 
   const canSwipe = currentIndex >= 0;
+
+
   const swiped = (direction, nameToDelete, index) => {
+
+    setCardStates((prev) => {
+      const newState = [...prev];
+      newState[index] = direction;
+      return newState;
+    });
     updateCurrentIndex(index - 1);
+    setTimeout(() => {
+      setCardStates((prev) => {
+        const newState = [...prev];
+        newState[index] = null;
+        return newState;
+      });
+    }, 500);
     
   };
 
@@ -206,13 +209,13 @@ export default function Match() {
             key={profile.reg_no}
             ref={childRefs[index]}
             preventSwipe={["up", "down"]}
-            onSwipe={(dir) => swiped(dir, profile.name, index)}
+            onSwipe={(dir) => {swiped(dir, profile.name, index); }}
             onCardLeftScreen={() => outOfFrame(profile.name, index)}
             swipeRequirementType="position"
             swipeThreshold={200}
             flickOnSwipe={true}
           >
-            <Card profile={profile} />
+            <Card profile={profile} cardDir={cardStates[index]} isActive={index === currentIndex} />
           </TinderCard>
         ))}
 
@@ -228,7 +231,7 @@ export default function Match() {
         >
           <Button
             variant="contained"
-            onClick={() => swipe("left")}
+            onPointerUp={() => swipe("left")}
             sx={{
               background:
                 "linear-gradient(145deg, #FF006E 0%, #FB5607 50%, #FFBE0B 100%)", // More vibrant gradient
@@ -259,7 +262,7 @@ export default function Match() {
 
           <Button
             variant="contained"
-            onClick={() => swipe("right")}
+            onPointerUp={() => swipe("right")}
             sx={{
               background:
                 "linear-gradient(145deg, #00C853 0%, #B2FF59 50%, #FFD600 100%)", // Vibrant green to lime to yellow

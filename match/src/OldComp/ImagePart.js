@@ -2,7 +2,7 @@ import { useState } from "react";
 import { Box, Typography, IconButton } from "@mui/material";
 import SmallLoading from "../login/SmallLoading";
 import { ArrowBackIos, ArrowForwardIos } from "@mui/icons-material";
-import Drawer from './Drawer';
+import Drawer from '../../OldComp/Drawer';
 import { createPortal } from "react-dom";
 import { useNavigate, useOutletContext } from "react-router-dom";
 

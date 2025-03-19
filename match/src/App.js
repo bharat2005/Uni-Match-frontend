@@ -74,17 +74,34 @@ export default function App() {
                 </ProtectedRoute>
               }
             >
-              <Route path="likes" element={<Likesoo />} />
-              <Route path="matches" element={<Matchesoo />} />
 
-              <Route path='home' element={<Match />} >
-                    <Route path='info' element={<Drawer2 />}/ >
+              
+              <Route path="likes" element={<Likesoo />} >
+                  <Route path="info" element={<Drawer2 />}/>
               </Route>
 
 
 
-              <Route path="chats" element={<Chatsoo />} />
+              <Route path="matches" element={<Matchesoo />} >
+
+              <Route path=":info" element={<Drawer2 />}/>
+
+              </Route>
+
+              <Route path='home' element={<Match />} >
+                    <Route path='info' element={<Drawer2/>}/>
+              </Route>
+
+
+
+              <Route path="chats" element={<Chatsoo />} >
+                  <Route path="info" element={<Drawer2 />} />
+              </Route>
+
+
+
               <Route path=":chatId" element={<Chatoo />} />
+
 
 
               <Route path="profile" element={<Profilee />} >

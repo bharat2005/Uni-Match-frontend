@@ -11,8 +11,9 @@ import {
 } from "@mui/material";
 import Modall from "./Modal";
 import { ArrowBackIos, ArrowForwardIos } from "@mui/icons-material";
-import Drawer from "./Drawer";
-import ImagePart from "./ImagePart";
+import Drawer2 from './Drawer2'
+import { useNavigate } from "react-router-dom";
+import { Outlet } from "react-router-dom";
 
 const profile = {
   reg_no: "12413928",
@@ -33,6 +34,7 @@ const profile = {
 };
 
 const ProfileGrid = () => {
+  const navigate = useNavigate();
   const [modalOpen, setModalOpen] = useState(false);
   const [imageClick, setImageClick] = useState(false);
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
@@ -110,66 +112,9 @@ const ProfileGrid = () => {
       imageUrl: "/10.jpg",
       imageAlt: "Profile photo",
     },
-    ,
+    
   ];
 
-  const containerStyle = {
-    background: "transparent",
-    minHeight: "100vh",
-    padding: "20px",
-    "@media (max-width: 991px)": {
-      padding: "15px",
-    },
-    "@media (max-width: 640px)": {
-      padding: "10px",
-    },
-  };
-
-  const scrollableGridStyle = {
-    maxHeight: "75vh",
-    overflowY: "auto",
-    "&::-webkit-scrollbar": {
-      display: "none",
-    },
-  };
-
-  const cardStyle = {
-    display: "flex",
-    flexDirection: "column",
-    overflow: "hidden",
-    boxShadow: "none",
-    background: "transparent",
-    height: "100%",
-    textAlign: "left",
-  };
-
-  const imageStyle = {
-    width: "100%",
-    height: "200px",
-    borderRadius: "26px",
-    objectFit: "cover",
-  };
-
-  const nameStyle = {
-    fontFamily: '"Inter", sans-serif',
-    fontSize: {
-      xs: "20px",
-      sm: "26px",
-    },
-    fontWeight: 600,
-    color: "#333",
-    marginBottom: "0px",
-  };
-
-  const detailsStyle = {
-    fontFamily: '"Inter", sans-serif',
-    fontSize: {
-      xs: "12px",
-      sm: "14px",
-    },
-    color: "#666",
-    lineHeight: 1.4,
-  };
 
   return (
     <>
@@ -179,17 +124,7 @@ const ProfileGrid = () => {
         name={"unlike"}
       />
 
-      {imageClick && (
-        <ImagePart
-          imageLoaded={imageLoaded}
-          setImageLoaded={setImageLoaded}
-          list={list}
-          currentImageIndex={currentImageIndex}
-          setImageClick={setImageClick}
-          prevImage={prevImage}
-          nextImage={nextImage}
-        />
-      )}
+    <Outlet/>
 
       <Box
         sx={{
@@ -236,7 +171,7 @@ const ProfileGrid = () => {
         >
           <Grid container spacing={{ xs: 1, sm: 2 }} columns={{ xs: 2, sm: 2 }}>
             {profiles.map((profile, index) => (
-              <Grid item xs={1} key={index} onClick={() => setImageClick(true)}>
+              <Grid item xs={1} key={index} onClick={()=> navigate("/app/likes/info")}>
                 <Card
                   sx={{
                     display: "flex",
@@ -272,7 +207,7 @@ const ProfileGrid = () => {
                     }}
                   >
                     <IconButton
-                      onClick={(e) => {
+                      onPointerUp={(e) => {
                         e.stopPropagation();
                         console.log("UnLIke Clicked");
                         setModalOpen(true);
@@ -343,7 +278,7 @@ const ProfileGrid = () => {
           />
         </Box>
       </Box>
-      <Drawer imageClick={imageClick} profile={profile} key={profile.reg_no} />
+    
     </>
   );
 };

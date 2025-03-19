@@ -14,10 +14,10 @@ import {
   IconButton,
 } from "@mui/material";
 import Chatoo from "./Chatoo";
-import ImagePart from "./ImagePart";
 import { ArrowBackIos, ArrowForwardIos } from "@mui/icons-material";
-import Drawer from "./Drawer";
+import Drawer2 from "./Drawer2";
 import SmallLoading from "../login/SmallLoading";
+import { Outlet } from "react-router-dom";
 
 const profile = {
   reg_no: "12413928",
@@ -160,17 +160,7 @@ export default function ChatInterface() {
 
   return (
     <>
-      {imageClick && (
-        <ImagePart
-          imageLoaded={imageLoaded}
-          setImageLoaded={setImageLoaded}
-          list={list}
-          currentImageIndex={currentImageIndex}
-          setImageClick={setImageClick}
-          prevImage={prevImage}
-          nextImage={nextImage}
-        />
-      )}
+    <Outlet/>
 
       <Container
         component="main"
@@ -248,7 +238,7 @@ export default function ChatInterface() {
                     onClick={(e) => {
                       e.stopPropagation();
                       e.preventDefault();
-                      setImageClick(true);
+                      navigate("/app/chats/info");
                     }}
                     src={chat.image}
                     alt={`${chat.name}'s profile`}
@@ -350,7 +340,7 @@ export default function ChatInterface() {
         </Container>
       </Container>
 
-      <Drawer imageClick={imageClick} profile={profile} key={profile.reg_no} />
+      
     </>
   );
 }

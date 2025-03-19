@@ -3,19 +3,19 @@ import "../../App.css";
 import { Box, Typography, IconButton } from "@mui/material";
 import { createPortal } from "react-dom";
 import { ArrowBackIos, ArrowForwardIos } from "@mui/icons-material";
-import Drawer from "./Drawer.js";
+import Drawer from "../../OldComp/Drawer.js";
 import SmallLoading from "../login/SmallLoading";
 import { useNavigate } from 'react-router-dom';
-import ImagePart from "./ImagePart.js";
 import { Outlet } from "react-router-dom";
 
 
-export default function Card({ profile }) {
+export default function Card({ profile, cardDir, isActive }) {
   const navigate = useNavigate();
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const list = profile.images.filter((item) => item != null);
 
-  
+
+
   const nextImage = () => {
     setCurrentImageIndex((prevIndex) =>
       prevIndex === list.length - 1 ? 0 : prevIndex + 1,
@@ -30,8 +30,34 @@ export default function Card({ profile }) {
 
   return (
     <>
+    <style>
+  {`
+    @keyframes popUp {
+      0% {
+        transform: scale(0.5);
+        opacity: 0;
+      }
+      100% {
+        transform: scale(1);
+        opacity: 1;
+      }
+      
+    }
+    
+    @keyframes fadeIn {
+      0% {
+        transform: translateY(-20px);
+        opacity: 0;
+      }
+      100% {
+        transform: translateY(0);
+        opacity: 1;
+      }
+    }
+  `}
+</style>
         
-       <Outlet/>
+{isActive && <Outlet context={{ profile }} />} 
 
       <Box
         sx={{
@@ -50,6 +76,27 @@ export default function Card({ profile }) {
           alignItems: "center",
         }}
       >
+<Box sx={{display:'flex', width:'100%', position:'absolute', top:0}}>
+{cardDir === 'left' && (
+    <img src={'/unlike.svg'}     style={{
+      width: '100%',
+      transform: 'scale(0.5)', // Start small
+      opacity: 0, // Start invisible
+      animation: 'popUp 0.3s ease forwards'
+    }} />
+  )}
+  {cardDir === 'right' && (
+    <img src={'/like.svg'}     style={{
+      width: '100%',
+      transform: 'scale(0.5)', // Start small
+      opacity: 0, // Start invisible
+      animation: 'popUp 0.3s ease forwards'
+    }} />
+  )}
+ 
+</Box>
+
+
         {/* Left Arrow */}
         <IconButton
           sx={{
@@ -80,7 +127,7 @@ export default function Card({ profile }) {
 
         {/* Open in Modal */}
         <IconButton
-          onPointerDown={() => navigate('/app/home/info')}
+          onPointerDown={() => navigate(`/app/home/info`)}
           sx={{
             position: "absolute",
             bottom: "18%",

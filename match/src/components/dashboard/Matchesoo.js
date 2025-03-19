@@ -11,8 +11,9 @@ import {
 } from "@mui/material";
 import { ArrowBackIos, ArrowForwardIos } from "@mui/icons-material";
 import Modall from "./Modal";
-import Drawer from "./Drawer";
-import ImagePart from "./ImagePart";
+import Drawer2 from "./Drawer2";
+import { useNavigate } from "react-router-dom";
+import { Outlet } from "react-router-dom";
 
 const profile = {
   reg_no: "12413928",
@@ -33,6 +34,7 @@ const profile = {
 };
 
 const ProfileGrid = () => {
+  const navigate = useNavigate();
   const [open, setOpen] = useState(false);
   const [name, setName] = useState(false);
   const [imageClick, setImageClick] = useState(false);
@@ -172,17 +174,7 @@ const ProfileGrid = () => {
     <>
       <Modall setModalOpen={setName} modalOpen={name} name={name} />
 
-      {imageClick && (
-        <ImagePart
-          imageLoaded={imageLoaded}
-          setImageLoaded={setImageLoaded}
-          list={list}
-          currentImageIndex={currentImageIndex}
-          setImageClick={setImageClick}
-          prevImage={prevImage}
-          nextImage={nextImage}
-        />
-      )}
+<Outlet/>
 
       <Box sx={containerStyle}>
         <Box
@@ -210,7 +202,7 @@ const ProfileGrid = () => {
             {profiles.map((profile, index) => (
               <Grid item xs={1} key={index}>
                 <Card
-                  onClick={() => setImageClick(true)}
+                  onClick={() => navigate('/app/mathes/info')}
                   sx={{
                     display: "flex",
                     flexDirection: "column",
@@ -350,7 +342,7 @@ const ProfileGrid = () => {
         </Box>
       </Box>
 
-      <Drawer imageClick={imageClick} profile={profile} key={profile.reg_no} />
+    
     </>
   );
 };
