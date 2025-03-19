@@ -4,6 +4,8 @@ import { Box, Button, IconButton } from "@mui/material";
 import TinderCard from "react-tinder-card";
 import Card from "./Card";
 import { Interests } from "@mui/icons-material";
+import Filter from "./Filter";
+
 
 const db = [
   {
@@ -62,6 +64,7 @@ const db = [
 export default function Match() {
   const [currentIndex, setCurrentIndex] = useState(db.length - 1);
   const currentIndexRef = useRef(currentIndex);
+    const [isDrawerOpen, setIsDrawerOpen] = React.useState(false);
   const [cardStates, setCardStates] = useState(Array(db.length).fill(null));
 
 
@@ -172,7 +175,7 @@ export default function Match() {
                 }}
               />
             </Box>
-            <IconButton >
+            <IconButton onClick={() => setIsDrawerOpen(true)}>
               <i
                 className="ti ti-adjustments-horizontal"
                 style={{ fontSize: "28px", color: "black" }}
@@ -291,6 +294,7 @@ export default function Match() {
             />
           </Button>
         </Box>
+        <Filter isDrawerOpen={isDrawerOpen} setIsDrawerOpen={setIsDrawerOpen} />
       </Box>
     </>
   );

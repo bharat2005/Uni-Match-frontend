@@ -31,7 +31,6 @@ const LoginPage = () => {
   const handleClickShowPassword = () => setShowPassword((show) => !show);
 
   useEffect(() => {
-    console.log("typing...");
     if (
       lpuLogin["regNo"].length == 8 &&
       lpuLogin["password"].length > 0 &&
@@ -47,7 +46,7 @@ const LoginPage = () => {
     setLoading(true);
     e.preventDefault();
     axios
-      .post("https://api.uni-match.in/login/hi", lpuLogin, {
+      .post("https://api.uni-match.in/login", lpuLogin, {
         withCredentials: true,
       })
       .then((response) => {
@@ -62,7 +61,7 @@ const LoginPage = () => {
           localStorage.setItem("csrfTokenRefresh", csrfTokenRefresh);
 
           response.data.nbool
-            ? navigate("/app", { replace: true })
+            ? navigate("/app")
             : navigate("/profile-setup");
         } else {
           login(false);
@@ -72,9 +71,8 @@ const LoginPage = () => {
       .catch((error) => {
         console.error(error);
         setLoading(false);
-        login(true);
+        login(false);
         setBarOpen(true);
-        navigate("/profile-setup");
       });
   }
 
@@ -104,7 +102,7 @@ const LoginPage = () => {
       <Box
         sx={{
           display: "flex",
-          flexDirection: "column", // Stack rows vertically
+          flexDirection: "column", 
           justifyContent: "center",
           alignItems: "center",
           marginTop: "10%",
@@ -112,13 +110,12 @@ const LoginPage = () => {
           position: "relative",
         }}
       >
-        {/* First row with icon and first image */}
+      
         <Box
           sx={{
             display: "flex",
             justifyContent: "center",
             alignItems: "center",
-            // gap: '10px', // Space between icon and image
             width: "100%",
           }}
         >
@@ -136,12 +133,11 @@ const LoginPage = () => {
           <img src="/Uni-match-14-3-2025.png" style={{ width: "85%" }} />
         </Box>
 
-        {/* Second row with second image */}
+
         <Box
           sx={{
             display: "flex",
             justifyContent: "center",
-            // marginTop: '20px',
             width: "100%",
           }}
         >
@@ -155,7 +151,6 @@ const LoginPage = () => {
           backdropFilter: "blur(10px)",
           borderRadius: "20px",
           padding: { xs: "20px", md: "30px" },
-          //marginTop: { xs: "25px", md: "50px" },
           boxShadow: "0 4px 15px rgba(0, 0, 0, 0.05)",
         }}
       >

@@ -8,7 +8,7 @@ import Matchesoo from "./Matchesoo";
 import Match from "./Match";
 import Modall from "./Modal";
 import { Outlet, useLocation } from "react-router-dom";
-import Filter from "./Filter";
+
 
 function AppLayout() {
   const location = useLocation();
@@ -42,77 +42,14 @@ function AppLayout() {
         }}
       >
       
-          {/* <Box
-            sx={{
-              display: "flex",
-              justifyContent: "space-between",
-              alignItems: "center",
-              backgroundColor: "white",
-              zIndex: 0,
-              padding:"4px",
-            }}
-          >
-            <Box
-              sx={{
-                display: "flex",
-                justifyContent: "center",
-                alignItems: "center",
-              }}
-            >
-              {" "}
-              <IconButton sx={{ margin: 0, padding: 0 }}>
-                <Box
-                  sx={{
-                    display: "flex",
-                    justifyContent: "center",
-                    alignItems: "center",
-                    width: "30px",
-                    height: "46px",
-                    borderRadius: "50%",
-                    display: "flex",
-                    justifyContent: "center",
-                    alignItems: "center",
-                    backgroundColor: "transparent", // Transparent background
-                    transition: "background-color 0.3s ease-in-out",
-                  }}
-                >
-                  <i
-                    className="ti ti-clover-filled"
-                    style={{
-                      fontSize: "24px",
-                      background:
-                        "linear-gradient(145deg, #ff3c78 0%, #ff79b0 30%, #b985ff 70%, #5caeff 100%)",
-                      WebkitBackgroundClip: "text", // Clip background to text
-                      WebkitTextFillColor: "transparent", // Make text transparent to show gradient
-                      transition: "background 0.3s ease-in-out",
-                    }}
-                  />
-                </Box>
-              </IconButton>
-              <img
-                src="/Uni-match-14-3-2025.png" // Replace with your image path
-                alt="clover"
-                style={{
-                  height: "42px",
-                  objectFit: "cover",
-                }}
-              />
-            </Box>
-            <IconButton onClick={() => setIsDrawerOpen(true)}>
-              <i
-                className="ti ti-adjustments-horizontal"
-                style={{ fontSize: "28px", color: "black" }}
-              />
-            </IconButton>
-          </Box>
-         */}
+
 
         <Box sx={{ flex: 1 }}>
           <Outlet />
         </Box>
 
         <NavBar />
-        <Filter isDrawerOpen={isDrawerOpen} setIsDrawerOpen={setIsDrawerOpen} />
+       
       </Box>
     </>
   );
