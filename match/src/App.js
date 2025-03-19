@@ -6,6 +6,7 @@ import {
   Routes,
   Route,
 } from "react-router-dom";
+import Done from './components/stepform/Done';
 import Login from "./components/login/Login";
 import StepForm from "./components/stepform/StepForm";
 import { ProtectedRoute, AuthProvider } from "./AuthProvider";
@@ -28,7 +29,6 @@ export default function App() {
   const [bool, setBool] = useState(false);
 
   useEffect(() => {
-    // Fix viewport height based on window height
     const resizeHandler = () => {
       document.documentElement.style.setProperty(
         "--vh",
@@ -39,13 +39,8 @@ export default function App() {
     window.addEventListener("resize", resizeHandler);
     resizeHandler();
 
-    // Prevent pull-to-refresh and bounce scrolling
-    // const preventScroll = (e) => e.preventDefault();
-    // document.addEventListener('touchmove', preventScroll, { passive: false });
-
     return () => {
       window.removeEventListener("resize", resizeHandler);
-      // document.removeEventListener('touchmove', preventScroll);
     };
   }, []);
 
@@ -64,7 +59,10 @@ export default function App() {
                   <StepForm />
                 </ProtectedRoute>
               }
-            />
+            >
+              <Route path="done" element={<Done/>}/>
+              </Route>
+       
 
             <Route
               path="/app"

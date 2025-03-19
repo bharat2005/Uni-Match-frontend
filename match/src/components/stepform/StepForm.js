@@ -16,8 +16,10 @@ import Stepper from "../../OldComp/Stepper";
 import SmallLoading from "../login/SmallLoading";
 import { InformationCircleIcon } from "@heroicons/react/24/solid";
 import { fontSize, width } from "@mui/system";
+import { replace, useNavigate } from "react-router-dom";
 
 const InputDesign = () => {
+  const navigate =useNavigate();
   const [step, setStep] = useState(0);
   const [doneShow, setDoneShow] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -43,8 +45,8 @@ const InputDesign = () => {
       })
       .then((response) => {
         setLoading(false);
-
         console.log("Message from server: ", response.data);
+        navigate("/profile-setup/done", {replace:true})
       })
       .catch((error) => {
         setLoading(false);
