@@ -110,7 +110,7 @@ export default function Match() {
 
   const swipe = (dir) => {
     if (canSwipe && currentIndex < db.length) {
-      childRefs[currentIndex].current.swipe(dir);
+      setTimeout(()=> childRefs[currentIndex].current.swipe(dir), 300);
     }
   };
 

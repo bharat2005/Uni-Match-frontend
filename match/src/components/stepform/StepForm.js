@@ -21,7 +21,6 @@ import { replace, useNavigate } from "react-router-dom";
 const InputDesign = () => {
   const navigate =useNavigate();
   const [step, setStep] = useState(0);
-  const [doneShow, setDoneShow] = useState(false);
   const [loading, setLoading] = useState(false);
   const [formData, setFormData] = useState({
     name: "",
@@ -39,7 +38,7 @@ const InputDesign = () => {
     setLoading(true);
     console.log(formData);
     axios
-      .post("https://api.uni-match.in/profile/hi", formData, {
+      .post("https://api.uni-match.in/profile", formData, {
         withCredentials: true,
         headers: { "X-CSRF-TOKEN": localStorage.getItem("csrfTokenAccess") },
       })
@@ -50,9 +49,7 @@ const InputDesign = () => {
       })
       .catch((error) => {
         setLoading(false);
-        setDoneShow(true);
         console.error("Error: ", error);
-        navigate("/profile-setup/done", {replace:true})
       });
   }
 
@@ -151,9 +148,7 @@ const InputDesign = () => {
     },
   };
 
-  if (doneShow) {
-    return <Done />;
-  }
+
 
   return (
     <>
