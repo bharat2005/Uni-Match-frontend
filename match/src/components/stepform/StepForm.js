@@ -11,6 +11,7 @@ import Bio from "./Bio";
 import Interestt from "./Interests";
 import Persona from "./Personality";
 import Done from "./Done";
+import { Outlet } from "react-router-dom";
 import axios from "axios";
 import Stepper from "../../OldComp/Stepper";
 import SmallLoading from "../login/SmallLoading";
@@ -156,6 +157,7 @@ const InputDesign = () => {
         href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;700&display=swap"
         rel="stylesheet"
       />
+      <Outlet/>
       {loading && <SmallLoading />}
       <Box sx={styles.appContainer}>
         <Button

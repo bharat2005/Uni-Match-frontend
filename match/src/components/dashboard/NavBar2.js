@@ -2,7 +2,7 @@ import React from "react";
 import { Box, IconButton } from "@mui/material";
 import { NavLink } from "react-router-dom";
 
-export default function Stepper() {
+export default function Stepper({likesNoti, setLikesNoti}) {
   return (
     <Box
       sx={{
