@@ -5,6 +5,8 @@ import NavBar from "./NavBar2";
 import Chatsoo from "./Chatsoo";
 import Likesoo from "./Likesoo";
 import Matchesoo from "./Matchesoo";
+import axios from "axios";
+
 import Match from "./Match";
 import Modall from "./Modal";
 import { Outlet, useLocation } from "react-router-dom";
@@ -14,8 +16,8 @@ function AppLayout() {
   const location = useLocation();
   const [activeTab, setActiveTab] = React.useState("clover");
   const [isDrawerOpen, setIsDrawerOpen] = React.useState(false);
-  const [likesNoti, setLikesNoti] = useState([]);
-  const [matchesNoti, setMatchesNoti] = useState([]);
+  const [likesNoti, setLikesNoti] = React.useState([]);
+  const [matchesNoti, setMatchesNoti] = React.useState([]);
   //const [name, setName] = React.useState(false);
   const shouldShowHeader = location.pathname === "/app";
 
@@ -23,7 +25,7 @@ function AppLayout() {
   //   setName("noti");
   // }, []);
 
-  useEffect(() => {
+  React.useEffect(() => {
     axios
       .get("https://api.uni-match.in/dashboard", {
         withCredentials: true,

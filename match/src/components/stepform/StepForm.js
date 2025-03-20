@@ -46,7 +46,7 @@ const InputDesign = () => {
       .then((response) => {
         setLoading(false);
         console.log("Message from server: ", response.data);
-        navigate("/profile-setup/done", {replace:true})
+        navigate("/done", {replace:true})
       })
       .catch((error) => {
         setLoading(false);
@@ -157,7 +157,7 @@ const InputDesign = () => {
         href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;700&display=swap"
         rel="stylesheet"
       />
-      <Outlet/>
+      
       {loading && <SmallLoading />}
       <Box sx={styles.appContainer}>
         <Button

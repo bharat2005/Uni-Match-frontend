@@ -59,9 +59,14 @@ export default function App() {
                   <StepForm />
                 </ProtectedRoute>
               }
-            >
-              <Route path="done" element={<Done/>}/>
-              </Route>
+            />
+            
+            <Route path="/done"
+             element={
+                <ProtectedRoute>
+                  <Done />
+                </ProtectedRoute>
+              }/>
        
 
             <Route
