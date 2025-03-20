@@ -6,6 +6,7 @@ import Chatsoo from "./Chatsoo";
 import Likesoo from "./Likesoo";
 import Matchesoo from "./Matchesoo";
 import axios from "axios";
+import { useAuth } from "../../AuthProvider";
 
 import Match from "./Match";
 import Modall from "./Modal";
@@ -16,8 +17,7 @@ function AppLayout() {
   const location = useLocation();
   const [activeTab, setActiveTab] = React.useState("clover");
   const [isDrawerOpen, setIsDrawerOpen] = React.useState(false);
-  const [likesNoti, setLikesNoti] = React.useState([]);
-  const [matchesNoti, setMatchesNoti] = React.useState([]);
+  const {likesNoti, setLikesNoti, matchesNoti, setMatchesNoti} = useAuth();
   //const [name, setName] = React.useState(false);
   const shouldShowHeader = location.pathname === "/app";
 
@@ -106,7 +106,7 @@ function AppLayout() {
           <Outlet />
         </Box>
 
-        <NavBar likesNoti={likesNoti} setLikesNoti={setLikesNoti} />
+        <NavBar likesNoti={likesNoti} matchesNoti={matchesNoti}/>
        
       </Box>
     </>

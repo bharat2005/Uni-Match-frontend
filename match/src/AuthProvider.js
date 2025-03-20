@@ -12,6 +12,8 @@ export const AuthProvider = ({ children }) => {
   const [bool, setBool] = useState(() => {
     return localStorage.getItem("bool") ? true : false;
   });
+  const [likesNoti, setLikesNoti] = useState([])
+  const [matchesNoti, setMatchesNoti] = useState([])
 
   useEffect(() => {
     if (bool) {
@@ -30,7 +32,7 @@ export const AuthProvider = ({ children }) => {
   };
 
   return (
-    <AuthContext.Provider value={{ bool, login, logout }}>
+    <AuthContext.Provider value={{ bool, login, logout, likesNoti, setLikesNoti, matchesNoti, setMatchesNoti }}>
       {children}
     </AuthContext.Provider>
   );

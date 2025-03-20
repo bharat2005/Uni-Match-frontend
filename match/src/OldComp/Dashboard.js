@@ -10,11 +10,11 @@ import { AdjustmentsVerticalIcon } from "@heroicons/react/24/solid";
 import FilterModal from "./FilterModal";
 
 export default function Dashboard() {
-  const [value, setValue] = useState(() => {
-    return localStorage.getItem("value")
-      ? parseInt(localStorage.getItem("value"), 10)
-      : 0;
-  });
+  // const [value, setValue] = useState(() => {
+  //   return localStorage.getItem("value")
+  //     ? parseInt(localStorage.getItem("value"), 10)
+  //     : 0;
+  // });
   const [profiles, setProfiles] = useState([]);
   const [open, setOpen] = useState(false);
   const [profile, setSelfProfile] = useState({});
@@ -22,13 +22,13 @@ export default function Dashboard() {
   const [likesNoti, setLikesNoti] = useState([]);
   const [matchesNoti, setMatchesNoti] = useState([]);
 
-  useEffect(() => {
-    if (value) {
-      localStorage.setItem("value", value);
-    } else {
-      localStorage.removeItem("value");
-    }
-  }, [value]);
+  // useEffect(() => {
+  //   if (value) {
+  //     localStorage.setItem("value", value);
+  //   } else {
+  //     localStorage.removeItem("value");
+  //   }
+  // }, [value]);
 
   useEffect(() => {
     axios

@@ -1,8 +1,12 @@
 import React from "react";
-import { Box, IconButton } from "@mui/material";
-import { NavLink } from "react-router-dom";
+import { Box, IconButton,Badge } from "@mui/material";
+import { useNavigate, useLocation } from "react-router-dom";
 
-export default function Stepper({likesNoti, setLikesNoti}) {
+export default function Stepper({likesNoti, matchesNoti}) {
+  const navigate = useNavigate();
+  const location = useLocation(); 
+
+
   return (
     <Box
       sx={{
@@ -20,84 +24,66 @@ export default function Stepper({likesNoti, setLikesNoti}) {
         zIndex: 5,
       }}
     >
-      <NavLink
-        to="/app/likes"
-        style={{
-          textDecoration: "none",
-          outline: "none", // ✅ Removes focus outline from the <a> element
-          WebkitTapHighlightColor: "transparent",
-        }}
-      >
-        {({ isActive }) => (
+
+
+
           <IconButton
+          onClick={() => navigate("/app/likes")}
             sx={{
               display: "flex",
               flexDirection: "column",
               alignItems: "center",
               gap: "5px",
-              color: isActive ? "#FE6BA2" : "black",
+              color: location.pathname === "/app/likes" ? "#FE6BA2" : "black",
               "&:hover": {
                 backgroundColor: "rgba(255, 77, 109, 0.04)",
               },
             }}
-          >
-            <i className="ti ti-thumb-up-filled" style={{ fontSize: "24px" }} />
+          ><i className="ti ti-thumb-up-filled" style={{ fontSize: "24px" }} />
             <Box
               sx={{
                 fontSize: { xs: "10px", sm: "12px" },
-                color: isActive ? "#FE6BA2" : "#666",
+                color: location.pathname === "/app/likes" ? "#FE6BA2" : "#666",
               }}
             >
               Likes
             </Box>
           </IconButton>
-        )}
-      </NavLink>
 
-      <NavLink
-        to="/app/matches"
-        style={{
-          textDecoration: "none",
-          outline: "none", // ✅ Removes focus outline from the <a> element
-          WebkitTapHighlightColor: "transparent",
-        }}
-      >
-        {({ isActive }) => (
+
           <IconButton
+          onClick={() => navigate("/app/matches")}
             sx={{
               display: "flex",
               flexDirection: "column",
               alignItems: "center",
               gap: "5px",
-              color: isActive ? "#FE6BA2" : "black",
+              color: location.pathname === "/app/matches" ? "#FE6BA2" : "black",
               "&:hover": {
                 backgroundColor: "rgba(255, 77, 109, 0.04)",
               },
             }}
           >
-            <i className="ti ti-heart-filled" style={{ fontSize: "24px" }} />
+        <Badge
+            badgeContent={likesNoti.length > 0 ? likesNoti.length : null}
+            color="error"
+            sx={{ display: "flex", justifyContent: "center", width: "40%" }}
+          ><i className="ti ti-heart-filled" style={{ fontSize: "24px" }} />
+          </Badge>
             <Box
               sx={{
                 fontSize: { xs: "10px", sm: "12px" },
-                color: isActive ? "#FE6BA2" : "#666",
+                color: location.pathname === "/app/matches" ? "#FE6BA2" : "#666",
               }}
             >
               Match
             </Box>
           </IconButton>
-        )}
-      </NavLink>
 
-      <NavLink
-        to="/app/home"
-        style={{
-          textDecoration: "none",
-          outline: "none", // ✅ Removes focus outline from the <a> element
-          WebkitTapHighlightColor: "transparent",
-        }}
-      >
-        {({ isActive }) => (
-          <IconButton>
+
+
+          <IconButton
+          onClick={() => navigate("/app/home")}>
             <Box
               sx={{
                 display: "flex",
@@ -115,69 +101,54 @@ export default function Stepper({likesNoti, setLikesNoti}) {
                 className="ti ti-clover-filled"
                 style={{
                   fontSize: "34px",
-                  color: isActive ? "white" : "white",
+                  color: location.pathname === "/app/home" ? "white" : "white",
                   transition: "color 0.3s ease-in-out",
                 }}
               />
             </Box>
           </IconButton>
-        )}
-      </NavLink>
 
-      <NavLink 
-        to="/app/chats"
-        style={{
-          textDecoration: "none",
-          outline: "none", // ✅ Removes focus outline from the <a> element
-          WebkitTapHighlightColor: "transparent",
-        }}
-      >
-        {({ isActive }) => (
+
+
           <IconButton
+          onClick={() => navigate("/app/chats")}
             sx={{
               display: "flex",
               flexDirection: "column",
               alignItems: "center",
               gap: "5px",
-              color: isActive ? "#FE6BA2" : "black",
+              color: location.pathname === "/app/chats" ? "#FE6BA2" : "black",
               "&:hover": {
                 backgroundColor: "rgba(255, 77, 109, 0.04)",
               },
             }}
-          >
-            <i
-              className="ti ti-message-circle-filled"
-              style={{ fontSize: "24px" }}
-            />
+          > <Badge
+          badgeContent={matchesNoti.length > 0 ? matchesNoti.length : null}
+          color="error"
+          sx={{ display: "flex", justifyContent: "center", width: "40%" }}
+        ><i className="ti ti-message-circle-filled"
+            style={{ fontSize: "24px" }}
+            /></Badge>
             <Box
               sx={{
                 fontSize: { xs: "10px", sm: "12px" },
-                color: isActive ? "#FE6BA2" : "#666",
+                color: location.pathname === "/app/chats" ? "#FE6BA2" : "#666",
               }}
             >
               Chats
             </Box>
           </IconButton>
-        )}
-      </NavLink>
+ 
 
-      <NavLink
-        to="/app/profile"
-        style={{
-          textDecoration: "none",
-          outline: "none", // ✅ Removes focus outline from the <a> element
-          WebkitTapHighlightColor: "transparent",
-        }}
-      >
-        {({ isActive }) => (
+
           <IconButton
-            //onClick={() => setActiveTab("profile")}
+            onClick={() => navigate("/app/profile")}
             sx={{
               display: "flex",
               flexDirection: "column",
               alignItems: "center",
               gap: "5px",
-              color: isActive ? "#FE6BA2" : "black",
+              color: location.pathname === "/app/profile" ? "#FE6BA2" : "black",
               "&:hover": {
                 backgroundColor: "rgba(255, 77, 109, 0.04)",
               },
@@ -187,14 +158,12 @@ export default function Stepper({likesNoti, setLikesNoti}) {
             <Box
               sx={{
                 fontSize: { xs: "10px", sm: "12px" },
-                color: isActive ? "#FE6BA2" : "#666",
+                color: location.pathname === "/app/profile" ? "#FE6BA2" : "#666",
               }}
             >
               Profile
             </Box>
           </IconButton>
-        )}
-      </NavLink>
     </Box>
   );
 }
