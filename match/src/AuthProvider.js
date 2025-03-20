@@ -42,6 +42,5 @@ export const useAuth = () => {
 
 export const ProtectedRoute = ({ children }) => {
   const { bool } = useAuth();
-  return children
- // return bool ? children : <Navigate to="/" />;
+  return bool ? children : <Navigate to="/" />;
 };
