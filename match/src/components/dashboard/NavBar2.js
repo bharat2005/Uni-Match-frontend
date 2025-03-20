@@ -66,8 +66,9 @@ export default function Stepper({likesNoti, matchesNoti}) {
           >
         <Badge
             badgeContent={likesNoti.length > 0 ? likesNoti.length : null}
-            color="error"
-            sx={{ display: "flex", justifyContent: "center", width: "40%" }}
+            sx={{ display: "flex", justifyContent: "center",
+              "& .MuiBadge-badge": { backgroundColor: "#FE6BA2", color: "white" },
+             }}
           ><i className="ti ti-heart-filled" style={{ fontSize: "24px" }} />
           </Badge>
             <Box
@@ -124,8 +125,9 @@ export default function Stepper({likesNoti, matchesNoti}) {
             }}
           > <Badge
           badgeContent={matchesNoti.length > 0 ? matchesNoti.length : null}
-          color="error"
-          sx={{ display: "flex", justifyContent: "center", width: "40%" }}
+          sx={{ display: "flex", justifyContent: "center",
+            "& .MuiBadge-badge": { backgroundColor: "#FE6BA2", color: "white" },
+           }}
         ><i className="ti ti-message-circle-filled"
             style={{ fontSize: "24px" }}
             /></Badge>
