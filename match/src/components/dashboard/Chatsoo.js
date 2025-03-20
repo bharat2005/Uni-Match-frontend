@@ -1,6 +1,8 @@
 "use client";
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { useAuth } from "../../AuthProvider";
+import axios from 'axios';
 import {
   Avatar,
   Badge,
@@ -138,25 +140,138 @@ const chatData = [
 ];
 export default function ChatInterface() {
   const navigate = useNavigate();
+  const {setMatchesNoti} = useAuth();
   const [imageClick, setImageClick] = useState(false);
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const [imageLoaded, setImageLoaded] = useState(false);
   const list = profile.images.filter((item) => item != null);
 
-  const nextImage = () => {
-    setCurrentImageIndex((prevIndex) =>
-      prevIndex === list.length - 1 ? 0 : prevIndex + 1,
-    );
-
-    setImageLoaded(false);
-  };
-
-  const prevImage = () => {
-    setCurrentImageIndex((prevIndex) =>
-      prevIndex === 0 ? list.length - 1 : prevIndex - 1,
-    );
-    setImageLoaded(false);
-  };
+  //  useEffect(() => {
+  //     axios
+  //       .get("https://api.uni-match.in/matches", {
+  //         withCredentials: true,
+  //         headers: { "X-CSRF-TOKEN": localStorage.getItem("csrfTokenAccess") },
+  //       })
+  //       .then((response) => {
+  //         console.log(response.data);
+  //         setMatchList(response.data.matches);
+  //         setNotifications(response.data.notifications);
+  //       })
+  //       .catch((error) => {
+  //         console.error("Error: ", error);
+  
+  //         if (error.response?.status === 401) {
+  //           axios
+  //             .post(
+  //               "https://api.uni-match.in/refresh",
+  //               {},
+  //               {
+  //                 withCredentials: true,
+  //                 headers: {
+  //                   "X-CSRF-TOKEN": localStorage.getItem("csrfTokenRefresh"),
+  //                 },
+  //               },
+  //             )
+  
+  //             .then((refreshResponse) => {
+  //               const csrfToken = refreshResponse.headers["x-csrf-token"];
+  //               localStorage.setItem("csrfToken", csrfToken);
+  
+  //               axios
+  //                 .get("https://api.uni-match.in/matches", {
+  //                   withCredentials: true,
+  //                   headers: {
+  //                     "X-CSRF-TOKEN": localStorage.getItem("csrfTokenAccess"),
+  //                   },
+  //                 })
+  //                 .then((response) => {
+  //                   console.log("Protected Data (After Refresh):", response.data);
+  //                   setMatchList(response.data.matches);
+  //                   setNotifications(response.data.notifications);
+  //                 })
+  //                 .catch((retryError) =>
+  //                   console.error("Failed after refresh:", retryError),
+  //                 );
+  //             })
+  //             .catch(() =>
+  //               console.error("Session expired, please log in again."),
+  //             );
+  //         }
+  //       });
+  //   }, [selectedMatch]);
+  
+    // const handleTabChange = (event, newValue) => {
+    //   setValue(newValue);
+    // };
+  
+    function handleNotiClick(sender_reg_no) {
+      axios
+        .patch(
+          "https://api.uni-match.in/notidel",
+          { sender_reg_no },
+          {
+            withCredentials: true,
+            headers: { "X-CSRF-TOKEN": localStorage.getItem("csrfToken") },
+          },
+        )
+        .then((response) => {
+          console.log(response.data);
+          setMatchesNoti(response.data.MatchesNoti);
+        })
+        .catch((error) => {
+          console.error("Error: ", error);
+        });
+    }
+  
+    // function handleDeleteMatch(e, data) {
+    //   e.stopPropagation();
+    //   axios
+    //     .post("https://api.uni-match.in/matchdel", data, {
+    //       withCredentials: true,
+    //       headers: { "X-CSRF-TOKEN": localStorage.getItem("csrfToken") },
+    //     })
+    //     .then((response) => {
+    //       setMatchList(response.data.matches);
+    //       setMatchesNoti(response.data.MatchesNoti);
+    //     })
+    //     .catch((error) => {
+    //       console.error("Error :", error);
+    //     });
+    // }
+  
+    // function handleClick(sender_reg_no) {
+    //   handleNotiClick(sender_reg_no);
+    //   axios
+    //     .post(
+    //       "https://api.uni-match.in/seen",
+    //       { sender_reg_no },
+    //       {
+    //         withCredentials: true,
+    //         headers: { "X-CSRF-TOKEN": localStorage.getItem("csrfTokenAccess") },
+    //       },
+    //     )
+    //     .then((responce) => {
+    //       console.log(responce.data.message);
+    //     })
+    //     .catch((error) => {
+    //       console.error("Error: ", error);
+    //     });
+    // }
+  
+    // let filteredList;
+    // if (matchList) {
+    //   filteredList = matchList;
+    // }
+  
+    // if (selectedMatch) {
+    //   return (
+    //     <Chat
+    //       match={selectedMatch}
+    //       profile={profile}
+    //       onBack={() => setSelectedMatch(null)}
+    //     />
+    //   );
+    // }
 
   return (
     <>
@@ -221,7 +336,7 @@ export default function ChatInterface() {
           >
             {chatData.map((chat, index) => (
               <ListItem
-                onClick={() => navigate(`/app/${chat.id}`)}
+                onClick={() => {handleNotiClick("12413326"); navigate(`/app/${chat.id}`)}}
                 key={index}
                 sx={{
                   padding: {

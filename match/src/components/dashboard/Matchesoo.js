@@ -12,6 +12,8 @@ import {
 import { ArrowBackIos, ArrowForwardIos } from "@mui/icons-material";
 import Modall from "./Modal";
 import Drawer2 from "./Drawer2";
+import axios from 'axios';
+import { useAuth } from "../../AuthProvider";
 import { useNavigate } from "react-router-dom";
 import { Outlet } from "react-router-dom";
 
@@ -33,13 +35,103 @@ const profile = {
   ],
 };
 
+
+const profiles = [
+  {
+    name: "Bharat, 19",
+    details: "🎉Casual Dating",
+    imageUrl: "/5.jpg",
+    imageAlt: "Profile photo",
+  },
+  {
+    name: "Amit, 18",
+    details: "💘Long-term",
+    imageUrl: "/6.jpg",
+    imageAlt: "Profile photo",
+  },
+  {
+    name: "Rahul, 20",
+    details: "😍Short-term",
+    imageUrl: "/7.jpg",
+    imageAlt: "Profile photo",
+  },
+  {
+    name: "Deepak, 23",
+    details: "🎉Casual Dating",
+    imageUrl: "/8.jpg",
+    imageAlt: "Profile photo",
+  },
+  {
+    name: "Rakesh, 23",
+    details: "💘Long-term",
+    imageUrl: "/9.jpg",
+    imageAlt: "Profile photo",
+  },
+  {
+    name: "Nikhil, 19",
+    details: "😍Short-term",
+    imageUrl: "/10.jpg",
+    imageAlt: "Profile photo",
+  },
+  {
+    name: "Tanmay, 22",
+    details: "😍Short-term",
+    imageUrl: "/11.jpg",
+    imageAlt: "Profile photo",
+  },
+];
+
+const containerStyle = {
+  background:
+    "linear-gradient(180deg, rgba(245, 245, 245, 0) 0%, #F5F5F5 26%)",
+  minHeight: "100vh",
+  padding: {
+    xs: "12px",
+    sm: "14px",
+    md: "18px",
+  },
+};
+
+const scrollableGridStyle = {
+  height: `calc(100vh - 42px - 46px - 16px)`, // Adjust height as needed
+  overflowY: "auto",
+  padding: "8px",
+  //border: "1px solid #ddd", // Optional for visual clarity
+  "&::-webkit-scrollbar": {
+    display: "none", // For Chrome, Safari, and Opera
+  },
+};
+
+
+const nameStyle = {
+  fontFamily: '"Inter", sans-serif',
+  fontSize: {
+    xs: "20px",
+    sm: "26px",
+  },
+  fontWeight: 600,
+  color: "#333",
+  marginBottom: "0px",
+};
+
+const detailsStyle = {
+  fontFamily: '"Inter", sans-serif',
+  fontSize: {
+    xs: "12px",
+    sm: "14px",
+  },
+  color: "#666",
+  lineHeight: 1.4,
+};
+
 const ProfileGrid = () => {
   const navigate = useNavigate();
-  const [open, setOpen] = useState(false);
+  const {setLikesNoti} = useAuth();
+  //const [open, setOpen] = useState(false);
   const [name, setName] = useState(false);
-  const [imageClick, setImageClick] = useState(false);
-  const [currentImageIndex, setCurrentImageIndex] = useState(0);
-  const [imageLoaded, setImageLoaded] = useState(false);
+ // const [imageClick, setImageClick] = useState(false);
+ // const [currentImageIndex, setCurrentImageIndex] = useState(0);
+//  const [imageLoaded, setImageLoaded] = useState(false);
   const list = profile.images.filter((item) => item != null);
 
   useEffect(() => {
@@ -52,123 +144,143 @@ const ProfileGrid = () => {
     };
   }, []);
 
-  const nextImage = () => {
-    setCurrentImageIndex((prevIndex) =>
-      prevIndex === list.length - 1 ? 0 : prevIndex + 1,
-    );
+  // useEffect(() => {
+  //   axios
+  //     .get("https://api.uni-match.in/likes", {
+  //       withCredentials: true,
+  //       headers: { "X-CSRF-TOKEN": localStorage.getItem("csrfTokenAccess") },
+  //     })
+  //     .then((response) => {
+  //       console.log(response.data);
+  //       setLikesList(response.data);
+  //     })
+  //     .catch((error) => {
+  //       console.error("Error: ", error);
+  //     });
+  // }, []);
 
-    setImageLoaded(false);
-  };
+  // const handleTabChange = (event, newValue) => {
+  //   setValue(newValue);
+  // };
 
-  const prevImage = () => {
-    setCurrentImageIndex((prevIndex) =>
-      prevIndex === 0 ? list.length - 1 : prevIndex - 1,
-    );
-    setImageLoaded(false);
-  };
+  // let filteredList;
+  // if (likesList) {
+  //   filteredList = value === 1 ? likesList.likedByYou : likesList.likesYou;
+  // }
 
-  const profiles = [
-    {
-      name: "Bharat, 19",
-      details: "🎉Casual Dating",
-      imageUrl: "/5.jpg",
-      imageAlt: "Profile photo",
-    },
-    {
-      name: "Amit, 18",
-      details: "💘Long-term",
-      imageUrl: "/6.jpg",
-      imageAlt: "Profile photo",
-    },
-    {
-      name: "Rahul, 20",
-      details: "😍Short-term",
-      imageUrl: "/7.jpg",
-      imageAlt: "Profile photo",
-    },
-    {
-      name: "Deepak, 23",
-      details: "🎉Casual Dating",
-      imageUrl: "/8.jpg",
-      imageAlt: "Profile photo",
-    },
-    {
-      name: "Rakesh, 23",
-      details: "💘Long-term",
-      imageUrl: "/9.jpg",
-      imageAlt: "Profile photo",
-    },
-    {
-      name: "Nikhil, 19",
-      details: "😍Short-term",
-      imageUrl: "/10.jpg",
-      imageAlt: "Profile photo",
-    },
-    {
-      name: "Tanmay, 22",
-      details: "😍Short-term",
-      imageUrl: "/11.jpg",
-      imageAlt: "Profile photo",
-    },
-  ];
+  function handleNotiClick(target_reg_no) {
+    axios
+      .patch(
+        "https://api.uni-match.in/notidel",
+        { target_reg_no },
+        {
+          withCredentials: true,
+          headers: { "X-CSRF-TOKEN": localStorage.getItem("csrfTokenAccess") },
+        },
+      )
+      .then((response) => {
+        console.log(response.data);
+        setLikesNoti(response.data.likesNoti);
+      })
+      .catch((error) => {
+        console.error("Error: ", error);
+      });
+  }
 
-  const containerStyle = {
-    background:
-      "linear-gradient(180deg, rgba(245, 245, 245, 0) 0%, #F5F5F5 26%)",
-    minHeight: "100vh",
-    padding: {
-      xs: "12px",
-      sm: "14px",
-      md: "18px",
-    },
-  };
+  // function handleLikeClick(target_reg_no) {
+  //   setLoad(true);
+  //   handleNotiClick(target_reg_no);
+  //   axios
+  //     .post(
+  //       "https://api.uni-match.in/match",
+  //       { target_reg_no, swipe_action: "right" },
+  //       {
+  //         withCredentials: true,
+  //         headers: { "X-CSRF-TOKEN": localStorage.getItem("csrfTokenAccess") },
+  //       },
+  //     )
+  //     .then((responce) => {
+  //       console.log(responce.data.message);
+  //       setLikesList((prev) => {
+  //         return { ...prev, likesYou: responce.data.likesYou };
+  //       });
+  //     })
+  //     .catch((error) => {
+  //       console.error("Error: ", error);
+  //     })
+  //     .finally(() => {
+  //       setLoad(false);
+  //     });
+  // }
 
-  const scrollableGridStyle = {
-    height: `calc(100vh - 42px - 46px - 16px)`, // Adjust height as needed
-    overflowY: "auto",
-    padding: "8px",
-    //border: "1px solid #ddd", // Optional for visual clarity
-    "&::-webkit-scrollbar": {
-      display: "none", // For Chrome, Safari, and Opera
-    },
-  };
+  // function handleCrossClick(target_reg_no) {
+  //   setLoad(true);
+  //   handleNotiClick(target_reg_no);
+  //   axios
+  //     .post(
+  //       "https://api.uni-match.in/likeno",
+  //       { target_reg_no, swipe_action: "left" },
+  //       {
+  //         withCredentials: true,
+  //         headers: { "X-CSRF-TOKEN": localStorage.getItem("csrfTokenAccess") },
+  //       },
+  //     )
+  //     .then((responce) => {
+  //       console.log(responce.data.message);
+  //       setLikesList((prev) => {
+  //         return { ...prev, likesYou: responce.data.likesYou };
+  //       });
+  //     })
+  //     .catch((error) => {
+  //       console.error("Error: ", error);
+  //       if (error.response?.status === 401) {
+  //         axios
+  //           .post(
+  //             "https://api.uni-match.in/refresh",
+  //             {},
+  //             {
+  //               withCredentials: true,
+  //               headers: {
+  //                 "X-CSRF-TOKEN": localStorage.getItem("csrfTokenRefresh"),
+  //               },
+  //             },
+  //           )
 
-  const cardStyle = {
-    display: "flex",
-    flexDirection: "column",
-    overflow: "hidden",
-    boxShadow: "none",
-    background: "transparent",
-    height: "100%",
-  };
+  //           .then((response) => {
+  //             const csrfTokenAccess = response.headers["x-csrf-token-access"];
+  //             localStorage.setItem("csrfTokenAccess", csrfTokenAccess);
 
-  const imageStyle = {
-    width: "100%",
-    height: "200px",
-    borderRadius: "26px",
-    objectFit: "cover",
-  };
+  //             axios
+  //               .post(
+  //                 "https://api.uni-match.in/likeno",
+  //                 { target_reg_no, swipe_action: "left" },
+  //                 {
+  //                   withCredentials: true,
+  //                   headers: {
+  //                     "X-CSRF-TOKEN": localStorage.getItem("csrfTokenAccess"),
+  //                   },
+  //                 },
+  //               )
+  //               .then((response) => {
+  //                 console.log("Protected Data (After Refresh):", response.data);
+  //                 setLikesList((prev) => {
+  //                   return { ...prev, likesYou: response.data.likesYou };
+  //                 });
+  //               })
+  //               .catch((retryError) =>
+  //                 console.error("Failed after refresh:", retryError),
+  //               );
+  //           })
+  //           .catch(() =>
+  //             console.error("Session expired, please log in again."),
+  //           );
+  //       }
+  //     })
+  //     .finally(() => {
+  //       setLoad(false);
+  //     });
+  // }
 
-  const nameStyle = {
-    fontFamily: '"Inter", sans-serif',
-    fontSize: {
-      xs: "20px",
-      sm: "26px",
-    },
-    fontWeight: 600,
-    color: "#333",
-    marginBottom: "0px",
-  };
-
-  const detailsStyle = {
-    fontFamily: '"Inter", sans-serif',
-    fontSize: {
-      xs: "12px",
-      sm: "14px",
-    },
-    color: "#666",
-    lineHeight: 1.4,
-  };
 
   return (
     <>
@@ -283,6 +395,7 @@ const ProfileGrid = () => {
                       onClick={(e) => {
                         e.stopPropagation();
                         setName("accept");
+                        handleNotiClick("12413382")
                       }}
                       sx={{
                         width: "44px",
