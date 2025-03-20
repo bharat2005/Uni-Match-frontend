@@ -61,7 +61,7 @@ const LoginPage = () => {
           localStorage.setItem("csrfTokenRefresh", csrfTokenRefresh);
 
           response.data.nbool
-            ? navigate("/app")
+            ? navigate("/app/home")
             : navigate("/profile-setup");
         } else {
           login(false);

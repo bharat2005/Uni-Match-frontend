@@ -3,7 +3,6 @@ import "../../App.css";
 import { Box, Button, IconButton } from "@mui/material";
 import TinderCard from "react-tinder-card";
 import Card from "./Card";
-import { Interests } from "@mui/icons-material";
 import Filter from "./Filter";
 
 
