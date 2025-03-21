@@ -174,16 +174,16 @@ const styles = {
 };
 
 function AppContainer({ isDrawerOpen, setIsDrawerOpen, setProfiles }) {
-  const [selectedGender, setSelectedGender] = React.useState("");
+  const [selectedGender, setSelectedGender] = React.useState("Male");
   const [smallDrawerOpen, setSmallDrawerOpen] = React.useState(false);
-  const [selectedPersonality, setSelectedPersonality] = React.useState("");
+  const [selectedPersonality, setSelectedPersonality] = React.useState("Introvert");
   const [ageRange, setAgeRange] = React.useState([18, 30]);
-  const [selectedOption, setSelectedOption] = React.useState("");
+  const [selectedOption, setSelectedOption] = React.useState("🎉Casual dating");
 
   const handleApplyFilters = (e) => {
     //e.preventDefault();
   
-    if (selectedGender && selectedOption && selectedPersonality) {
+   
       const filters = { 
         ageRange, 
         gender: selectedGender, 
@@ -198,6 +198,7 @@ function AppContainer({ isDrawerOpen, setIsDrawerOpen, setProfiles }) {
           headers: { "X-CSRF-TOKEN": localStorage.getItem("csrfTokenAccess") },
         })
         .then((response) => {
+          console.log(response.data)
           setProfiles(response.data);
         })
         .catch((error) => {
@@ -247,9 +248,7 @@ function AppContainer({ isDrawerOpen, setIsDrawerOpen, setProfiles }) {
           }
         });
       setIsDrawerOpen(false);
-    } else {
-      alert("Please fill all fields before applying the filters.");
-    }
+
   };
   
 
