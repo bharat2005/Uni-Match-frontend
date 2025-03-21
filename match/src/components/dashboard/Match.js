@@ -4,9 +4,11 @@ import { Box, Button, IconButton } from "@mui/material";
 import TinderCard from "react-tinder-card";
 import Card from "./Card";
 import Filter from "./Filter";
+import axios from "axios";
 
 
-const db = [
+
+const dbjnkjn = [
   {
     reg_no: "12432323",
     reason: "Serious Relationship",
@@ -61,27 +63,34 @@ const db = [
 ];
 
 export default function Match() {
-  const [currentIndex, setCurrentIndex] = useState(db.length - 1);
+  const [profiles, setProfiles] = useState([]); 
+  const [currentIndex, setCurrentIndex] = useState(0);
   const currentIndexRef = useRef(currentIndex);
     const [isDrawerOpen, setIsDrawerOpen] = React.useState(false);
-  const [cardStates, setCardStates] = useState(Array(db.length).fill(null));
+  const [cardStates, setCardStates] = useState([]);
 
+  useEffect(() => {
+    axios.get("https://api.uni-match.in/matchcomp") 
+      .then((response) => {
+        console.log(response.data)
+        setProfiles(response.data.cards);  
+        setCurrentIndex(response.data.cards.length - 1); 
+        setCardStates(Array(response.data.cards.length).fill(null));
+      })
+      .catch((error) => {
+        console.error("Error fetching profiles:", error);
+      });
+  }, []);
 
+  const childRefs = useMemo(() => profiles.map(() => React.createRef()), [profiles]);
 
-  const childRefs = useMemo(
-    () =>
-      Array(db.length)
-        .fill(0)
-        .map((i) => React.createRef()),
-    [],
-  );
 
   const updateCurrentIndex = (val) => {
     setCurrentIndex(val);
     currentIndexRef.current = val;
   };
 
-  const canSwipe = currentIndex >= 0;
+  const canSwipe = currentIndex >= 0 && profiles.length > 0;
 
 
   const swiped = (direction, nameToDelete, index) => {
@@ -108,7 +117,7 @@ export default function Match() {
   };
 
   const swipe = (dir) => {
-    if (canSwipe && currentIndex < db.length) {
+    if (canSwipe && currentIndex < profiles.length) {
       setTimeout(()=> childRefs[currentIndex].current.swipe(dir), 300);
     }
   };
@@ -205,7 +214,7 @@ export default function Match() {
       >
         {/* Conditional rendering of the image when imageClick is true */}
 
-        {db.map((profile, index) => (
+        {profiles.map((profile, index) => (
           <TinderCard
             className="swipe"
             key={profile.reg_no}
@@ -233,7 +242,7 @@ export default function Match() {
         >
           <Button
             variant="contained"
-            onPointerUp={() => swipe("left")}
+            onClick={() => swipe("left")}
             sx={{
               background:
                 "linear-gradient(145deg, #FF006E 0%, #FB5607 50%, #FFBE0B 100%)", // More vibrant gradient

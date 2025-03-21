@@ -5,6 +5,9 @@ import { Box, Typography, Button, Container } from "@mui/material";
 import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
 import AddPhotoAlternateIcon from "@mui/icons-material/AddPhotoAlternate";
 import DeleteIcon from "@mui/icons-material/Delete";
+import SmallLoading from "../login/SmallLoading";
+
+import axios from "axios";
 
 function GenderSelectionForm({
   setStep,
@@ -14,7 +17,7 @@ function GenderSelectionForm({
   setImages,
 }) {
   const fileInputRefs = useRef([]);
-
+  const [loading, setLoading] = useState(false)
   if (fileInputRefs.current.length !== 6) {
     fileInputRefs.current = Array(6)
       .fill()
@@ -23,20 +26,46 @@ function GenderSelectionForm({
 
   const handleImageSelect = (index, event) => {
     const file = event.target.files[0];
-    if (file && file.type.startsWith("image/")) {
-      const newtempImages = [...formData["images"]];
-      newtempImages[index] = { filename: file.name, filetype: file.type };
-      setFormData((prev) => ({ ...prev, images: newtempImages }));
+    if (!file || !file.type.startsWith("image/")) return;
 
-      const reader = new FileReader();
-      reader.onload = (e) => {
-        const newImages = [...images];
-        newImages[index] = e.target.result;
-        setImages(newImages);
-      };
-      reader.readAsDataURL(file);
-    }
-  };
+    setLoading(true)
+    
+    axios
+      .post("https://api.uni-match.in/get_presigned_url", {
+        file_name: file.name,
+        file_type: file.type,
+      })
+      .then((response) => {
+        const { presigned_url, file_url } = response.data; 
+
+    
+        return axios.put(presigned_url, file, {
+          headers: { "Content-Type": file.type },
+        }).then(() => file_url); 
+      })
+      .then((file_url) => {
+      
+        const newtempImages = [...formData["images"]];
+        newtempImages[index] = file_url;
+        setFormData((prev) => ({ ...prev, images: newtempImages }));
+
+      
+        const reader = new FileReader();
+        reader.onload = (e) => {
+          const newImages = [...images];
+          newImages[index] = e.target.result;
+          setImages(newImages);
+        };
+        reader.readAsDataURL(file);
+      })
+      .catch((error) => {
+        console.error("Error uploading image:", error);
+      })
+      .finally(() => {
+        setLoading(false); 
+      });
+};
+
 
   const handleRemoveImage = (index, event) => {
     event.stopPropagation();
@@ -52,7 +81,8 @@ function GenderSelectionForm({
     }
   };
 
-  return (
+  return (<>
+    {loading && <SmallLoading />}
     <Box
       maxWidth="md"
       sx={{
@@ -206,7 +236,7 @@ function GenderSelectionForm({
         </Button>
       </Box>
     </Box>
-  );
+ </> );
 }
 
 export default GenderSelectionForm;
