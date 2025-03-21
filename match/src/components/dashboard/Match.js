@@ -70,7 +70,10 @@ export default function Match() {
   const [cardStates, setCardStates] = useState([]);
 
   useEffect(() => {
-    axios.get("https://api.uni-match.in/matchcomp") 
+    axios.get("https://api.uni-match.in/matchcomp",{
+      withCredentials: true,
+      headers: { "X-CSRF-TOKEN": localStorage.getItem("csrfTokenAccess") },
+    }, ) 
       .then((response) => {
         console.log(response.data)
         setProfiles(response.data.cards);  
