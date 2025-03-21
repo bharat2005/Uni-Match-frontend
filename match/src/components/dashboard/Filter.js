@@ -12,6 +12,7 @@ import {
   SwipeableDrawer,
   Chip,
 } from "@mui/material";
+import axios from "axios";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import KeyboardArrowRightIcon from "@mui/icons-material/KeyboardArrowRight";
 import SettingsIcon from "@mui/icons-material/Settings";
@@ -172,12 +173,86 @@ const styles = {
   },
 };
 
-function AppContainer({ isDrawerOpen, setIsDrawerOpen }) {
+function AppContainer({ isDrawerOpen, setIsDrawerOpen, setProfiles }) {
   const [selectedGender, setSelectedGender] = React.useState("");
   const [smallDrawerOpen, setSmallDrawerOpen] = React.useState(false);
-  const [selectedMarriage, setSelectedMarriage] = React.useState("");
+  const [selectedPersonality, setSelectedPersonality] = React.useState("");
   const [ageRange, setAgeRange] = React.useState([18, 30]);
   const [selectedOption, setSelectedOption] = React.useState("");
+
+  const handleApplyFilters = (e) => {
+    e.preventDefault();
+  
+    if (selectedGender && selectedOption && selectedPersonality) {
+      const filters = { 
+        ageRange, 
+        gender: selectedGender, 
+        reason: selectedOption,
+        personality: selectedPersonality
+      };
+      console.log(filters);
+  
+      axios
+        .post("https://api.uni-match.in/filtered_dashboard", filters, {
+          withCredentials: true,
+          headers: { "X-CSRF-TOKEN": localStorage.getItem("csrfTokenAccess") },
+        })
+        .then((response) => {
+          setProfiles(response.data);
+        })
+        .catch((error) => {
+          console.error("Error: ", error);
+  
+          if (error.response?.status === 401) {
+            axios
+              .post(
+                "https://api.uni-match.in/refresh",
+                {},
+                {
+                  withCredentials: true,
+                  headers: {
+                    "X-CSRF-TOKEN": localStorage.getItem("csrfTokenRefresh"),
+                  },
+                },
+              )
+              .then((response) => {
+                const csrfTokenAccess = response.headers["x-csrf-token-access"];
+                localStorage.setItem("csrfTokenAccess", csrfTokenAccess);
+  
+                axios
+                  .post(
+                    "https://api.uni-match.in/filtered_dashboard",
+                    filters,
+                    {
+                      withCredentials: true,
+                      headers: {
+                        "X-CSRF-TOKEN": localStorage.getItem("csrfTokenAccess"),
+                      },
+                    },
+                  )
+                  .then((response) => {
+                    console.log(
+                      "Protected Data (After Refresh):",
+                      response.data,
+                    );
+                    setProfiles(response.data);
+                  })
+                  .catch((retryError) =>
+                    console.error("Failed after refresh:", retryError),
+                  );
+              })
+              .catch(() =>
+                console.error("Session expired, please log in again."),
+              );
+          }
+        });
+      setIsDrawerOpen(false);
+    } else {
+      alert("Please fill all fields before applying the filters.");
+    }
+  };
+  
+
 
   const toggleSmallDrawer = (open) => () => setSmallDrawerOpen(open);
 
@@ -276,9 +351,9 @@ function AppContainer({ isDrawerOpen, setIsDrawerOpen }) {
                 <Chip
                   key={option}
                   label={option}
-                  onClick={() => setSelectedMarriage(option)}
+                  onClick={() => setSelectedPersonality(option)}
                   sx={styles.chip}
-                  className={selectedMarriage === option ? "selected" : ""}
+                  className={selectedPersonality === option ? "selected" : ""}
                 />
               ))}
             </Box>
@@ -301,13 +376,13 @@ function AppContainer({ isDrawerOpen, setIsDrawerOpen }) {
             sx={styles.resetButton}
             onClick={() => {
               setSelectedGender(null);
-              setSelectedMarriage(null);
+              setSelectedPersonality(null);
               setAgeRange([18, 30]);
             }}
           >
             Reset
           </Button>
-          <Button sx={styles.searchButton} variant="contained">
+          <Button sx={styles.searchButton} variant="contained" onClick={handleApplyFilters}>
             Apply
           </Button>
         </Box>

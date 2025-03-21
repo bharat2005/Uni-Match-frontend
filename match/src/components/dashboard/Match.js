@@ -270,7 +270,7 @@ export default function Match() {
             />
           </Button>
         </Box>
-        <Filter isDrawerOpen={isDrawerOpen} setIsDrawerOpen={setIsDrawerOpen} />
+        <Filter isDrawerOpen={isDrawerOpen} setIsDrawerOpen={setIsDrawerOpen}  setProfiles={setProfiles}/>
       </Box>
     </>
   );
