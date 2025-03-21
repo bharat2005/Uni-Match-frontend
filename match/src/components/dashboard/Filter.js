@@ -174,7 +174,7 @@ const styles = {
 };
 
 function AppContainer({ isDrawerOpen, setIsDrawerOpen, setProfiles }) {
-  const [selectedGender, setSelectedGender] = React.useState("Male");
+  const [selectedGender, setSelectedGender] = React.useState("male");
   const [smallDrawerOpen, setSmallDrawerOpen] = React.useState(false);
   const [selectedPersonality, setSelectedPersonality] = React.useState("Introvert");
   const [ageRange, setAgeRange] = React.useState([18, 30]);
@@ -331,7 +331,7 @@ function AppContainer({ isDrawerOpen, setIsDrawerOpen, setProfiles }) {
           <Box sx={styles.formGroup}>
             <Typography sx={styles.label}>Gender</Typography>
             <Box sx={styles.optionsContainer}>
-              {["Male", "Female"].map((option) => (
+              {["male", "female"].map((option) => (
                 <Chip
                   key={option}
                   label={option}
@@ -365,7 +365,7 @@ function AppContainer({ isDrawerOpen, setIsDrawerOpen, setProfiles }) {
               endIcon={<KeyboardArrowRightIcon />}
               onClick={toggleSmallDrawer(true)}
             >
-              {selectedOption || "Select an option"}
+              {selectedOption}
             </Button>
           </Box>
         </Box>
@@ -403,19 +403,19 @@ function AppContainer({ isDrawerOpen, setIsDrawerOpen, setProfiles }) {
       >
         <List sx={{ paddingBottom: 0 }}>
           {[
-            "🎉Casual dating",
-            "💘Long-term",
-            "😍Short-term",
-            "👋New friends",
-            "🎓Study buddy",
-            "🤔Still figuring",
-          ].map((option, index) => (
+          { symbol: "🎉", label: "Casual dating" },
+          { symbol: "💘", label: "Long-term" },
+          { symbol: "😍", label: "Short-term" },
+          { symbol: "👋", label: "New friends" },
+          { symbol: "🎓", label: "Study buddy" },
+          { symbol: "🤔", label: "Still figuring" },
+        ].map((option, index) => (
             <ListItemButton
               key={index}
-              onClick={() => handleOptionSelect(option)}
+              onClick={() => handleOptionSelect(option.label)}
               sx={{ borderBottom: "1px solid #f0f0f0" }}
             >
-              <ListItemText primary={option} sx={{ textAlign: "center" }} />
+              <ListItemText primary={`${option.symbol} ${option.label}`} sx={{ textAlign: "center" }} />
             </ListItemButton>
           ))}
         </List>
