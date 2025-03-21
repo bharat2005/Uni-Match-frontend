@@ -25,7 +25,6 @@ function Drawer() {
    const [currentImageIndex, setCurrentImageIndex] = React.useState(0);
   const list = profile.images.filter(item => item != null);
 
-  console.log(profile.name)
 
   React.useEffect(()=> {
     setIsDrawerOpen(true)

@@ -7,61 +7,6 @@ import Filter from "./Filter";
 import axios from "axios";
 
 
-
-const dbjnkjn = [
-  {
-    reg_no: "12432323",
-    reason: "Serious Relationship",
-    age: 19,
-    name: "May",
-    images: [null, "/7.jpg", "/8.jpg", null, null],
-    bio: "Spring is my vibe, i love greenery!",
-    interests: [
-      "Gardening",
-      "Paragliding",
-      "Puzzles",
-      "Juggling",
-      "Art",
-      "Juggling",
-    ],
-  },
-  {
-    reg_no: "12432324",
-    reason: "Friendship",
-    age: 21,
-    name: "Misaki",
-    images: [null, null, "/4.jpg", "/5.jpg", "/6.jpg"],
-    bio: "Just enjoying the life as much as possible!!",
-    interests: [
-      "Gardening",
-      "Paragliding",
-      "Puzzles",
-      "Juggling",
-      "Art",
-      "Juggling",
-    ],
-  },
-
-  {
-    reg_no: "12413928",
-    reason: "💘Long-term relationship",
-    age: 20,
-    name: "Jisoo",
-    personality: "extrovert",
-    images: ["/2.jpg", "/3.jpg", "/1.jpg", null, null],
-    bio: "Im the solo developer of this whole Uni-Match platform...😎",
-    interests: [
-      "Gardening",
-      "Paragliding",
-      "Puzzles",
-      "Juggling",
-      "Art",
-      "Juggling",
-    ],
-  },
-
-];
-
 export default function Match() {
   const [profiles, setProfiles] = useState([]); 
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -95,14 +40,35 @@ export default function Match() {
 
   const canSwipe = currentIndex >= 0 && profiles.length > 0;
 
+  const sendSwipeData = (direction, targetRegNo) => {
+    if (direction === "right") {
+      axios.post("https://api.uni-match.in/swipeadd", {
+        target_reg_no: targetRegNo,
+        swipe_action: direction,
+      }, {
+        withCredentials: true,
+        headers: { "X-CSRF-TOKEN": localStorage.getItem("csrfTokenAccess") },
+      })
+        .then(() => {
+          console.log("Swipe data sent successfully");
+        })
+        .catch((error) => {
+          console.error("Error sending swipe data:", error);
+        });
+    }
+  };
 
-  const swiped = (direction, nameToDelete, index) => {
-
+ const swiped = (direction, profile, index) => {
     setCardStates((prev) => {
       const newState = [...prev];
       newState[index] = direction;
       return newState;
     });
+    
+    if (direction === "right") {
+      sendSwipeData(direction, profile.reg_no);
+    }
+    
     updateCurrentIndex(index - 1);
     setTimeout(() => {
       setCardStates((prev) => {
@@ -111,7 +77,6 @@ export default function Match() {
         return newState;
       });
     }, 500);
-    
   };
 
   const outOfFrame = (name, idx) => {
@@ -223,7 +188,7 @@ export default function Match() {
             key={profile.reg_no}
             ref={childRefs[index]}
             preventSwipe={["up", "down"]}
-            onSwipe={(dir) => {swiped(dir, profile.name, index); }}
+            onSwipe={(dir) => {swiped(dir, profile, index); }}
             onCardLeftScreen={() => outOfFrame(profile.name, index)}
             swipeRequirementType="position"
             swipeThreshold={200}
