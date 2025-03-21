@@ -181,7 +181,7 @@ function AppContainer({ isDrawerOpen, setIsDrawerOpen, setProfiles }) {
   const [selectedOption, setSelectedOption] = React.useState("");
 
   const handleApplyFilters = (e) => {
-    e.preventDefault();
+    //e.preventDefault();
   
     if (selectedGender && selectedOption && selectedPersonality) {
       const filters = { 
