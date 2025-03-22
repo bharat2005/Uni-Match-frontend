@@ -303,6 +303,7 @@ const ProfileGrid = () => {
         </Box>
         {/* Scrollable Grid */}
         <Box sx={scrollableGridStyle}>
+          {likesList ? (
           <Grid container spacing={{ xs: 1, sm: 2 }} columns={{ xs: 2, sm: 2 }}>
             {likesList.map((profile, index) => (
               <Grid item xs={1} key={index}>
@@ -437,7 +438,9 @@ const ProfileGrid = () => {
                 </Card>
               </Grid>
             ))}
-          </Grid>
+          </Grid>):(
+              <div>hiii</div>
+          )}
           <Box
             sx={{
               height: "40px", // Same as or slightly more than the navbar height
