@@ -373,7 +373,7 @@ function SearchContainer({ onClose, setIsDrawerOpen }) {
     setLoading(true);
     console.log(formData);
     axios
-      .post("https://api.uni-match.in/profile", formData, {
+      .post("https://api.uni-match.in/profile_update", formData, {
         withCredentials: true,
         headers: { "X-CSRF-TOKEN": localStorage.getItem("csrfTokenAccess") },
       })
@@ -401,7 +401,7 @@ function SearchContainer({ onClose, setIsDrawerOpen }) {
               const csrfTokenAccess = response.headers["x-csrf-token-access"];
               localStorage.setItem("csrfTokenAccess", csrfTokenAccess);
               axios
-              .post("https://api.uni-match.in/profile", formData, {
+              .post("https://api.uni-match.in/profile_update", formData, {
                 withCredentials: true,
                 headers: { "X-CSRF-TOKEN": localStorage.getItem("csrfTokenAccess") },
               })
