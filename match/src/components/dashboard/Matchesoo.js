@@ -144,29 +144,29 @@ const ProfileGrid = () => {
     };
   }, []);
 
-  // useEffect(() => {
-  //   axios
-  //     .get("https://api.uni-match.in/likes", {
-  //       withCredentials: true,
-  //       headers: { "X-CSRF-TOKEN": localStorage.getItem("csrfTokenAccess") },
-  //     })
-  //     .then((response) => {
-  //       console.log(response.data);
-  //       setLikesList(response.data);
-  //     })
-  //     .catch((error) => {
-  //       console.error("Error: ", error);
-  //     });
-  // }, []);
+  useEffect(() => {
+    axios
+      .get("https://api.uni-match.in/likes", {
+        withCredentials: true,
+        headers: { "X-CSRF-TOKEN": localStorage.getItem("csrfTokenAccess") },
+      })
+      .then((response) => {
+        console.log(response.data);
+        setLikesList(response.data);
+      })
+      .catch((error) => {
+        console.error("Error: ", error);
+      });
+  }, []);
 
-  // const handleTabChange = (event, newValue) => {
-  //   setValue(newValue);
-  // };
+  const handleTabChange = (event, newValue) => {
+    setValue(newValue);
+  };
 
-  // let filteredList;
-  // if (likesList) {
-  //   filteredList = value === 1 ? likesList.likedByYou : likesList.likesYou;
-  // }
+  let filteredList;
+  if (likesList) {
+    filteredList = value === 1 ? likesList.likedByYou : likesList.likesYou;
+  }
 
   function handleNotiClick(target_reg_no) {
     axios
