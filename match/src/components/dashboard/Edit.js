@@ -246,7 +246,7 @@ function SearchContainer({ onClose, setIsDrawerOpen }) {
     reason: selfprofile?.reason || "",
     name: selfprofile?.name || "",
     personality: selfprofile?.personality || "",
-    images: selfprofile?.images || [...Array(6).fill(null)],
+    images: selfprofile?.images || ["/9.jpg", ...Array(5).fill(null)],
     bio: selfprofile?.bio || "",
     interests: selfprofile?.interests || [],
   })
@@ -254,6 +254,10 @@ function SearchContainer({ onClose, setIsDrawerOpen }) {
   const [selectedOption, setSelectedOption] = React.useState(formData['reason']);
   const fileInputRefs = React.useRef([]);
   const [loading, setLoading] = React.useState(false)
+
+  console.log("formDtata",formData['images'])
+  console.log("images state",images)
+
   if (fileInputRefs.current.length !== 6) {
     fileInputRefs.current = Array(6)
       .fill()
@@ -496,46 +500,11 @@ function SearchContainer({ onClose, setIsDrawerOpen }) {
           gap: { xs: 1.25, sm: 2.5 },
         }}
       >
-        {images.map((image, index) => (
-          <Box
-            key={index}
-            onClick={() => fileInputRefs.current[index].current.click()}
-            sx={{
-              width: "100%",
-              height:'100%',
-              aspectRatio: "0.8",
-              borderRadius: 2,
-              display: "flex",
-              flexDirection: "column",
-              alignItems: "center",
-              justifyContent: "center",
-              margin: "auto",
-              position: "relative",
-              border: "2px dashed #ff97b5",
-              backgroundColor: "#fff",
-              overflow: "hidden",
-              transition: "all 0.3s ease",
-              "&:hover": {
-                transform: "scale(1.02)",
-                backgroundColor: "#fff5f8",
-              },
-              outline: "none",
-              userSelect: "none",
-              WebkitTapHighlightColor: "transparent",
-              "&:focus": {
-                outline: "none",
-                boxShadow: "none",
-              },
-            }}
-            tabIndex={-1}
-          >
-            <input
-              type="file"
-              accept="image/*"
-              ref={fileInputRefs.current[index]}
-              onChange={(e) => handleImageSelect(index, e)}
-              style={{ display: "none" }}
-            />
+
+
+
+
+
 
 
 
@@ -619,11 +588,7 @@ function SearchContainer({ onClose, setIsDrawerOpen }) {
       )}
     </Box>
   );
-})
-
-
-
-
+})}
 
 
 
@@ -737,15 +702,6 @@ function SearchContainer({ onClose, setIsDrawerOpen }) {
           ))}
         </List>
       </SwipeableDrawer>
-
-
-
-
-
-
-
-
-
 
         <Box sx={formGroupStyle}>
           <Typography
