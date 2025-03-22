@@ -3,7 +3,7 @@ import * as React from "react";
 import { Player } from "@lottiefiles/react-lottie-player";
 import { Box, Typography, Button, Modal, Fade,Grow } from "@mui/material";
 
-const Container = ({ setModalOpen, modalOpen, name, handleCrossClick, handleLikeClick, target_reg_no, handleCrossClick1 }) => {
+const Container = ({ setModalOpen, modalOpen="true", name="reject", handleCrossClick, handleLikeClick, target_reg_no, handleCrossClick1 }) => {
 
 console.log("ye dhekkk bsdk" ,target_reg_no)
 console.log(typeof target_reg_no)
@@ -57,7 +57,7 @@ console.log(typeof target_reg_no)
           },
         }}
       >
-        <Box sx={{ position: "relative", bottom: "28%" }}>
+        <Box sx={{ position: "relative", bottom: "50%" }}>
           <Player
             autoplay
             loop
@@ -72,7 +72,7 @@ console.log(typeof target_reg_no)
                       ? "/noti.json"
                       : null
             }
-            style={{ height: "130px" }}
+            style={{ height: "260px" }}
           />
         </Box>
 
@@ -82,7 +82,7 @@ console.log(typeof target_reg_no)
             flexDirection: "column",
             justifyContent: "center",
             position: "relative",
-            bottom: "40%",
+            bottom: "70%",
             alignItems: "center",
             gap: "8px",
             width: "100%",
@@ -145,7 +145,7 @@ console.log(typeof target_reg_no)
             alignItems: "center",
             width: "100%",
             position: "relative",
-            bottom: "40%",
+            bottom: "70%",
           }}
         >
           <Button

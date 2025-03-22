@@ -1,45 +1,79 @@
-import React from "react";
-import { CircularProgress, Box } from "@mui/material";
+"use client";
+import * as React from "react";
 
-function CustomCircularProgress() {
+function HeartAnimation() {
+  const containerStyle = {
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+    height: "100vh",
+    width: "100vw",
+    background: "transparent",
+    fontFamily: "Inter, sans-serif",
+  };
+
+  const heartFigureStyle = {
+    position: "relative",
+    width: "54px",
+    height: "54px",
+    margin: 0,
+  };
+
+  const heartSvgStyle = {
+    position: "absolute",
+    width: "100%",
+    height: "100%",
+  };
+
   return (
-    <Box
-      sx={{
-        position: "fixed",
-        top: 0,
-        left: 0,
-        width: "100vw",
-        height: "100vh",
-        backgroundColor: "rgba(255, 255, 255, 0.4)", // Semi-transparent overlay
-        display: "flex",
-        justifyContent: "center",
-        alignItems: "center",
-        zIndex: 9999,
-        borderRadius: "16px", // Soft rounded edges for the container
-      }}
-    >
-      <CircularProgress
-        variant="indeterminate"
-        size={50} // Increased size for better visibility
-        thickness={5} // Slightly thinner for a sleeker look
-        sx={{
-          color: "transparent", // Make the base transparent
-          "& .MuiCircularProgress-circle": {
-            stroke: "url(#gradient)",
-            strokeLinecap: "round", // Round edges for a smooth feel
-          },
-        }}
-      />
-      <svg width="0" height="0">
-        <defs>
-          <linearGradient id="gradient" x1="0%" y1="0%" x2="100%" y2="0%">
-            <stop offset="0%" stopColor="#ff69b4" />
-            <stop offset="100%" stopColor="#8b5cf6" />
-          </linearGradient>
-        </defs>
-      </svg>
-    </Box>
+    <section style={containerStyle}>
+      <figure style={heartFigureStyle}>
+        <svg viewBox="0 0 100 100" style={heartSvgStyle}>
+          <defs>
+            <linearGradient
+              id="heart-gradient"
+              x1="0%"
+              y1="0%"
+              x2="100%"
+              y2="0%"
+            >
+              <stop offset="0%" stopColor="#ff69b4" />
+              <stop offset="100%" stopColor="#8b5cf6" />
+            </linearGradient>
+          </defs>
+          <path
+            d="M50 85C20 65 8 55 8 38C8 15 35 10 50 30C65 10 92 15 92 38C92 55 80 65 50 85Z"
+            fill="none"
+            stroke="#F5E5FF"
+            strokeWidth="6"
+          />
+          <path
+            d="M50 85C20 65 8 55 8 38C8 15 35 10 50 30C65 10 92 15 92 38C92 55 80 65 50 85Z"
+            fill="none"
+            stroke="url(#heart-gradient)"
+            strokeWidth="6"
+            strokeLinecap="round"
+          >
+<animate
+  attributeName="stroke-dasharray"
+  values="300, 200"
+  dur="1.6s"
+  repeatCount="indefinite"
+/>
+<animate
+  attributeName="stroke-dashoffset"
+  from="0"
+  to="-500"
+  dur="1.6s"
+  repeatCount="indefinite"
+  calcMode="linear"
+/>
+
+          </path>
+        </svg>
+      </figure>
+    </section>
   );
 }
 
-export default CustomCircularProgress;
+export default HeartAnimation;
