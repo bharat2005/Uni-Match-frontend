@@ -429,7 +429,7 @@ const ProfileGrid = () => {
                       onClick={(e) => {
                         e.stopPropagation();
                         setTargetRegNo(profile.reg_no)
-                        setName("accept"); 
+                        setTimeout(setName("accept"),500);
                       }}
                       sx={{
                         width: "44px",

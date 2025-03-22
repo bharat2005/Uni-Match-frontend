@@ -5,6 +5,7 @@ import { Box, Typography, Button, Modal, Fade,Grow } from "@mui/material";
 
 const Container = ({ setModalOpen, modalOpen, name, handleCrossClick, handleLikeClick, target_reg_no }) => {
 
+console.log("ye dhekkk bsdk" ,target_reg_no)
 
   const handleLater = () => {
     console.log("Later clicked");
@@ -147,7 +148,7 @@ const Container = ({ setModalOpen, modalOpen, name, handleCrossClick, handleLike
           }}
         >
           <Button
-            onClick={name=="reject"?  ()=> {handleCrossClick(target_reg_no)} : name == "accept" ? ()=>{handleLikeClick("12417283")} : null}
+            onClick={name=="reject"?  ()=> {handleCrossClick(target_reg_no)} : name == "accept" ? ()=>{handleLikeClick(target_reg_no)} : null}
             sx={{
               height: "50px",
               padding: "0 40px",
