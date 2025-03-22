@@ -230,41 +230,28 @@ const styles = {
 
 function SearchContainer({ onClose, setIsDrawerOpen }) {
   const navigate = useNavigate();
-  const {selfProfile} = useAuth();
-  const [selectedGender, setSelectedGender] = React.useState("");
-  const [gender, setGender] = React.useState("any");
-  const [name, setName] = React.useState(selfProfile.name);
-  const [bio, setBio] = React.useState(selfProfile.bio);
-  const [formData, setFormData] = React.useState({
-    reg_no: "12413928",
-    reason: "Long-term relationship",
-    age: 20,
-    name: "Jisoo",
-    personality: "extrovert",
-    images: ["/2.jpg", "/3.jpg", "/1.jpg", null, null],
-    bio: "Im the solo developer of this whole Uni-Match platform...😎",
-    interests: [
-      "Gardening",
-      "Paragliding",
-      "Puzzles",
-      "Juggling",
-      "Art",
-      "Juggling",
-    ],
-  })
-
+  const {selfProfile, setSelfProfile} = useAuth();
   const [smallDrawerOpen, setSmallDrawerOpen] = React.useState(false);
-   const [bigDrawerOpen, setBigDrawerOpen] = React.useState(false);
-
-  const [selectedOption, setSelectedOption] = React.useState("");
-
+  const [bigDrawerOpen, setBigDrawerOpen] = React.useState(false);
   const toggleSmallDrawer = (open) => () => setSmallDrawerOpen(open);
   const toggleBigDrawer = (open) => () => setBigDrawerOpen(open);
+  const [formData, setFormData] = React.useState({
+    reason: selfProfile?.reason || "",
+    name: selfProfile?.name || "",
+    personality: selfProfile?.personality || "",
+    images: selfProfile?.images || [],
+    bio: selfProfile?.bio || "",
+    interests: selfProfile?.interests || [],
+  })
+  const [selectedGender, setSelectedGender] = React.useState(formData['personality']);
+  const [selectedOption, setSelectedOption] = React.useState(formData['reason']);
+
 
   const handleOptionSelect = (option) => {
     setSelectedOption(option);
     setSmallDrawerOpen(false);
   };
+
 
   const handleLocationSelect = (location) => {
     setFormData((prev) => {
@@ -392,8 +379,8 @@ function SearchContainer({ onClose, setIsDrawerOpen }) {
           </Typography>
           <TextareaAutosize
            minRows={1}
-           value={name}
-           onChange={(e)=> setName(e.target.value)}
+           value={formData['name']}
+           onChange={(e)=> setFormData((prev)=> ({...prev, name:e.target.value}))}
             placeholder="enter name"
             style={{
               //width: "100%",
@@ -518,8 +505,6 @@ function SearchContainer({ onClose, setIsDrawerOpen }) {
         onClose={toggleSmallDrawer(false)}
         sx={{
           "& .MuiDrawer-paper": {
-            // borderTopLeftRadius: "20px",
-            // borderTopRightRadius: "20px",
             background: "white",
             maxHeight: "90vh",
           },
@@ -527,12 +512,12 @@ function SearchContainer({ onClose, setIsDrawerOpen }) {
       >
         <List sx={{ paddingBottom: 0 }}>
           {[
-            "🎉Casual dating",
-            "💘Long-term",
-            "😍Short-term",
-            "👋New friends",
-            "🎓Study buddy",
-            "🤔Still figuring",
+            "Casual dating",
+            "Long-term",
+            "Short-term",
+            "New friends",
+            "Study buddy",
+            "Still figuring",
           ].map((option, index) => (
             <ListItemButton
               key={index}
@@ -565,9 +550,9 @@ function SearchContainer({ onClose, setIsDrawerOpen }) {
             About
           </Typography>
           <TextareaAutosize
-          value={bio}
-          onChange={(e)=> setBio(e.target.value)}
             minRows={6}
+            value={formData['bio']}
+            onChange={(e)=> setFormData((prev)=> ({...prev, bio: e.target.value}))}
             placeholder="A few words about yourself..."
             style={{
               //width: "100%",
