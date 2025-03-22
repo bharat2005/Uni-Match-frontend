@@ -1,9 +1,10 @@
 import { useEffect } from "react";
 import axios from "axios";
-import { replace, useNavigate } from "react-router-dom";
+import { replace, useLocation, useNavigate } from "react-router-dom";
 
 export default function AuthWrapper({ setBool }) {
   const navigate = useNavigate();
+  const location = useLocation();
 
   useEffect(() => {
     axios
@@ -20,7 +21,8 @@ export default function AuthWrapper({ setBool }) {
 
         const csrfTokenAccess = response.headers["x-csrf-token-access"];
         localStorage.setItem("csrfTokenAccess", csrfTokenAccess);
-        navigate("/app/home", { replace: true });
+
+        navigate(location.pathname, { replace: true });
       })
       .catch(() => {
         console.log("Session expired, redirecting to login...");
