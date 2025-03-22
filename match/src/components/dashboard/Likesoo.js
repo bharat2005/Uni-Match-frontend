@@ -48,7 +48,7 @@ const ProfileGrid = () => {
       })
       .then((response) => {
         console.log(response.data);
-        setLikedList(response.data.LikedByYou);
+        setLikedList(response.data.likedByYou);
       })
       .catch((error) => {
         console.error("Error: ", error);
