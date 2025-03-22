@@ -152,21 +152,13 @@ const ProfileGrid = () => {
       })
       .then((response) => {
         console.log(response.data);
-        setLikesList(response.data);
+        //setLikesList(response.data);
       })
       .catch((error) => {
         console.error("Error: ", error);
       });
   }, []);
 
-  const handleTabChange = (event, newValue) => {
-    setValue(newValue);
-  };
-
-  let filteredList;
-  if (likesList) {
-    filteredList = value === 1 ? likesList.likedByYou : likesList.likesYou;
-  }
 
   function handleNotiClick(target_reg_no) {
     axios
