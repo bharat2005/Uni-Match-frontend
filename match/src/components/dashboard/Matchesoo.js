@@ -387,7 +387,8 @@ const ProfileGrid = () => {
                       aria-label="unlike"
                       onClick={(e) => {
                         e.stopPropagation();
-                        setName("reject");
+                        setTargetRegNo(profile.reg_no)
+                        setTimeout(setName("reject"),500);
                       }}
                       sx={{
                         width: "44px",
