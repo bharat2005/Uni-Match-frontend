@@ -153,7 +153,7 @@ const ProfileGrid = () => {
       })
       .then((response) => {
         console.log(response.data);
-        setLikesList(response.data);
+        setLikesList(response.data.likesYou);
       })
       .catch((error) => {
         console.error("Error: ", error);
