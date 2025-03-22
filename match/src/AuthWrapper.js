@@ -22,7 +22,13 @@ export default function AuthWrapper({ setBool }) {
         const csrfTokenAccess = response.headers["x-csrf-token-access"];
         localStorage.setItem("csrfTokenAccess", csrfTokenAccess);
 
-        navigate(location.pathname, { replace: true });
+        if (location.pathname.startsWith("/app") || location.pathname.startsWith("/profile-setup") || location.pathname.startsWith("/done") ) {
+          // 🔄 Keep user on the same page
+          navigate(location.pathname, { replace: true });
+        } else {
+          // 🚀 If no valid path, send to /app/home
+          navigate("/app/home", { replace: true });
+        }
       })
       .catch(() => {
         console.log("Session expired, redirecting to login...");
