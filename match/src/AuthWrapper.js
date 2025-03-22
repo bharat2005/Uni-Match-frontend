@@ -21,7 +21,7 @@ export default function AuthWrapper({ setBool }) {
         localStorage.setItem("csrfTokenAccess", csrfTokenAccess);
 
         // ✅ Navigate based on the current path
-        if (location.pathname.startsWith("/app")) {
+        if (location.pathname.startsWith("/app") || location.pathname.startsWith("/profile-setup")) {
           // 🔄 Keep user on the same page
           navigate(location.pathname, { replace: true });
         } else {
