@@ -147,7 +147,7 @@ const Container = ({ setModalOpen, modalOpen, name, handleCrossClick, handleLike
           }}
         >
           <Button
-            onClick={name=="reject"? handleCrossClick(target_reg_no) : name == "accept" ? handleLikeClick(target_reg_no) : null}
+            onClick={name=="reject"?  ()=> {handleCrossClick(target_reg_no)} : name == "accept" ? ()=>{handleLikeClick(target_reg_no)} : null}
             sx={{
               height: "50px",
               padding: "0 40px",
