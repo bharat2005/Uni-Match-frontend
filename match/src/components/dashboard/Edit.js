@@ -246,7 +246,7 @@ function SearchContainer({ onClose, setIsDrawerOpen }) {
     reason: selfprofile?.reason || "",
     name: selfprofile?.name || "",
     personality: selfprofile?.personality || "",
-    images: selfprofile?.images || ["/9.jpg", ...Array(5).fill(null)],
+    images: selfprofile?.images || [...Array(5).fill(null)],
     bio: selfprofile?.bio || "",
     interests: selfprofile?.interests || [],
   })
@@ -254,9 +254,6 @@ function SearchContainer({ onClose, setIsDrawerOpen }) {
   const [selectedOption, setSelectedOption] = React.useState(formData['reason']);
   const fileInputRefs = React.useRef([]);
   const [loading, setLoading] = React.useState(false)
-
-  console.log("formDtata",formData['images'])
-  console.log("images state",images)
 
   if (fileInputRefs.current.length !== 6) {
     fileInputRefs.current = Array(6)
@@ -321,8 +318,7 @@ function SearchContainer({ onClose, setIsDrawerOpen }) {
     }
   };
 
-  console.log("selfprofile",selfprofile);
-  console.log("formData", formData)
+
 
   const handleOptionSelect = (option) => {
     setSelectedOption(option);
@@ -372,6 +368,61 @@ function SearchContainer({ onClose, setIsDrawerOpen }) {
     },
   };
 
+
+  function handleDone() {
+    setLoading(true);
+    console.log(formData);
+    axios
+      .post("https://api.uni-match.in/profile", formData, {
+        withCredentials: true,
+        headers: { "X-CSRF-TOKEN": localStorage.getItem("csrfTokenAccess") },
+      })
+      .then((response) => {
+        setLoading(false);
+        console.log("Message from server: ", response.data);
+        navigate("/done", {replace:true})
+      })
+      .catch((error) => {
+        console.error("Error: ", error);
+        if (error.response?.status === 401) {
+          axios
+            .post(
+              "https://api.uni-match.in/refresh",
+              {},
+              {
+                withCredentials: true,
+                headers: {
+                  "X-CSRF-TOKEN": localStorage.getItem("csrfTokenRefresh"),
+                },
+              },
+            )
+
+            .then((response) => {
+              const csrfTokenAccess = response.headers["x-csrf-token-access"];
+              localStorage.setItem("csrfTokenAccess", csrfTokenAccess);
+              axios
+              .post("https://api.uni-match.in/profile", formData, {
+                withCredentials: true,
+                headers: { "X-CSRF-TOKEN": localStorage.getItem("csrfTokenAccess") },
+              })
+              .then((response) => {
+                setLoading(false);
+                console.log("Message from server: ", response.data);
+                navigate("/done", {replace:true})
+              })
+                .catch((retryError) =>
+                  console.error("Failed after refresh:", retryError),
+                );
+            })
+            .catch(() =>
+              console.error("Session expired, please log in again."),
+            );
+        }
+      })
+      .finally(()=>{
+        setLoading(false);}
+      )
+  }
  
 
 
@@ -776,6 +827,7 @@ function SearchContainer({ onClose, setIsDrawerOpen }) {
       >
         <Button
           fullWidth
+          onClick={()=> navigate(-1)}
           variant="outlined"
           sx={{
             padding: "8px 20px",
@@ -796,10 +848,10 @@ function SearchContainer({ onClose, setIsDrawerOpen }) {
         </Button>
         <Button
           fullWidth
+          onClick={handleDone}
           variant="contained"
           sx={{
             py: 1.5,
-
             borderRadius: "25px",
             bgcolor: "#ff6b9c",
             fontSize: "14px",
