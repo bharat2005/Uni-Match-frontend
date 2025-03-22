@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useEffect, useState} from "react";
 import {
   Box,
   Avatar,
@@ -12,6 +12,7 @@ import {
   useTheme,
   useMediaQuery,
 } from "@mui/material";
+import axios from 'axios';
 import { useNavigate } from "react-router-dom";
 import { Outlet } from "react-router-dom";
 import LogOutModal from './LogOutModal';
@@ -37,11 +38,65 @@ const ProfileContainer = () => {
   const theme = useTheme();
   const isMobile = useMediaQuery("(max-width:640px)");
   const isTablet = useMediaQuery("(max-width:991px)");
+  const [lpuselfprofile, setLpuSelfProfile] = useState({});
+  const [selfprofile, setSelfProfile] = useState({})
   const [logOutModalOpen, setLogOutModalOpen] = React.useState(false)
   const [open, setOpen] = React.useState(null);
   const [modalOpen, setModalOpen] = React.useState(false);
 
+  useEffect(() => {
+    axios
+      .get("https://api.uni-match.in/profilecomp", {
+        withCredentials: true,
+        headers: { "X-CSRF-TOKEN": localStorage.getItem("csrfTokenAccess") },
+      })
+      .then((response) => {
+        console.log(response.data);
+        setLpuSelfProfile(response.data.lpuselfprofile);
+        setSelfProfile(response.data.selfprofile);
+      })
+      .catch((error) => {
+        console.error("Error", error);
 
+        if (error.response?.status === 401) {
+          axios
+            .post(
+              "https://api.uni-match.in/refresh",
+              {},
+              {
+                withCredentials: true,
+                headers: {
+                  "X-CSRF-TOKEN": localStorage.getItem("csrfTokenRefresh"),
+                },
+              },
+            )
+
+            .then((response) => {
+              const csrfTokenAccess = response.headers["x-csrf-token-access"];
+              localStorage.setItem("csrfTokenAccess", csrfTokenAccess);
+
+              axios
+                .get("https://api.uni-match.in/profilecomp", {
+                  withCredentials: true,
+                  headers: {
+                    "X-CSRF-TOKEN": localStorage.getItem("csrfTokenAccess"),
+                  },
+                })
+                .then((response) => {
+                  console.log("Protected Data (After Refresh):", response.data);
+                  setLpuSelfProfile(response.data.lpuselfprofile);
+                  setSelfProfile(response.data.selfprofile);
+                })
+                .catch((retryError) =>
+                  console.error("Failed after refresh:", retryError),
+                );
+            })
+            .catch(() =>
+              console.error("Session expired, please log in again."),
+            );
+        }
+      });
+  }, []);
 
 
   const handleShare = () => {
@@ -217,7 +272,7 @@ const ProfileContainer = () => {
       <Box sx={containerStyles}>
         <Box sx={profileHeaderStyles}>
           <Avatar
-            src="/5.jpg"
+            src={lpuselfprofile.image}
             alt="Profile"
             sx={{
               width: { xs: "90px", md: "90px" },
@@ -234,7 +289,7 @@ const ProfileContainer = () => {
               marginBottom: "5px",
             }}
           >
-            Bharat
+            {lpuselfprofile.name}
           </Typography>
           <Box
             sx={{
@@ -250,7 +305,7 @@ const ProfileContainer = () => {
               className="ti ti-id"
               style={{ fontSize: "20px", marginRight: "2px" }}
             />
-            12413923
+            {lpuselfprofile.reg_no}
           </Box>
         </Box>
 
