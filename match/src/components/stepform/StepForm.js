@@ -49,9 +49,46 @@ const InputDesign = () => {
         navigate("/done", {replace:true})
       })
       .catch((error) => {
-        setLoading(false);
+        
         console.error("Error: ", error);
-      });
+        if (error.response?.status === 401) {
+          axios
+            .post(
+              "https://api.uni-match.in/refresh",
+              {},
+              {
+                withCredentials: true,
+                headers: {
+                  "X-CSRF-TOKEN": localStorage.getItem("csrfTokenRefresh"),
+                },
+              },
+            )
+
+            .then((response) => {
+              const csrfTokenAccess = response.headers["x-csrf-token-access"];
+              localStorage.setItem("csrfTokenAccess", csrfTokenAccess);
+              axios
+              .post("https://api.uni-match.in/profile", formData, {
+                withCredentials: true,
+                headers: { "X-CSRF-TOKEN": localStorage.getItem("csrfTokenAccess") },
+              })
+              .then((response) => {
+                setLoading(false);
+                console.log("Message from server: ", response.data);
+                navigate("/done", {replace:true})
+              })
+                .catch((retryError) =>
+                  console.error("Failed after refresh:", retryError),
+                );
+            })
+            .catch(() =>
+              console.error("Session expired, please log in again."),
+            );
+        }
+      })
+      .finally(()=>{
+        setLoading(false);}
+      )
   }
 
   const styles = {
