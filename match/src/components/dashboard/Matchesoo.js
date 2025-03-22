@@ -129,6 +129,7 @@ const ProfileGrid = () => {
   const {setLikesNoti} = useAuth();
   //const [open, setOpen] = useState(false);
   const [name, setName] = useState(false);
+  const [likesList, setLikesList] = useState([])
  // const [imageClick, setImageClick] = useState(false);
  // const [currentImageIndex, setCurrentImageIndex] = useState(0);
 //  const [imageLoaded, setImageLoaded] = useState(false);
@@ -152,7 +153,7 @@ const ProfileGrid = () => {
       })
       .then((response) => {
         console.log(response.data);
-        //setLikesList(response.data);
+        setLikesList(response.data);
       })
       .catch((error) => {
         console.error("Error: ", error);
@@ -303,7 +304,7 @@ const ProfileGrid = () => {
         {/* Scrollable Grid */}
         <Box sx={scrollableGridStyle}>
           <Grid container spacing={{ xs: 1, sm: 2 }} columns={{ xs: 2, sm: 2 }}>
-            {profiles.map((profile, index) => (
+            {likesList.map((profile, index) => (
               <Grid item xs={1} key={index}>
                 <Card
                   onClick={() => navigate('/app/mathes/info')}
@@ -320,8 +321,7 @@ const ProfileGrid = () => {
                 >
                   <CardMedia
                     component="img"
-                    image={profile.imageUrl}
-                    alt={profile.imageAlt}
+                    image={profile.images[0]}
                     sx={{
                       width: "100%",
                       height: "200px",
@@ -432,7 +432,7 @@ const ProfileGrid = () => {
                     }}
                   >
                     <Typography sx={nameStyle}>{profile.name}</Typography>
-                    <Typography sx={detailsStyle}>{profile.details}</Typography>
+                    <Typography sx={detailsStyle}>{profile.reason}</Typography>
                   </CardContent>
                 </Card>
               </Grid>
