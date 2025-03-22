@@ -244,6 +244,7 @@ const ProfileGrid = () => {
       })
       .finally(() => {
         //setLoad(false);
+        setName(false)
       });
   }
 
@@ -312,6 +313,7 @@ const ProfileGrid = () => {
       })
       .finally(() => {
         //setLoad(false);
+        setName(false)
       });
   }
 

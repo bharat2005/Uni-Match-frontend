@@ -3,7 +3,7 @@ import * as React from "react";
 import { Player } from "@lottiefiles/react-lottie-player";
 import { Box, Typography, Button, Modal, Fade,Grow } from "@mui/material";
 
-const Container = ({ setModalOpen, modalOpen, name, handleCrossClick, handleLikeClick, target_reg_no }) => {
+const Container = ({ setModalOpen, modalOpen, name, handleCrossClick, handleLikeClick, target_reg_no, handleCrossClick1 }) => {
 
 console.log("ye dhekkk bsdk" ,target_reg_no)
 console.log(typeof target_reg_no)
@@ -16,7 +16,7 @@ console.log(typeof target_reg_no)
   return (
     <Modal
       open={modalOpen}
-      onClose={() => setModalOpen(false)}
+      //onClose={() => setModalOpen(false)}
       aria-labelledby="modal-title"
       aria-describedby="modal-description"
       closeAfterTransition
@@ -149,7 +149,7 @@ console.log(typeof target_reg_no)
           }}
         >
           <Button
-            onClick={name=="reject"?  ()=> {handleCrossClick(target_reg_no)} : name == "accept" ? ()=>{handleLikeClick(target_reg_no)} : null}
+            onClick={name=="reject"?  ()=> {handleCrossClick(target_reg_no)} : name == "accept" ? ()=>{handleLikeClick(target_reg_no)} : name == "unlike" ? ()=>{handleCrossClick1(target_reg_no)} : null}
             sx={{
               height: "50px",
               padding: "0 40px",

@@ -13,6 +13,7 @@ import Modall from "./Modal";
 import { ArrowBackIos, ArrowForwardIos } from "@mui/icons-material";
 import Drawer2 from './Drawer2'
 import { useNavigate } from "react-router-dom";
+import axios from 'axios';
 import { Outlet } from "react-router-dom";
 
 const profile = {
@@ -36,10 +37,23 @@ const profile = {
 const ProfileGrid = () => {
   const navigate = useNavigate();
   const [modalOpen, setModalOpen] = useState(false);
-  const [imageClick, setImageClick] = useState(false);
-  const [currentImageIndex, setCurrentImageIndex] = useState(0);
-  const [imageLoaded, setImageLoaded] = useState(false);
-  const list = profile.images.filter((item) => item != null);
+  const [likedList, setLikedList] = useState([]);
+  const [target_reg_no, setTargetRegNo] = useState(null)
+ 
+  useEffect(() => {
+    axios
+      .get("https://api.uni-match.in/likedbyu", {
+        withCredentials: true,
+        headers: { "X-CSRF-TOKEN": localStorage.getItem("csrfTokenAccess") },
+      })
+      .then((response) => {
+        console.log(response.data);
+        setLikedList(response.data.LikedByYou);
+      })
+      .catch((error) => {
+        console.error("Error: ", error);
+      });
+  }, []);
 
   
   useEffect(() => {
@@ -52,55 +66,73 @@ const ProfileGrid = () => {
     };
   }, []);
 
+  function handleCrossClick(target_reg_no) {
+    //setLoad(true);
+    axios
+      .post(
+        "https://api.uni-match.in/likedbyudel",
+        { target_reg_no, swipe_action: "left" },
+        {
+          withCredentials: true,
+          headers: { "X-CSRF-TOKEN": localStorage.getItem("csrfTokenAccess") },
+        },
+      )
+      .then((responce) => {
+        console.log(responce.data.message);
+        setLikedList((prev) => {
+          return [ ...responce.data.likedByYou ];
+        });
+      })
+      .catch((error) => {
+        console.error("Error: ", error);
+        if (error.response?.status === 401) {
+          axios
+            .post(
+              "https://api.uni-match.in/refresh",
+              {},
+              {
+                withCredentials: true,
+                headers: {
+                  "X-CSRF-TOKEN": localStorage.getItem("csrfTokenRefresh"),
+                },
+              },
+            )
 
+            .then((response) => {
+              const csrfTokenAccess = response.headers["x-csrf-token-access"];
+              localStorage.setItem("csrfTokenAccess", csrfTokenAccess);
 
-  const profiles = [
-    {
-      name: "Rakesh, 23",
-      details: "💘Long-term ",
-      imageUrl: "/9.jpg",
-      imageAlt: "Profile photo",
-    },
-    {
-      name: "Amit, 18",
-      details: "💘Long-term ",
-      imageUrl: "/6.jpg",
-      imageAlt: "Profile photo",
-    },
-    {
-      name: "Bharat, 19",
-      details: "🎉Casual Dating",
-      imageUrl: "/5.jpg",
-      imageAlt: "Profile photo",
-    },
-    {
-      name: "Tanmay, 22",
-      details: "93年 · ",
-      imageUrl: "/11.jpg",
-      imageAlt: "Profile photo",
-    },
-    {
-      name: "Rahul, 20",
-      details: "😍Short-term",
-      imageUrl: "/7.jpg",
-      imageAlt: "Profile photo",
-    },
-
-    {
-      name: "Deepak, 23",
-      details: "🎉Casual Dating",
-      imageUrl: "/8.jpg",
-      imageAlt: "Profile photo",
-    },
-
-    {
-      name: "Nikhil, 19",
-      details: "😍Short-term",
-      imageUrl: "/10.jpg",
-      imageAlt: "Profile photo",
-    },
-    
-  ];
+              axios
+                .post(
+                  "https://api.uni-match.in/likedbyudel",
+                  { target_reg_no, swipe_action: "left" },
+                  {
+                    withCredentials: true,
+                    headers: {
+                      "X-CSRF-TOKEN": localStorage.getItem("csrfTokenAccess"),
+                    },
+                  },
+                )
+                .then((response) => {
+                  console.log("Protected Data (After Refresh):", response.data);
+                  setLikedList((prev) => {
+                    return [ ...response.data.likedByYou ];
+                  });
+                })
+                .catch((retryError) =>
+                  console.error("Failed after refresh:", retryError),
+                );
+            })
+            .catch(() =>
+              console.error("Session expired, please log in again."),
+            );
+        }
+      })
+      .finally(() => {
+        //setLoad(false);
+        setModalOpen(false)
+      });
+  }
 
 
   return (
@@ -109,6 +141,8 @@ const ProfileGrid = () => {
         setModalOpen={setModalOpen}
         modalOpen={modalOpen}
         name={"unlike"}
+        handleCrossClick1={handleCrossClick}
+        target_reg_no={String(target_reg_no)}
       />
 
     <Outlet/>
@@ -156,8 +190,9 @@ const ProfileGrid = () => {
             },
           }}
         >
+          {likedList.length ? (
           <Grid container spacing={{ xs: 1, sm: 2 }} columns={{ xs: 2, sm: 2 }}>
-            {profiles.map((profile, index) => (
+            {likedList.map((profile, index) => (
               <Grid item xs={1} key={index} onClick={()=> navigate("/app/likes/info")}>
                 <Card
                   sx={{
@@ -173,8 +208,8 @@ const ProfileGrid = () => {
                 >
                   <CardMedia
                     component="img"
-                    image={profile.imageUrl}
-                    alt={profile.imageAlt}
+                    image={profile.images[0]}
+                    
                     sx={{
                       width: "100%",
                       height: "200px",
@@ -196,8 +231,8 @@ const ProfileGrid = () => {
                     <IconButton
                       onClick={(e) => {
                         e.stopPropagation();
-                        console.log("UnLIke Clicked");
-                        setModalOpen(true);
+                       setTargetRegNo(profile.reg_no)
+                      setModalOpen(true);
                       }}
                       sx={{
                         width: "42px",
@@ -250,13 +285,15 @@ const ProfileGrid = () => {
                         lineHeight: 1.4,
                       }}
                     >
-                      {profile.details}
+                      {profile.reason}
                     </Typography>
                   </CardContent>
                 </Card>
               </Grid>
             ))}
-          </Grid>
+          </Grid>):(
+            <div>No likes yet</div>
+          )}
           <Box
             sx={{
               height: "40px", // Same as or slightly more than the navbar height
