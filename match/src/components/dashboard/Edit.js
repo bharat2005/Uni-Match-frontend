@@ -236,12 +236,12 @@ function SearchContainer({ onClose, setIsDrawerOpen }) {
   const toggleSmallDrawer = (open) => () => setSmallDrawerOpen(open);
   const toggleBigDrawer = (open) => () => setBigDrawerOpen(open);
   const [formData, setFormData] = React.useState({
-    reason: selfProfile?.reason || "",
-    name: selfProfile?.name || "",
-    personality: selfProfile?.personality || "",
-    images: selfProfile?.images || [],
-    bio: selfProfile?.bio || "",
-    interests: selfProfile?.interests || [],
+    reason: selfprofile?.reason || "",
+    name: selfprofile?.name || "",
+    personality: selfprofile?.personality || "",
+    images: selfprofile?.images || [],
+    bio: selfprofile?.bio || "",
+    interests: selfprofile?.interests || [],
   })
   const [selectedGender, setSelectedGender] = React.useState(formData['personality']);
   const [selectedOption, setSelectedOption] = React.useState(formData['reason']);
