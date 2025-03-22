@@ -28,7 +28,7 @@ export default function AuthWrapper({ setBool }) {
         console.log("Session expired, redirecting to login...");
       })
       .finally(() => {
-        setBool(true);
+        setTimeout(()=>{setBool(true)},1000)
       });
   }, []);
 
