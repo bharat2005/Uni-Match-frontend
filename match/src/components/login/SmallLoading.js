@@ -3,24 +3,28 @@ import * as React from "react";
 
 function HeartAnimation() {
   const containerStyle = {
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "center",
-    height: "100vh",
+    position: "fixed",
+    top: 0,
+    left: 0,
     width: "100vw",
-    background: "transparent",
-    fontFamily: "Inter, sans-serif",
+    height: "100vh",
+    backgroundColor: "rgba(255, 255, 255, 0.4)", 
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+    zIndex: 9999,
+  
   };
 
   const heartFigureStyle = {
     position: "relative",
-    width: "54px",
-    height: "54px",
+    width: "60px",
+    height: "60px",
     margin: 0,
   };
 
   const heartSvgStyle = {
-    position: "absolute",
+    position: "relative",
     width: "100%",
     height: "100%",
   };
@@ -45,13 +49,13 @@ function HeartAnimation() {
             d="M50 85C20 65 8 55 8 38C8 15 35 10 50 30C65 10 92 15 92 38C92 55 80 65 50 85Z"
             fill="none"
             stroke="#F5E5FF"
-            strokeWidth="6"
+            strokeWidth="7"
           />
           <path
             d="M50 85C20 65 8 55 8 38C8 15 35 10 50 30C65 10 92 15 92 38C92 55 80 65 50 85Z"
             fill="none"
             stroke="url(#heart-gradient)"
-            strokeWidth="6"
+            strokeWidth="7"
             strokeLinecap="round"
           >
 <animate
