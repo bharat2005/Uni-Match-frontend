@@ -18,6 +18,7 @@ export const AuthProvider = ({ children }) => {
   const [likesNoti, setLikesNoti] = useState([])
   const [matchesNoti, setMatchesNoti] = useState([])
 
+  console.log(selfprofile)
   useEffect(() => {
     if (bool) {
       localStorage.setItem("bool", "uni-match");

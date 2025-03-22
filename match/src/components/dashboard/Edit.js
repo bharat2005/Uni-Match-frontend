@@ -230,7 +230,7 @@ const styles = {
 
 function SearchContainer({ onClose, setIsDrawerOpen }) {
   const navigate = useNavigate();
-  const {selfProfile, setSelfProfile} = useAuth();
+  const {selfprofile, setSelfProfile} = useAuth();
   const [smallDrawerOpen, setSmallDrawerOpen] = React.useState(false);
   const [bigDrawerOpen, setBigDrawerOpen] = React.useState(false);
   const toggleSmallDrawer = (open) => () => setSmallDrawerOpen(open);
@@ -246,6 +246,7 @@ function SearchContainer({ onClose, setIsDrawerOpen }) {
   const [selectedGender, setSelectedGender] = React.useState(formData['personality']);
   const [selectedOption, setSelectedOption] = React.useState(formData['reason']);
 
+  console.log(selfprofile);
 
   const handleOptionSelect = (option) => {
     setSelectedOption(option);
