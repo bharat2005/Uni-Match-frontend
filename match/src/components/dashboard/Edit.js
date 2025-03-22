@@ -17,7 +17,11 @@ import {
   SwipeableDrawer,
   Container,
 } from "@mui/material";
+import SmallLoading from "../login/SmallLoading";
 import { useAuth } from "../../AuthProvider";
+import AddPhotoAlternateIcon from "@mui/icons-material/AddPhotoAlternate";
+import DeleteIcon from "@mui/icons-material/Delete";
+import axios from 'axios';
 import AddIcon from "@mui/icons-material/Add";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import CloseIcon from "@mui/icons-material/Close";
@@ -235,16 +239,83 @@ function SearchContainer({ onClose, setIsDrawerOpen }) {
   const [bigDrawerOpen, setBigDrawerOpen] = React.useState(false);
   const toggleSmallDrawer = (open) => () => setSmallDrawerOpen(open);
   const toggleBigDrawer = (open) => () => setBigDrawerOpen(open);
+  const [images, setImages] = React.useState(
+    selfprofile?.images?.length > 0 ? [...selfprofile.images] : Array(6).fill(null)
+  );  
   const [formData, setFormData] = React.useState({
     reason: selfprofile?.reason || "",
     name: selfprofile?.name || "",
     personality: selfprofile?.personality || "",
-    images: selfprofile?.images || [],
+    images: selfprofile?.images || [...Array(6).fill(null)],
     bio: selfprofile?.bio || "",
     interests: selfprofile?.interests || [],
   })
   const [selectedGender, setSelectedGender] = React.useState(formData['personality']);
   const [selectedOption, setSelectedOption] = React.useState(formData['reason']);
+  const fileInputRefs = React.useRef([]);
+  const [loading, setLoading] = React.useState(false)
+  if (fileInputRefs.current.length !== 6) {
+    fileInputRefs.current = Array(6)
+      .fill()
+      .map(() => React.createRef());
+  }
+
+  const handleImageSelect = (index, event) => {
+    const file = event.target.files[0];
+    if (!file || !file.type.startsWith("image/")) return;
+
+    setLoading(true)
+    
+    axios
+      .post("https://api.uni-match.in/get_presigned_url", {
+        file_name: file.name,
+        file_type: file.type,
+      })
+      .then((response) => {
+        const { presigned_url, file_url } = response.data; 
+
+    
+        return axios.put(presigned_url, file, {
+          headers: { "Content-Type": file.type },
+        }).then(() => file_url); 
+      })
+      .then((file_url) => {
+      
+        const newtempImages = [...formData["images"]];
+        newtempImages[index] = file_url;
+        setFormData((prev) => ({ ...prev, images: newtempImages }));
+
+      
+        const reader = new FileReader();
+        reader.onload = (e) => {
+          const newImages = [...images];
+          newImages[index] = e.target.result;
+          setImages(newImages);
+        };
+        reader.readAsDataURL(file);
+      })
+      .catch((error) => {
+        console.error("Error uploading image:", error);
+      })
+      .finally(() => {
+        setLoading(false); 
+      });
+};
+
+
+  const handleRemoveImage = (index, event) => {
+    event.stopPropagation();
+    const newImages = [...images];
+    newImages[index] = null;
+    setImages(newImages);
+
+    const newtempImages = [...formData["images"]];
+    newtempImages[index] = null;
+    setFormData((prev) => ({ ...prev, images: newtempImages }));
+    if (fileInputRefs.current[index]) {
+      fileInputRefs.current[index].current.value = "";
+    }
+  };
 
   console.log("selfprofile",selfprofile);
   console.log("formData", formData)
@@ -300,7 +371,8 @@ function SearchContainer({ onClose, setIsDrawerOpen }) {
  
 
 
-  return (
+  return (<>
+    {loading && <SmallLoading />}
     <Box
       sx={{
         position: "absolute",
@@ -415,63 +487,157 @@ function SearchContainer({ onClose, setIsDrawerOpen }) {
   >
     Photos
   </Typography>
-  <Box sx={imageGridStyle}>
-    {Array(6)
-      .fill(0)
-      .map((_, index) => (
-        <Box key={index} sx={uploadBoxStyle}>
-          {/* Show existing images if available */}
-          {formData.images[index] ? (
-            <img
-              src={typeof formData.images[index] === "string" ? formData.images[index] : URL.createObjectURL(formData.images[index])}
-              alt={`preview-${index}`}
-              style={{
-                width: "100%",
-                height: "100%",
-                objectFit: "cover",
-                borderRadius: "8px",
-              }}
-            />
-          ) : (
-            <label htmlFor={`image-upload-${index}`}   style={{
-              cursor: "pointer",
+
+
+  <Box
+        sx={{
+          display: "grid",
+          gridTemplateColumns: "repeat(3, 1fr)",
+          gap: { xs: 1.25, sm: 2.5 },
+        }}
+      >
+        {images.map((image, index) => (
+          <Box
+            key={index}
+            onClick={() => fileInputRefs.current[index].current.click()}
+            sx={{
+              width: "100%",
+              height:'100%',
+              aspectRatio: "0.8",
+              borderRadius: 2,
               display: "flex",
+              flexDirection: "column",
               alignItems: "center",
               justifyContent: "center",
-              height: "100%",
+              margin: "auto",
+              position: "relative",
+              border: "2px dashed #ff97b5",
+              backgroundColor: "#fff",
+              overflow: "hidden",
+              transition: "all 0.3s ease",
+              "&:hover": {
+                transform: "scale(1.02)",
+                backgroundColor: "#fff5f8",
+              },
               outline: "none",
+              userSelect: "none",
               WebkitTapHighlightColor: "transparent",
-            }}>
-              <AddIcon
-                sx={{
-                  fontSize: 24,
-                  color: "#999",
-                  transition: "color 0.2s ease",
-                  "&:hover": { color: "#666" },
-                }}
-              />
-            </label>
-          )}
-          {/* Hidden File Input */}
-          <input
-            type="file"
-            id={`image-upload-${index}`}
-            accept="image/*"
-            style={{ display: "none" }}
-            onChange={(e) => {
-              const file = e.target.files[0];
-              if (file) {
-                setFormData((prev) => {
-                  const updatedImages = [...prev.images];
-                  updatedImages[index] = file;
-                  return { ...prev, images: updatedImages };
-                });
-              }
+              "&:focus": {
+                outline: "none",
+                boxShadow: "none",
+              },
+            }}
+            tabIndex={-1}
+          >
+            <input
+              type="file"
+              accept="image/*"
+              ref={fileInputRefs.current[index]}
+              onChange={(e) => handleImageSelect(index, e)}
+              style={{ display: "none" }}
+            />
+
+
+
+
+{images.map((image, index) => {
+  const previewImage = image || formData.images[index]; // Use either local preview or existing URL
+  return (
+    <Box
+      key={index}
+      onClick={() => fileInputRefs.current[index].current.click()}
+      sx={{
+        width: "100%",
+        height: "100%",
+        aspectRatio: "0.8",
+        borderRadius: 2,
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center",
+        justifyContent: "center",
+        margin: "auto",
+        position: "relative",
+        border: "2px dashed #ff97b5",
+        backgroundColor: "#fff",
+        overflow: "hidden",
+        transition: "all 0.3s ease",
+        "&:hover": {
+          transform: "scale(1.02)",
+          backgroundColor: "#fff5f8",
+        },
+        outline: "none",
+        userSelect: "none",
+        WebkitTapHighlightColor: "transparent",
+        "&:focus": {
+          outline: "none",
+          boxShadow: "none",
+        },
+      }}
+      tabIndex={-1}
+    >
+      <input
+        type="file"
+        accept="image/*"
+        ref={fileInputRefs.current[index]}
+        onChange={(e) => handleImageSelect(index, e)}
+        style={{ display: "none" }}
+      />
+
+      {previewImage ? (
+        <>
+          <Box
+            sx={{
+              width: "100%",
+              height: "100%",
+              backgroundImage: `url(${previewImage})`,
+              backgroundSize: "cover",
+              backgroundPosition: "center",
             }}
           />
+          <Button
+            onClick={(e) => handleRemoveImage(index, e)}
+            sx={{
+              position: "absolute",
+              top: "8px",
+              right: "8px",
+              minWidth: "auto",
+              padding: "4px",
+              backgroundColor: "rgba(255, 255, 255, 0.8)",
+              borderRadius: "50%",
+              "&:hover": {
+                backgroundColor: "rgba(255, 255, 255, 0.9)",
+              },
+            }}
+          >
+            <DeleteIcon sx={{ fontSize: 20, color: "#FF4D4D" }} />
+          </Button>
+        </>
+      ) : (
+        <Box sx={{ display: "flex", flexDirection: "column", alignItems: "center", gap: "8px" }}>
+          <AddPhotoAlternateIcon sx={{ fontSize: 40, color: "#FFD6E7" }} />
         </Box>
-      ))}
-  </Box>
+      )}
+    </Box>
+  );
+})
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+      </Box>
+
+
+
 </Box>
 
 
@@ -762,7 +928,7 @@ function SearchContainer({ onClose, setIsDrawerOpen }) {
            </Box>
       </SwipeableDrawer>
     </Box>
-  );
+</>  );
 }
 
 export default SearchContainer;
