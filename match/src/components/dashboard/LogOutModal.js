@@ -1,6 +1,73 @@
 import { Modal, Typography, Box, Button } from "@mui/material";
+import axios from 'axios';
+import {useAuth} from '../../AuthProvider';
+import { useNavigate } from "react-router-dom";
 
 export default function LogOutModal({ open, handleClose, handleLogout }) {
+  const {logout} = useAuth();
+  const navigate = useNavigate();
+
+
+  
+  function handleClick() {
+    axios
+      .get("https://api.uni-match.in/logout", {
+        withCredentials: true,
+        headers: { "X-CSRF-TOKEN": localStorage.getItem("csrfTokenAccess") },
+      })
+      .then((response) => {
+        console.log(response.data);
+        localStorage.removeItem("csrfTokenAccess");
+        localStorage.removeItem("csrfTokenRefresh");
+        localStorage.removeItem("value");
+        logout();
+        navigate("/", { replace: true });
+      })
+      .catch((error) => {
+        console.error("Error: ", error);
+        if (error.response?.status === 401) {
+          axios
+            .post(
+              "https://api.uni-match.in/refresh",
+              {},
+              {
+                withCredentials: true,
+                headers: {
+                  "X-CSRF-TOKEN": localStorage.getItem("csrfTokenRefresh"),
+                },
+              },
+            )
+
+            .then((response) => {
+              const csrfTokenAccess = response.headers["x-csrf-token-access"];
+              localStorage.setItem("csrfTokenAccess", csrfTokenAccess);
+
+              axios
+                .get("https://api.uni-match.in/logout", {
+                  withCredentials: true,
+                  headers: {
+                    "X-CSRF-TOKEN": localStorage.getItem("csrfTokenAccess"),
+                  },
+                })
+                .then((response) => {
+                  console.log("Protected Data (After Refresh):", response.data);
+                  localStorage.removeItem("csrfTokenAccess");
+                  localStorage.removeItem("csrfTokenRefresh");
+                  localStorage.removeItem("value");
+                  logout();
+                  navigate("/", { replace: true });
+                })
+                .catch((retryError) =>
+                  console.error("Failed after refresh:", retryError),
+                );
+            })
+            .catch(() =>
+              console.error("Session expired, please log in again."),
+            );
+        }
+      });
+  }
+
   return (
     <Modal open={open} onClose={handleClose}>
       <Box
@@ -70,7 +137,7 @@ export default function LogOutModal({ open, handleClose, handleLogout }) {
             Cancel
           </Button>
           <Button
-            onClick={handleClose}
+            onClick={handleClick}
             sx={{
               flex: 1,
               backgroundColor: "#ff4757",

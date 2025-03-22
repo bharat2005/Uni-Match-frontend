@@ -32,10 +32,12 @@ import Delete from "./DeleteProfile";
 import Support from "./Support";
 import EditStepForm from "./Edit";
 import Modal from "./Modal2.0";
+import {useAuth} from '../../AuthProvider';
 
 const ProfileContainer = () => {
   const navigate = useNavigate();
   const theme = useTheme();
+  const { logout } = useAuth();
   const isMobile = useMediaQuery("(max-width:640px)");
   const isTablet = useMediaQuery("(max-width:991px)");
   const [lpuselfprofile, setLpuSelfProfile] = useState({});
@@ -97,6 +99,9 @@ const ProfileContainer = () => {
         }
       });
   }, []);
+
+
+
 
 
   const handleShare = () => {

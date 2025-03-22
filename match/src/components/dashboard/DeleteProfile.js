@@ -2,16 +2,75 @@
 import React, { useState } from "react";
 import { Box, Typography, IconButton, Button, Modal } from "@mui/material";
 import { useNavigate } from "react-router-dom";
+import {useAuth} from '../../AuthProvider';
+import axios from 'axios';
 
 const DeleteProfile = ({ onClose }) => {
   const [open, setOpen] = useState(false);
   const navigate = useNavigate();
+  const {logout} = useAuth();
   const handleDeleteClick = () => setOpen(true);
   const handleClose = () => setOpen(false);
-  const handleConfirm = () => {
-    setOpen(false);
-    console.log("Profile deleted"); // Placeholder for actual deletion logic
-  };
+
+  function handleDeleteClick2() {
+    axios
+      .get("https://api.uni-match.in/delaccount", {
+        withCredentials: true,
+        headers: { "X-CSRF-TOKEN": localStorage.getItem("csrfTokenAccess") },
+      })
+      .then((response) => {
+        console.log(response.data);
+        localStorage.removeItem("csrfTokenAccess");
+        localStorage.removeItem("csrfTokenRefresh");
+        localStorage.removeItem("value");
+        logout();
+        navigate("/", { replace: true });
+      })
+      .catch((error) => {
+        console.error("Error: ", error);
+        if (error.response?.status === 401) {
+          axios
+            .post(
+              "https://api.uni-match.in/refresh",
+              {},
+              {
+                withCredentials: true,
+                headers: {
+                  "X-CSRF-TOKEN": localStorage.getItem("csrfTokenRefresh"),
+                },
+              },
+            )
+
+            .then((response) => {
+              const csrfTokenAccess = response.headers["x-csrf-token-access"];
+              localStorage.setItem("csrfTokenAccess", csrfTokenAccess);
+
+              axios
+                .get("https://api.uni-match.in/delaccount", {
+                  withCredentials: true,
+                  headers: {
+                    "X-CSRF-TOKEN": localStorage.getItem("csrfTokenAccess"),
+                  },
+                })
+                .then((response) => {
+                  console.log("Protected Data (After Refresh):", response.data);
+                  localStorage.removeItem("csrfTokenAccess");
+                  localStorage.removeItem("csrfTokenRefresh");
+                  localStorage.removeItem("value");
+                  logout();
+                  navigate("/", { replace: true });
+                })
+                .catch((retryError) =>
+                  console.error("Failed after refresh:", retryError),
+                );
+            })
+            .catch(() =>
+              console.error("Session expired, please log in again."),
+            );
+        }
+      });
+  }
+
 
   return (
     <Box
@@ -233,7 +292,7 @@ const DeleteProfile = ({ onClose }) => {
               Cancel
             </Button>
             <Button
-              onClick={handleConfirm}
+              onClick={handleDeleteClick2}
               sx={{
                 flex: 1,
                 backgroundColor: "#D32F2F",
