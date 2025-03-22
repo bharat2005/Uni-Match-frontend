@@ -13,17 +13,20 @@ export default function AuthWrapper({ setBool }) {
         {
           withCredentials: true,
           headers: { "X-CSRF-TOKEN": localStorage.getItem("csrfTokenRefresh") },
-        },
+        }
       )
       .then((response) => {
-        console.log("Session restored! Navigating to dashboard...");
+        console.log("Session restored! Staying on the same page...");
 
+        // Store the new access token
         const csrfTokenAccess = response.headers["x-csrf-token-access"];
         localStorage.setItem("csrfTokenAccess", csrfTokenAccess);
-        navigate("/app/home", { replace: true });
+
+        // ⚠️ Don't force navigation – Let React Router handle it
       })
       .catch(() => {
         console.log("Session expired, redirecting to login...");
+        navigate("/", { replace: true });
       })
       .finally(() => {
         setBool(true);
