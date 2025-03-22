@@ -37,68 +37,66 @@ import {useAuth} from '../../AuthProvider';
 const ProfileContainer = () => {
   const navigate = useNavigate();
   const theme = useTheme();
-  const { logout } = useAuth();
+  const { lpuselfprofile } = useAuth();
   const isMobile = useMediaQuery("(max-width:640px)");
   const isTablet = useMediaQuery("(max-width:991px)");
-  const [lpuselfprofile, setLpuSelfProfile] = useState({});
-  const [selfprofile, setSelfProfile] = useState({})
   const [logOutModalOpen, setLogOutModalOpen] = React.useState(false)
   const [open, setOpen] = React.useState(null);
   const [modalOpen, setModalOpen] = React.useState(false);
 
-  useEffect(() => {
-    axios
-      .get("https://api.uni-match.in/profilecomp", {
-        withCredentials: true,
-        headers: { "X-CSRF-TOKEN": localStorage.getItem("csrfTokenAccess") },
-      })
-      .then((response) => {
-        console.log(response.data);
-        setLpuSelfProfile(response.data.lpuselfprofile);
-        setSelfProfile(response.data.selfprofile);
-      })
-      .catch((error) => {
-        console.error("Error", error);
+  // useEffect(() => {
+  //   axios
+  //     .get("https://api.uni-match.in/profilecomp", {
+  //       withCredentials: true,
+  //       headers: { "X-CSRF-TOKEN": localStorage.getItem("csrfTokenAccess") },
+  //     })
+  //     .then((response) => {
+  //       console.log(response.data);
+  //       setLpuSelfProfile(response.data.lpuselfprofile);
+  //       setSelfProfile(response.data.selfprofile);
+  //     })
+  //     .catch((error) => {
+  //       console.error("Error", error);
 
-        if (error.response?.status === 401) {
-          axios
-            .post(
-              "https://api.uni-match.in/refresh",
-              {},
-              {
-                withCredentials: true,
-                headers: {
-                  "X-CSRF-TOKEN": localStorage.getItem("csrfTokenRefresh"),
-                },
-              },
-            )
+  //       if (error.response?.status === 401) {
+  //         axios
+  //           .post(
+  //             "https://api.uni-match.in/refresh",
+  //             {},
+  //             {
+  //               withCredentials: true,
+  //               headers: {
+  //                 "X-CSRF-TOKEN": localStorage.getItem("csrfTokenRefresh"),
+  //               },
+  //             },
+  //           )
 
-            .then((response) => {
-              const csrfTokenAccess = response.headers["x-csrf-token-access"];
-              localStorage.setItem("csrfTokenAccess", csrfTokenAccess);
+  //           .then((response) => {
+  //             const csrfTokenAccess = response.headers["x-csrf-token-access"];
+  //             localStorage.setItem("csrfTokenAccess", csrfTokenAccess);
 
-              axios
-                .get("https://api.uni-match.in/profilecomp", {
-                  withCredentials: true,
-                  headers: {
-                    "X-CSRF-TOKEN": localStorage.getItem("csrfTokenAccess"),
-                  },
-                })
-                .then((response) => {
-                  console.log("Protected Data (After Refresh):", response.data);
-                  setLpuSelfProfile(response.data.lpuselfprofile);
-                  setSelfProfile(response.data.selfprofile);
-                })
-                .catch((retryError) =>
-                  console.error("Failed after refresh:", retryError),
-                );
-            })
-            .catch(() =>
-              console.error("Session expired, please log in again."),
-            );
-        }
-      });
-  }, []);
+  //             axios
+  //               .get("https://api.uni-match.in/profilecomp", {
+  //                 withCredentials: true,
+  //                 headers: {
+  //                   "X-CSRF-TOKEN": localStorage.getItem("csrfTokenAccess"),
+  //                 },
+  //               })
+  //               .then((response) => {
+  //                 console.log("Protected Data (After Refresh):", response.data);
+  //                 setLpuSelfProfile(response.data.lpuselfprofile);
+  //                 setSelfProfile(response.data.selfprofile);
+  //               })
+  //               .catch((retryError) =>
+  //                 console.error("Failed after refresh:", retryError),
+  //               );
+  //           })
+  //           .catch(() =>
+  //             console.error("Session expired, please log in again."),
+  //           );
+  //       }
+  //     });
+  // }, []);
 
 
 

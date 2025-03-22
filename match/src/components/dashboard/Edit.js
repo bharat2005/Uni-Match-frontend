@@ -17,6 +17,7 @@ import {
   SwipeableDrawer,
   Container,
 } from "@mui/material";
+import { useAuth } from "../../AuthProvider";
 import AddIcon from "@mui/icons-material/Add";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import CloseIcon from "@mui/icons-material/Close";
@@ -229,7 +230,8 @@ const styles = {
 
 function SearchContainer({ onClose, setIsDrawerOpen }) {
   const navigate = useNavigate();
-    const [selectedGender, setSelectedGender] = React.useState("");
+  const {selfProfile} = useAuth();
+  const [selectedGender, setSelectedGender] = React.useState("");
   const [gender, setGender] = React.useState("any");
   const [education, setEducation] = React.useState("");
   const [formData, setFormData] = React.useState({
