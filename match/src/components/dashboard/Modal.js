@@ -6,6 +6,7 @@ import { Box, Typography, Button, Modal, Fade,Grow } from "@mui/material";
 const Container = ({ setModalOpen, modalOpen, name, handleCrossClick, handleLikeClick, target_reg_no }) => {
 
 console.log("ye dhekkk bsdk" ,target_reg_no)
+console.log(typeof target_reg_no)
 
   const handleLater = () => {
     console.log("Later clicked");
