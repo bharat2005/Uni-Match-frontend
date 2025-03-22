@@ -71,7 +71,7 @@ const Container = ({ modalOpen, setModalOpen, name , handleShare}) => {
             position: "relative",
             bottom: "40%",
             alignItems: "center",
-            gap: "8px",
+            gap: name == "update"? "16px": "8px",
             width: "100%",
           }}
         >
@@ -93,7 +93,7 @@ const Container = ({ modalOpen, setModalOpen, name , handleShare}) => {
             }}
           >
             {name === "share" && "Spread the love at LPU!"}
-            {name === "update" && "Not quite feeling it?"}
+            {name === "update" && "Profile updated successfully!"}
           </Typography>
           <Typography
             id="modal-description"
@@ -117,7 +117,7 @@ const Container = ({ modalOpen, setModalOpen, name , handleShare}) => {
           >
             {name === "share" &&
               "Help your friends find meaningful connections — share Uni-Match and grow the LPU community into a place where real bonds and relationships thrive!"}
-            {name === "update" && "Wanna move on?"}
+            {name === "update" && "Your updates have been applied."}
           </Typography>
         </Box>
 
@@ -129,12 +129,11 @@ const Container = ({ modalOpen, setModalOpen, name , handleShare}) => {
             alignItems: "center",
             width: "100%",
             position: "relative",
-            bottom: "40%",
+            bottom: name == "update"? "30%" : "40%",
           }}
         >
           <Button
-            onClick={name=="share"? handleShare : null}
-            aria-label="解锁互动"
+            onClick={name=="share"? handleShare : name=="update" ? ()=>{setModalOpen(false)} : null}
             sx={{
               height: "50px",
               padding: "0 40px",
@@ -162,7 +161,7 @@ const Container = ({ modalOpen, setModalOpen, name , handleShare}) => {
             }}
           >
             {name === "share" && "Share"}
-            {name === "update" && "Continue"}
+            {name === "update" && "Okay!"}
           </Button>
         </Box>
       </Box>

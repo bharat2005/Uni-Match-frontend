@@ -19,6 +19,7 @@ import {
 } from "@mui/material";
 import SmallLoading from "../login/SmallLoading";
 import { useAuth } from "../../AuthProvider";
+import Modall from "./Modal2.0";
 import AddPhotoAlternateIcon from "@mui/icons-material/AddPhotoAlternate";
 import DeleteIcon from "@mui/icons-material/Delete";
 import axios from 'axios';
@@ -253,7 +254,8 @@ function SearchContainer({ onClose, setIsDrawerOpen }) {
   const [selectedGender, setSelectedGender] = React.useState(formData['personality']);
   const [selectedOption, setSelectedOption] = React.useState(formData['reason']);
   const fileInputRefs = React.useRef([]);
-  const [loading, setLoading] = React.useState(false)
+  const [loading, setLoading] = React.useState(false);
+  const [modalOpen, setModalOpen] = React.useState(false);
 
   if (fileInputRefs.current.length !== 6) {
     fileInputRefs.current = Array(6)
@@ -380,9 +382,10 @@ function SearchContainer({ onClose, setIsDrawerOpen }) {
       .then((response) => {
         setLoading(false);
         console.log("Message from server: ", response.data);
-        navigate("/done", {replace:true})
+        setModalOpen(true)
       })
       .catch((error) => {
+        setModalOpen(true)
         console.error("Error: ", error);
         if (error.response?.status === 401) {
           axios
@@ -427,7 +430,16 @@ function SearchContainer({ onClose, setIsDrawerOpen }) {
 
 
   return (<>
+
+
     {loading && <SmallLoading />}
+
+    <Modall
+        setModalOpen={setModalOpen}
+        modalOpen={modalOpen}
+        name={"update"}
+      />
+
     <Box
       sx={{
         position: "absolute",
