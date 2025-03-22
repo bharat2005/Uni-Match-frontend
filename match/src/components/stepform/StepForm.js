@@ -49,7 +49,6 @@ const InputDesign = () => {
         navigate("/done", {replace:true})
       })
       .catch((error) => {
-        
         console.error("Error: ", error);
         if (error.response?.status === 401) {
           axios

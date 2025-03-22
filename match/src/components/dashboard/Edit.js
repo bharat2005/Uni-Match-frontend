@@ -233,7 +233,8 @@ function SearchContainer({ onClose, setIsDrawerOpen }) {
   const {selfProfile} = useAuth();
   const [selectedGender, setSelectedGender] = React.useState("");
   const [gender, setGender] = React.useState("any");
-  const [education, setEducation] = React.useState("");
+  const [name, setName] = React.useState(selfProfile.name);
+  const [bio, setBio] = React.useState(selfProfile.bio);
   const [formData, setFormData] = React.useState({
     reg_no: "12413928",
     reason: "Long-term relationship",
@@ -307,38 +308,8 @@ function SearchContainer({ onClose, setIsDrawerOpen }) {
     },
   };
 
-  const genderButtonStyle = (isSelected) => ({
-    px: { xs: 2, sm: 3 },
-    py: { xs: 0.75, sm: 1 },
-    borderRadius: "20px",
-    border: "1px solid #eee",
-    color: "#666",
-    fontSize: "14px",
-    bgcolor: isSelected ? "#f5f5f5" : "white",
-    "&:hover": {
-      bgcolor: isSelected ? "#f0f0f0" : "#fafafa",
-      borderColor: "#ddd",
-    },
-    textTransform: "none",
-    minWidth: "80px",
-  });
+ 
 
-  const inputBaseStyle = {
-    "& .MuiOutlinedInput-root": {
-      borderRadius: "8px",
-      fontSize: "14px",
-      "&:hover .MuiOutlinedInput-notchedOutline": {
-        borderColor: "#ddd",
-      },
-      "& .MuiOutlinedInput-notchedOutline": {
-        borderColor: "#eee",
-      },
-      "&.Mui-focused .MuiOutlinedInput-notchedOutline": {
-        borderColor: "#ff6b9c",
-        borderWidth: "1px",
-      },
-    },
-  };
 
   return (
     <Box
@@ -421,6 +392,8 @@ function SearchContainer({ onClose, setIsDrawerOpen }) {
           </Typography>
           <TextareaAutosize
            minRows={1}
+           value={name}
+           onChange={(e)=> setName(e.target.value)}
             placeholder="enter name"
             style={{
               //width: "100%",
@@ -592,6 +565,8 @@ function SearchContainer({ onClose, setIsDrawerOpen }) {
             About
           </Typography>
           <TextareaAutosize
+          value={bio}
+          onChange={(e)=> setBio(e.target.value)}
             minRows={6}
             placeholder="A few words about yourself..."
             style={{
