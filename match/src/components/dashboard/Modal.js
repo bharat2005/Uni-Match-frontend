@@ -3,11 +3,8 @@ import * as React from "react";
 import { Player } from "@lottiefiles/react-lottie-player";
 import { Box, Typography, Button, Modal, Fade,Grow } from "@mui/material";
 
-const Container = ({ setModalOpen, modalOpen, name = "accept" }) => {
-  const handleUnlock = () => {
-    console.log("Unlock clicked");
-    setModalOpen(false); // Close modal after unlock
-  };
+const Container = ({ setModalOpen, modalOpen, name, handleCrossClick, handleLikeClick, target_reg_no }) => {
+
 
   const handleLater = () => {
     console.log("Later clicked");
@@ -150,8 +147,7 @@ const Container = ({ setModalOpen, modalOpen, name = "accept" }) => {
           }}
         >
           <Button
-            onClick={handleUnlock}
-            aria-label="解锁互动"
+            onClick={name=="reject"? handleCrossClick(target_reg_no) : name == "accept" ? handleLikeClick(target_reg_no) : null}
             sx={{
               height: "50px",
               padding: "0 40px",
@@ -185,7 +181,6 @@ const Container = ({ setModalOpen, modalOpen, name = "accept" }) => {
           </Button>
           <Button
             onClick={handleLater}
-            aria-label="稍后解锁"
             sx={{
               height: "50px",
               padding: "0 40px",

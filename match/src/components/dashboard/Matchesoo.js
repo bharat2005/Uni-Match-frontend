@@ -129,6 +129,7 @@ const ProfileGrid = () => {
   const {setLikesNoti} = useAuth();
   //const [open, setOpen] = useState(false);
   const [name, setName] = useState(false);
+  const [target_reg_no, setTargetRegNo] = useState(null);
   const [likesList, setLikesList] = useState([])
  // const [imageClick, setImageClick] = useState(false);
  // const [currentImageIndex, setCurrentImageIndex] = useState(0);
@@ -180,104 +181,104 @@ const ProfileGrid = () => {
       });
   }
 
-  // function handleLikeClick(target_reg_no) {
-  //   setLoad(true);
-  //   handleNotiClick(target_reg_no);
-  //   axios
-  //     .post(
-  //       "https://api.uni-match.in/match",
-  //       { target_reg_no, swipe_action: "right" },
-  //       {
-  //         withCredentials: true,
-  //         headers: { "X-CSRF-TOKEN": localStorage.getItem("csrfTokenAccess") },
-  //       },
-  //     )
-  //     .then((responce) => {
-  //       console.log(responce.data.message);
-  //       setLikesList((prev) => {
-  //         return { ...prev, likesYou: responce.data.likesYou };
-  //       });
-  //     })
-  //     .catch((error) => {
-  //       console.error("Error: ", error);
-  //     })
-  //     .finally(() => {
-  //       setLoad(false);
-  //     });
-  // }
+  function handleLikeClick(target_reg_no) {
+    setLoad(true);
+    handleNotiClick(target_reg_no);
+    axios
+      .post(
+        "https://api.uni-match.in/match",
+        { target_reg_no, swipe_action: "right" },
+        {
+          withCredentials: true,
+          headers: { "X-CSRF-TOKEN": localStorage.getItem("csrfTokenAccess") },
+        },
+      )
+      .then((responce) => {
+        console.log(responce.data.message);
+        setLikesList((prev) => {
+          return { ...prev, likesYou: responce.data.likesYou };
+        });
+      })
+      .catch((error) => {
+        console.error("Error: ", error);
+      })
+      .finally(() => {
+        setLoad(false);
+      });
+  }
 
-  // function handleCrossClick(target_reg_no) {
-  //   setLoad(true);
-  //   handleNotiClick(target_reg_no);
-  //   axios
-  //     .post(
-  //       "https://api.uni-match.in/likeno",
-  //       { target_reg_no, swipe_action: "left" },
-  //       {
-  //         withCredentials: true,
-  //         headers: { "X-CSRF-TOKEN": localStorage.getItem("csrfTokenAccess") },
-  //       },
-  //     )
-  //     .then((responce) => {
-  //       console.log(responce.data.message);
-  //       setLikesList((prev) => {
-  //         return { ...prev, likesYou: responce.data.likesYou };
-  //       });
-  //     })
-  //     .catch((error) => {
-  //       console.error("Error: ", error);
-  //       if (error.response?.status === 401) {
-  //         axios
-  //           .post(
-  //             "https://api.uni-match.in/refresh",
-  //             {},
-  //             {
-  //               withCredentials: true,
-  //               headers: {
-  //                 "X-CSRF-TOKEN": localStorage.getItem("csrfTokenRefresh"),
-  //               },
-  //             },
-  //           )
+  function handleCrossClick(target_reg_no) {
+    setLoad(true);
+    handleNotiClick(target_reg_no);
+    axios
+      .post(
+        "https://api.uni-match.in/likeno",
+        { target_reg_no, swipe_action: "left" },
+        {
+          withCredentials: true,
+          headers: { "X-CSRF-TOKEN": localStorage.getItem("csrfTokenAccess") },
+        },
+      )
+      .then((responce) => {
+        console.log(responce.data.message);
+        setLikesList((prev) => {
+          return { ...prev, likesYou: responce.data.likesYou };
+        });
+      })
+      .catch((error) => {
+        console.error("Error: ", error);
+        if (error.response?.status === 401) {
+          axios
+            .post(
+              "https://api.uni-match.in/refresh",
+              {},
+              {
+                withCredentials: true,
+                headers: {
+                  "X-CSRF-TOKEN": localStorage.getItem("csrfTokenRefresh"),
+                },
+              },
+            )
 
-  //           .then((response) => {
-  //             const csrfTokenAccess = response.headers["x-csrf-token-access"];
-  //             localStorage.setItem("csrfTokenAccess", csrfTokenAccess);
+            .then((response) => {
+              const csrfTokenAccess = response.headers["x-csrf-token-access"];
+              localStorage.setItem("csrfTokenAccess", csrfTokenAccess);
 
-  //             axios
-  //               .post(
-  //                 "https://api.uni-match.in/likeno",
-  //                 { target_reg_no, swipe_action: "left" },
-  //                 {
-  //                   withCredentials: true,
-  //                   headers: {
-  //                     "X-CSRF-TOKEN": localStorage.getItem("csrfTokenAccess"),
-  //                   },
-  //                 },
-  //               )
-  //               .then((response) => {
-  //                 console.log("Protected Data (After Refresh):", response.data);
-  //                 setLikesList((prev) => {
-  //                   return { ...prev, likesYou: response.data.likesYou };
-  //                 });
-  //               })
-  //               .catch((retryError) =>
-  //                 console.error("Failed after refresh:", retryError),
-  //               );
-  //           })
-  //           .catch(() =>
-  //             console.error("Session expired, please log in again."),
-  //           );
-  //       }
-  //     })
-  //     .finally(() => {
-  //       setLoad(false);
-  //     });
-  // }
+              axios
+                .post(
+                  "https://api.uni-match.in/likeno",
+                  { target_reg_no, swipe_action: "left" },
+                  {
+                    withCredentials: true,
+                    headers: {
+                      "X-CSRF-TOKEN": localStorage.getItem("csrfTokenAccess"),
+                    },
+                  },
+                )
+                .then((response) => {
+                  console.log("Protected Data (After Refresh):", response.data);
+                  setLikesList((prev) => {
+                    return { ...prev, likesYou: response.data.likesYou };
+                  });
+                })
+                .catch((retryError) =>
+                  console.error("Failed after refresh:", retryError),
+                );
+            })
+            .catch(() =>
+              console.error("Session expired, please log in again."),
+            );
+        }
+      })
+      .finally(() => {
+        setLoad(false);
+      });
+  }
 
 
   return (
     <>
-      <Modall setModalOpen={setName} modalOpen={name} name={name} />
+      <Modall setModalOpen={setName} modalOpen={name} name={name} handleCrossClick={handleCrossClick} handleLikeClick={handleLikeClick} target_reg_no={target_reg_no}/>
 
 <Outlet/>
 
@@ -303,7 +304,7 @@ const ProfileGrid = () => {
         </Box>
         {/* Scrollable Grid */}
         <Box sx={scrollableGridStyle}>
-          {likesList ? (
+          {likesList.length ? (
           <Grid container spacing={{ xs: 1, sm: 2 }} columns={{ xs: 2, sm: 2 }}>
             {likesList.map((profile, index) => (
               <Grid item xs={1} key={index}>
@@ -387,8 +388,8 @@ const ProfileGrid = () => {
                       aria-label="like"
                       onClick={(e) => {
                         e.stopPropagation();
-                        setName("accept");
-                        handleNotiClick("12413382")
+                        setTargetRegNo(profile.reg_no)
+                        setName("accept"); 
                       }}
                       sx={{
                         width: "44px",
@@ -439,7 +440,7 @@ const ProfileGrid = () => {
               </Grid>
             ))}
           </Grid>):(
-              <div>hiii</div>
+              <div>No matches yet!</div>
           )}
           <Box
             sx={{
