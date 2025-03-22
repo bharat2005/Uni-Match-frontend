@@ -318,7 +318,7 @@ const ProfileGrid = () => {
 
   return (
     <>
-      <Modall setModalOpen={setName} modalOpen={name} name={name} handleCrossClick={handleCrossClick} handleLikeClick={handleLikeClick} target_reg_no={target_reg_no}/>
+      <Modall setModalOpen={setName} modalOpen={name} name={name} handleCrossClick={handleCrossClick} handleLikeClick={handleLikeClick} target_reg_no={String(target_reg_no)}/>
 
       <Outlet/>
 
