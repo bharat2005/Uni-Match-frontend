@@ -246,7 +246,8 @@ function SearchContainer({ onClose, setIsDrawerOpen }) {
   const [selectedGender, setSelectedGender] = React.useState(formData['personality']);
   const [selectedOption, setSelectedOption] = React.useState(formData['reason']);
 
-  console.log(selfprofile);
+  console.log("selfprofile",selfprofile);
+  console.log("formData", formData)
 
   const handleOptionSelect = (option) => {
     setSelectedOption(option);
@@ -405,34 +406,74 @@ function SearchContainer({ onClose, setIsDrawerOpen }) {
         </Box>
 
         <Box sx={formGroupStyle}>
-          <Typography
-            sx={{
-              color: "#333",
-              fontSize: "16px",
-              fontWeight: 500,
+  <Typography
+    sx={{
+      color: "#333",
+      fontSize: "16px",
+      fontWeight: 500,
+    }}
+  >
+    Photos
+  </Typography>
+  <Box sx={imageGridStyle}>
+    {Array(6)
+      .fill(0)
+      .map((_, index) => (
+        <Box key={index} sx={uploadBoxStyle}>
+          {/* Show existing images if available */}
+          {formData.images[index] ? (
+            <img
+              src={typeof formData.images[index] === "string" ? formData.images[index] : URL.createObjectURL(formData.images[index])}
+              alt={`preview-${index}`}
+              style={{
+                width: "100%",
+                height: "100%",
+                objectFit: "cover",
+                borderRadius: "8px",
+              }}
+            />
+          ) : (
+            <label htmlFor={`image-upload-${index}`}   style={{
+              cursor: "pointer",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              height: "100%",
+              outline: "none",
+              WebkitTapHighlightColor: "transparent",
+            }}>
+              <AddIcon
+                sx={{
+                  fontSize: 24,
+                  color: "#999",
+                  transition: "color 0.2s ease",
+                  "&:hover": { color: "#666" },
+                }}
+              />
+            </label>
+          )}
+          {/* Hidden File Input */}
+          <input
+            type="file"
+            id={`image-upload-${index}`}
+            accept="image/*"
+            style={{ display: "none" }}
+            onChange={(e) => {
+              const file = e.target.files[0];
+              if (file) {
+                setFormData((prev) => {
+                  const updatedImages = [...prev.images];
+                  updatedImages[index] = file;
+                  return { ...prev, images: updatedImages };
+                });
+              }
             }}
-          >
-            Photos
-          </Typography>
-          <Box sx={imageGridStyle}>
-            {Array(6)
-              .fill(0)
-              .map((_, index) => (
-                <Box key={index} sx={uploadBoxStyle} role="button" tabIndex={0}>
-                  <AddIcon
-                    sx={{
-                      fontSize: 24,
-                      color: "#999",
-                      transition: "color 0.2s ease",
-                      "&:hover": {
-                        color: "#666",
-                      },
-                    }}
-                  />
-                </Box>
-              ))}
-          </Box>
+          />
         </Box>
+      ))}
+  </Box>
+</Box>
+
 
         <Box sx={formGroupStyle}>
           <Typography

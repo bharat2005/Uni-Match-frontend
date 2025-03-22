@@ -18,7 +18,6 @@ export const AuthProvider = ({ children }) => {
   const [likesNoti, setLikesNoti] = useState([])
   const [matchesNoti, setMatchesNoti] = useState([])
 
-  console.log(selfprofile)
   useEffect(() => {
     if (bool) {
       localStorage.setItem("bool", "uni-match");
@@ -102,5 +101,5 @@ export const useAuth = () => {
 
 export const ProtectedRoute = ({ children }) => {
   const { bool } = useAuth();
-  return bool ? children : <Navigate to="/" />;
+  return true ? children : <Navigate to="/" />;
 };
