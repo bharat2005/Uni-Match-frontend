@@ -131,12 +131,13 @@ const ProfileGrid = () => {
   //const [open, setOpen] = useState(false);
   const [name, setName] = useState(false);
   const [target_reg_no, setTargetRegNo] = useState(null);
+  const [profile, setSelectedProfile] = useState({})
   const [loading, setLoading] = useState(false);
   const [likesList, setLikesList] = useState([])
  // const [imageClick, setImageClick] = useState(false);
  // const [currentImageIndex, setCurrentImageIndex] = useState(0);
 //  const [imageLoaded, setImageLoaded] = useState(false);
-  const list = profile.images.filter((item) => item != null);
+  //const list = profile.images.filter((item) => item != null);
 
   useEffect(() => {
     // Disable scrolling for the whole page
@@ -329,7 +330,7 @@ const ProfileGrid = () => {
 {loading && <SmallLoading app={true}/>}
       <Modall setModalOpen={setName} modalOpen={name} name={name} handleCrossClick={handleCrossClick} handleLikeClick={handleLikeClick} target_reg_no={String(target_reg_no)}/>
 
-      <Outlet/>
+       <Outlet context={{profile}}/>
 
       <Box sx={containerStyle}>
         <Box
@@ -361,7 +362,7 @@ const ProfileGrid = () => {
             {likesList.map((profile, index) => (
               <Grid item xs={1} key={index}>
                 <Card
-                  onClick={() => navigate('/app/mathes/info')}
+                  onClick={() => { setSelectedProfile(profile); navigate('/app/mathes/info')}}
                   sx={{
                     display: "flex",
                     flexDirection: "column",

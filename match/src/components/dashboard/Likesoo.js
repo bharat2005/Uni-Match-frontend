@@ -40,6 +40,7 @@ const ProfileGrid = () => {
   const [modalOpen, setModalOpen] = useState(false);
   const [loading, setLoading] = useState(false)
   const [likedList, setLikedList] = useState([]);
+  const [profile, setSelectedProfile] = useState({})
   const [target_reg_no, setTargetRegNo] = useState(null)
  
   useEffect(() => {
@@ -152,7 +153,7 @@ const ProfileGrid = () => {
         target_reg_no={String(target_reg_no)}
       />
 
-    <Outlet/>
+    <Outlet context={{profile}}/>
 
       <Box
         sx={{
@@ -200,7 +201,7 @@ const ProfileGrid = () => {
           {likedList.length ? (
           <Grid container spacing={{ xs: 1, sm: 2 }} columns={{ xs: 2, sm: 2 }}>
             {likedList.map((profile, index) => (
-              <Grid item xs={1} key={index} onClick={()=> navigate("/app/likes/info")}>
+              <Grid item xs={1} key={index} onClick={()=> {setSelectedProfile(profile); navigate("/app/likes/info")}}>
                 <Card
                   sx={{
                     display: "flex",
