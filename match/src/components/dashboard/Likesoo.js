@@ -15,6 +15,7 @@ import Drawer2 from './Drawer2'
 import { useNavigate } from "react-router-dom";
 import axios from 'axios';
 import { Outlet } from "react-router-dom";
+import SmallLoading from '../login/SmallLoading';
 
 const profile = {
   reg_no: "12413928",
@@ -37,10 +38,12 @@ const profile = {
 const ProfileGrid = () => {
   const navigate = useNavigate();
   const [modalOpen, setModalOpen] = useState(false);
+  const [loading, setLoading] = useState(false)
   const [likedList, setLikedList] = useState([]);
   const [target_reg_no, setTargetRegNo] = useState(null)
  
   useEffect(() => {
+    setLoading(true)
     axios
       .get("https://api.uni-match.in/likedbyu", {
         withCredentials: true,
@@ -52,7 +55,10 @@ const ProfileGrid = () => {
       })
       .catch((error) => {
         console.error("Error: ", error);
-      });
+      })
+      .finally(()=>{
+        setLoading(false)
+      })
   }, []);
 
   
@@ -67,7 +73,7 @@ const ProfileGrid = () => {
   }, []);
 
   function handleCrossClick(target_reg_no) {
-    //setLoad(true);
+    setLoading(true);
     axios
       .post(
         "https://api.uni-match.in/likedbyudel",
@@ -129,7 +135,7 @@ const ProfileGrid = () => {
         }
       })
       .finally(() => {
-        //setLoad(false);
+        setLoading(false);
         setModalOpen(false)
       });
   }
@@ -137,6 +143,7 @@ const ProfileGrid = () => {
 
   return (
     <>
+    {loading && <SmallLoading app={true}/>}
       <Modall
         setModalOpen={setModalOpen}
         modalOpen={modalOpen}
@@ -292,8 +299,35 @@ const ProfileGrid = () => {
               </Grid>
             ))}
           </Grid>):(
-            <div>No likes yet</div>
-          )}
+            <Box
+  sx={{
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "center",
+    position: "absolute",
+    top: "50%",
+    left: "50%",
+    transform: "translate(-50%, -50%)",
+    opacity: 0.4, // Lighter look for placeholders
+  }}
+>
+  <img src={"/likesem.png"} width={75} alt="No likes yet" />
+  <Box
+    sx={{
+      fontSize: "18px",
+      color: "#888", // Typical gray placeholder color
+      marginTop: "6px", // Space between image & text
+    }}
+  >
+    No likes yet
+  </Box>
+</Box>
+
+)}
+
+
+
+
           <Box
             sx={{
               height: "40px", // Same as or slightly more than the navbar height

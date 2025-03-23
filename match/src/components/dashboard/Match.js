@@ -5,6 +5,7 @@ import TinderCard from "react-tinder-card";
 import Card from "./Card";
 import Filter from "./Filter";
 import axios from "axios";
+import CenterLoading from "./CenterLoading";
 
 
 export default function Match() {
@@ -166,7 +167,7 @@ export default function Match() {
 
 
 
-
+{ profiles.length ? (
 
       <Box
         sx={{
@@ -272,6 +273,9 @@ export default function Match() {
         </Box>
         <Filter isDrawerOpen={isDrawerOpen} setIsDrawerOpen={setIsDrawerOpen}  setProfiles={setProfiles}/>
       </Box>
+      ):(
+<CenterLoading />
+      )}
     </>
   );
 }

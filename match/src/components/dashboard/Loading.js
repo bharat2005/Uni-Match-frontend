@@ -2,7 +2,7 @@
 import * as React from "react";
 import { Box } from "@mui/material";
 
-function SpinningLoader() {
+function StaticLoader() {
   const containerStyle = {
     display: "flex",
     alignItems: "center",
@@ -17,7 +17,6 @@ function SpinningLoader() {
     height: "120px",
     borderRadius: "24px",
     backgroundColor: "transparent",
-    backdropFilter: "blur(8px)",
     display: "flex",
     alignItems: "center",
     justifyContent: "center",
@@ -25,38 +24,23 @@ function SpinningLoader() {
   };
 
   const imageStyle = {
-    width: "72px",
-    height: "72px",
+    width: "68px",
+    height: "68px",
     objectFit: "contain",
     backgroundColor: "transparent",
-    animation: "spin 1.5s linear infinite", // Continuous spin
   };
 
   return (
     <Box component="section" sx={containerStyle}>
       <Box sx={contentStyle}>
         <img
-          // src="https://bharatbuckettiny.s3.eu-north-1.amazonaws.com/icons8-love-glassmorphism-96.png"
-          src="/mainlogo.png"
-          alt="Spinning loader icon"
+          src="/heart.gif"
+          alt="Static loader icon"
           style={imageStyle}
         />
       </Box>
-      {/* Define the keyframes using a global style */}
-      <style>
-        {`
-          @keyframes spin {
-            from {
-              transform: rotate(0deg);
-            }
-            to {
-              transform: rotate(360deg);
-            }
-          }
-        `}
-      </style>
     </Box>
   );
 }
 
-export default SpinningLoader;
+export default StaticLoader;

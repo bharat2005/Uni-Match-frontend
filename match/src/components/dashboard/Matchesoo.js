@@ -16,6 +16,7 @@ import axios from 'axios';
 import { useAuth } from "../../AuthProvider";
 import { useNavigate } from "react-router-dom";
 import { Outlet } from "react-router-dom";
+import SmallLoading from '../login/SmallLoading';
 
 const profile = {
   reg_no: "12413928",
@@ -130,6 +131,7 @@ const ProfileGrid = () => {
   //const [open, setOpen] = useState(false);
   const [name, setName] = useState(false);
   const [target_reg_no, setTargetRegNo] = useState(null);
+  const [loading, setLoading] = useState(false);
   const [likesList, setLikesList] = useState([])
  // const [imageClick, setImageClick] = useState(false);
  // const [currentImageIndex, setCurrentImageIndex] = useState(0);
@@ -147,6 +149,7 @@ const ProfileGrid = () => {
   }, []);
 
   useEffect(() => {
+    setLoading(true)
     axios
       .get("https://api.uni-match.in/likes", {
         withCredentials: true,
@@ -158,7 +161,10 @@ const ProfileGrid = () => {
       })
       .catch((error) => {
         console.error("Error: ", error);
-      });
+      })
+      .finally(()=> {
+        setLoading(false)
+      })
   }, []);
 
 
@@ -182,7 +188,7 @@ const ProfileGrid = () => {
   }
 
   function handleLikeClick(target_reg_no) {
-    //setLoad(true);
+    setLoading(true);
     handleNotiClick(target_reg_no);
     axios
       .post(
@@ -243,13 +249,13 @@ const ProfileGrid = () => {
         }
       })
       .finally(() => {
-        //setLoad(false);
+        setLoading(false);
         setName(false)
       });
   }
 
   function handleCrossClick(target_reg_no) {
-    //setLoad(true);
+    setLoading(true);
     handleNotiClick(target_reg_no);
     axios
       .post(
@@ -312,7 +318,7 @@ const ProfileGrid = () => {
         }
       })
       .finally(() => {
-        //setLoad(false);
+        setLoading(false);
         setName(false)
       });
   }
@@ -320,6 +326,7 @@ const ProfileGrid = () => {
 
   return (
     <>
+{loading && <SmallLoading app={true}/>}
       <Modall setModalOpen={setName} modalOpen={name} name={name} handleCrossClick={handleCrossClick} handleLikeClick={handleLikeClick} target_reg_no={String(target_reg_no)}/>
 
       <Outlet/>
@@ -346,6 +353,9 @@ const ProfileGrid = () => {
         </Box>
         {/* Scrollable Grid */}
         <Box sx={scrollableGridStyle}>
+
+
+        
           {likesList.length ? (
           <Grid container spacing={{ xs: 1, sm: 2 }} columns={{ xs: 2, sm: 2 }}>
             {likesList.map((profile, index) => (
@@ -483,7 +493,30 @@ const ProfileGrid = () => {
               </Grid>
             ))}
           </Grid>):(
-              <div>No matches yet!</div>
+                      <Box
+            sx={{
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "center",
+              position: "absolute",
+              top: "50%",
+              left: "50%",
+              transform: "translate(-50%, -50%)",
+              opacity: 0.4, // Lighter look for placeholders
+            }}
+          >
+            <img src={"/likesem.png"} width={75} alt="No likes yet" />
+            <Box
+              sx={{
+                fontSize: "18px",
+                color: "#888", // Typical gray placeholder color
+                marginTop: "6px", // Space between image & text
+              }}
+            >
+              No matches yet
+            </Box>
+          </Box>
+          
           )}
           <Box
             sx={{

@@ -1,14 +1,14 @@
 "use client";
 import * as React from "react";
 
-function HeartAnimation() {
+function HeartAnimation({app}) {
   const containerStyle = {
     position: "fixed",
     top: 0,
     left: 0,
     width: "100vw",
-    height: "100vh",
-    backgroundColor: "rgba(255, 255, 255, 0.4)", 
+    height: app ? "calc(100vh - 52px)" : "100vh",
+    backgroundColor: app ? "transparent" : "rgba(255, 255, 255, 0.4)", 
     display: "flex",
     justifyContent: "center",
     alignItems: "center",
