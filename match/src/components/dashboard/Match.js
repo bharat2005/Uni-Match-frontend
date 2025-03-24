@@ -31,6 +31,43 @@ export default function Match() {
       })
       .catch((error) => {
         console.error("Error fetching profiles:", error);
+
+        if (error.response?.status === 401) {
+          axios
+            .post(
+              "https://api.uni-match.in/refresh",
+              {},
+              {
+                withCredentials: true,
+                headers: {
+                  "X-CSRF-TOKEN": localStorage.getItem("csrfTokenRefresh"),
+                },
+              },
+            )
+
+            .then((response) => {
+              const csrfTokenAccess = response.headers["x-csrf-token-access"];
+              localStorage.setItem("csrfTokenAccess", csrfTokenAccess);
+
+              axios.get("https://api.uni-match.in/matchcomp",{
+                withCredentials: true,
+                headers: { "X-CSRF-TOKEN": localStorage.getItem("csrfTokenAccess") },
+              }, ) 
+                .then((response) => {
+                  console.log(response.data)
+                  setProfiles(response.data.cards);  
+                  setCurrentIndex(response.data.cards.length - 1); 
+                  setCardStates(Array(response.data.cards.length).fill(null));
+                })
+                .catch((retryError) =>
+                  console.error("Failed after refresh:", retryError),
+                );
+            })
+            .catch(() =>
+              console.error("Session expired, please log in again."),
+            );
+        }
+
       })
       .finally(()=> {
         setIsReady(true)
