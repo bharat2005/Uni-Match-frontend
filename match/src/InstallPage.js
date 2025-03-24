@@ -39,6 +39,10 @@ export default function InstallPage({ deferredPrompt }) {
           padding: "20px",
           fontFamily: '"Inter", sans-serif',
           position: "relative",
+          display:'flex',
+          flexDirection:'column',
+          justifyContent:'center',
+    
         }}
       >
         <link
@@ -49,54 +53,6 @@ export default function InstallPage({ deferredPrompt }) {
           rel="stylesheet"
           href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/dist/tabler-icons.min.css"
         />
-
-  
-        <Box
-          sx={{
-            display: "flex",
-            flexDirection: "column", 
-            justifyContent: "center",
-            alignItems: "center",
-            marginTop: "0%",
-            padding: { xs: "12px 10px", md: "24px 20px" },
-            paddingBottom:'0px !important',
-            position: "relative",
-          }}
-        >
-        
-          <Box
-            sx={{
-              display: "flex",
-              justifyContent: "center",
-              alignItems: "center",
-              width: "100%",
-            }}
-          >
-            <i
-              className="ti ti-clover-filled"
-              style={{
-                fontSize: "36px",
-                background:
-                  "linear-gradient(145deg, #ff3c78 0%, #ff79b0 30%, #b985ff 70%, #5caeff 100%)",
-                WebkitBackgroundClip: "text",
-                WebkitTextFillColor: "transparent",
-                transition: "background 0.3s ease-in-out",
-              }}
-            />
-            <img src="/Uni-match-14-3-2025.png" style={{ width: "85%" }} />
-          </Box>
-  
-  
-          <Box
-            sx={{
-              display: "flex",
-              justifyContent: "center",
-              width: "100%",
-            }}
-          >
-            <img src="/sub.png" style={{ width: "40%" }} />
-          </Box>
-        </Box>
   
         <Box
   sx={{
