@@ -1,3 +1,4 @@
+import React from "react";
 import { Modal, Typography, Box, Button } from "@mui/material";
 import axios from 'axios';
 import {useAuth} from '../../AuthProvider';
@@ -7,7 +8,7 @@ import SmallLoading from '../login/SmallLoading';
 export default function LogOutModal({ open, handleClose, handleLogout }) {
   const {logout} = useAuth();
   const navigate = useNavigate();
-  const [loading, setLoading] = useState(false)
+  const [loading, setLoading] = React.useState(false)
 
 
   
