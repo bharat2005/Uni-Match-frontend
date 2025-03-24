@@ -6,16 +6,19 @@ import Card from "./Card";
 import Filter from "./Filter";
 import axios from "axios";
 import CenterLoading from "./CenterLoading";
+import NoSuchProfiles from './NoSuchProfiles';
 
 
 export default function Match() {
   const [profiles, setProfiles] = useState([]); 
   const [currentIndex, setCurrentIndex] = useState(0);
   const currentIndexRef = useRef(currentIndex);
-    const [isDrawerOpen, setIsDrawerOpen] = React.useState(false);
+  const [isDrawerOpen, setIsDrawerOpen] = React.useState(false);
   const [cardStates, setCardStates] = useState([]);
+  const [isReady, setIsReady] = useState(false)
 
   useEffect(() => {
+    setIsReady(false)
     axios.get("https://api.uni-match.in/matchcomp",{
       withCredentials: true,
       headers: { "X-CSRF-TOKEN": localStorage.getItem("csrfTokenAccess") },
@@ -28,7 +31,10 @@ export default function Match() {
       })
       .catch((error) => {
         console.error("Error fetching profiles:", error);
-      });
+      })
+      .finally(()=> {
+        setIsReady(true)
+      })
   }, []);
 
   const childRefs = useMemo(() => profiles.map(() => React.createRef()), [profiles]);
@@ -152,7 +158,7 @@ export default function Match() {
                 }}
               />
             </Box>
-            <IconButton onClick={() => setIsDrawerOpen(true)}>
+            <IconButton onClick={() => {setIsDrawerOpen(true)}}>
               <i
                 className="ti ti-adjustments-horizontal"
                 style={{ fontSize: "28px", color: "black" }}
@@ -166,7 +172,7 @@ export default function Match() {
 
 
 
-
+{ isReady ? (<>
 { profiles.length ? (
 
       <Box
@@ -274,7 +280,9 @@ export default function Match() {
         <Filter isDrawerOpen={isDrawerOpen} setIsDrawerOpen={setIsDrawerOpen}  setProfiles={setProfiles}/>
       </Box>
       ):(
-<CenterLoading />
+<NoSuchProfiles />
+      )} </>):(
+<CenterLoading/>
       )}
     </>
   );

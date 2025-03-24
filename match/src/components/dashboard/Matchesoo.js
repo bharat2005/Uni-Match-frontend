@@ -11,6 +11,7 @@ import {
 } from "@mui/material";
 import { ArrowBackIos, ArrowForwardIos } from "@mui/icons-material";
 import Modall from "./Modal";
+import { Player } from "@lottiefiles/react-lottie-player";
 import Drawer2 from "./Drawer2";
 import axios from 'axios';
 import { useAuth } from "../../AuthProvider";
@@ -506,16 +507,23 @@ const ProfileGrid = () => {
               opacity: 0.4, // Lighter look for placeholders
             }}
           >
-            <img src={"/likesem.png"} width={75} alt="No likes yet" />
-            <Box
-              sx={{
-                fontSize: "18px",
-                color: "#888", // Typical gray placeholder color
-                marginTop: "6px", // Space between image & text
-              }}
-            >
-              No matches yet
-            </Box>
+            <Player
+                autoplay
+                loop
+                src={"/empty.json"}
+                style={{ width: "200px" }}
+              />
+  <Box
+    sx={{
+      fontSize: "18px",
+      position:'relative',
+      bottom:40,
+      color: "#888", // Typical gray placeholder color
+      //marginTop: "6px", // Space between image & text
+    }}
+  >
+    No matches yet!
+  </Box>
           </Box>
           
           )}
