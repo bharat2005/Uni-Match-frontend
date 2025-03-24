@@ -2,6 +2,7 @@ import { Modal, Typography, Box, Button } from "@mui/material";
 import axios from 'axios';
 import {useAuth} from '../../AuthProvider';
 import { useNavigate } from "react-router-dom";
+import SmallLoading from '../login/SmallLoading';
 
 export default function LogOutModal({ open, handleClose, handleLogout }) {
   const {logout} = useAuth();
@@ -10,6 +11,7 @@ export default function LogOutModal({ open, handleClose, handleLogout }) {
 
   
   function handleClick() {
+    setLoading(true)
     axios
       .get("https://api.uni-match.in/logout", {
         withCredentials: true,
@@ -65,11 +67,17 @@ export default function LogOutModal({ open, handleClose, handleLogout }) {
               console.error("Session expired, please log in again."),
             );
         }
-      });
+      })
+      .finally(()=> {
+        setLoading(false)
+      })
   }
 
-  return (
+  return (<>
+  {loading && <SmallLoading/>}
+
     <Modal open={open} onClose={handleClose}>
+      
       <Box
         sx={{
           position: "absolute",
@@ -156,5 +164,5 @@ export default function LogOutModal({ open, handleClose, handleLogout }) {
         </Box>
       </Box>
     </Modal>
-  );
+ </> );
 }
