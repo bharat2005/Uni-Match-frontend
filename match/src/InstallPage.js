@@ -57,8 +57,9 @@ export default function InstallPage({ deferredPrompt }) {
             flexDirection: "column", 
             justifyContent: "center",
             alignItems: "center",
-            marginTop: "10%",
-            padding: { xs: "20px 10px", md: "40px 20px" },
+            marginTop: "0%",
+            padding: { xs: "12px 10px", md: "24px 20px" },
+            paddingBottom:'0px !important',
             position: "relative",
           }}
         >
@@ -123,7 +124,7 @@ export default function InstallPage({ deferredPrompt }) {
               aspectRatio:1,
               borderRadius:'24px',
               border: '2px solid #ff69b4',
-              marginBottom:'12px'
+              marginBottom:'6px'
             }}
 >
 
@@ -133,6 +134,17 @@ export default function InstallPage({ deferredPrompt }) {
 </Box>
 
 
+        <Typography
+          sx={{
+            fontSize: { xs: "28px", md: "28px" },
+            color: "#ff69b4",
+            fontWeight: "bold",
+            textAlign: "center",
+            marginBottom: "12px",
+          }}
+        >
+          Uni-Match
+        </Typography>
 
 
 
@@ -153,10 +165,10 @@ Meet new people, build real connections, and explore campus life like never befo
   {/* Bullet Points - Features */}
   <Box component="ul" sx={{ paddingLeft: "0", listStyle: "none", textAlign: "left" }}>
     {[
-      "LPU Exclusive – Connect with verified students only.",
-      "Smart Matching – Find people who share your interests.",
-      "Safe & Secure – Private chats & verified profiles.",
-      "More Than Dating – Friends, networking, and fun!"
+      <p style={{margin:0}}><strong>LPU Exclusive</strong> – Connect with verified students only.</p>,
+      <p style={{margin:0}}><strong>Smart Matching </strong> – Find people who share your interests.</p>,
+      <p style={{margin:0}}><strong>Safe & Secure</strong> – Private chats & verified profiles.</p>,
+      <p style={{margin:0}}><strong>More Than Dating </strong> – Friends, networking, and fun!</p>
     ].map((point, index) => (
       <Typography
         component="li"
@@ -190,7 +202,7 @@ Meet new people, build real connections, and explore campus life like never befo
   sx={{
     backgroundColor: "#ff69b4",
     color: "white !important",
-    borderRadius: "24px",
+    borderRadius: "12px",
     padding: { xs: "12px", md: "15px" },
     fontSize: "16px",
     fontWeight: "bold",
