@@ -257,6 +257,9 @@ function SearchContainer({ onClose, setIsDrawerOpen }) {
   const [loading, setLoading] = React.useState(false);
   const [modalOpen, setModalOpen] = React.useState(false);
 
+  console.log(selfprofile)
+
+  
   if (fileInputRefs.current.length !== 6) {
     fileInputRefs.current = Array(6)
       .fill()

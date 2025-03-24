@@ -18,7 +18,7 @@ export const AuthProvider = ({ children }) => {
   const [likesNoti, setLikesNoti] = useState([])
   const [matchesNoti, setMatchesNoti] = useState([])
 
-  console.log(lpuselfprofile)
+  console.log(selfprofile)
 
   useEffect(() => {
     if (bool) {

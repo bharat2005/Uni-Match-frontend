@@ -44,7 +44,7 @@ const ProfileContainer = () => {
   const [open, setOpen] = React.useState(null);
   const [modalOpen, setModalOpen] = React.useState(false);
 
-  console.log("from profilee",lpuselfprofile)
+  
   // useEffect(() => {
   //   axios
   //     .get("https://api.uni-match.in/profilecomp", {
