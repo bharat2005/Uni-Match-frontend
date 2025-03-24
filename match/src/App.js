@@ -1,12 +1,11 @@
 import React, { useState, useEffect } from "react";
-import axios from "axios";
 import {
   Navigate,
   BrowserRouter as Router,
   Routes,
   Route,
 } from "react-router-dom";
-import Done from './components/stepform/Done';
+import Done from "./components/stepform/Done";
 import Login from "./components/login/Login";
 import StepForm from "./components/stepform/StepForm";
 import { ProtectedRoute, AuthProvider } from "./AuthProvider";
@@ -19,20 +18,41 @@ import Match from "./components/dashboard/Match";
 import Profilee from "./components/dashboard/Profilee";
 import Chatsoo from "./components/dashboard/Chatsoo";
 import Chatoo from "./components/dashboard/Chatoo";
-import Edit from './components/dashboard/Edit';
-import About from './components/dashboard/About';
-import Drawer2 from './components/dashboard/Drawer2';
-import Support from './components/dashboard/Support';
-import DeleteProfile from './components/dashboard/DeleteProfile';
+import Edit from "./components/dashboard/Edit";
+import About from "./components/dashboard/About";
+import Drawer2 from "./components/dashboard/Drawer2";
+import Support from "./components/dashboard/Support";
+import DeleteProfile from "./components/dashboard/DeleteProfile";
+
 
 export default function App() {
   const [bool, setBool] = useState(false);
+  const [isPWA, setIsPWA] = useState(false);
+  const [deferredPrompt, setDeferredPrompt] = useState(null);
 
   useEffect(() => {
+    // Detect if running as PWA
+    const isStandalone =
+      window.matchMedia("(display-mode: standalone)").matches ||
+      window.navigator.standalone;
+    setIsPWA(isStandalone);
+
+    // Redirect to install page if not installed
+    if (!isStandalone) {
+      window.location.href = "/install";
+    }
+
+    // Show install prompt if available
+    window.addEventListener("beforeinstallprompt", (event) => {
+      event.preventDefault();
+      setDeferredPrompt(event);
+    });
+
+    // Handle screen height
     const resizeHandler = () => {
       document.documentElement.style.setProperty(
         "--vh",
-        `${window.innerHeight * 0.01}px`,
+        `${window.innerHeight * 0.01}px`
       );
     };
 
@@ -44,11 +64,25 @@ export default function App() {
     };
   }, []);
 
+  const handleInstall = () => {
+    if (deferredPrompt) {
+      deferredPrompt.prompt();
+      deferredPrompt.userChoice.then((choice) => {
+        if (choice.outcome === "accepted") {
+          console.log("User installed the app");
+        }
+        setDeferredPrompt(null);
+      });
+    }
+  };
+
   return (
     <AuthProvider>
       <Router>
         <AuthWrapper setBool={setBool} />
-        {bool ? (
+        {!isPWA ? (
+          <InstallPage onInstall={handleInstall} />
+        ) : bool ? (
           <Routes>
             <Route path="/" element={<Login />} />
 
@@ -60,14 +94,15 @@ export default function App() {
                 </ProtectedRoute>
               }
             />
-            
-            <Route path="/done"
-             element={
+
+            <Route
+              path="/done"
+              element={
                 <ProtectedRoute>
                   <Done />
                 </ProtectedRoute>
-              }/>
-       
+              }
+            />
 
             <Route
               path="/app"
@@ -77,43 +112,30 @@ export default function App() {
                 </ProtectedRoute>
               }
             >
-
-              
-              <Route path="likes" element={<Likesoo />} >
-                  <Route path="info" element={<Drawer2 />}/>
+              <Route path="likes" element={<Likesoo />}>
+                <Route path="info" element={<Drawer2 />} />
               </Route>
 
-
-
-              <Route path="matches" element={<Matchesoo />} >
-
-              <Route path=":info" element={<Drawer2 />}/>
-
+              <Route path="matches" element={<Matchesoo />}>
+                <Route path=":info" element={<Drawer2 />} />
               </Route>
 
-              <Route path='home' element={<Match />} >
-                    <Route path='info' element={<Drawer2/>}/>
+              <Route path="home" element={<Match />}>
+                <Route path="info" element={<Drawer2 />} />
               </Route>
 
-
-
-              <Route path="chats" element={<Chatsoo />} >
-                  <Route path="info" element={<Drawer2 />} />
+              <Route path="chats" element={<Chatsoo />}>
+                <Route path="info" element={<Drawer2 />} />
               </Route>
-
-
 
               <Route path=":chatId" element={<Chatoo />} />
 
-
-
-              <Route path="profile" element={<Profilee />} >
-                    <Route path="edit" element={<Edit/>}/>
-                    <Route path="about" element={<About/>}/>
-                    <Route path="support" element={<Support/>}/>
-                    <Route path="delete" element={<DeleteProfile/>}/>
+              <Route path="profile" element={<Profilee />}>
+                <Route path="edit" element={<Edit />} />
+                <Route path="about" element={<About />} />
+                <Route path="support" element={<Support />} />
+                <Route path="delete" element={<DeleteProfile />} />
               </Route>
-
             </Route>
           </Routes>
         ) : (
@@ -123,3 +145,16 @@ export default function App() {
     </AuthProvider>
   );
 }
+
+
+const InstallPage = ({ onInstall }) => {
+  return (
+    <div style={{ textAlign: "center", padding: "20px" }}>
+      <h1>This App Must Be Installed</h1>
+      <p>To use this app, please install it on your device.</p>
+      <button onClick={onInstall} style={{ padding: "10px 20px", fontSize: "16px" }}>
+        Install App
+      </button>
+    </div>
+  );
+};
