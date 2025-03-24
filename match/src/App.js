@@ -28,6 +28,8 @@ import DeleteProfile from './components/dashboard/DeleteProfile';
 export default function App() {
   const [bool, setBool] = useState(false);
   const [isStandalone, setIsStandalone] = useState(false)
+  const [deferredPrompt, setDeferredPrompt] = useState(null);
+
 
   useEffect(() => {
 
@@ -140,7 +142,7 @@ export default function App() {
           <Loading />
         )}
       </Router>):(
-<InstallPage />
+ <InstallPage deferredPrompt={deferredPrompt} />
       )}
     </AuthProvider>
   );
