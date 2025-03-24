@@ -86,9 +86,9 @@ export default function App() {
             
             <Route path="/done"
              element={
-                <ProtectedRoute>
+                // <ProtectedRoute>
                   <Done />
-                </ProtectedRoute>
+                // </ProtectedRoute>
               }/>
        
 
