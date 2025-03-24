@@ -7,6 +7,7 @@ import SmallLoading from '../login/SmallLoading';
 export default function LogOutModal({ open, handleClose, handleLogout }) {
   const {logout} = useAuth();
   const navigate = useNavigate();
+  const [loading, setLoading] = useState(false)
 
 
   

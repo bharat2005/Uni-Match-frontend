@@ -4,6 +4,7 @@ import { Box, Typography, IconButton, Button, Modal } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import {useAuth} from '../../AuthProvider';
 import axios from 'axios';
+import SmallLoading from '../login/SmallLoading'
 
 const DeleteProfile = ({ onClose }) => {
   const [open, setOpen] = useState(false);
@@ -11,8 +12,10 @@ const DeleteProfile = ({ onClose }) => {
   const {logout} = useAuth();
   const handleDeleteClick = () => setOpen(true);
   const handleClose = () => setOpen(false);
+  const [loading, setLoading] = useState(false);
 
   function handleDeleteClick2() {
+    setLoading(true)
     axios
       .get("https://api.uni-match.in/delaccount", {
         withCredentials: true,
@@ -68,11 +71,16 @@ const DeleteProfile = ({ onClose }) => {
               console.error("Session expired, please log in again."),
             );
         }
-      });
+      })
+      .finally(()=> {
+        setLoading(false)
+      })
   }
 
 
   return (
+    <>
+    {loading && <SmallLoading/>}
     <Box
       sx={{
         position: "absolute",
@@ -312,7 +320,7 @@ const DeleteProfile = ({ onClose }) => {
         </Box>
       </Modal>
     </Box>
-  );
+ </> );
 };
 
 export default DeleteProfile;
