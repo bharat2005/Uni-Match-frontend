@@ -68,12 +68,12 @@ export default function App() {
     <AuthProvider>
 
 
-      { true ? (
+      { isStandalone ? (
       <Router>
-        {/* <AuthWrapper setBool={setBool} />
-        {bool ? ( */}
+        <AuthWrapper setBool={setBool} />
+        {bool ? (
           <Routes>
-            <Route path="/" element={<StepForm />} />
+            <Route path="/" element={<Login />} />
 
             <Route
               path="/profile-setup"
@@ -86,9 +86,9 @@ export default function App() {
             
             <Route path="/done"
              element={
-                // <ProtectedRoute>
+                <ProtectedRoute>
                   <Done />
-                // </ProtectedRoute>
+                </ProtectedRoute>
               }/>
        
 
@@ -139,9 +139,9 @@ export default function App() {
 
             </Route>
           </Routes>
-        {/* ) : (
-          <Loading />
-        )} */}
+        ) : (
+           <Loading />
+         )} 
       </Router>):(
  <InstallPage deferredPrompt={deferredPrompt} />
       )}
