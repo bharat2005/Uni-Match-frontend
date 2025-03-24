@@ -6,6 +6,7 @@ import {
   Routes,
   Route,
 } from "react-router-dom";
+import InstallPage from "./InstallPage";
 import Done from './components/stepform/Done';
 import Login from "./components/login/Login";
 import StepForm from "./components/stepform/StepForm";
@@ -41,7 +42,7 @@ export default function App() {
 
   const handleBeforeInstallPrompt = (event) => {
     event.preventDefault();
-    setDeferredPrompt(event);
+    setTimeout(()=> {setDeferredPrompt(event)}, 500);
   };
 
   window.addEventListener("beforeinstallprompt", handleBeforeInstallPrompt);
@@ -150,28 +151,3 @@ export default function App() {
 
 
 
-function InstallPage({ deferredPrompt }) {
-  const handleClick = () => {
-    if (deferredPrompt) {
-      deferredPrompt.prompt();
-      deferredPrompt.userChoice.then((choiceResult) => {
-        if (choiceResult.outcome === "accepted") {
-          console.log("User installed the app");
-        } else {
-          console.log("User dismissed the install prompt");
-        }
-      });
-    } else {
-      alert("Installation not supported on this browser.");
-    }
-  };
-
-  return (
-    <div style={{ textAlign: "center", padding: "20px" }}>
-      <h1>Install App Now</h1>
-      <button onClick={handleClick} style={{ padding: "10px 20px", fontSize: "16px" }}>
-        Install
-      </button>
-    </div>
-  );
-}
