@@ -37,14 +37,14 @@ import {useAuth} from '../../AuthProvider';
 const ProfileContainer = () => {
   const navigate = useNavigate();
   const theme = useTheme();
-  const { lpuselfprofile } = useAuth();
+  const { lpuselfprofile, selfprofile } = useAuth();
   const isMobile = useMediaQuery("(max-width:640px)");
   const isTablet = useMediaQuery("(max-width:991px)");
   const [logOutModalOpen, setLogOutModalOpen] = React.useState(false)
   const [open, setOpen] = React.useState(null);
   const [modalOpen, setModalOpen] = React.useState(false);
 
-  
+  console.log(`Profilee --selfprofile-->${selfprofile}\n lpuselfprofile--->${lpuselfprofile}`)
   // useEffect(() => {
   //   axios
   //     .get("https://api.uni-match.in/profilecomp", {

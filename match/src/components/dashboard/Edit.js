@@ -257,7 +257,7 @@ function SearchContainer({ onClose, setIsDrawerOpen }) {
   const [loading, setLoading] = React.useState(false);
   const [modalOpen, setModalOpen] = React.useState(false);
 
-  console.log(selfprofile)
+  console.log("Edit",selfprofile)
 
   
   if (fileInputRefs.current.length !== 6) {
