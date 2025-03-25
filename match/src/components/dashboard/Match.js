@@ -64,7 +64,8 @@ export default function Match() {
                 );
             })
             .catch(() =>
-              console.error("Session expired, please log in again."),
+              console.error("Session expired, please log in again.")
+
             );
         }
 
