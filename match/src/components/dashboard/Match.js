@@ -15,64 +15,58 @@ export default function Match() {
   const currentIndexRef = useRef(currentIndex);
   const [isDrawerOpen, setIsDrawerOpen] = React.useState(false);
   const [cardStates, setCardStates] = useState([]);
-  const [isReady, setIsReady] = useState(false)
+  const [isReady, setIsReady] = useState(false);
+  const [offset, setOffset] = useState(0);
+  const limit = 10;
 
   useEffect(() => {
-    setIsReady(false)
-    axios.get("https://api.uni-match.in/matchcomp",{
-      withCredentials: true,
-      headers: { "X-CSRF-TOKEN": localStorage.getItem("csrfTokenAccess") },
-    }, ) 
+    setIsReady(false);
+  
+    const fetchProfiles = (csrfToken) => {
+      axios
+        .get(`https://api.uni-match.in/matchcomp?offset=${offset}&limit=${limit}`, {
+          withCredentials: true,
+          headers: { "X-CSRF-TOKEN": csrfToken },
+        })
+        .then((response) => {
+          console.log(response.data);
+          setProfiles((prevProfiles) => [...prevProfiles, ...response.data.cards]);
+          setCurrentIndex(response.data.cards.length - 1);
+          setCardStates(Array(response.data.cards.length).fill(null));
+        })
+        .catch((error) => console.error("Error fetching profiles:", error))
+        .finally(() => setIsReady(true));
+    };
+  
+    axios
+      .get("https://api.uni-match.in/matchcomp", {
+        withCredentials: true,
+        headers: { "X-CSRF-TOKEN": localStorage.getItem("csrfTokenAccess") },
+      })
       .then((response) => {
-        console.log(response.data)
-        setProfiles(response.data.cards);  
-        setCurrentIndex(response.data.cards.length - 1); 
+        console.log(response.data);
+        setProfiles((prevProfiles) => [...prevProfiles, ...response.data.cards]);
+        setCurrentIndex(response.data.cards.length - 1);
         setCardStates(Array(response.data.cards.length).fill(null));
       })
       .catch((error) => {
-        console.error("Error fetching profiles:", error);
-
         if (error.response?.status === 401) {
+          // Handle refresh
           axios
-            .post(
-              "https://api.uni-match.in/refresh",
-              {},
-              {
-                withCredentials: true,
-                headers: {
-                  "X-CSRF-TOKEN": localStorage.getItem("csrfTokenRefresh"),
-                },
-              },
-            )
-
+            .post("https://api.uni-match.in/refresh", {}, { withCredentials: true })
             .then((response) => {
               const csrfTokenAccess = response.headers["x-csrf-token-access"];
               localStorage.setItem("csrfTokenAccess", csrfTokenAccess);
-
-              axios.get("https://api.uni-match.in/matchcomp",{
-                withCredentials: true,
-                headers: { "X-CSRF-TOKEN": localStorage.getItem("csrfTokenAccess") },
-              }, ) 
-                .then((response) => {
-                  console.log(response.data)
-                  setProfiles(response.data.cards);  
-                  setCurrentIndex(response.data.cards.length - 1); 
-                  setCardStates(Array(response.data.cards.length).fill(null));
-                })
-                .catch((retryError) =>
-                  console.error("Failed after refresh:", retryError),
-                );
+              fetchProfiles(csrfTokenAccess); // Fetch again after refresh
             })
-            .catch(() =>
-              console.error("Session expired, please log in again."),
-            );
+            .catch(() => console.error("Session expired, please log in again."));
         }
-
       })
-      .finally(()=> {
-        setIsReady(true)
-      })
-  }, []);
+      .finally(() => setIsReady(true));
+  
+  }, [offset]); // Runs only when `offset` changes
+  // 🔥 Now it runs whenever `offset` changes
+  
 
   const childRefs = useMemo(() => profiles.map(() => React.createRef()), [profiles]);
 
@@ -83,6 +77,7 @@ export default function Match() {
   };
 
   const canSwipe = currentIndex >= 0 && profiles.length > 0;
+
 
   const sendSwipeData = (direction, targetRegNo) => {
     if (direction === "right") {
@@ -102,23 +97,30 @@ export default function Match() {
     }
   };
 
- const swiped = (direction, profile, index) => {
+  const swiped = (direction, profile, index) => {
     setCardStates((prev) => {
       const newState = [...prev];
       newState[index] = direction;
       return newState;
     });
-    
+  
     if (direction === "right") {
       sendSwipeData(direction, profile.reg_no);
     }
-    
+  
     updateCurrentIndex(index - 1);
+  
     setTimeout(() => {
       updateCurrentIndex(index - 1);
+  
+      // 🔥 Load more profiles when reaching the last one
+      if (index === 0) {
+        setOffset((prevOffset) => prevOffset + limit);
+      }
+  
     }, 600); // Ensure the image stays longer before moving
-    ;
   };
+  
 
   const outOfFrame = (name, idx) => {
     console.log(`${name} (${idx}) left the screen!`, currentIndexRef.current);
@@ -137,9 +139,16 @@ export default function Match() {
       // Delay swipe to let image be visible
       setTimeout(() => {
         childRefs[currentIndex].current.swipe(dir);
+  
+        // Check if this was the last card
+        if (currentIndex === profiles.length - 1) {
+          setOffset((prevOffset) => prevOffset + limit); // Load next batch
+        }
+  
       }, 500); // Adjust delay as needed
     }
   };
+  
   
 
   return (
@@ -239,7 +248,7 @@ export default function Match() {
             className="swipe"
             key={profile.reg_no}
             ref={childRefs[index]}
-            preventSwipe={["up", "down"]}
+            preventSwipe={["up", "down", "left", "right"]}
             onSwipe={(dir) => {swiped(dir, profile, index); }}
             onCardLeftScreen={() => outOfFrame(profile.name, index)}
             swipeRequirementType="position"
