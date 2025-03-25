@@ -29,7 +29,19 @@ export default function InstallPage({ deferredPrompt }) {
       }
     };
   
-    return (
+    return (<>
+
+
+      <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/dist/tabler-icons.min.css"
+    />
+
+
         <Box
         sx={{
           background:
@@ -45,14 +57,56 @@ export default function InstallPage({ deferredPrompt }) {
     
         }}
       >
-        <link
-          href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap"
-          rel="stylesheet"
-        />
-        <link
-          rel="stylesheet"
-          href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/dist/tabler-icons.min.css"
-        />
+
+<Box
+        sx={{
+          display: "flex",
+          flexDirection: "column", 
+          justifyContent: "center",
+          alignItems: "center",
+          marginTop: "10%",
+          padding: { xs: "20px 10px", md: "40px 20px" },
+          position: "relative",
+        }}
+      >
+      
+        <Box
+          sx={{
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            width: "100%",
+          }}
+        >
+          <i
+            className="ti ti-clover-filled"
+            style={{
+              fontSize: "36px",
+              background:
+                "linear-gradient(145deg, #ff3c78 0%, #ff79b0 30%, #b985ff 70%, #5caeff 100%)",
+              WebkitBackgroundClip: "text",
+              WebkitTextFillColor: "transparent",
+              transition: "background 0.3s ease-in-out",
+            }}
+          />
+          <img src="/Uni-match-14-3-2025.png" style={{ width: "85%" }} />
+        </Box>
+
+
+        <Box
+          sx={{
+            display: "flex",
+            justifyContent: "center",
+            width: "100%",
+          }}
+        >
+          <img src="/sub.png" style={{ width: "40%" }} />
+        </Box>
+      </Box>
+
+
+
+   
   
         <Box
   sx={{
@@ -68,26 +122,9 @@ export default function InstallPage({ deferredPrompt }) {
 
 
 
-<Box
-            sx={{
-              display: "flex",
-              flexDirection: "column",
-              justifyContent:'center',
-              alignItems:'center',
-              backgroundColor:'rgb(73, 73, 73)',
-              width:'35%',
-              margin:'auto',
-              aspectRatio:1,
-              borderRadius:'24px',
-              border: '2px solid #ff69b4',
-              marginBottom:'6px'
-            }}
->
-
-<img src={'/mainlogo.png'} style={{width:"100%"}}/>
 
 
-</Box>
+
 
 
         <Typography
@@ -182,7 +219,7 @@ Meet new people, build real connections, and explore campus life like never befo
 
 
       </Box>
-    );
+  </>  );
   }
 
 
