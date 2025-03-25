@@ -115,12 +115,9 @@ export default function Match() {
     
     updateCurrentIndex(index - 1);
     setTimeout(() => {
-      setCardStates((prev) => {
-        const newState = [...prev];
-        newState[index] = null;
-        return newState;
-      });
-    }, 500);
+      updateCurrentIndex(index - 1);
+    }, 600); // Ensure the image stays longer before moving
+    ;
   };
 
   const outOfFrame = (name, idx) => {
@@ -130,9 +127,20 @@ export default function Match() {
 
   const swipe = (dir) => {
     if (canSwipe && currentIndex < profiles.length) {
-      setTimeout(()=> childRefs[currentIndex].current.swipe(dir), 300);
+      // Show like/unlike image first
+      setCardStates((prev) => {
+        const newState = [...prev];
+        newState[currentIndex] = dir; // 'left' or 'right'
+        return newState;
+      });
+  
+      // Delay swipe to let image be visible
+      setTimeout(() => {
+        childRefs[currentIndex].current.swipe(dir);
+      }, 500); // Adjust delay as needed
     }
   };
+  
 
   return (
     <>
