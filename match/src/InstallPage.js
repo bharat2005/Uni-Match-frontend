@@ -64,7 +64,7 @@ export default function InstallPage({ deferredPrompt }) {
           flexDirection: "column", 
           justifyContent: "center",
           alignItems: "center",
-          marginTop: "10%",
+          marginTop: "0%",
           padding: { xs: "20px 10px", md: "40px 20px" },
           position: "relative",
         }}
