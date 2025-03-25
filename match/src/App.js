@@ -68,7 +68,7 @@ export default function App() {
     <AuthProvider>
 
 
-      { true ? (
+      { isStandalone ? (
       <Router>
         <AuthWrapper setBool={setBool} />
         {bool ? (
