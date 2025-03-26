@@ -53,7 +53,6 @@ const LoginPage = () => {
         setLoading(false);
         console.log(response.data);
         if (response.data.message == "Login") {
-          login(false);
           const csrfTokenAccess = response.headers["x-csrf-token-access"];
           localStorage.setItem("csrfTokenAccess", csrfTokenAccess);
 
