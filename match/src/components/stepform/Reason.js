@@ -58,7 +58,7 @@ function GenderSelectionForm({ formData, setFormData, setStep }) {
         }}
       >
         {[
-          "🎉Casual dating",
+          { symbol: "🎉", label: "Casual dating" },
           { symbol: "💘", label: "Long-term" },
           { symbol: "😍", label: "Short-term" },
           { symbol: "👋", label: "New friends" },
