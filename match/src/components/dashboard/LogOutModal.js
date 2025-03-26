@@ -6,7 +6,7 @@ import { useNavigate } from "react-router-dom";
 import SmallLoading from '../login/SmallLoading';
 
 export default function LogOutModal({ open, handleClose, handleLogout }) {
-  const {logout} = useAuth();
+  const {login} = useAuth();
   const navigate = useNavigate();
   const [loading, setLoading] = React.useState(false)
 
@@ -24,7 +24,7 @@ export default function LogOutModal({ open, handleClose, handleLogout }) {
         localStorage.removeItem("csrfTokenAccess");
         localStorage.removeItem("csrfTokenRefresh");
         localStorage.removeItem("value");
-        logout();
+        login(false);
         navigate("/", { replace: true });
       })
       .catch((error) => {
@@ -58,7 +58,7 @@ export default function LogOutModal({ open, handleClose, handleLogout }) {
                   localStorage.removeItem("csrfTokenAccess");
                   localStorage.removeItem("csrfTokenRefresh");
                   localStorage.removeItem("value");
-                  logout();
+                  login(false);
                   navigate("/", { replace: true });
                 })
                 .catch((retryError) =>

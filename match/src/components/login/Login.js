@@ -20,7 +20,7 @@ import { useAuth } from "../../AuthProvider";
 
 const LoginPage = () => {
   const navigate = useNavigate();
-  const { login, bool } = useAuth();
+  const { login, bool, setBool2 } = useAuth();
   const [showPassword, setShowPassword] = useState(false);
   const [isChecked, setIsChecked] = useState(false);
   const [lpuLogin, setLpuLogin] = useState({ regNo: "", password: "" });
@@ -53,17 +53,22 @@ const LoginPage = () => {
         setLoading(false);
         console.log(response.data);
         if (response.data.message == "Login") {
+          
           const csrfTokenAccess = response.headers["x-csrf-token-access"];
           localStorage.setItem("csrfTokenAccess", csrfTokenAccess);
 
           const csrfTokenRefresh = response.headers["x-csrf-token-refresh"];
           localStorage.setItem("csrfTokenRefresh", csrfTokenRefresh);
 
-          response.data.nbool
-            ? navigate("/app/home")
-            : navigate("/profile-setup");
+         if (response.data.nbool){
+          login(true)
+         navigate("/app/home")
         } else {
-          login(false);
+          setBool2(true)
+          navigate("/profile-setup")
+        }
+
+        } else {
           setBarOpen(true);
         }
       })

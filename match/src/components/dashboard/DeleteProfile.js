@@ -9,7 +9,7 @@ import SmallLoading from '../login/SmallLoading'
 const DeleteProfile = ({ onClose }) => {
   const [open, setOpen] = useState(false);
   const navigate = useNavigate();
-  const {logout} = useAuth();
+  const {login} = useAuth();
   const handleDeleteClick = () => setOpen(true);
   const handleClose = () => setOpen(false);
   const [loading, setLoading] = useState(false);
@@ -26,7 +26,7 @@ const DeleteProfile = ({ onClose }) => {
         localStorage.removeItem("csrfTokenAccess");
         localStorage.removeItem("csrfTokenRefresh");
         localStorage.removeItem("value");
-        logout();
+        login(false);
         navigate("/", { replace: true });
       })
       .catch((error) => {
@@ -60,7 +60,7 @@ const DeleteProfile = ({ onClose }) => {
                   localStorage.removeItem("csrfTokenAccess");
                   localStorage.removeItem("csrfTokenRefresh");
                   localStorage.removeItem("value");
-                  logout();
+                  login(false);
                   navigate("/", { replace: true });
                 })
                 .catch((retryError) =>

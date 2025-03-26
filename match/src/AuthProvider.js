@@ -6,24 +6,59 @@ import {
   Route,
 } from "react-router-dom";
 import axios from 'axios';
+import Loading from './components/dashboard/Loading'
+import { replace, useLocation, useNavigate } from "react-router-dom";
 
 const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
   const [lpuselfprofile, setLpuSelfProfile] = useState({});
   const [selfprofile, setSelfProfile] = useState({})
-  const [bool, setBool] = useState(() => {
-    return localStorage.getItem("bool") ? true : false;
-  });
+  const [bool, setBool] = useState(false);
+  const [bool2, setBool2] = useState(false)
   const [likesNoti, setLikesNoti] = useState([])
   const [matchesNoti, setMatchesNoti] = useState([])
+  const [loading , setLoading] = useState(true)
+  const navigate = useNavigate();
+  
 
   console.log(`AuthProvider --selfprofile-->${selfprofile}\n lpuselfprofile--->${lpuselfprofile}`)
 
-  useEffect(() => {
-    if (bool) {
-      localStorage.setItem("bool", "uni-match");
 
+  useEffect(() => {
+    axios
+      .post(
+        "https://api.uni-match.in/refresh",
+        {},
+        {
+          withCredentials: true,
+          headers: { "X-CSRF-TOKEN": localStorage.getItem("csrfTokenRefresh") },
+        },
+      )
+      .then((response) => {
+        console.log("Session restored! Navigating to dashboard...");
+
+        const csrfTokenAccess = response.headers["x-csrf-token-access"];
+        localStorage.setItem("csrfTokenAccess", csrfTokenAccess);
+
+          navigate("/app/home", { replace: true });
+      })
+      .catch(() => {
+        console.log("Session expired, redirecting to login...");
+      })
+      .finally(() => {
+        setLoading(false)
+      });
+  }, []);
+
+
+
+
+
+  useEffect(() => {
+
+    if (bool) {
+      setLoading(true)
     axios
       .get("https://api.uni-match.in/profilecomp", {
         withCredentials: true,
@@ -74,24 +109,22 @@ export const AuthProvider = ({ children }) => {
               console.error("Session expired, please log in again."),
             );
         }
-      });
+      })
+      .finally(()=>{
+        setLoading(false)
+      })
 
-
-    } else {
-      localStorage.removeItem("bool");
     }
   }, [bool]);
 
-  const login = (a) => {
+
+  function login(a){
     setBool(a);
   };
 
-  const logout = () => {
-    setBool(false);
-  };
 
   return (
-    <AuthContext.Provider value={{ bool, login, logout, likesNoti, setLikesNoti, matchesNoti, setMatchesNoti, lpuselfprofile, selfprofile, setLpuSelfProfile, setSelfProfile }}>
+    <AuthContext.Provider value={{ bool, loading, bool2, setBool2, login, likesNoti, setLikesNoti, matchesNoti, setMatchesNoti, lpuselfprofile, selfprofile, setLpuSelfProfile, setSelfProfile }}>
       {children}
     </AuthContext.Provider>
   );
@@ -102,6 +135,17 @@ export const useAuth = () => {
 };
 
 export const ProtectedRoute = ({ children }) => {
-  const { bool } = useAuth();
+  const { bool, loading } = useAuth();
+  if (loading){
+    return <Loading/>
+  }
   return bool ? children : <Navigate to="/" />;
+};
+
+export const ProtectedRoute2 = ({ children }) => {
+  const { bool2, loading } = useAuth();
+  if (loading){
+    return <Loading/>
+  }
+  return bool2 ? children : <Navigate to="/" />;
 };
