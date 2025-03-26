@@ -81,7 +81,7 @@ function GenderSelectionForm({ formData, setFormData, setStep }) {
                 justifyContent: "center",
                 position: "relative",
                 border:
-                  formData["reason"] === item.label
+                  formData["reason"] === `${item.symbol} ${item.label}`
                     ? "3px solid #ff97b5"
                     : "3px solid transparent",
                 transition: "all 0.2s",
