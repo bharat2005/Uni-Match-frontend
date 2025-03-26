@@ -23,37 +23,7 @@ export const AuthProvider = ({ children }) => {
   
 
   console.log(`AuthProvider --selfprofile-->${selfprofile}\n lpuselfprofile--->${lpuselfprofile}`)
-
-
-  useEffect(() => {
-    axios
-      .post(
-        "https://api.uni-match.in/refresh",
-        {},
-        {
-          withCredentials: true,
-          headers: { "X-CSRF-TOKEN": localStorage.getItem("csrfTokenRefresh") },
-        },
-      )
-      .then((response) => {
-        console.log("Session restored! Navigating to dashboard...");
-
-        const csrfTokenAccess = response.headers["x-csrf-token-access"];
-        localStorage.setItem("csrfTokenAccess", csrfTokenAccess);
-
-          navigate("/app/home", { replace: true });
-      })
-      .catch(() => {
-        console.log("Session expired, redirecting to login...");
-      })
-      .finally(() => {
-        setLoading(false)
-      });
-  }, []);
-
-
-
-
+  
 
   useEffect(() => {
 

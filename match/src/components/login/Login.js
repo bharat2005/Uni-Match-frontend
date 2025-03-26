@@ -64,6 +64,7 @@ const LoginPage = () => {
           login(true)
          navigate("/app/home")
         } else {
+          localStorage.setItem("login", "halfLogin");
           setBool2(true)
           navigate("/profile-setup")
         }

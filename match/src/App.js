@@ -12,6 +12,8 @@ import Done from './components/stepform/Done';
 import Login from "./components/login/Login";
 import StepForm from "./components/stepform/StepForm";
 import { ProtectedRoute, AuthProvider, ProtectedRoute2 } from "./AuthProvider";
+import AuthWrapper from "./AuthWrapper";
+import Loading from "./components/dashboard/Loading";
 import Home from "./components/dashboard/Home";
 import Likesoo from "./components/dashboard/Likesoo";
 import Matchesoo from "./components/dashboard/Matchesoo";
@@ -26,6 +28,7 @@ import Support from './components/dashboard/Support';
 import DeleteProfile from './components/dashboard/DeleteProfile';
 
 export default function App() {
+  const [bool, setBool] = useState(false);
   const [isStandalone, setIsStandalone] = useState(false)
   const [deferredPrompt, setDeferredPrompt] = useState(null);
   const [isAllowed, setIsAllowed] = useState(false)
@@ -87,6 +90,8 @@ export default function App() {
     <AuthProvider>
 
       <Router>
+        <AuthWrapper setBool={setBool} />
+        {bool ? (
           <Routes>
             <Route path="/" element={<Login />} />
 
@@ -154,6 +159,9 @@ export default function App() {
 
             </Route>
           </Routes>
+        ) : (
+           <Loading />
+         )} 
       </Router>
     </AuthProvider>
   );

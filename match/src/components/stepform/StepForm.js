@@ -50,6 +50,7 @@ const InputDesign = () => {
         console.log("Message from server: ", response.data);
         login(true);
         navigate("/done", {replace:true})
+        localStorage.removeItem("login")
       })
       .catch((error) => {
         console.error("Error: ", error);
