@@ -22,8 +22,7 @@ export default function AuthWrapper({ setBool }) {
         const csrfTokenAccess = response.headers["x-csrf-token-access"];
         localStorage.setItem("csrfTokenAccess", csrfTokenAccess);
 
-        if (!localStorage.getItem("login")){
-          console.log(localStorage.getItem("login"))
+        if (localStorage.getItem("login")== null){
           navigate("/app/home", { replace: true })}
       })
       .catch(() => {
