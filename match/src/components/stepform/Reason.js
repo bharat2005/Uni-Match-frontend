@@ -58,17 +58,18 @@ function GenderSelectionForm({ formData, setFormData, setStep }) {
         }}
       >
         {[
-          { symbol: "🎉", label: "Casual dating" },
-          { symbol: "💘", label: "Long-term" },
-          { symbol: "😍", label: "Short-term" },
-          { symbol: "👋", label: "New friends" },
-          { symbol: "🎓", label: "Study buddy" },
-          { symbol: "🤔", label: "Still figuring" },
+          "🤷‍♂️ All" ,
+          "🎉 Casual dating",
+          "💘 Long-term",
+          "😍 Short-term" ,
+          "👋 New friends",
+          "🎓  Study buddy",
+          "🤔 Still figuring",
         ].map((item) => {
           return (
             <Box
               onClick={() => {
-                setFormData((prev) => ({ ...prev, reason: item.label }));
+                setFormData((prev) => ({ ...prev, reason: item }));
               }}
               sx={{
                 width: { xs: 120, sm: 140 },

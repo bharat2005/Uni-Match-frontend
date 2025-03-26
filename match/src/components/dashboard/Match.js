@@ -219,7 +219,7 @@ export default function Match() {
 
 
 { isReady ? (<>
-{ profiles.length ? (
+{ !profiles.length ? (
 
       <Box
         sx={{

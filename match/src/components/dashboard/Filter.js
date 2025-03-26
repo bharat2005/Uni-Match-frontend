@@ -7,6 +7,7 @@ import {
   Typography,
   List,
   ListItemButton,
+  TextField,
   ListItemText,
   Box,
   SwipeableDrawer,
@@ -174,11 +175,12 @@ const styles = {
 };
 
 function AppContainer({ isDrawerOpen, setIsDrawerOpen, setProfiles }) {
-  const [selectedGender, setSelectedGender] = React.useState("male");
+  const [selectedGender, setSelectedGender] = React.useState("");
   const [smallDrawerOpen, setSmallDrawerOpen] = React.useState(false);
-  const [selectedPersonality, setSelectedPersonality] = React.useState("Introvert");
-  const [ageRange, setAgeRange] = React.useState([18, 30]);
-  const [selectedOption, setSelectedOption] = React.useState("🎉Casual dating");
+  const [selectedPersonality, setSelectedPersonality] = React.useState("");
+  const [ageRange, setAgeRange] = React.useState([0, 0]);
+  const [selectedOption, setSelectedOption] = React.useState("");
+  const [section, setSection] = React.useState("")
 
  
   const handleApplyFilters = (e) => {
@@ -189,7 +191,8 @@ function AppContainer({ isDrawerOpen, setIsDrawerOpen, setProfiles }) {
         ageRange, 
         gender: selectedGender, 
         reason: selectedOption,
-        personality: selectedPersonality
+        personality: selectedPersonality,
+        section: section
       };
       console.log(filters);
   
@@ -311,6 +314,35 @@ function AppContainer({ isDrawerOpen, setIsDrawerOpen, setProfiles }) {
               marginBottom: "12px",
             }}
           >
+
+<TextField
+  fullWidth
+  value={section}
+  onChange={(e)=> setSection(e.target.value)}
+  placeholder="Enter section (e.g., K24EU)"
+    inputProps={{
+    maxLength: 5,
+  }}
+  sx={{
+    "& .MuiOutlinedInput-root": {
+      borderRadius: "24px",
+      backgroundColor: "white",
+      "& fieldset": {
+        borderColor: "#eee",
+      },
+      "&:hover fieldset": {
+        borderColor: "#ccc", // Slightly darker on hover
+      },
+      "&.Mui-focused fieldset": {
+        borderColor: "#ff6b9c", // Different color on focus
+      },
+    },
+  }}
+/>
+
+
+
+
             <Typography sx={styles.label}>Age</Typography>
             <Box sx={styles.sliderContainer}>
               <Slider
@@ -332,7 +364,7 @@ function AppContainer({ isDrawerOpen, setIsDrawerOpen, setProfiles }) {
           <Box sx={styles.formGroup}>
             <Typography sx={styles.label}>Gender</Typography>
             <Box sx={styles.optionsContainer}>
-              {["male", "female"].map((option) => (
+              {["Male", "Female"].map((option) => (
                 <Chip
                   key={option}
                   label={option}
@@ -366,7 +398,7 @@ function AppContainer({ isDrawerOpen, setIsDrawerOpen, setProfiles }) {
               endIcon={<KeyboardArrowRightIcon />}
               onClick={toggleSmallDrawer(true)}
             >
-              {selectedOption}
+              {selectedOption==""? "select option": selectedOption}
             </Button>
           </Box>
         </Box>
@@ -375,9 +407,11 @@ function AppContainer({ isDrawerOpen, setIsDrawerOpen, setProfiles }) {
           <Button
             sx={styles.resetButton}
             onClick={() => {
-              setSelectedGender(null);
-              setSelectedPersonality(null);
-              setAgeRange([18, 30]);
+              setSelectedGender("");
+              setSelectedPersonality("");
+              setAgeRange([0, 0]);
+              handleOptionSelect("")
+              setSection("")
             }}
           >
             Reset
@@ -395,8 +429,6 @@ function AppContainer({ isDrawerOpen, setIsDrawerOpen, setProfiles }) {
         disableSwipeToOpen={true}
         sx={{
           "& .MuiDrawer-paper": {
-            // borderTopLeftRadius: "20px",
-            // borderTopRightRadius: "20px",
             background: "white",
             maxHeight: "90vh",
           },
@@ -404,19 +436,19 @@ function AppContainer({ isDrawerOpen, setIsDrawerOpen, setProfiles }) {
       >
         <List sx={{ paddingBottom: 0 }}>
           {[
-          { symbol: "🎉", label: "Casual dating" },
-          { symbol: "💘", label: "Long-term" },
-          { symbol: "😍", label: "Short-term" },
-          { symbol: "👋", label: "New friends" },
-          { symbol: "🎓", label: "Study buddy" },
-          { symbol: "🤔", label: "Still figuring" },
+          "🎉 Casual dating",
+          "💘 Long-term",
+          "😍 Short-term" ,
+          "👋 New friends",
+          "🎓  Study buddy",
+          "🤔 Still figuring",
         ].map((option, index) => (
             <ListItemButton
               key={index}
-              onClick={() => handleOptionSelect(option.label)}
+              onClick={() => handleOptionSelect(option)}
               sx={{ borderBottom: "1px solid #f0f0f0" }}
             >
-              <ListItemText primary={`${option.symbol} ${option.label}`} sx={{ textAlign: "center" }} />
+              <ListItemText primary={option} sx={{ textAlign: "center" }} />
             </ListItemButton>
           ))}
         </List>

@@ -7,6 +7,7 @@ import {
   Route,
 } from "react-router-dom";
 import InstallPage from "./InstallPage";
+import Restrict from './Restrict';
 import Done from './components/stepform/Done';
 import Login from "./components/login/Login";
 import StepForm from "./components/stepform/StepForm";
@@ -30,45 +31,64 @@ export default function App() {
   const [bool, setBool] = useState(false);
   const [isStandalone, setIsStandalone] = useState(false)
   const [deferredPrompt, setDeferredPrompt] = useState(null);
+  const [isAllowed, setIsAllowed] = useState(false)
 
 
   useEffect(() => {
 
-    if (window.matchMedia('(display-mode: standalone)').matches) {
+  if (window.matchMedia('(display-mode: standalone)').matches) {
       setIsStandalone(true)
   } else {
       setIsStandalone(false)
   }
+
+  const checkAccess = () => {
+    const isMobile = /Mobi|Android/i.test(navigator.userAgent);
+    const isPortrait = window.innerHeight > window.innerWidth;
+    
+    setIsAllowed(isMobile || isPortrait);
+  };
 
   const handleBeforeInstallPrompt = (event) => {
     event.preventDefault();
     setTimeout(()=> {setDeferredPrompt(event)}, 500);
   };
 
-  window.addEventListener("beforeinstallprompt", handleBeforeInstallPrompt);
-  
-
-    const resizeHandler = () => {
+  const resizeHandler = () => {
       document.documentElement.style.setProperty(
         "--vh",
         `${window.innerHeight * 0.01}px`,
       );
     };
 
-    window.addEventListener("resize", resizeHandler);
     resizeHandler();
+    checkAccess();
+
+    window.addEventListener("resize", resizeHandler);
+    window.addEventListener("beforeinstallprompt", handleBeforeInstallPrompt);
+    window.addEventListener("resize", checkAccess); 
+  
 
     return () => {
       window.removeEventListener("resize", resizeHandler);
       window.removeEventListener("beforeinstallprompt", handleBeforeInstallPrompt)
+      window.removeEventListener("resize", checkAccess); 
     };
   }, []);
+
+
+  if (!isAllowed){
+    return <Restrict />
+  }
+
+  // if (!isStandalone){
+  //   return  <InstallPage deferredPrompt={deferredPrompt} />
+  // } 
+
 
   return (
     <AuthProvider>
 
-
-      { isStandalone ? (
       <Router>
         <AuthWrapper setBool={setBool} />
         {bool ? (
@@ -142,9 +162,7 @@ export default function App() {
         ) : (
            <Loading />
          )} 
-      </Router>):(
- <InstallPage deferredPrompt={deferredPrompt} />
-      )}
+      </Router>
     </AuthProvider>
   );
 }

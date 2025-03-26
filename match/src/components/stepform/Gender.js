@@ -52,7 +52,7 @@ function GenderSelectionForm({ formData, setFormData, setStep }) {
           gap: { xs: 1.25, sm: 2.5 },
         }}
       >
-        {["male", "female"].map((item) => {
+        {["Male", "Female"].map((item) => {
           return (
             <Box
               onClick={() => {
@@ -85,12 +85,12 @@ function GenderSelectionForm({ formData, setFormData, setStep }) {
                   mb: 1.5,
                 }}
               >
-                {item == "male" ? <MaleIcon /> : <FemaleIcon />}
+                {item == "Male" ? <MaleIcon /> : <FemaleIcon />}
               </Box>
               <Typography
                 sx={{ fontSize: { xs: 16, sm: 18 }, fontWeight: 500 }}
               >
-                {item == "male" ? "Male" : "Female"}
+                {item == "Male" ? "Male" : "Female"}
               </Typography>
             </Box>
           );

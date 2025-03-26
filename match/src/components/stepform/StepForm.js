@@ -18,9 +18,11 @@ import SmallLoading from "../login/SmallLoading";
 import { InformationCircleIcon } from "@heroicons/react/24/solid";
 import { fontSize, width } from "@mui/system";
 import { replace, useNavigate } from "react-router-dom";
+import { useAuth } from "../../AuthProvider";
 
 const InputDesign = () => {
   const navigate =useNavigate();
+  const { login } = useAuth();
   const [step, setStep] = useState(0);
   const [loading, setLoading] = useState(false);
   const [formData, setFormData] = useState({
@@ -46,6 +48,7 @@ const InputDesign = () => {
       .then((response) => {
         setLoading(false);
         console.log("Message from server: ", response.data);
+        login(true);
         navigate("/done", {replace:true})
       })
       .catch((error) => {
