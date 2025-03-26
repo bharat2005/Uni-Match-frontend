@@ -7,7 +7,6 @@ import {
 } from "react-router-dom";
 import axios from 'axios';
 import Loading from './components/dashboard/Loading'
-import { replace, useLocation, useNavigate } from "react-router-dom";
 
 const AuthContext = createContext();
 
@@ -19,7 +18,7 @@ export const AuthProvider = ({ children }) => {
   const [likesNoti, setLikesNoti] = useState([])
   const [matchesNoti, setMatchesNoti] = useState([])
   const [loading , setLoading] = useState(true)
-  const navigate = useNavigate();
+  
   
 
   console.log(`AuthProvider --selfprofile-->${selfprofile}\n lpuselfprofile--->${lpuselfprofile}`)
