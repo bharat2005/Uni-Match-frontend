@@ -105,16 +105,16 @@ export const useAuth = () => {
 
 export const ProtectedRoute = ({ children }) => {
   const { bool, loading } = useAuth();
-  if (loading){
-    return <Loading/>
-  }
+  // if (loading){
+  //   return <Loading/>
+  // }
   return bool ? children : <Navigate to="/" />;
 };
 
 export const ProtectedRoute2 = ({ children }) => {
   const { bool2, loading } = useAuth();
-  if (loading){
-    return <Loading/>
-  }
+  // if (loading){
+  //   return <Loading/>
+  // }
   return bool2 ? children : <Navigate to="/" />;
 };

@@ -190,7 +190,13 @@ const LoginPage = () => {
                 borderRadius: "10px",
                 backgroundColor: "white",
                 "& fieldset": {
-                  borderColor: "#e0e0e0",
+                  borderColor: " #e0e0e0",
+                },
+                "&:hover fieldset": {
+                  borderColor: "#ccc", // Slightly darker on hover
+                },
+                "&.Mui-focused fieldset": {
+                  borderColor: "#ff6b9c", // Different color on focus
                 },
               },
             }}
@@ -219,6 +225,12 @@ const LoginPage = () => {
                 backgroundColor: "white",
                 "& fieldset": {
                   borderColor: "#e0e0e0",
+                },
+                "&:hover fieldset": {
+                  borderColor: "#ccc", // Slightly darker on hover
+                },
+                "&.Mui-focused fieldset": {
+                  borderColor: "#ff6b9c", // Different color on focus
                 },
               },
             }}
