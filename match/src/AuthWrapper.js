@@ -23,6 +23,7 @@ export default function AuthWrapper({ setBool }) {
         localStorage.setItem("csrfTokenAccess", csrfTokenAccess);
 
         if (!localStorage.getItem("login")){
+          console.log("hi")
           navigate("/app/home", { replace: true })}
       })
       .catch(() => {
