@@ -80,7 +80,9 @@ const InputDesign = () => {
                 .then((response) => {
                   setLoading(false);
                   console.log("Message from server: ", response.data);
+                  login(true);
                   navigate("/done", { replace: true });
+                  localStorage.removeItem("login");
                 })
                 .catch((retryError) =>
                   console.error("Failed after refresh:", retryError),

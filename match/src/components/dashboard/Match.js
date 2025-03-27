@@ -10,17 +10,7 @@ import NoSuchProfiles from "./NoSuchProfiles";
 import { Interests } from "@mui/icons-material";
 
 export default function Match() {
-  const [profiles, setProfiles] = useState([
-    {
-      name: "Bharat",
-      age: "19",
-      reg_no: 12345434,
-      interests: ["Running"],
-      images: ["/9.jpg", "/4.jpg", "/5.jpg", "/6.jpg", "/7.jpg", "/8.jpg"],
-      bio: "irtuhtig",
-      reason: "iuguygyug",
-    },
-  ]);
+  const [profiles, setProfiles] = useState([]);
   const [currentIndex, setCurrentIndex] = useState(0);
   const currentIndexRef = useRef(currentIndex);
   const [isDrawerOpen, setIsDrawerOpen] = React.useState(false);
