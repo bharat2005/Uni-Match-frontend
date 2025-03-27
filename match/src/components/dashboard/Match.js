@@ -29,7 +29,7 @@ export default function Match() {
       })
       .then((response) => {
         console.log(response.data);
-        setProfiles(prev => [...prev, ...response.data.cards]);
+        setProfiles(prev => [...response.data.cards, ...prev]);
         setCurrentIndex(response.data.cards.length - 1);
         setCardStates(Array(response.data.cards.length).fill(null));
 
