@@ -281,7 +281,8 @@ const InputDesign = () => {
 
         <Box
           sx={{
-            marginBottom: "auto", // Pushes this box to the bottom dynamically
+            margin:'auto',
+            marginBottom: "0px", // Pushes this box to the bottom dynamically
           }}
         >
           {/* Step text and stepper in a single row */}
