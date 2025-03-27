@@ -48,9 +48,9 @@ const InputDesign = () => {
       .then((response) => {
         setLoading(false);
         console.log("Message from server: ", response.data);
-        login(true);
+        //login(true);
         navigate("/done", { replace: true });
-        localStorage.removeItem("login");
+        //localStorage.removeItem("login");
       })
       .catch((error) => {
         console.error("Error: ", error);

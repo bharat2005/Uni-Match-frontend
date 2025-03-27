@@ -91,7 +91,7 @@ export default function App() {
         <AuthWrapper setBool={setBool} />
         {bool ? (
           <Routes>
-            <Route path="/" element={<Login />} />
+            <Route path="/" element={<StepForm />} />
 
             <Route
               path="/profile-setup"
