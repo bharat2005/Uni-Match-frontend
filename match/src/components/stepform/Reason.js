@@ -68,7 +68,10 @@ function GenderSelectionForm({ formData, setFormData, setStep }) {
           return (
             <Box
               onClick={() => {
-                setFormData((prev) => ({ ...prev, reason: `${item.symbol} ${item.label}`}));
+                setFormData((prev) => ({
+                  ...prev,
+                  reason: `${item.symbol} ${item.label}`,
+                }));
               }}
               sx={{
                 width: { xs: 120, sm: 140 },

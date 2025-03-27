@@ -53,22 +53,20 @@ const LoginPage = () => {
         setLoading(false);
         console.log(response.data);
         if (response.data.message == "Login") {
-          
           const csrfTokenAccess = response.headers["x-csrf-token-access"];
           localStorage.setItem("csrfTokenAccess", csrfTokenAccess);
 
           const csrfTokenRefresh = response.headers["x-csrf-token-refresh"];
           localStorage.setItem("csrfTokenRefresh", csrfTokenRefresh);
 
-         if (response.data.nbool){
-          login(true)
-         navigate("/app/home")
-        } else {
-          localStorage.setItem("login", "halfLogin");
-          setBool2(true)
-          navigate("/profile-setup")
-        }
-
+          if (response.data.nbool) {
+            login(true);
+            navigate("/app/home");
+          } else {
+            localStorage.setItem("login", "halfLogin");
+            setBool2(true);
+            navigate("/profile-setup");
+          }
         } else {
           setBarOpen(true);
         }
@@ -107,7 +105,7 @@ const LoginPage = () => {
       <Box
         sx={{
           display: "flex",
-          flexDirection: "column", 
+          flexDirection: "column",
           justifyContent: "center",
           alignItems: "center",
           marginTop: "10%",
@@ -115,7 +113,6 @@ const LoginPage = () => {
           position: "relative",
         }}
       >
-      
         <Box
           sx={{
             display: "flex",
@@ -137,7 +134,6 @@ const LoginPage = () => {
           />
           <img src="/Uni-match-14-3-2025.png" style={{ width: "85%" }} />
         </Box>
-
 
         <Box
           sx={{

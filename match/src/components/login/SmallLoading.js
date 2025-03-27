@@ -1,19 +1,18 @@
 "use client";
 import * as React from "react";
 
-function HeartAnimation({app}) {
+function HeartAnimation({ app }) {
   const containerStyle = {
     position: "fixed",
     top: 0,
     left: 0,
     width: "100vw",
     height: app ? "calc(100vh - 52px)" : "100vh",
-    backgroundColor: app ? "transparent" : "rgba(255, 255, 255, 0.4)", 
+    backgroundColor: app ? "transparent" : "rgba(255, 255, 255, 0.4)",
     display: "flex",
     justifyContent: "center",
     alignItems: "center",
     zIndex: 9999,
-  
   };
 
   const heartFigureStyle = {
@@ -58,21 +57,20 @@ function HeartAnimation({app}) {
             strokeWidth="7"
             strokeLinecap="round"
           >
-<animate
-  attributeName="stroke-dasharray"
-  values="300, 200"
-  dur="1.6s"
-  repeatCount="indefinite"
-/>
-<animate
-  attributeName="stroke-dashoffset"
-  from="0"
-  to="-500"
-  dur="1.6s"
-  repeatCount="indefinite"
-  calcMode="linear"
-/>
-
+            <animate
+              attributeName="stroke-dasharray"
+              values="300, 200"
+              dur="1.6s"
+              repeatCount="indefinite"
+            />
+            <animate
+              attributeName="stroke-dashoffset"
+              from="0"
+              to="-500"
+              dur="1.6s"
+              repeatCount="indefinite"
+              calcMode="linear"
+            />
           </path>
         </svg>
       </figure>

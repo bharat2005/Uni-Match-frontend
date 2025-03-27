@@ -47,7 +47,7 @@ const TextBoard = ({ onClose }) => {
               backgroundColor: "#F5F5F5",
             },
           }}
-          onClick={()=> navigate(-1)}
+          onClick={() => navigate(-1)}
         >
           <i
             className="ti ti-chevron-left"
@@ -261,7 +261,7 @@ const TextBoard = ({ onClose }) => {
         }}
       >
         <Button
-        onClick={handleContactClick}
+          onClick={handleContactClick}
           variant="contained"
           sx={{
             py: 1.5,

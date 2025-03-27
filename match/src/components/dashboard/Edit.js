@@ -22,12 +22,11 @@ import { useAuth } from "../../AuthProvider";
 import Modall from "./Modal2.0";
 import AddPhotoAlternateIcon from "@mui/icons-material/AddPhotoAlternate";
 import DeleteIcon from "@mui/icons-material/Delete";
-import axios from 'axios';
+import axios from "axios";
 import AddIcon from "@mui/icons-material/Add";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import CloseIcon from "@mui/icons-material/Close";
 import { useNavigate } from "react-router-dom";
-
 
 const interests = [
   { emoji: "🎬", label: "Movies" },
@@ -77,7 +76,6 @@ const interests = [
   { emoji: "📡", label: "Tech" },
   { emoji: "🧪", label: "Science" },
 ];
-
 
 const styles = {
   appContainer: {
@@ -235,14 +233,16 @@ const styles = {
 
 function SearchContainer({ onClose, setIsDrawerOpen }) {
   const navigate = useNavigate();
-  const {selfprofile, setSelfProfile} = useAuth();
+  const { selfprofile, setSelfProfile } = useAuth();
   const [smallDrawerOpen, setSmallDrawerOpen] = React.useState(false);
   const [bigDrawerOpen, setBigDrawerOpen] = React.useState(false);
   const toggleSmallDrawer = (open) => () => setSmallDrawerOpen(open);
   const toggleBigDrawer = (open) => () => setBigDrawerOpen(open);
   const [images, setImages] = React.useState(
-    selfprofile?.images?.length > 0 ? [...selfprofile.images] : Array(6).fill(null)
-  );  
+    selfprofile?.images?.length > 0
+      ? [...selfprofile.images]
+      : Array(6).fill(null),
+  );
   const [formData, setFormData] = React.useState({
     reason: selfprofile?.reason || "",
     name: selfprofile?.name || "",
@@ -250,16 +250,19 @@ function SearchContainer({ onClose, setIsDrawerOpen }) {
     images: selfprofile?.images || [...Array(5).fill(null)],
     bio: selfprofile?.bio || "",
     interests: selfprofile?.interests || [],
-  })
-  const [selectedGender, setSelectedGender] = React.useState(formData['personality']);
-  const [selectedOption, setSelectedOption] = React.useState(formData['reason']);
+  });
+  const [selectedGender, setSelectedGender] = React.useState(
+    formData["personality"],
+  );
+  const [selectedOption, setSelectedOption] = React.useState(
+    formData["reason"],
+  );
   const fileInputRefs = React.useRef([]);
   const [loading, setLoading] = React.useState(false);
   const [modalOpen, setModalOpen] = React.useState(false);
 
-  console.log("Edit",selfprofile)
+  console.log("Edit", selfprofile);
 
-  
   if (fileInputRefs.current.length !== 6) {
     fileInputRefs.current = Array(6)
       .fill()
@@ -270,28 +273,27 @@ function SearchContainer({ onClose, setIsDrawerOpen }) {
     const file = event.target.files[0];
     if (!file || !file.type.startsWith("image/")) return;
 
-    setLoading(true)
-    
+    setLoading(true);
+
     axios
       .post("https://api.uni-match.in/get_presigned_url", {
         file_name: file.name,
         file_type: file.type,
       })
       .then((response) => {
-        const { presigned_url, file_url } = response.data; 
+        const { presigned_url, file_url } = response.data;
 
-    
-        return axios.put(presigned_url, file, {
-          headers: { "Content-Type": file.type },
-        }).then(() => file_url); 
+        return axios
+          .put(presigned_url, file, {
+            headers: { "Content-Type": file.type },
+          })
+          .then(() => file_url);
       })
       .then((file_url) => {
-      
         const newtempImages = [...formData["images"]];
         newtempImages[index] = file_url;
         setFormData((prev) => ({ ...prev, images: newtempImages }));
 
-      
         const reader = new FileReader();
         reader.onload = (e) => {
           const newImages = [...images];
@@ -304,10 +306,9 @@ function SearchContainer({ onClose, setIsDrawerOpen }) {
         console.error("Error uploading image:", error);
       })
       .finally(() => {
-        setLoading(false); 
+        setLoading(false);
       });
-};
-
+  };
 
   const handleRemoveImage = (index, event) => {
     event.stopPropagation();
@@ -323,13 +324,10 @@ function SearchContainer({ onClose, setIsDrawerOpen }) {
     }
   };
 
-
-
   const handleOptionSelect = (option) => {
     setSelectedOption(option);
     setSmallDrawerOpen(false);
   };
-
 
   const handleLocationSelect = (location) => {
     setFormData((prev) => {
@@ -341,7 +339,6 @@ function SearchContainer({ onClose, setIsDrawerOpen }) {
       };
     });
   };
-
 
   const formGroupStyle = {
     display: "flex",
@@ -373,7 +370,6 @@ function SearchContainer({ onClose, setIsDrawerOpen }) {
     },
   };
 
-
   function handleDone() {
     setLoading(true);
     console.log(formData);
@@ -385,10 +381,10 @@ function SearchContainer({ onClose, setIsDrawerOpen }) {
       .then((response) => {
         setLoading(false);
         console.log("Message from server: ", response.data);
-        setModalOpen(true)
+        setModalOpen(true);
       })
       .catch((error) => {
-        setModalOpen(true)
+        setModalOpen(true);
         console.error("Error: ", error);
         if (error.response?.status === 401) {
           axios
@@ -407,15 +403,17 @@ function SearchContainer({ onClose, setIsDrawerOpen }) {
               const csrfTokenAccess = response.headers["x-csrf-token-access"];
               localStorage.setItem("csrfTokenAccess", csrfTokenAccess);
               axios
-              .post("https://api.uni-match.in/profile_update", formData, {
-                withCredentials: true,
-                headers: { "X-CSRF-TOKEN": localStorage.getItem("csrfTokenAccess") },
-              })
-              .then((response) => {
-                setLoading(false);
-                console.log("Message from server: ", response.data);
-                navigate("/done", {replace:true})
-              })
+                .post("https://api.uni-match.in/profile_update", formData, {
+                  withCredentials: true,
+                  headers: {
+                    "X-CSRF-TOKEN": localStorage.getItem("csrfTokenAccess"),
+                  },
+                })
+                .then((response) => {
+                  setLoading(false);
+                  console.log("Message from server: ", response.data);
+                  navigate("/done", { replace: true });
+                })
                 .catch((retryError) =>
                   console.error("Failed after refresh:", retryError),
                 );
@@ -425,533 +423,516 @@ function SearchContainer({ onClose, setIsDrawerOpen }) {
             );
         }
       })
-      .finally(()=>{
-        setLoading(false);}
-      )
+      .finally(() => {
+        setLoading(false);
+      });
   }
- 
 
+  return (
+    <>
+      {loading && <SmallLoading />}
 
-  return (<>
-
-
-    {loading && <SmallLoading />}
-
-    <Modall
+      <Modall
         setModalOpen={setModalOpen}
         modalOpen={modalOpen}
         name={"update"}
       />
 
-    <Box
-      sx={{
-        position: "absolute",
-        top: 0,
-        left: 0,
-        width: "100vw",
-        height: "100vh",
-        backgroundColor: "#FAFAFA",
-        fontFamily: '"Inter", sans-serif',
-        zIndex: 9,
-        display: "flex",
-        flexDirection: "column",
-      }}
-    >
       <Box
         sx={{
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
-          padding: "28px 20px 12px 20px",
-          position: "sticky",
+          position: "absolute",
           top: 0,
-          backgroundColor: "#FFFFFF",
-          zIndex: 10,
-
-          borderBottom: "1px solid #E0E0E0",
-          boxShadow: "0 1px 4px rgba(0,0,0,0.05)",
+          left: 0,
+          width: "100vw",
+          height: "100vh",
+          backgroundColor: "#FAFAFA",
+          fontFamily: '"Inter", sans-serif',
+          zIndex: 9,
+          display: "flex",
+          flexDirection: "column",
         }}
       >
-        <IconButton
+        <Box
           sx={{
-            position: "absolute",
-            left: 16,
-            color: "#333",
-            "&:hover": {
-              backgroundColor: "#F5F5F5",
-            },
-          }}
-          onClick={()=> navigate(-1)}
-        >
-          <i
-            className="ti ti-chevron-left"
-            style={{ fontSize: "20px", color: "#555" }}
-          />
-        </IconButton>
-        <Typography
-          sx={{
-            fontSize: "18px",
-            fontWeight: 500,
-            color: "#212121",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            padding: "28px 20px 12px 20px",
+            position: "sticky",
+            top: 0,
+            backgroundColor: "#FFFFFF",
+            zIndex: 10,
+
+            borderBottom: "1px solid #E0E0E0",
+            boxShadow: "0 1px 4px rgba(0,0,0,0.05)",
           }}
         >
-          Edit Profile
-        </Typography>
-      </Box>
-
-      <Box
-        component="form"
-        sx={{
-          flex: 1,
-          padding: "24px",
-          overflowY: "auto",
-          textAlign: "left",
-          backgroundColor: "#FFFFFF",
-          "&::-webkit-scrollbar": { display: "none" },
-          scrollbarWidth: "none",
-        }}
-      >
-        <Box sx={formGroupStyle}>
-          <Typography
-            sx={{
-              color: "#333",
-              fontSize: "16px",
-              fontWeight: 500,
-            }}
-          >
-            Name
-          </Typography>
-          <TextareaAutosize
-           minRows={1}
-           value={formData['name']}
-           onChange={(e)=> setFormData((prev)=> ({...prev, name:e.target.value}))}
-            placeholder="enter name"
-            style={{
-              //width: "100%",
-              padding: "12px",
-              borderRadius: "8px",
-              border: "1px solid #eee",
-              fontSize: "16px",
-             // color: "#666",
-              resize: "vertical",
-              fontFamily: "inherit",
-              outline: "none",
-              transition: "border-color 0.2s ease",
-            }}
-            onFocus={(e) => {
-              e.target.style.borderColor = "#ff6b9c";
-            }}
-            onBlur={(e) => {
-              e.target.style.borderColor = "#eee";
-            }}
-          />
-        </Box>
-
-        <Box sx={formGroupStyle}>
-  <Typography
-    sx={{
-      color: "#333",
-      fontSize: "16px",
-      fontWeight: 500,
-    }}
-  >
-    Photos
-  </Typography>
-
-
-  <Box
-        sx={{
-          display: "grid",
-          gridTemplateColumns: "repeat(3, 1fr)",
-          gap: { xs: 1.25, sm: 2.5 },
-        }}
-      >
-
-
-
-
-
-
-
-
-
-{images.map((image, index) => {
-  const previewImage = image || formData.images[index]; // Use either local preview or existing URL
-  return (
-    <Box
-      key={index}
-      onClick={() => fileInputRefs.current[index].current.click()}
-      sx={{
-        width: "100%",
-        height: "100%",
-        aspectRatio: "0.8",
-        borderRadius: 2,
-        display: "flex",
-        flexDirection: "column",
-        alignItems: "center",
-        justifyContent: "center",
-        margin: "auto",
-        position: "relative",
-        border: "2px dashed #ff97b5",
-        backgroundColor: "#fff",
-        overflow: "hidden",
-        transition: "all 0.3s ease",
-        "&:hover": {
-          transform: "scale(1.02)",
-          backgroundColor: "#fff5f8",
-        },
-        outline: "none",
-        userSelect: "none",
-        WebkitTapHighlightColor: "transparent",
-        "&:focus": {
-          outline: "none",
-          boxShadow: "none",
-        },
-      }}
-      tabIndex={-1}
-    >
-      <input
-        type="file"
-        accept="image/*"
-        ref={fileInputRefs.current[index]}
-        onChange={(e) => handleImageSelect(index, e)}
-        style={{ display: "none" }}
-      />
-
-      {previewImage ? (
-        <>
-          <Box
-            sx={{
-              width: "100%",
-              height: "100%",
-              backgroundImage: `url(${previewImage})`,
-              backgroundSize: "cover",
-              backgroundPosition: "center",
-            }}
-          />
-          <Button
-            onClick={(e) => handleRemoveImage(index, e)}
+          <IconButton
             sx={{
               position: "absolute",
-              top: "8px",
-              right: "8px",
-              minWidth: "auto",
-              padding: "4px",
-              backgroundColor: "rgba(255, 255, 255, 0.8)",
-              borderRadius: "50%",
+              left: 16,
+              color: "#333",
               "&:hover": {
-                backgroundColor: "rgba(255, 255, 255, 0.9)",
+                backgroundColor: "#F5F5F5",
+              },
+            }}
+            onClick={() => navigate(-1)}
+          >
+            <i
+              className="ti ti-chevron-left"
+              style={{ fontSize: "20px", color: "#555" }}
+            />
+          </IconButton>
+          <Typography
+            sx={{
+              fontSize: "18px",
+              fontWeight: 500,
+              color: "#212121",
+            }}
+          >
+            Edit Profile
+          </Typography>
+        </Box>
+
+        <Box
+          component="form"
+          sx={{
+            flex: 1,
+            padding: "24px",
+            overflowY: "auto",
+            textAlign: "left",
+            backgroundColor: "#FFFFFF",
+            "&::-webkit-scrollbar": { display: "none" },
+            scrollbarWidth: "none",
+          }}
+        >
+          <Box sx={formGroupStyle}>
+            <Typography
+              sx={{
+                color: "#333",
+                fontSize: "16px",
+                fontWeight: 500,
+              }}
+            >
+              Name
+            </Typography>
+            <TextareaAutosize
+              minRows={1}
+              value={formData["name"]}
+              onChange={(e) =>
+                setFormData((prev) => ({ ...prev, name: e.target.value }))
+              }
+              placeholder="enter name"
+              style={{
+                //width: "100%",
+                padding: "12px",
+                borderRadius: "8px",
+                border: "1px solid #eee",
+                fontSize: "16px",
+                // color: "#666",
+                resize: "vertical",
+                fontFamily: "inherit",
+                outline: "none",
+                transition: "border-color 0.2s ease",
+              }}
+              onFocus={(e) => {
+                e.target.style.borderColor = "#ff6b9c";
+              }}
+              onBlur={(e) => {
+                e.target.style.borderColor = "#eee";
+              }}
+            />
+          </Box>
+
+          <Box sx={formGroupStyle}>
+            <Typography
+              sx={{
+                color: "#333",
+                fontSize: "16px",
+                fontWeight: 500,
+              }}
+            >
+              Photos
+            </Typography>
+
+            <Box
+              sx={{
+                display: "grid",
+                gridTemplateColumns: "repeat(3, 1fr)",
+                gap: { xs: 1.25, sm: 2.5 },
+              }}
+            >
+              {images.map((image, index) => {
+                const previewImage = image || formData.images[index]; // Use either local preview or existing URL
+                return (
+                  <Box
+                    key={index}
+                    onClick={() => fileInputRefs.current[index].current.click()}
+                    sx={{
+                      width: "100%",
+                      height: "100%",
+                      aspectRatio: "0.8",
+                      borderRadius: 2,
+                      display: "flex",
+                      flexDirection: "column",
+                      alignItems: "center",
+                      justifyContent: "center",
+                      margin: "auto",
+                      position: "relative",
+                      border: "2px dashed #ff97b5",
+                      backgroundColor: "#fff",
+                      overflow: "hidden",
+                      transition: "all 0.3s ease",
+                      "&:hover": {
+                        transform: "scale(1.02)",
+                        backgroundColor: "#fff5f8",
+                      },
+                      outline: "none",
+                      userSelect: "none",
+                      WebkitTapHighlightColor: "transparent",
+                      "&:focus": {
+                        outline: "none",
+                        boxShadow: "none",
+                      },
+                    }}
+                    tabIndex={-1}
+                  >
+                    <input
+                      type="file"
+                      accept="image/*"
+                      ref={fileInputRefs.current[index]}
+                      onChange={(e) => handleImageSelect(index, e)}
+                      style={{ display: "none" }}
+                    />
+
+                    {previewImage ? (
+                      <>
+                        <Box
+                          sx={{
+                            width: "100%",
+                            height: "100%",
+                            backgroundImage: `url(${previewImage})`,
+                            backgroundSize: "cover",
+                            backgroundPosition: "center",
+                          }}
+                        />
+                        <Button
+                          onClick={(e) => handleRemoveImage(index, e)}
+                          sx={{
+                            position: "absolute",
+                            top: "8px",
+                            right: "8px",
+                            minWidth: "auto",
+                            padding: "4px",
+                            backgroundColor: "rgba(255, 255, 255, 0.8)",
+                            borderRadius: "50%",
+                            "&:hover": {
+                              backgroundColor: "rgba(255, 255, 255, 0.9)",
+                            },
+                          }}
+                        >
+                          <DeleteIcon sx={{ fontSize: 20, color: "#FF4D4D" }} />
+                        </Button>
+                      </>
+                    ) : (
+                      <Box
+                        sx={{
+                          display: "flex",
+                          flexDirection: "column",
+                          alignItems: "center",
+                          gap: "8px",
+                        }}
+                      >
+                        <AddPhotoAlternateIcon
+                          sx={{ fontSize: 40, color: "#FFD6E7" }}
+                        />
+                      </Box>
+                    )}
+                  </Box>
+                );
+              })}
+            </Box>
+          </Box>
+
+          <Box sx={formGroupStyle}>
+            <Typography
+              sx={{
+                color: "#333",
+                fontSize: "16px",
+                fontWeight: 500,
+              }}
+            >
+              Personality
+            </Typography>
+            <Box sx={{ display: "flex", gap: 1.5 }}>
+              {["Introvert", "Extrovert", "Ambivert"].map((option) => (
+                <Chip
+                  key={option}
+                  label={option}
+                  onClick={() => setSelectedGender(option)}
+                  sx={{
+                    borderRadius: "18px",
+                    fontSize: "14px",
+                    padding: "18px 12px",
+                    backgroundColor: "white",
+                    border: "1px solid #eee",
+                    color: "#666",
+                    "&:hover": {
+                      backgroundColor: "#f5f5f5",
+                    },
+                    "&.selected": {
+                      backgroundColor: "#ff6b9c",
+                      color: "white",
+                      //borderColor: "#ff6b9c",
+                      boxShadow: "0 2px 4px rgba(255, 107, 156, 0.2)",
+                      "&:hover": {
+                        backgroundColor: "#ff5b8c",
+                      },
+                    },
+                  }}
+                  className={selectedGender === option ? "selected" : ""}
+                />
+              ))}
+            </Box>
+          </Box>
+
+          <Box sx={formGroupStyle}>
+            <Typography
+              sx={{
+                color: "#333",
+                fontSize: "16px",
+                fontWeight: 500,
+              }}
+            >
+              Here for?
+            </Typography>
+
+            <Button
+              sx={styles.locationSelector}
+              endIcon={<KeyboardArrowDownIcon />}
+              onClick={toggleSmallDrawer(true)}
+            >
+              {selectedOption || "Select an option"}
+            </Button>
+          </Box>
+
+          <SwipeableDrawer
+            anchor="bottom"
+            open={smallDrawerOpen}
+            onClose={toggleSmallDrawer(false)}
+            sx={{
+              "& .MuiDrawer-paper": {
+                background: "white",
+                maxHeight: "90vh",
               },
             }}
           >
-            <DeleteIcon sx={{ fontSize: 20, color: "#FF4D4D" }} />
-          </Button>
-        </>
-      ) : (
-        <Box sx={{ display: "flex", flexDirection: "column", alignItems: "center", gap: "8px" }}>
-          <AddPhotoAlternateIcon sx={{ fontSize: 40, color: "#FFD6E7" }} />
-        </Box>
-      )}
-    </Box>
-  );
-})}
+            <List sx={{ paddingBottom: 0 }}>
+              {[
+                "Casual dating",
+                "Long-term",
+                "Short-term",
+                "New friends",
+                "Study buddy",
+                "Still figuring",
+              ].map((option, index) => (
+                <ListItemButton
+                  key={index}
+                  onClick={() => handleOptionSelect(option)}
+                  sx={{ borderBottom: "1px solid #f0f0f0" }}
+                >
+                  <ListItemText primary={option} sx={{ textAlign: "center" }} />
+                </ListItemButton>
+              ))}
+            </List>
+          </SwipeableDrawer>
 
-
-
-
-
-
-
-
-
-
-      </Box>
-
-
-
-</Box>
-
-
-        <Box sx={formGroupStyle}>
-          <Typography
-            sx={{
-              color: "#333",
-              fontSize: "16px",
-              fontWeight: 500,
-            }}
-          >
-            Personality
-          </Typography>
-          <Box sx={{ display: "flex", gap: 1.5 }}>
-            {[
-              "Introvert",
-              "Extrovert",
-              "Ambivert",
-            ].map((option) => (
-              <Chip
-              key={option}
-              label={option}
-              onClick={() => setSelectedGender(option)}
+          <Box sx={formGroupStyle}>
+            <Typography
               sx={{
-                borderRadius: "18px",
-                fontSize: "14px",
-                padding: "18px 12px",
-                backgroundColor: "white",
-                border: "1px solid #eee",
-                color: "#666",
-                "&:hover": {
-                  backgroundColor: "#f5f5f5",
-                },
-                "&.selected": {
-                  backgroundColor: "#ff6b9c",
-                  color: "white",
-                  //borderColor: "#ff6b9c",
-                  boxShadow: "0 2px 4px rgba(255, 107, 156, 0.2)",
-                  "&:hover": {
-                    backgroundColor: "#ff5b8c",
-                  },
-                },
+                color: "#333",
+                fontSize: "16px",
+                fontWeight: 500,
               }}
-              className={selectedGender === option ? "selected" : ""}
+            >
+              About
+            </Typography>
+            <TextareaAutosize
+              minRows={6}
+              value={formData["bio"]}
+              onChange={(e) =>
+                setFormData((prev) => ({ ...prev, bio: e.target.value }))
+              }
+              placeholder="A few words about yourself..."
+              style={{
+                //width: "100%",
+                padding: "12px",
+                borderRadius: "8px",
+                border: "1px solid #eee",
+                fontSize: "14px",
+                color: "#666",
+                resize: "vertical",
+                fontFamily: "inherit",
+                outline: "none",
+                transition: "border-color 0.2s ease",
+              }}
+              onFocus={(e) => {
+                e.target.style.borderColor = "#ff6b9c";
+              }}
+              onBlur={(e) => {
+                e.target.style.borderColor = "#eee";
+              }}
             />
-            ))}
+          </Box>
+
+          <Box sx={formGroupStyle}>
+            <Typography
+              sx={{
+                color: "#333",
+                fontSize: "16px",
+                fontWeight: 500,
+              }}
+            >
+              Interests
+            </Typography>
+            <Button
+              sx={styles.locationSelector}
+              endIcon={<KeyboardArrowDownIcon />}
+              onClick={toggleBigDrawer(true)}
+            >
+              your interests
+            </Button>
           </Box>
         </Box>
+        <Box
+          sx={{
+            boxSizing: "border-box",
+            display: "flex",
+            width: "100%",
 
-        <Box sx={formGroupStyle}>
-          <Typography
-            sx={{
-              color: "#333",
-              fontSize: "16px",
-              fontWeight: 500,
-            }}
-          >
-            Here for?
-          </Typography>
-
+            gap: 1,
+            position: "sticky",
+            bottom: 0,
+            backgroundColor: "#FFFFFF",
+            padding: "12px 16px",
+            boxShadow: "0 -1px 3px rgba(0,0,0,0.05)",
+            borderTop: "1px solid #E0E0E0",
+            justifyContent: "center",
+          }}
+        >
           <Button
-            sx={styles.locationSelector}
-            endIcon={<KeyboardArrowDownIcon />}
-            onClick={toggleSmallDrawer(true)}
-          >
-            {selectedOption || "Select an option"}
-          </Button>
-        </Box>
-
-     <SwipeableDrawer
-        anchor="bottom"
-        open={smallDrawerOpen}
-        onClose={toggleSmallDrawer(false)}
-        sx={{
-          "& .MuiDrawer-paper": {
-            background: "white",
-            maxHeight: "90vh",
-          },
-        }}
-      >
-        <List sx={{ paddingBottom: 0 }}>
-          {[
-            "Casual dating",
-            "Long-term",
-            "Short-term",
-            "New friends",
-            "Study buddy",
-            "Still figuring",
-          ].map((option, index) => (
-            <ListItemButton
-              key={index}
-              onClick={() => handleOptionSelect(option)}
-              sx={{ borderBottom: "1px solid #f0f0f0" }}
-            >
-              <ListItemText primary={option} sx={{ textAlign: "center" }} />
-            </ListItemButton>
-          ))}
-        </List>
-      </SwipeableDrawer>
-
-        <Box sx={formGroupStyle}>
-          <Typography
+            fullWidth
+            onClick={() => navigate(-1)}
+            variant="outlined"
             sx={{
-              color: "#333",
-              fontSize: "16px",
-              fontWeight: 500,
-            }}
-          >
-            About
-          </Typography>
-          <TextareaAutosize
-            minRows={6}
-            value={formData['bio']}
-            onChange={(e)=> setFormData((prev)=> ({...prev, bio: e.target.value}))}
-            placeholder="A few words about yourself..."
-            style={{
-              //width: "100%",
-              padding: "12px",
-              borderRadius: "8px",
-              border: "1px solid #eee",
-              fontSize: "14px",
+              padding: "8px 20px",
+              py: 1.5,
+              borderRadius: "25px",
+              borderColor: "#eee",
               color: "#666",
-              resize: "vertical",
-              fontFamily: "inherit",
-              outline: "none",
-              transition: "border-color 0.2s ease",
-            }}
-            onFocus={(e) => {
-              e.target.style.borderColor = "#ff6b9c";
-            }}
-            onBlur={(e) => {
-              e.target.style.borderColor = "#eee";
-            }}
-          />
-        </Box>
-
-        <Box sx={formGroupStyle}>
-          <Typography
-            sx={{
-              color: "#333",
-              fontSize: "16px",
-              fontWeight: 500,
+              fontSize: "14px",
+              "&:hover": {
+                borderColor: "#ddd",
+                bgcolor: "#fafafa",
+              },
+              textTransform: "none",
+              transition: "all 0.2s ease",
             }}
           >
-            Interests
-          </Typography>
+            Cancel
+          </Button>
           <Button
-            sx={styles.locationSelector}
-            endIcon={<KeyboardArrowDownIcon />}
-            onClick={toggleBigDrawer(true)}
+            fullWidth
+            onClick={handleDone}
+            variant="contained"
+            sx={{
+              py: 1.5,
+              borderRadius: "25px",
+              bgcolor: "#ff6b9c",
+              fontSize: "14px",
+              "&:hover": {
+                bgcolor: "#ff5c8f",
+              },
+              textTransform: "none",
+              boxShadow: "none",
+              transition: "all 0.2s ease",
+            }}
           >
-            your interests
+            Save
           </Button>
         </Box>
-      </Box>
-      <Box
-        sx={{
-          boxSizing: "border-box",
-          display: "flex",
-          width: "100%",
 
-          gap: 1,
-          position: "sticky",
-          bottom: 0,
-          backgroundColor: "#FFFFFF",
-          padding: "12px 16px",
-          boxShadow: "0 -1px 3px rgba(0,0,0,0.05)",
-          borderTop: "1px solid #E0E0E0",
-          justifyContent: "center",
-        }}
-      >
-        <Button
-          fullWidth
-          onClick={()=> navigate(-1)}
-          variant="outlined"
+        <SwipeableDrawer
+          anchor="bottom"
+          open={bigDrawerOpen}
+          onClose={toggleBigDrawer(false)}
           sx={{
-            padding: "8px 20px",
-            py: 1.5,
-            borderRadius: "25px",
-            borderColor: "#eee",
-            color: "#666",
-            fontSize: "14px",
-            "&:hover": {
-              borderColor: "#ddd",
-              bgcolor: "#fafafa",
+            "& .MuiDrawer-paper": {
+              // borderTopLeftRadius: "20px",
+              // borderTopRightRadius: "20px",
+              background: "white",
+              maxHeight: "90vh",
             },
-            textTransform: "none",
-            transition: "all 0.2s ease",
           }}
         >
-          Cancel
-        </Button>
-        <Button
-          fullWidth
-          onClick={handleDone}
-          variant="contained"
-          sx={{
-            py: 1.5,
-            borderRadius: "25px",
-            bgcolor: "#ff6b9c",
-            fontSize: "14px",
-            "&:hover": {
-              bgcolor: "#ff5c8f",
-            },
-            textTransform: "none",
-            boxShadow: "none",
-            transition: "all 0.2s ease",
-          }}
-        >
-          Save
-        </Button>
-      </Box>
-
-      <SwipeableDrawer
-        anchor="bottom"
-        open={bigDrawerOpen}
-        onClose={toggleBigDrawer(false)}
-        sx={{
-          "& .MuiDrawer-paper": {
-            // borderTopLeftRadius: "20px",
-            // borderTopRightRadius: "20px",
-            background: "white",
-            maxHeight: "90vh",
-          },
-        }}
-      >
           <Box
-             sx={{
-               display: "grid",
-               margin: "30px 0 40px 0",
-               gridTemplateColumns: {
-                 xs: "repeat(1, 1fr)",
-                 sm: "repeat(1, 1fr)",
-               },
-               gap: { xs: "10px", sm: "15px" },
-               padding: "0 25%",
-               maxHeight: "",
-               overflowY: "auto",
-               msOverflowStyle: "none",
-               scrollbarWidth: "none",
-               "&::-webkit-scrollbar": {
-                 display: "none",
-               },
-             }}
-           >
-             {interests.map((location) => (
-               <Button
-                 key={location.label}
-                 onClick={() => handleLocationSelect(location.label)}
-                 sx={{
-                   background: formData["interests"].includes(location.label)
-                     ? "rgba(255, 105, 190, 0.4)"
-                     : "white",
-                   borderRadius: "25px",
-                   padding: { xs: "10px", sm: "12px" },
-                   textAlign: "center",
-                   fontSize: { xs: "14px", sm: "16px" },
-                   color: formData["interests"].includes(location.label)
-                     ? "white"
-                     : "black",
-                   transition: "all 0.3s ease",
-                   "&:hover": {
-                     background: formData["interests"].includes(location.label)
-                       ? "rgba(255, 105, 190, 0.4)"
-                       : "white",
-                   },
-                   fontFamily: "inherit",
-                   boxShadow: formData["interests"].includes(location.label)
-                     ? "0 2px 6px rgba(255, 70, 162, 0.3)"
-                     : "none",
-                   transform: formData["interests"].includes(location.label)
-                     ? "scale(1.02)"
-                     : "scale(1)",
-                 }}
-               >
-                 {location.emoji}
-                 {location.label}
-               </Button>
-             ))}
-           </Box>
-      </SwipeableDrawer>
-    </Box>
-</>  );
+            sx={{
+              display: "grid",
+              margin: "30px 0 40px 0",
+              gridTemplateColumns: {
+                xs: "repeat(1, 1fr)",
+                sm: "repeat(1, 1fr)",
+              },
+              gap: { xs: "10px", sm: "15px" },
+              padding: "0 25%",
+              maxHeight: "",
+              overflowY: "auto",
+              msOverflowStyle: "none",
+              scrollbarWidth: "none",
+              "&::-webkit-scrollbar": {
+                display: "none",
+              },
+            }}
+          >
+            {interests.map((location) => (
+              <Button
+                key={location.label}
+                onClick={() => handleLocationSelect(location.label)}
+                sx={{
+                  background: formData["interests"].includes(location.label)
+                    ? "rgba(255, 105, 190, 0.4)"
+                    : "white",
+                  borderRadius: "25px",
+                  padding: { xs: "10px", sm: "12px" },
+                  textAlign: "center",
+                  fontSize: { xs: "14px", sm: "16px" },
+                  color: formData["interests"].includes(location.label)
+                    ? "white"
+                    : "black",
+                  transition: "all 0.3s ease",
+                  "&:hover": {
+                    background: formData["interests"].includes(location.label)
+                      ? "rgba(255, 105, 190, 0.4)"
+                      : "white",
+                  },
+                  fontFamily: "inherit",
+                  boxShadow: formData["interests"].includes(location.label)
+                    ? "0 2px 6px rgba(255, 70, 162, 0.3)"
+                    : "none",
+                  transform: formData["interests"].includes(location.label)
+                    ? "scale(1.02)"
+                    : "scale(1)",
+                }}
+              >
+                {location.emoji}
+                {location.label}
+              </Button>
+            ))}
+          </Box>
+        </SwipeableDrawer>
+      </Box>
+    </>
+  );
 }
 
 export default SearchContainer;

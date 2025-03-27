@@ -2,7 +2,7 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../../AuthProvider";
-import axios from 'axios';
+import axios from "axios";
 import {
   Avatar,
   Badge,
@@ -140,7 +140,7 @@ const chatData = [
 ];
 export default function ChatInterface() {
   const navigate = useNavigate();
-  const {setMatchesNoti} = useAuth();
+  const { setMatchesNoti } = useAuth();
   const [imageClick, setImageClick] = useState(false);
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const [imageLoaded, setImageLoaded] = useState(false);
@@ -159,7 +159,7 @@ export default function ChatInterface() {
   //       })
   //       .catch((error) => {
   //         console.error("Error: ", error);
-  
+
   //         if (error.response?.status === 401) {
   //           axios
   //             .post(
@@ -172,11 +172,11 @@ export default function ChatInterface() {
   //                 },
   //               },
   //             )
-  
+
   //             .then((refreshResponse) => {
   //               const csrfToken = refreshResponse.headers["x-csrf-token"];
   //               localStorage.setItem("csrfToken", csrfToken);
-  
+
   //               axios
   //                 .get("https://api.uni-match.in/matches", {
   //                   withCredentials: true,
@@ -199,83 +199,83 @@ export default function ChatInterface() {
   //         }
   //       });
   //   }, [selectedMatch]);
-  
-    // const handleTabChange = (event, newValue) => {
-    //   setValue(newValue);
-    // };
-  
-    function handleNotiClick(sender_reg_no) {
-      axios
-        .patch(
-          "https://api.uni-match.in/notidel",
-          { sender_reg_no },
-          {
-            withCredentials: true,
-            headers: { "X-CSRF-TOKEN": localStorage.getItem("csrfToken") },
-          },
-        )
-        .then((response) => {
-          console.log(response.data);
-          setMatchesNoti(response.data.MatchesNoti);
-        })
-        .catch((error) => {
-          console.error("Error: ", error);
-        });
-    }
-  
-    // function handleDeleteMatch(e, data) {
-    //   e.stopPropagation();
-    //   axios
-    //     .post("https://api.uni-match.in/matchdel", data, {
-    //       withCredentials: true,
-    //       headers: { "X-CSRF-TOKEN": localStorage.getItem("csrfToken") },
-    //     })
-    //     .then((response) => {
-    //       setMatchList(response.data.matches);
-    //       setMatchesNoti(response.data.MatchesNoti);
-    //     })
-    //     .catch((error) => {
-    //       console.error("Error :", error);
-    //     });
-    // }
-  
-    // function handleClick(sender_reg_no) {
-    //   handleNotiClick(sender_reg_no);
-    //   axios
-    //     .post(
-    //       "https://api.uni-match.in/seen",
-    //       { sender_reg_no },
-    //       {
-    //         withCredentials: true,
-    //         headers: { "X-CSRF-TOKEN": localStorage.getItem("csrfTokenAccess") },
-    //       },
-    //     )
-    //     .then((responce) => {
-    //       console.log(responce.data.message);
-    //     })
-    //     .catch((error) => {
-    //       console.error("Error: ", error);
-    //     });
-    // }
-  
-    // let filteredList;
-    // if (matchList) {
-    //   filteredList = matchList;
-    // }
-  
-    // if (selectedMatch) {
-    //   return (
-    //     <Chat
-    //       match={selectedMatch}
-    //       profile={profile}
-    //       onBack={() => setSelectedMatch(null)}
-    //     />
-    //   );
-    // }
+
+  // const handleTabChange = (event, newValue) => {
+  //   setValue(newValue);
+  // };
+
+  function handleNotiClick(sender_reg_no) {
+    axios
+      .patch(
+        "https://api.uni-match.in/notidel",
+        { sender_reg_no },
+        {
+          withCredentials: true,
+          headers: { "X-CSRF-TOKEN": localStorage.getItem("csrfToken") },
+        },
+      )
+      .then((response) => {
+        console.log(response.data);
+        setMatchesNoti(response.data.MatchesNoti);
+      })
+      .catch((error) => {
+        console.error("Error: ", error);
+      });
+  }
+
+  // function handleDeleteMatch(e, data) {
+  //   e.stopPropagation();
+  //   axios
+  //     .post("https://api.uni-match.in/matchdel", data, {
+  //       withCredentials: true,
+  //       headers: { "X-CSRF-TOKEN": localStorage.getItem("csrfToken") },
+  //     })
+  //     .then((response) => {
+  //       setMatchList(response.data.matches);
+  //       setMatchesNoti(response.data.MatchesNoti);
+  //     })
+  //     .catch((error) => {
+  //       console.error("Error :", error);
+  //     });
+  // }
+
+  // function handleClick(sender_reg_no) {
+  //   handleNotiClick(sender_reg_no);
+  //   axios
+  //     .post(
+  //       "https://api.uni-match.in/seen",
+  //       { sender_reg_no },
+  //       {
+  //         withCredentials: true,
+  //         headers: { "X-CSRF-TOKEN": localStorage.getItem("csrfTokenAccess") },
+  //       },
+  //     )
+  //     .then((responce) => {
+  //       console.log(responce.data.message);
+  //     })
+  //     .catch((error) => {
+  //       console.error("Error: ", error);
+  //     });
+  // }
+
+  // let filteredList;
+  // if (matchList) {
+  //   filteredList = matchList;
+  // }
+
+  // if (selectedMatch) {
+  //   return (
+  //     <Chat
+  //       match={selectedMatch}
+  //       profile={profile}
+  //       onBack={() => setSelectedMatch(null)}
+  //     />
+  //   );
+  // }
 
   return (
     <>
-    <Outlet/>
+      <Outlet />
 
       <Container
         component="main"
@@ -336,7 +336,10 @@ export default function ChatInterface() {
           >
             {chatData.map((chat, index) => (
               <ListItem
-                onClick={() => {handleNotiClick("12413326"); navigate(`/app/${chat.id}`)}}
+                onClick={() => {
+                  handleNotiClick("12413326");
+                  navigate(`/app/${chat.id}`);
+                }}
                 key={index}
                 sx={{
                   padding: {
@@ -454,8 +457,6 @@ export default function ChatInterface() {
           </List>
         </Container>
       </Container>
-
-      
     </>
   );
 }

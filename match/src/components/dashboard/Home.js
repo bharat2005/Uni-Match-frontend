@@ -12,12 +12,11 @@ import Match from "./Match";
 import Modall from "./Modal";
 import { Outlet, useLocation } from "react-router-dom";
 
-
 function AppLayout() {
   const location = useLocation();
   const [activeTab, setActiveTab] = React.useState("clover");
   const [isDrawerOpen, setIsDrawerOpen] = React.useState(false);
-  const {likesNoti, setLikesNoti, matchesNoti, setMatchesNoti} = useAuth();
+  const { likesNoti, setLikesNoti, matchesNoti, setMatchesNoti } = useAuth();
   //const [name, setName] = React.useState(false);
   const shouldShowHeader = location.pathname === "/app";
 
@@ -99,15 +98,11 @@ function AppLayout() {
           position: "relative",
         }}
       >
-      
-
-
         <Box sx={{ flex: 1 }}>
           <Outlet />
         </Box>
 
-        <NavBar likesNoti={likesNoti} matchesNoti={matchesNoti}/>
-       
+        <NavBar likesNoti={likesNoti} matchesNoti={matchesNoti} />
       </Box>
     </>
   );

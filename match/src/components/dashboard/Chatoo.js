@@ -53,25 +53,23 @@ const ChatComponent = ({ setChatt }) => {
       messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
     }, 10);
   }, [messages]);
-  
 
   const sendMessage = (e) => {
     e.preventDefault(); // Prevent default action
-  
+
     if (messageText.trim()) {
       setMessages((prev) => [
         ...prev,
         { id: Date.now(), text: messageText, sender: "me" },
       ]);
       setMessageText("");
-  
+
       // Delay the focus to avoid input flickering
       setTimeout(() => {
         messageInputRef.current?.focus();
       }, 10);
     }
   };
-  
 
   return (
     <Box
@@ -224,23 +222,23 @@ const ChatComponent = ({ setChatt }) => {
             borderRadius: "20px",
             "& .MuiOutlinedInput-root": {
               borderRadius: "20px",
-              border:'none'
+              border: "none",
             },
             "& .MuiOutlinedInput-input": {
               padding: "10px",
-              border:'none',
+              border: "none",
             },
             "& fieldset": {
               borderColor: "transparent",
-              border:'none',
+              border: "none",
             },
             "&:hover fieldset": {
               borderColor: "transparent",
-              border:'none',
+              border: "none",
             },
             "&.Mui-focused fieldset": {
               borderColor: "transparent",
-              border:'none'
+              border: "none",
             },
           }}
         />

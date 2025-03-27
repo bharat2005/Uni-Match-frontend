@@ -7,16 +7,17 @@ import {
   CardMedia,
   Grid,
   IconButton,
+  Skeleton,
   Modal,
 } from "@mui/material";
 import Modall from "./Modal";
 import { ArrowBackIos, ArrowForwardIos } from "@mui/icons-material";
 import { Player } from "@lottiefiles/react-lottie-player";
-import Drawer2 from './Drawer2'
+import Drawer2 from "./Drawer2";
 import { useNavigate } from "react-router-dom";
-import axios from 'axios';
+import axios from "axios";
 import { Outlet } from "react-router-dom";
-import SmallLoading from '../login/SmallLoading';
+import SmallLoading from "../login/SmallLoading";
 
 const profile = {
   reg_no: "12413928",
@@ -39,13 +40,13 @@ const profile = {
 const ProfileGrid = () => {
   const navigate = useNavigate();
   const [modalOpen, setModalOpen] = useState(false);
-  const [loading, setLoading] = useState(false)
+  const [loading, setLoading] = useState(true);
   const [likedList, setLikedList] = useState([]);
-  const [profile, setSelectedProfile] = useState({})
-  const [target_reg_no, setTargetRegNo] = useState(null)
- 
+  const [profile, setSelectedProfile] = useState({});
+  const [target_reg_no, setTargetRegNo] = useState(null);
+
   useEffect(() => {
-    setLoading(true)
+    setLoading(true);
     axios
       .get("https://api.uni-match.in/likedbyu", {
         withCredentials: true,
@@ -76,14 +77,16 @@ const ProfileGrid = () => {
               localStorage.setItem("csrfTokenAccess", csrfTokenAccess);
 
               axios
-              .get("https://api.uni-match.in/likedbyu", {
-                withCredentials: true,
-                headers: { "X-CSRF-TOKEN": localStorage.getItem("csrfTokenAccess") },
-              })
-              .then((response) => {
-                console.log(response.data);
-                setLikedList(response.data.likedByYou);
-              })
+                .get("https://api.uni-match.in/likedbyu", {
+                  withCredentials: true,
+                  headers: {
+                    "X-CSRF-TOKEN": localStorage.getItem("csrfTokenAccess"),
+                  },
+                })
+                .then((response) => {
+                  console.log(response.data);
+                  setLikedList(response.data.likedByYou);
+                })
                 .catch((retryError) =>
                   console.error("Failed after refresh:", retryError),
                 );
@@ -92,14 +95,12 @@ const ProfileGrid = () => {
               console.error("Session expired, please log in again."),
             );
         }
-
       })
-      .finally(()=>{
-        setLoading(false)
-      })
+      .finally(() => {
+        setLoading(false);
+      });
   }, []);
 
-  
   useEffect(() => {
     // Disable scrolling for the whole page
     document.body.style.overflow = "hidden";
@@ -124,7 +125,7 @@ const ProfileGrid = () => {
       .then((responce) => {
         console.log(responce.data.message);
         setLikedList((prev) => {
-          return [ ...responce.data.likedByYou ];
+          return [...responce.data.likedByYou];
         });
       })
       .catch((error) => {
@@ -160,7 +161,7 @@ const ProfileGrid = () => {
                 .then((response) => {
                   console.log("Protected Data (After Refresh):", response.data);
                   setLikedList((prev) => {
-                    return [ ...response.data.likedByYou ];
+                    return [...response.data.likedByYou];
                   });
                 })
                 .catch((retryError) =>
@@ -174,14 +175,12 @@ const ProfileGrid = () => {
       })
       .finally(() => {
         setLoading(false);
-        setModalOpen(false)
+        setModalOpen(false);
       });
   }
 
-
   return (
     <>
-    {loading && <SmallLoading app={true}/>}
       <Modall
         setModalOpen={setModalOpen}
         modalOpen={modalOpen}
@@ -190,7 +189,7 @@ const ProfileGrid = () => {
         target_reg_no={String(target_reg_no)}
       />
 
-    <Outlet context={{profile}}/>
+      <Outlet context={{ profile }} />
 
       <Box
         sx={{
@@ -235,143 +234,190 @@ const ProfileGrid = () => {
             },
           }}
         >
-          {likedList.length ? (
-          <Grid container spacing={{ xs: 1, sm: 2 }} columns={{ xs: 2, sm: 2 }}>
-            {likedList.map((profile, index) => (
-              <Grid item xs={1} key={index} onClick={()=> {setSelectedProfile(profile); navigate("/app/likes/info")}}>
-                <Card
+          {!loading ? (
+            <>
+              {likedList.length ? (
+                <Grid
+                  container
+                  spacing={{ xs: 1, sm: 2 }}
+                  columns={{ xs: 2, sm: 2 }}
+                >
+                  {likedList.map((profile, index) => (
+                    <Grid
+                      item
+                      xs={1}
+                      key={index}
+                      onClick={() => {
+                        setSelectedProfile(profile);
+                        navigate("/app/likes/info");
+                      }}
+                    >
+                      <Card
+                        sx={{
+                          display: "flex",
+                          flexDirection: "column",
+                          overflow: "hidden",
+                          boxShadow: "none",
+                          background: "transparent",
+                          height: "100%",
+                          position: "relative",
+                          textAlign: "left",
+                        }}
+                      >
+                        <CardMedia
+                          component="img"
+                          image={profile.images[0]}
+                          sx={{
+                            width: "100%",
+                            height: "200px",
+                            borderRadius: "26px",
+                            objectFit: "cover",
+                          }}
+                        />
+
+                        <Box
+                          sx={{
+                            position: "absolute",
+                            top: "60%", // Center vertically
+                            left: "80%", // Center horizontally
+                            transform: "translate(-50%, -20%)", // Adjust positioning slightly upwards
+                            display: "flex",
+                            gap: 2,
+                          }}
+                        >
+                          <IconButton
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              setTargetRegNo(profile.reg_no);
+                              setModalOpen(true);
+                            }}
+                            sx={{
+                              width: "42px",
+                              height: "42px",
+                              color: "white",
+                              backgroundColor: "rgba(0, 0, 0, 0.8)",
+                              padding: "12px",
+                              borderRadius: "50%",
+                              "&:hover": {
+                                backgroundColor: "rgba(0, 0, 0, 1)",
+                              },
+                              "&:active": {
+                                transform: "scale(0.8)", // Less shrink to feel more natural
+                                boxShadow: "0 4px 12px rgba(255, 0, 110, 0.9)", // More intense active shadow
+                              },
+                            }}
+                          >
+                            <i
+                              className="ti ti-x"
+                              style={{ fontSize: "24px" }}
+                            ></i>
+                          </IconButton>
+                        </Box>
+
+                        <CardContent
+                          sx={{
+                            paddingBottom: "12px !important",
+                            paddingTop: "6px !important",
+                          }}
+                        >
+                          <Typography
+                            sx={{
+                              fontFamily: '"Inter", sans-serif',
+                              fontSize: {
+                                xs: "20px",
+                                sm: "26px",
+                              },
+                              fontWeight: 600,
+                              color: "#333",
+                              marginBottom: "0px",
+                            }}
+                          >
+                            {profile.name}
+                          </Typography>
+                          <Typography
+                            sx={{
+                              fontFamily: '"Inter", sans-serif',
+                              fontSize: {
+                                xs: "12px",
+                                sm: "14px",
+                              },
+                              color: "#666",
+                              lineHeight: 1.4,
+                            }}
+                          >
+                            {profile.reason}
+                          </Typography>
+                        </CardContent>
+                      </Card>
+                    </Grid>
+                  ))}
+                </Grid>
+              ) : (
+                <Box
                   sx={{
                     display: "flex",
                     flexDirection: "column",
-                    overflow: "hidden",
-                    boxShadow: "none",
-                    background: "transparent",
-                    height: "100%",
-                    position: "relative",
-                    textAlign: "left",
+                    alignItems: "center",
+                    position: "absolute",
+                    top: "50%",
+                    left: "50%",
+                    transform: "translate(-50%, -50%)", // Lighter look for placeholders
                   }}
                 >
-                  <CardMedia
-                    component="img"
-                    image={profile.images[0]}
-                    
-                    sx={{
-                      width: "100%",
-                      height: "200px",
-                      borderRadius: "26px",
-                      objectFit: "cover",
-                    }}
-                  />
-
+                  <img src={"/empty-box.png"} style={{ width: "120px" }} />
                   <Box
                     sx={{
-                      position: "absolute",
-                      top: "60%", // Center vertically
-                      left: "80%", // Center horizontally
-                      transform: "translate(-50%, -20%)", // Adjust positioning slightly upwards
-                      display: "flex",
-                      gap: 2,
+                      fontSize: "18px",
+                      color: "#888", // Typical gray placeholder color
                     }}
                   >
-                    <IconButton
-                      onClick={(e) => {
-                        e.stopPropagation();
-                       setTargetRegNo(profile.reg_no)
-                      setModalOpen(true);
-                      }}
-                      sx={{
-                        width: "42px",
-                        height: "42px",
-                        color: "white",
-                        backgroundColor: "rgba(0, 0, 0, 0.8)",
-                        padding: "12px",
-                        borderRadius: "50%",
-                        "&:hover": {
-                          backgroundColor: "rgba(0, 0, 0, 1)",
-                        },
-                        "&:active": {
-                          transform: "scale(0.8)", // Less shrink to feel more natural
-                          boxShadow: "0 4px 12px rgba(255, 0, 110, 0.9)", // More intense active shadow
-                        },
-                      }}
-                    >
-                      <i className="ti ti-x" style={{ fontSize: "24px" }}></i>
-                    </IconButton>
+                    No likes yet!
                   </Box>
-
-                  <CardContent
-                    sx={{
-                      paddingBottom: "12px !important",
-                      paddingTop: "6px !important",
-                    }}
-                  >
-                    <Typography
+                </Box>
+              )}
+            </>
+          ) : (
+            <>
+              <Grid
+                container
+                spacing={{ xs: 1, sm: 2 }}
+                columns={{ xs: 2, sm: 2 }}
+              >
+                {[...Array(6)].map((_, index) => (
+                  <Grid item xs={1} key={index}>
+                    <Card
                       sx={{
-                        fontFamily: '"Inter", sans-serif',
-                        fontSize: {
-                          xs: "20px",
-                          sm: "26px",
-                        },
-                        fontWeight: 600,
-                        color: "#333",
-                        marginBottom: "0px",
+                        display: "flex",
+                        flexDirection: "column",
+                        overflow: "hidden",
+                        boxShadow: "none",
+                        background: "transparent",
+                        height: "100%",
+                        position: "relative",
+                        textAlign: "left",
                       }}
                     >
-                      {profile.name}
-                    </Typography>
-                    <Typography
-                      sx={{
-                        fontFamily: '"Inter", sans-serif',
-                        fontSize: {
-                          xs: "12px",
-                          sm: "14px",
-                        },
-                        color: "#666",
-                        lineHeight: 1.4,
-                      }}
-                    >
-                      {profile.reason}
-                    </Typography>
-                  </CardContent>
-                </Card>
+                      <Skeleton
+                        variant="rectangular"
+                        width="100%"
+                        height={200}
+                        sx={{ borderRadius: "26px" }}
+                      />
+                      <CardContent
+                        sx={{
+                          paddingBottom: "12px !important",
+                          paddingTop: "6px !important",
+                        }}
+                      >
+                        <Skeleton width="60%" height={30} />
+                        <Skeleton width="40%" height={20} />
+                      </CardContent>
+                    </Card>
+                  </Grid>
+                ))}
               </Grid>
-            ))}
-          </Grid>):(
-            <Box
-  sx={{
-    display: "flex",
-    flexDirection: "column",
-    alignItems: "center",
-    position: "absolute",
-    top: "50%",
-    left: "50%",
-    transform: "translate(-50%, -50%)",
-    opacity: 0.4, // Lighter look for placeholders
-  }}
->
-            <Player
-                autoplay
-                loop
-                src={"/empty.json"}
-                style={{ width: "200px" }}
-              />
-  <Box
-    sx={{
-      fontSize: "18px",
-      position:'relative',
-      bottom:40,
-      color: "#888", // Typical gray placeholder color
-      //marginTop: "6px", // Space between image & text
-    }}
-  >
-    No likes yet!
-  </Box>
-</Box>
-
-)}
-
-
-
+            </>
+          )}
 
           <Box
             sx={{
@@ -381,7 +427,6 @@ const ProfileGrid = () => {
           />
         </Box>
       </Box>
-    
     </>
   );
 };

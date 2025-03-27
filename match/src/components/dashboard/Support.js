@@ -5,12 +5,12 @@ import { useNavigate } from "react-router-dom";
 
 const SupportUs = ({ onClose }) => {
   const navigate = useNavigate();
-  const [open, setOpen] = React.useState(false)
+  const [open, setOpen] = React.useState(false);
   const handleContactClick = () => {
     console.log("Contact button clicked");
   };
-  function handleClose(){
-    setOpen(false)
+  function handleClose() {
+    setOpen(false);
   }
 
   return (
@@ -52,7 +52,7 @@ const SupportUs = ({ onClose }) => {
               backgroundColor: "#F5F5F5",
             },
           }}
-          onClick={()=> navigate(-1)}
+          onClick={() => navigate(-1)}
         >
           <i
             className="ti ti-chevron-left"
@@ -83,35 +83,43 @@ const SupportUs = ({ onClose }) => {
       >
         {/* INTRO SECTION */}
         <Typography
-  variant="subtitle1"
-  sx={{
-    fontSize: "16px",
-    fontWeight: 600,
-    color: "#212121",
-    marginBottom: "8px",
-  }}
->
-  Support Uni-Match
-</Typography>
-<Typography
-  variant="body2"
-  sx={{
-    fontSize: "15px",
-    color: "#555",
-    lineHeight: "1.7",
-    marginBottom: "24px",
-  }}
->
-  Building <strong>Uni-Match</strong> has been a rewarding but challenging journey. 
-  From countless late nights of coding to testing and refining the platform — it’s been a true labor of love. But maintaining and improving an app isn’t easy.
-  <br />
-  <br />
-  Your support can make a real difference! Whether it’s through valuable feedback, spreading the word, or even a financial contribution — every bit of help allows me to keep Uni-Match running smoothly and introduce exciting new features.
-  <br />
-  <br />
-  If Uni-Match has helped you connect with someone special or simply made your campus life a little easier — consider showing your support. Together, we can make Uni-Match even better for the entire LPU community.
-</Typography>
-</Box>
+          variant="subtitle1"
+          sx={{
+            fontSize: "16px",
+            fontWeight: 600,
+            color: "#212121",
+            marginBottom: "8px",
+          }}
+        >
+          Support Uni-Match
+        </Typography>
+        <Typography
+          variant="body2"
+          sx={{
+            fontSize: "15px",
+            color: "#555",
+            lineHeight: "1.7",
+            marginBottom: "24px",
+          }}
+        >
+          Building <strong>Uni-Match</strong> has been a rewarding but
+          challenging journey. From countless late nights of coding to testing
+          and refining the platform — it’s been a true labor of love. But
+          maintaining and improving an app isn’t easy.
+          <br />
+          <br />
+          Your support can make a real difference! Whether it’s through valuable
+          feedback, spreading the word, or even a financial contribution — every
+          bit of help allows me to keep Uni-Match running smoothly and introduce
+          exciting new features.
+          <br />
+          <br />
+          If Uni-Match has helped you connect with someone special or simply
+          made your campus life a little easier — consider showing your support.
+          Together, we can make Uni-Match even better for the entire LPU
+          community.
+        </Typography>
+      </Box>
 
       {/* FOOTER */}
       <Box
@@ -127,7 +135,7 @@ const SupportUs = ({ onClose }) => {
         }}
       >
         <Button
-        onClick={()=> setOpen(true)}
+          onClick={() => setOpen(true)}
           variant="contained"
           sx={{
             py: 1.5,
@@ -157,7 +165,7 @@ const SupportUs = ({ onClose }) => {
             left: "50%",
             transform: "translate(-50%, -50%)",
             width: 320,
-            zindex:11,
+            zindex: 11,
             backgroundColor: "#FFFFFF",
             borderRadius: "12px",
             boxShadow: "0 4px 12px rgba(0,0,0,0.1)",
@@ -186,15 +194,15 @@ const SupportUs = ({ onClose }) => {
               height: "160px",
               margin: "0 auto 16px",
               backgroundImage: "url(/qr.png)",
-              backgroundPosition:'center',
-              backgroundSize:'cover',
-              backgroundRepeat:"no-repeat",
+              backgroundPosition: "center",
+              backgroundSize: "cover",
+              backgroundRepeat: "no-repeat",
               borderRadius: "8px",
               display: "flex",
               alignItems: "center",
               justifyContent: "center",
             }}
-       />
+          />
 
           {/* UPI ID */}
           <Typography

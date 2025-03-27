@@ -4,6 +4,7 @@ import {
   IconButton,
   Typography,
   Card,
+  Skeleton,
   CardContent,
   CardMedia,
   Grid,
@@ -13,11 +14,11 @@ import { ArrowBackIos, ArrowForwardIos } from "@mui/icons-material";
 import Modall from "./Modal";
 import { Player } from "@lottiefiles/react-lottie-player";
 import Drawer2 from "./Drawer2";
-import axios from 'axios';
+import axios from "axios";
 import { useAuth } from "../../AuthProvider";
 import { useNavigate } from "react-router-dom";
 import { Outlet } from "react-router-dom";
-import SmallLoading from '../login/SmallLoading';
+import SmallLoading from "../login/SmallLoading";
 
 const profile = {
   reg_no: "12413928",
@@ -36,7 +37,6 @@ const profile = {
     "Juggling",
   ],
 };
-
 
 const profiles = [
   {
@@ -84,8 +84,7 @@ const profiles = [
 ];
 
 const containerStyle = {
-  background:
-    "linear-gradient(180deg, rgba(245, 245, 245, 0) 0%, #F5F5F5 26%)",
+  background: "linear-gradient(180deg, rgba(245, 245, 245, 0) 0%, #F5F5F5 26%)",
   minHeight: "100vh",
   padding: {
     xs: "12px",
@@ -103,7 +102,6 @@ const scrollableGridStyle = {
     display: "none", // For Chrome, Safari, and Opera
   },
 };
-
 
 const nameStyle = {
   fontFamily: '"Inter", sans-serif',
@@ -128,16 +126,16 @@ const detailsStyle = {
 
 const ProfileGrid = () => {
   const navigate = useNavigate();
-  const {setLikesNoti} = useAuth();
+  const { setLikesNoti } = useAuth();
   //const [open, setOpen] = useState(false);
   const [name, setName] = useState(false);
   const [target_reg_no, setTargetRegNo] = useState(null);
-  const [profile, setSelectedProfile] = useState({})
+  const [profile, setSelectedProfile] = useState({});
   const [loading, setLoading] = useState(false);
-  const [likesList, setLikesList] = useState([])
- // const [imageClick, setImageClick] = useState(false);
- // const [currentImageIndex, setCurrentImageIndex] = useState(0);
-//  const [imageLoaded, setImageLoaded] = useState(false);
+  const [likesList, setLikesList] = useState([]);
+  // const [imageClick, setImageClick] = useState(false);
+  // const [currentImageIndex, setCurrentImageIndex] = useState(0);
+  //  const [imageLoaded, setImageLoaded] = useState(false);
   //const list = profile.images.filter((item) => item != null);
 
   useEffect(() => {
@@ -151,7 +149,7 @@ const ProfileGrid = () => {
   }, []);
 
   useEffect(() => {
-    setLoading(true)
+    setLoading(true);
     axios
       .get("https://api.uni-match.in/likes", {
         withCredentials: true,
@@ -182,14 +180,16 @@ const ProfileGrid = () => {
               localStorage.setItem("csrfTokenAccess", csrfTokenAccess);
 
               axios
-              .get("https://api.uni-match.in/likes", {
-                withCredentials: true,
-                headers: { "X-CSRF-TOKEN": localStorage.getItem("csrfTokenAccess") },
-              })
-              .then((response) => {
-                console.log(response.data);
-                setLikesList(response.data.likesYou);
-              })
+                .get("https://api.uni-match.in/likes", {
+                  withCredentials: true,
+                  headers: {
+                    "X-CSRF-TOKEN": localStorage.getItem("csrfTokenAccess"),
+                  },
+                })
+                .then((response) => {
+                  console.log(response.data);
+                  setLikesList(response.data.likesYou);
+                })
                 .catch((retryError) =>
                   console.error("Failed after refresh:", retryError),
                 );
@@ -198,14 +198,11 @@ const ProfileGrid = () => {
               console.error("Session expired, please log in again."),
             );
         }
-
-
       })
-      .finally(()=> {
-        setLoading(false)
-      })
+      .finally(() => {
+        setLoading(false);
+      });
   }, []);
-
 
   function handleNotiClick(target_reg_no) {
     axios
@@ -241,7 +238,7 @@ const ProfileGrid = () => {
       .then((responce) => {
         console.log(responce.data.message);
         setLikesList((prev) => {
-          return [ ...responce.data.likesYou ];
+          return [...responce.data.likesYou];
         });
       })
       .catch((error) => {
@@ -264,20 +261,22 @@ const ProfileGrid = () => {
               localStorage.setItem("csrfTokenAccess", csrfTokenAccess);
 
               axios
-              .post(
-                "https://api.uni-match.in/match",
-                { target_reg_no, swipe_action: "right" },
-                {
-                  withCredentials: true,
-                  headers: { "X-CSRF-TOKEN": localStorage.getItem("csrfTokenAccess") },
-                },
-              )
-              .then((responce) => {
-                console.log(responce.data.message);
-                setLikesList((prev) => {
-                  return [...responce.data.likesYou ];
-                });
-              })
+                .post(
+                  "https://api.uni-match.in/match",
+                  { target_reg_no, swipe_action: "right" },
+                  {
+                    withCredentials: true,
+                    headers: {
+                      "X-CSRF-TOKEN": localStorage.getItem("csrfTokenAccess"),
+                    },
+                  },
+                )
+                .then((responce) => {
+                  console.log(responce.data.message);
+                  setLikesList((prev) => {
+                    return [...responce.data.likesYou];
+                  });
+                })
                 .catch((retryError) =>
                   console.error("Failed after refresh:", retryError),
                 );
@@ -289,7 +288,7 @@ const ProfileGrid = () => {
       })
       .finally(() => {
         setLoading(false);
-        setName(false)
+        setName(false);
       });
   }
 
@@ -308,7 +307,7 @@ const ProfileGrid = () => {
       .then((responce) => {
         console.log(responce.data.message);
         setLikesList((prev) => {
-          return [...responce.data.likesYou ];
+          return [...responce.data.likesYou];
         });
       })
       .catch((error) => {
@@ -344,7 +343,7 @@ const ProfileGrid = () => {
                 .then((response) => {
                   console.log("Protected Data (After Refresh):", response.data);
                   setLikesList((prev) => {
-                    return [ ...response.data.likesYou ];
+                    return [...response.data.likesYou];
                   });
                 })
                 .catch((retryError) =>
@@ -358,17 +357,22 @@ const ProfileGrid = () => {
       })
       .finally(() => {
         setLoading(false);
-        setName(false)
+        setName(false);
       });
   }
 
-
   return (
     <>
-{loading && <SmallLoading app={true}/>}
-      <Modall setModalOpen={setName} modalOpen={name} name={name} handleCrossClick={handleCrossClick} handleLikeClick={handleLikeClick} target_reg_no={String(target_reg_no)}/>
+      <Modall
+        setModalOpen={setName}
+        modalOpen={name}
+        name={name}
+        handleCrossClick={handleCrossClick}
+        handleLikeClick={handleLikeClick}
+        target_reg_no={String(target_reg_no)}
+      />
 
-       <Outlet context={{profile}}/>
+      <Outlet context={{ profile }} />
 
       <Box sx={containerStyle}>
         <Box
@@ -392,177 +396,217 @@ const ProfileGrid = () => {
         </Box>
         {/* Scrollable Grid */}
         <Box sx={scrollableGridStyle}>
+          {!loading ? (
+            <>
+              {likesList.length ? (
+                <Grid
+                  container
+                  spacing={{ xs: 1, sm: 2 }}
+                  columns={{ xs: 2, sm: 2 }}
+                >
+                  {likesList.map((profile, index) => (
+                    <Grid item xs={1} key={index}>
+                      <Card
+                        onClick={() => {
+                          setSelectedProfile(profile);
+                          navigate("/app/mathes/info");
+                        }}
+                        sx={{
+                          display: "flex",
+                          flexDirection: "column",
+                          overflow: "hidden",
+                          boxShadow: "none",
+                          background: "transparent",
+                          height: "100%",
+                          position: "relative",
+                          textAlign: "left",
+                        }}
+                      >
+                        <CardMedia
+                          component="img"
+                          image={profile.images[0]}
+                          sx={{
+                            width: "100%",
+                            height: "200px",
+                            borderRadius: "26px",
+                            objectFit: "cover",
+                          }}
+                        />
 
+                        {/* Heart and Cross Buttons */}
+                        <Box
+                          sx={{
+                            position: "absolute",
+                            top: "60%", // Center vertically
+                            left: "50%", // Center horizontally
+                            transform: "translate(-50%, -20%)", // Adjust positioning slightly upwards
+                            display: "flex",
+                            gap: 6,
+                          }}
+                        >
+                          <IconButton
+                            aria-label="unlike"
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              setTargetRegNo(profile.reg_no);
+                              setTimeout(setName("reject"), 500);
+                            }}
+                            sx={{
+                              width: "44px",
+                              height: "44px",
+                              color: "transparent", // Make the text transparent to allow gradient to show
+                              backgroundColor: "rgba(0, 0, 0, 0.8)", // Inverted background color
+                              padding: "12px",
+                              borderRadius: "50%",
+                              "&:hover": {
+                                backgroundColor: "#rgba(0, 0, 0, 1)", // Subtle hover effect
+                              },
+                              display: "flex",
+                              justifyContent: "center",
+                              alignItems: "center",
 
-        
-          {likesList.length ? (
-          <Grid container spacing={{ xs: 1, sm: 2 }} columns={{ xs: 2, sm: 2 }}>
-            {likesList.map((profile, index) => (
-              <Grid item xs={1} key={index}>
-                <Card
-                  onClick={() => { setSelectedProfile(profile); navigate('/app/mathes/info')}}
+                              boxShadow: "0 8px 24px rgba(255, 0, 110, 0.8)", // Stronger focus effect
+
+                              "&:active": {
+                                transform: "scale(0.8)", // Less shrink to feel more natural
+                                boxShadow: "0 4px 12px rgba(255, 0, 110, 0.9)", // More intense active shadow
+                              },
+                            }}
+                          >
+                            <i
+                              className="ti ti-x"
+                              style={{
+                                fontSize: "26px",
+                                background:
+                                  "linear-gradient(145deg, #FF006E 0%, #FB5607 50%, #FFBE0B 100%)",
+                                WebkitBackgroundClip: "text", // Clip gradient to text
+                                WebkitTextFillColor: "transparent", // Make text transparent
+                                transition: "background 0.3s ease",
+                              }}
+                            />
+                          </IconButton>
+
+                          <IconButton
+                            aria-label="like"
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              setTargetRegNo(profile.reg_no);
+                              setTimeout(setName("accept"), 500);
+                            }}
+                            sx={{
+                              width: "44px",
+                              height: "44px",
+                              color: "transparent",
+                              background: "rgba(0, 0, 0, 0.8)",
+                              padding: "12px",
+                              borderRadius: "50%",
+                              "&:hover": {
+                                backgroundColor: "#rgba(0, 0, 0, 1)",
+                              },
+                              display: "flex",
+                              justifyContent: "center",
+                              alignItems: "center",
+
+                              boxShadow: "0 8px 24px rgba(0, 200, 83, 0.8)", // Strong green glow on focus
+
+                              "&:active": {
+                                transform: "scale(0.8)", // Consistent shrink effect
+                                boxShadow: "0 4px 12px rgba(0, 200, 83, 0.9)", // Punchy feedback
+                              },
+                            }}
+                          >
+                            <i
+                              className="ti ti-heart-filled"
+                              style={{
+                                fontSize: "26px",
+                                background:
+                                  "linear-gradient(145deg, #00C853 0%, #B2FF59 50%, #FFD600 100%)",
+                                WebkitBackgroundClip: "text", // Clip gradient to text
+                                WebkitTextFillColor: "transparent", // Make text transparent
+                                transition: "background 0.3s ease",
+                              }}
+                            />
+                          </IconButton>
+                        </Box>
+
+                        <CardContent
+                          sx={{
+                            paddingBottom: "12px !important",
+                            paddingTop: "6px !important",
+                          }}
+                        >
+                          <Typography sx={nameStyle}>{profile.name}</Typography>
+                          <Typography sx={detailsStyle}>
+                            {profile.reason}
+                          </Typography>
+                        </CardContent>
+                      </Card>
+                    </Grid>
+                  ))}
+                </Grid>
+              ) : (
+                <Box
                   sx={{
                     display: "flex",
                     flexDirection: "column",
-                    overflow: "hidden",
-                    boxShadow: "none",
-                    background: "transparent",
-                    height: "100%",
-                    position: "relative",
-                    textAlign: "left",
+                    alignItems: "center",
+                    position: "absolute",
+                    top: "50%",
+                    left: "50%",
+                    transform: "translate(-50%, -50%)", // Lighter look for placeholders
                   }}
                 >
-                  <CardMedia
-                    component="img"
-                    image={profile.images[0]}
-                    sx={{
-                      width: "100%",
-                      height: "200px",
-                      borderRadius: "26px",
-                      objectFit: "cover",
-                    }}
-                  />
-
-                  {/* Heart and Cross Buttons */}
+                  <img src={"/empty-box.png"} style={{ width: "120px" }} />
                   <Box
                     sx={{
-                      position: "absolute",
-                      top: "60%", // Center vertically
-                      left: "50%", // Center horizontally
-                      transform: "translate(-50%, -20%)", // Adjust positioning slightly upwards
-                      display: "flex",
-                      gap: 6,
+                      fontSize: "18px",
+                      color: "#888", // Typical gray placeholder color
                     }}
                   >
-                    <IconButton
-                      aria-label="unlike"
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        setTargetRegNo(profile.reg_no)
-                        setTimeout(setName("reject"),500);
-                      }}
-                      sx={{
-                        width: "44px",
-                        height: "44px",
-                        color: "transparent", // Make the text transparent to allow gradient to show
-                        backgroundColor: "rgba(0, 0, 0, 0.8)", // Inverted background color
-                        padding: "12px",
-                        borderRadius: "50%",
-                        "&:hover": {
-                          backgroundColor: "#rgba(0, 0, 0, 1)", // Subtle hover effect
-                        },
-                        display: "flex",
-                        justifyContent: "center",
-                        alignItems: "center",
-
-                        boxShadow: "0 8px 24px rgba(255, 0, 110, 0.8)", // Stronger focus effect
-
-                        "&:active": {
-                          transform: "scale(0.8)", // Less shrink to feel more natural
-                          boxShadow: "0 4px 12px rgba(255, 0, 110, 0.9)", // More intense active shadow
-                        },
-                      }}
-                    >
-                      <i
-                        className="ti ti-x"
-                        style={{
-                          fontSize: "26px",
-                          background:
-                            "linear-gradient(145deg, #FF006E 0%, #FB5607 50%, #FFBE0B 100%)",
-                          WebkitBackgroundClip: "text", // Clip gradient to text
-                          WebkitTextFillColor: "transparent", // Make text transparent
-                          transition: "background 0.3s ease",
-                        }}
-                      />
-                    </IconButton>
-
-                    <IconButton
-                      aria-label="like"
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        setTargetRegNo(profile.reg_no)
-                        setTimeout(setName("accept"),500);
-                      }}
-                      sx={{
-                        width: "44px",
-                        height: "44px",
-                        color: "transparent",
-                        background: "rgba(0, 0, 0, 0.8)",
-                        padding: "12px",
-                        borderRadius: "50%",
-                        "&:hover": {
-                          backgroundColor: "#rgba(0, 0, 0, 1)",
-                        },
-                        display: "flex",
-                        justifyContent: "center",
-                        alignItems: "center",
-
-                        boxShadow: "0 8px 24px rgba(0, 200, 83, 0.8)", // Strong green glow on focus
-
-                        "&:active": {
-                          transform: "scale(0.8)", // Consistent shrink effect
-                          boxShadow: "0 4px 12px rgba(0, 200, 83, 0.9)", // Punchy feedback
-                        },
-                      }}
-                    >
-                      <i
-                        className="ti ti-heart-filled"
-                        style={{
-                          fontSize: "26px",
-                          background:
-                            "linear-gradient(145deg, #00C853 0%, #B2FF59 50%, #FFD600 100%)",
-                          WebkitBackgroundClip: "text", // Clip gradient to text
-                          WebkitTextFillColor: "transparent", // Make text transparent
-                          transition: "background 0.3s ease",
-                        }}
-                      />
-                    </IconButton>
+                    No matches yet!
                   </Box>
-
-                  <CardContent
+                </Box>
+              )}{" "}
+            </>
+          ) : (
+            <Grid
+              container
+              spacing={{ xs: 1, sm: 2 }}
+              columns={{ xs: 2, sm: 2 }}
+            >
+              {[...Array(6)].map((_, index) => (
+                <Grid item xs={1} key={index}>
+                  <Card
                     sx={{
-                      paddingBottom: "12px !important",
-                      paddingTop: "6px !important",
+                      display: "flex",
+                      flexDirection: "column",
+                      overflow: "hidden",
+                      boxShadow: "none",
+                      background: "transparent",
+                      height: "100%",
+                      position: "relative",
+                      textAlign: "left",
                     }}
                   >
-                    <Typography sx={nameStyle}>{profile.name}</Typography>
-                    <Typography sx={detailsStyle}>{profile.reason}</Typography>
-                  </CardContent>
-                </Card>
-              </Grid>
-            ))}
-          </Grid>):(
-                      <Box
-            sx={{
-              display: "flex",
-              flexDirection: "column",
-              alignItems: "center",
-              position: "absolute",
-              top: "50%",
-              left: "50%",
-              transform: "translate(-50%, -50%)",
-              opacity: 0.4, // Lighter look for placeholders
-            }}
-          >
-            <Player
-                autoplay
-                loop
-                src={"/empty.json"}
-                style={{ width: "200px" }}
-              />
-  <Box
-    sx={{
-      fontSize: "18px",
-      position:'relative',
-      bottom:40,
-      color: "#888", // Typical gray placeholder color
-      //marginTop: "6px", // Space between image & text
-    }}
-  >
-    No matches yet!
-  </Box>
-          </Box>
-          
+                    <Skeleton
+                      variant="rectangular"
+                      width="100%"
+                      height={200}
+                      sx={{ borderRadius: "26px" }}
+                    />
+                    <CardContent
+                      sx={{
+                        paddingBottom: "12px !important",
+                        paddingTop: "6px !important",
+                      }}
+                    >
+                      <Skeleton width="60%" height={30} />
+                      <Skeleton width="40%" height={20} />
+                    </CardContent>
+                  </Card>
+                </Grid>
+              ))}
+            </Grid>
           )}
           <Box
             sx={{
@@ -572,8 +616,6 @@ const ProfileGrid = () => {
           />
         </Box>
       </Box>
-
-    
     </>
   );
 };

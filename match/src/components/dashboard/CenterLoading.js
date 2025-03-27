@@ -6,22 +6,22 @@ const GradientWave = () => {
   // Inline styles
   const styles = {
     container: {
-    position:'fixed',
+      position: "fixed",
       top: 0,
       left: 0,
       width: "100vw",
       height: "100vh",
-      backgroundColor: "transparent", 
+      backgroundColor: "transparent",
       display: "flex",
       justifyContent: "center",
       alignItems: "center",
     },
     waveContainer: {
       position: "relative",
-      width: "340px",
+      width:"400px",
       top: 0,
       left: 0,
-      height: "340px",
+      height: "400px",
     },
     waveSvg: {
       position: "relative",
@@ -41,9 +41,6 @@ const GradientWave = () => {
             </linearGradient>
           </defs>
           <g className="waves">
-          
-
-
             <circle
               cx="50"
               cy="50"
@@ -132,7 +129,14 @@ const GradientWave = () => {
             </circle>
           </g>
 
-          <image href="/mainlogo.png" x="28" y="28" width="46" height="46" opacity={0.7} />
+          <image
+            href="/mainlogo.png"
+            x="34"
+            y="34"
+            width="32"
+            height="32"
+           // opacity={0.6}
+          />
         </svg>
       </Box>
       {/* Font import for Inter */}

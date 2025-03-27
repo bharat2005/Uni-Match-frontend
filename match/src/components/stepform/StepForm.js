@@ -21,7 +21,7 @@ import { replace, useNavigate } from "react-router-dom";
 import { useAuth } from "../../AuthProvider";
 
 const InputDesign = () => {
-  const navigate =useNavigate();
+  const navigate = useNavigate();
   const { login } = useAuth();
   const [step, setStep] = useState(0);
   const [loading, setLoading] = useState(false);
@@ -49,8 +49,8 @@ const InputDesign = () => {
         setLoading(false);
         console.log("Message from server: ", response.data);
         login(true);
-        navigate("/done", {replace:true})
-        localStorage.removeItem("login")
+        navigate("/done", { replace: true });
+        localStorage.removeItem("login");
       })
       .catch((error) => {
         console.error("Error: ", error);
@@ -71,15 +71,17 @@ const InputDesign = () => {
               const csrfTokenAccess = response.headers["x-csrf-token-access"];
               localStorage.setItem("csrfTokenAccess", csrfTokenAccess);
               axios
-              .post("https://api.uni-match.in/profile", formData, {
-                withCredentials: true,
-                headers: { "X-CSRF-TOKEN": localStorage.getItem("csrfTokenAccess") },
-              })
-              .then((response) => {
-                setLoading(false);
-                console.log("Message from server: ", response.data);
-                navigate("/done", {replace:true})
-              })
+                .post("https://api.uni-match.in/profile", formData, {
+                  withCredentials: true,
+                  headers: {
+                    "X-CSRF-TOKEN": localStorage.getItem("csrfTokenAccess"),
+                  },
+                })
+                .then((response) => {
+                  setLoading(false);
+                  console.log("Message from server: ", response.data);
+                  navigate("/done", { replace: true });
+                })
                 .catch((retryError) =>
                   console.error("Failed after refresh:", retryError),
                 );
@@ -89,9 +91,9 @@ const InputDesign = () => {
             );
         }
       })
-      .finally(()=>{
-        setLoading(false);}
-      )
+      .finally(() => {
+        setLoading(false);
+      });
   }
 
   const styles = {
@@ -189,17 +191,26 @@ const InputDesign = () => {
     },
   };
 
-
-
   return (
     <>
       <link
         href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;700&display=swap"
         rel="stylesheet"
       />
-      
+
       {loading && <SmallLoading />}
-      <Box sx={styles.appContainer}>
+      <Box
+        sx={{
+          background: "linear-gradient(135deg, #ffe6e6, #e6f0ff)",
+          minHeight: "95dvh",
+          width: "100vw",
+          padding: "20px",
+          fontFamily: '"Noto Sans SC", sans-serif',
+          position: "relative",
+          display: "flex", // Ensures child elements behave properly
+          flexDirection: "column",
+        }}
+      >
         <Button
           onClick={() => {
             setStep((prev) => prev - 1);
@@ -270,11 +281,7 @@ const InputDesign = () => {
 
         <Box
           sx={{
-            position: "fixed",
-            bottom: 0,
-            left: 0,
-            right: 0,
-            padding: { xs: "16px", sm: "20px" },
+            marginBottom: "auto", // Pushes this box to the bottom dynamically
           }}
         >
           {/* Step text and stepper in a single row */}

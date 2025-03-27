@@ -33,11 +33,7 @@ function StaticLoader() {
   return (
     <Box component="section" sx={containerStyle}>
       <Box sx={contentStyle}>
-        <img
-          src="/heart.gif"
-          alt="Static loader icon"
-          style={imageStyle}
-        />
+        <img src="/heart.gif" alt="Static loader icon" style={imageStyle} />
       </Box>
     </Box>
   );

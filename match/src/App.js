@@ -7,8 +7,8 @@ import {
   Route,
 } from "react-router-dom";
 import InstallPage from "./InstallPage";
-import Restrict from './Restrict';
-import Done from './components/stepform/Done';
+import Restrict from "./Restrict";
+import Done from "./components/stepform/Done";
 import Login from "./components/login/Login";
 import StepForm from "./components/stepform/StepForm";
 import { ProtectedRoute, AuthProvider, ProtectedRoute2 } from "./AuthProvider";
@@ -21,40 +21,39 @@ import Match from "./components/dashboard/Match";
 import Profilee from "./components/dashboard/Profilee";
 import Chatsoo from "./components/dashboard/Chatsoo";
 import Chatoo from "./components/dashboard/Chatoo";
-import Edit from './components/dashboard/Edit';
-import About from './components/dashboard/About';
-import Drawer2 from './components/dashboard/Drawer2';
-import Support from './components/dashboard/Support';
-import DeleteProfile from './components/dashboard/DeleteProfile';
+import Edit from "./components/dashboard/Edit";
+import About from "./components/dashboard/About";
+import Drawer2 from "./components/dashboard/Drawer2";
+import Support from "./components/dashboard/Support";
+import DeleteProfile from "./components/dashboard/DeleteProfile";
 
 export default function App() {
   const [bool, setBool] = useState(false);
-  const [isStandalone, setIsStandalone] = useState(false)
+  const [isStandalone, setIsStandalone] = useState(false);
   const [deferredPrompt, setDeferredPrompt] = useState(null);
-  const [isAllowed, setIsAllowed] = useState(false)
-
+  const [isAllowed, setIsAllowed] = useState(false);
 
   useEffect(() => {
+    if (window.matchMedia("(display-mode: standalone)").matches) {
+      setIsStandalone(true);
+    } else {
+      setIsStandalone(false);
+    }
 
-  if (window.matchMedia('(display-mode: standalone)').matches) {
-      setIsStandalone(true)
-  } else {
-      setIsStandalone(false)
-  }
+    const checkAccess = () => {
+      const isMobile = /Mobi|Android/i.test(navigator.userAgent);
 
-  const checkAccess = () => {
-    const isMobile = /Mobi|Android/i.test(navigator.userAgent);
-    const isPortrait = window.innerHeight > window.innerWidth;
-    
-    setIsAllowed(isMobile || isPortrait);
-  };
+      setIsAllowed(isMobile);
+    };
 
-  const handleBeforeInstallPrompt = (event) => {
-    event.preventDefault();
-    setTimeout(()=> {setDeferredPrompt(event)}, 500);
-  };
+    const handleBeforeInstallPrompt = (event) => {
+      event.preventDefault();
+      setTimeout(() => {
+        setDeferredPrompt(event);
+      }, 500);
+    };
 
-  const resizeHandler = () => {
+    const resizeHandler = () => {
       document.documentElement.style.setProperty(
         "--vh",
         `${window.innerHeight * 0.01}px`,
@@ -66,29 +65,28 @@ export default function App() {
 
     window.addEventListener("resize", resizeHandler);
     window.addEventListener("beforeinstallprompt", handleBeforeInstallPrompt);
-    window.addEventListener("resize", checkAccess); 
-  
+    window.addEventListener("resize", checkAccess);
 
     return () => {
       window.removeEventListener("resize", resizeHandler);
-      window.removeEventListener("beforeinstallprompt", handleBeforeInstallPrompt)
-      window.removeEventListener("resize", checkAccess); 
+      window.removeEventListener(
+        "beforeinstallprompt",
+        handleBeforeInstallPrompt,
+      );
+      window.removeEventListener("resize", checkAccess);
     };
   }, []);
 
-
-  if (!isAllowed){
-    return <Restrict />
+  if (!isAllowed) {
+    return <Restrict />;
   }
 
   // if (!isStandalone){
   //   return  <InstallPage deferredPrompt={deferredPrompt} />
-  // } 
-
+  // }
 
   return (
     <AuthProvider>
-
       <Router>
         <AuthWrapper setBool={setBool} />
         {bool ? (
@@ -103,14 +101,15 @@ export default function App() {
                 </ProtectedRoute2>
               }
             />
-            
-            <Route path="/done"
-             element={
+
+            <Route
+              path="/done"
+              element={
                 <ProtectedRoute2>
                   <Done />
                 </ProtectedRoute2>
-              }/>
-       
+              }
+            />
 
             <Route
               path="/app"
@@ -120,52 +119,36 @@ export default function App() {
                 </ProtectedRoute>
               }
             >
-
-              
-              <Route path="likes" element={<Likesoo />} >
-                  <Route path="info" element={<Drawer2 />}/>
+              <Route path="likes" element={<Likesoo />}>
+                <Route path="info" element={<Drawer2 />} />
               </Route>
 
-
-
-              <Route path="matches" element={<Matchesoo />} >
-
-              <Route path=":info" element={<Drawer2 />}/>
-
+              <Route path="matches" element={<Matchesoo />}>
+                <Route path=":info" element={<Drawer2 />} />
               </Route>
 
-              <Route path='home' element={<Match />} >
-                    <Route path='info' element={<Drawer2/>}/>
+              <Route path="home" element={<Match />}>
+                <Route path="info" element={<Drawer2 />} />
               </Route>
 
-
-
-              <Route path="chats" element={<Chatsoo />} >
-                  <Route path="info" element={<Drawer2 />} />
+              <Route path="chats" element={<Chatsoo />}>
+                <Route path="info" element={<Drawer2 />} />
               </Route>
-
-
 
               <Route path=":chatId" element={<Chatoo />} />
 
-
-
-              <Route path="profile" element={<Profilee />} >
-                    <Route path="edit" element={<Edit/>}/>
-                    <Route path="about" element={<About/>}/>
-                    <Route path="support" element={<Support/>}/>
-                    <Route path="delete" element={<DeleteProfile/>}/>
+              <Route path="profile" element={<Profilee />}>
+                <Route path="edit" element={<Edit />} />
+                <Route path="about" element={<About />} />
+                <Route path="support" element={<Support />} />
+                <Route path="delete" element={<DeleteProfile />} />
               </Route>
-
             </Route>
           </Routes>
         ) : (
-           <Loading />
-         )} 
+          <Loading />
+        )}
       </Router>
     </AuthProvider>
   );
 }
-
-
-

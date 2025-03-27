@@ -7,47 +7,41 @@ const GradientWave = () => {
   // Inline styles
   const styles = {
     container: {
-      position:'relative',
+      position: "relative",
       width: "100%",
       height: "100%",
-      backgroundColor: "transparent", 
+      backgroundColor: "transparent",
       display: "flex",
-      flexDirection:'column',
+      flexDirection: "column",
       justifyContent: "center",
       alignItems: "center",
     },
     waveContainer: {
       position: "relative",
       width: "340px",
-      opacity:0.4,
+      opacity: 0.4,
       top: 0,
       left: 0,
-      display:'flex',
-   
-     // height: "340px",
+      display: "flex",
+
+      // height: "340px",
     },
   };
 
-  return (<>
- 
-            <Player
-                autoplay
-                loop
-                src={"/emptypro.json"}
-                style={{ width: "220px" }}
-              />
-  <Box
-    sx={{
-      fontSize: "18px",
-      position:'relative',
-      bottom:50,
-      color: "#888", 
- 
-    }}
-  >
-    No such profiles!
-  </Box>
-</>
+  return (
+    <>
+      <Player autoplay loop src={"/emptypro.json"} style={{ width: "220px" }} />
+      <Box
+        sx={{
+          fontSize: "18px",
+          position: "relative",
+          bottom: 50,
+          color: "#888",
+        }}
+      >
+        No such profiles!
+      </Box>
+    </>
   );
 };
 

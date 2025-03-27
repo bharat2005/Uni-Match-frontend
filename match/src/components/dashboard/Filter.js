@@ -180,82 +180,70 @@ function AppContainer({ isDrawerOpen, setIsDrawerOpen, setProfiles }) {
   const [selectedPersonality, setSelectedPersonality] = React.useState("");
   const [ageRange, setAgeRange] = React.useState([0, 0]);
   const [selectedOption, setSelectedOption] = React.useState("");
-  const [section, setSection] = React.useState("")
+  const [section, setSection] = React.useState("");
 
- 
   const handleApplyFilters = (e) => {
     //e.preventDefault();
-  
-   
-      const filters = { 
-        ageRange, 
-        gender: selectedGender, 
-        reason: selectedOption,
-        personality: selectedPersonality,
-        section: section
-      };
-      console.log(filters);
-  
-      axios
-        .post("https://api.uni-match.in/filtered_dashboard", filters, {
-          withCredentials: true,
-          headers: { "X-CSRF-TOKEN": localStorage.getItem("csrfTokenAccess") },
-        })
-        .then((response) => {
-          console.log(response.data)
-          setProfiles(response.data);
-        })
-        .catch((error) => {
-          console.error("Error: ", error);
-  
-          if (error.response?.status === 401) {
-            axios
-              .post(
-                "https://api.uni-match.in/refresh",
-                {},
-                {
+
+    const filters = {
+      ageRange,
+      gender: selectedGender,
+      reason: selectedOption,
+      personality: selectedPersonality,
+      section: section,
+    };
+    console.log(filters);
+
+    axios
+      .post("https://api.uni-match.in/filtered_dashboard", filters, {
+        withCredentials: true,
+        headers: { "X-CSRF-TOKEN": localStorage.getItem("csrfTokenAccess") },
+      })
+      .then((response) => {
+        console.log(response.data);
+        setProfiles(response.data);
+      })
+      .catch((error) => {
+        console.error("Error: ", error);
+
+        if (error.response?.status === 401) {
+          axios
+            .post(
+              "https://api.uni-match.in/refresh",
+              {},
+              {
+                withCredentials: true,
+                headers: {
+                  "X-CSRF-TOKEN": localStorage.getItem("csrfTokenRefresh"),
+                },
+              },
+            )
+            .then((response) => {
+              const csrfTokenAccess = response.headers["x-csrf-token-access"];
+              localStorage.setItem("csrfTokenAccess", csrfTokenAccess);
+
+              axios
+                .post("https://api.uni-match.in/filtered_dashboard", filters, {
                   withCredentials: true,
                   headers: {
-                    "X-CSRF-TOKEN": localStorage.getItem("csrfTokenRefresh"),
+                    "X-CSRF-TOKEN": localStorage.getItem("csrfTokenAccess"),
                   },
-                },
-              )
-              .then((response) => {
-                const csrfTokenAccess = response.headers["x-csrf-token-access"];
-                localStorage.setItem("csrfTokenAccess", csrfTokenAccess);
-  
-                axios
-                  .post(
-                    "https://api.uni-match.in/filtered_dashboard",
-                    filters,
-                    {
-                      withCredentials: true,
-                      headers: {
-                        "X-CSRF-TOKEN": localStorage.getItem("csrfTokenAccess"),
-                      },
-                    },
-                  )
-                  .then((response) => {
-                    console.log(
-                      "Protected Data (After Refresh):",
-                      response.data,
-                    );
-                    setProfiles(response.data);
-                  })
-                  .catch((retryError) =>
-                    console.error("Failed after refresh:", retryError),
-                  );
-              })
-              .catch(() =>
-                console.error("Session expired, please log in again."),
-              );
-          }
-        });
-      setIsDrawerOpen(false);
-
+                })
+                .then((response) => {
+                  console.log("Protected Data (After Refresh):", response.data);
+                  setProfiles(response.data);
+                })
+                .catch((retryError) =>
+                  console.error("Failed after refresh:", retryError),
+                );
+            })
+            .catch(() =>
+              console.error("Session expired, please log in again."),
+            );
+        }
+      });
+    setIsDrawerOpen(false);
   };
-  
-
 
   const toggleSmallDrawer = (open) => () => setSmallDrawerOpen(open);
 
@@ -314,34 +302,30 @@ function AppContainer({ isDrawerOpen, setIsDrawerOpen, setProfiles }) {
               marginBottom: "12px",
             }}
           >
-
-<TextField
-  fullWidth
-  value={section}
-  onChange={(e)=> setSection(e.target.value)}
-  placeholder="Enter section (e.g., K24EU)"
-    inputProps={{
-    maxLength: 5,
-  }}
-  sx={{
-    "& .MuiOutlinedInput-root": {
-      borderRadius: "24px",
-      backgroundColor: "white",
-      "& fieldset": {
-        borderColor: "#eee",
-      },
-      "&:hover fieldset": {
-        borderColor: "#ccc", // Slightly darker on hover
-      },
-      "&.Mui-focused fieldset": {
-        borderColor: "#ff6b9c", // Different color on focus
-      },
-    },
-  }}
-/>
-
-
-
+            <TextField
+              fullWidth
+              value={section}
+              onChange={(e) => setSection(e.target.value)}
+              placeholder="Enter section (e.g., K24EU)"
+              inputProps={{
+                maxLength: 5,
+              }}
+              sx={{
+                "& .MuiOutlinedInput-root": {
+                  borderRadius: "24px",
+                  backgroundColor: "white",
+                  "& fieldset": {
+                    borderColor: "#eee",
+                  },
+                  "&:hover fieldset": {
+                    borderColor: "#ccc", // Slightly darker on hover
+                  },
+                  "&.Mui-focused fieldset": {
+                    borderColor: "#ff6b9c", // Different color on focus
+                  },
+                },
+              }}
+            />
 
             <Typography sx={styles.label}>Age</Typography>
             <Box sx={styles.sliderContainer}>
@@ -398,7 +382,7 @@ function AppContainer({ isDrawerOpen, setIsDrawerOpen, setProfiles }) {
               endIcon={<KeyboardArrowRightIcon />}
               onClick={toggleSmallDrawer(true)}
             >
-              {selectedOption==""? "select option": selectedOption}
+              {selectedOption == "" ? "select option" : selectedOption}
             </Button>
           </Box>
         </Box>
@@ -410,13 +394,17 @@ function AppContainer({ isDrawerOpen, setIsDrawerOpen, setProfiles }) {
               setSelectedGender("");
               setSelectedPersonality("");
               setAgeRange([0, 0]);
-              handleOptionSelect("")
-              setSection("")
+              handleOptionSelect("");
+              setSection("");
             }}
           >
             Reset
           </Button>
-          <Button sx={styles.searchButton} variant="contained" onClick={handleApplyFilters}>
+          <Button
+            sx={styles.searchButton}
+            variant="contained"
+            onClick={handleApplyFilters}
+          >
             Apply
           </Button>
         </Box>
@@ -436,13 +424,13 @@ function AppContainer({ isDrawerOpen, setIsDrawerOpen, setProfiles }) {
       >
         <List sx={{ paddingBottom: 0 }}>
           {[
-          "🎉 Casual dating",
-          "💘 Long-term",
-          "😍 Short-term" ,
-          "👋 New friends",
-          "🎓  Study buddy",
-          "🤔 Still figuring",
-        ].map((option, index) => (
+            "🎉 Casual dating",
+            "💘 Long-term",
+            "😍 Short-term",
+            "👋 New friends",
+            "🎓  Study buddy",
+            "🤔 Still figuring",
+          ].map((option, index) => (
             <ListItemButton
               key={index}
               onClick={() => handleOptionSelect(option)}

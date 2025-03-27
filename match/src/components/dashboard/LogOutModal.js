@@ -1,19 +1,17 @@
 import React from "react";
 import { Modal, Typography, Box, Button } from "@mui/material";
-import axios from 'axios';
-import {useAuth} from '../../AuthProvider';
+import axios from "axios";
+import { useAuth } from "../../AuthProvider";
 import { useNavigate } from "react-router-dom";
-import SmallLoading from '../login/SmallLoading';
+import SmallLoading from "../login/SmallLoading";
 
 export default function LogOutModal({ open, handleClose, handleLogout }) {
-  const {login} = useAuth();
+  const { login } = useAuth();
   const navigate = useNavigate();
-  const [loading, setLoading] = React.useState(false)
+  const [loading, setLoading] = React.useState(false);
 
-
-  
   function handleClick() {
-    setLoading(true)
+    setLoading(true);
     axios
       .get("https://api.uni-match.in/logout", {
         withCredentials: true,
@@ -70,101 +68,103 @@ export default function LogOutModal({ open, handleClose, handleLogout }) {
             );
         }
       })
-      .finally(()=> {
-        setLoading(false)
-      })
+      .finally(() => {
+        setLoading(false);
+      });
   }
 
-  return (<>
-  {loading && <SmallLoading/>}
+  return (
+    <>
+      {loading && <SmallLoading />}
 
-    <Modal open={open} onClose={handleClose}>
-      
-      <Box
-        sx={{
-          position: "absolute",
-          top: "50%",
-          left: "50%",
-          transform: "translate(-50%, -50%)",
-          width: 320,
-          backgroundColor: "#FFFFFF",
-          borderRadius: "12px",
-          boxShadow: "0 4px 12px rgba(0,0,0,0.1)",
-          padding: "24px",
-          textAlign: "center",
-          outline: "none"
-        }}
-      >
-        {/* Title */}
-        <Typography
-          variant="h6"
-          sx={{
-            fontSize: "18px",
-            fontWeight: 600,
-            color: "#212121",
-            marginBottom: "12px",
-          }}
-        >
-          Confirm Logout
-        </Typography>
-
-        {/* Description */}
-        <Typography
-          variant="body2"
-          sx={{
-            fontSize: "15px",
-            color: "#555",
-            lineHeight: "1.6",
-            marginBottom: "24px",
-          }}
-        >
-          Are you sure you want to log out? You’ll need to log back in to continue using the app.
-        </Typography>
-
-        {/* Buttons */}
+      <Modal open={open} onClose={handleClose}>
         <Box
           sx={{
-            display: "flex",
-            justifyContent: "space-between",
-            gap: "16px",
+            position: "absolute",
+            top: "50%",
+            left: "50%",
+            transform: "translate(-50%, -50%)",
+            width: 320,
+            backgroundColor: "#FFFFFF",
+            borderRadius: "12px",
+            boxShadow: "0 4px 12px rgba(0,0,0,0.1)",
+            padding: "24px",
+            textAlign: "center",
+            outline: "none",
           }}
         >
-          <Button
-            onClick={handleClose}
+          {/* Title */}
+          <Typography
+            variant="h6"
             sx={{
-              flex: 1,
-              backgroundColor: "#F5F5F5",
+              fontSize: "18px",
+              fontWeight: 600,
               color: "#212121",
-              padding: "8px",
-              fontSize: "14px",
-              fontWeight: 500,
-              borderRadius: "24px",
-              "&:hover": {
-                backgroundColor: "#E0E0E0",
-              },
+              marginBottom: "12px",
             }}
           >
-            Cancel
-          </Button>
-          <Button
-            onClick={handleClick}
+            Confirm Logout
+          </Typography>
+
+          {/* Description */}
+          <Typography
+            variant="body2"
             sx={{
-              flex: 1,
-              backgroundColor: "#ff4757",
-              color: "#FFFFFF",
-              padding: "8px",
-              fontSize: "14px",
-              fontWeight: 500,
-              borderRadius: "24px",
-              "&:hover": {
-                backgroundColor: "#ff3747",
-              },
+              fontSize: "15px",
+              color: "#555",
+              lineHeight: "1.6",
+              marginBottom: "24px",
             }}
           >
-            Log Out
-          </Button>
+            Are you sure you want to log out? You’ll need to log back in to
+            continue using the app.
+          </Typography>
+
+          {/* Buttons */}
+          <Box
+            sx={{
+              display: "flex",
+              justifyContent: "space-between",
+              gap: "16px",
+            }}
+          >
+            <Button
+              onClick={handleClose}
+              sx={{
+                flex: 1,
+                backgroundColor: "#F5F5F5",
+                color: "#212121",
+                padding: "8px",
+                fontSize: "14px",
+                fontWeight: 500,
+                borderRadius: "24px",
+                "&:hover": {
+                  backgroundColor: "#E0E0E0",
+                },
+              }}
+            >
+              Cancel
+            </Button>
+            <Button
+              onClick={handleClick}
+              sx={{
+                flex: 1,
+                backgroundColor: "#ff4757",
+                color: "#FFFFFF",
+                padding: "8px",
+                fontSize: "14px",
+                fontWeight: 500,
+                borderRadius: "24px",
+                "&:hover": {
+                  backgroundColor: "#ff3747",
+                },
+              }}
+            >
+              Log Out
+            </Button>
+          </Box>
         </Box>
-      </Box>
-    </Modal>
- </> );
+      </Modal>
+    </>
+  );
 }

@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from "react";
+import React, { useEffect, useState } from "react";
 import {
   Box,
   Avatar,
@@ -12,10 +12,10 @@ import {
   useTheme,
   useMediaQuery,
 } from "@mui/material";
-import axios from 'axios';
+import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { Outlet } from "react-router-dom";
-import LogOutModal from './LogOutModal';
+import LogOutModal from "./LogOutModal";
 import {
   Timeline,
   AccountCircle,
@@ -32,7 +32,7 @@ import Delete from "./DeleteProfile";
 import Support from "./Support";
 import EditStepForm from "./Edit";
 import Modal from "./Modal2.0";
-import {useAuth} from '../../AuthProvider';
+import { useAuth } from "../../AuthProvider";
 
 const ProfileContainer = () => {
   const navigate = useNavigate();
@@ -40,11 +40,13 @@ const ProfileContainer = () => {
   const { lpuselfprofile, selfprofile } = useAuth();
   const isMobile = useMediaQuery("(max-width:640px)");
   const isTablet = useMediaQuery("(max-width:991px)");
-  const [logOutModalOpen, setLogOutModalOpen] = React.useState(false)
+  const [logOutModalOpen, setLogOutModalOpen] = React.useState(false);
   const [open, setOpen] = React.useState(null);
   const [modalOpen, setModalOpen] = React.useState(false);
 
-  console.log(`Profilee --selfprofile-->${selfprofile}\n lpuselfprofile--->${lpuselfprofile}`)
+  console.log(
+    `Profilee --selfprofile-->${selfprofile}\n lpuselfprofile--->${lpuselfprofile}`,
+  );
   // useEffect(() => {
   //   axios
   //     .get("https://api.uni-match.in/profilecomp", {
@@ -99,29 +101,24 @@ const ProfileContainer = () => {
   //     });
   // }, []);
 
-
-
-
-
   const handleShare = () => {
     if (navigator.share) {
       navigator
         .share({
-          title: 'Uni-Match - Connecting ❤️ of LPU',
+          title: "Uni-Match - Connecting ❤️ of LPU",
           text: "✨ Ready to meet new people at LPU? Uni-Match makes it easy to connect with fellow students — whether you're looking for friendship, love, or just someone to vibe with! ❤️",
-          url:'https://uni-match.in',
+          url: "https://uni-match.in",
         })
         .then(() => {
-          console.log('Content shared successfully');
+          console.log("Content shared successfully");
         })
         .catch((error) => {
-          console.error('Error sharing content:', error);
+          console.error("Error sharing content:", error);
         });
     } else {
-      alert('Your browser does not support the share feature');
+      alert("Your browser does not support the share feature");
     }
   };
-  
 
   const containerStyles = {
     background:
@@ -269,9 +266,16 @@ const ProfileContainer = () => {
 
   return (
     <>
-      <Modal modalOpen={modalOpen} setModalOpen={setModalOpen} name={"share"} handleShare={handleShare} />
-      <LogOutModal open={logOutModalOpen} handleClose={()=> setLogOutModalOpen(false)}/>
-
+      <Modal
+        modalOpen={modalOpen}
+        setModalOpen={setModalOpen}
+        name={"share"}
+        handleShare={handleShare}
+      />
+      <LogOutModal
+        open={logOutModalOpen}
+        handleClose={() => setLogOutModalOpen(false)}
+      />
 
       <Box sx={containerStyles}>
         <Box sx={profileHeaderStyles}>
@@ -282,7 +286,7 @@ const ProfileContainer = () => {
               width: { xs: "90px", md: "90px" },
               height: { xs: "90px", md: "90px" },
               marginBottom: "10px",
-              border:'2px solid #fd7e14'
+              border: "2px solid #fd7e14",
             }}
           />
           <Typography
@@ -317,20 +321,19 @@ const ProfileContainer = () => {
           <List disablePadding>
             {menuItems.map((item, index) => (
               <ListItem
-              onClick={() => {
-                if (item.text === "Share") {
-                  setModalOpen(true);
-                } else if (item.text === "Edit Profile") {
-                  navigate('/app/profile/edit');
-                } else if (item.text === "About Developer") {
-                  navigate('/app/profile/about');
-                } else if (item.text === "Support Us") {
-                  navigate('/app/profile/support');
-                } else if (item.text === "Delete Profile") {
-                  navigate('/app/profile/delete');
-                }
-              }}
-              
+                onClick={() => {
+                  if (item.text === "Share") {
+                    setModalOpen(true);
+                  } else if (item.text === "Edit Profile") {
+                    navigate("/app/profile/edit");
+                  } else if (item.text === "About Developer") {
+                    navigate("/app/profile/about");
+                  } else if (item.text === "Support Us") {
+                    navigate("/app/profile/support");
+                  } else if (item.text === "Delete Profile") {
+                    navigate("/app/profile/delete");
+                  }
+                }}
                 key={index}
                 sx={menuItemStyles}
               >
@@ -355,7 +358,7 @@ const ProfileContainer = () => {
 
           <Box sx={actionButtonsStyles}>
             <Button
-            onClick={()=> setLogOutModalOpen(true)}
+              onClick={() => setLogOutModalOpen(true)}
               variant="contained"
               startIcon={
                 <i className="ti ti-logout" style={{ fontSize: "24px" }} />
@@ -377,7 +380,7 @@ const ProfileContainer = () => {
           </Box>
         </Box>
       </Box>
-      <Outlet/>
+      <Outlet />
     </>
   );
 };
