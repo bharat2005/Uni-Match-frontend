@@ -54,7 +54,7 @@ export default function InstallPage({ deferredPrompt }) {
         }}
       >
         <i
-          className="ti ti-device-mobile-off"
+          className="ti ti-device-mobile"
           style={{
             fontSize: "48px",
             color: "#ff69b4",
