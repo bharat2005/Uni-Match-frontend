@@ -1,10 +1,12 @@
 import { useEffect } from "react";
 import axios from "axios";
 import { replace, useLocation, useNavigate } from "react-router-dom";
+import { useAuth } from "./AuthProvider";
 
 export default function AuthWrapper({ setBool }) {
   const navigate = useNavigate();
   const location = useLocation();
+  const { setLpuSelfProfile, setSelfProfile } = useAuth();
 
   useEffect(() => {
     axios
