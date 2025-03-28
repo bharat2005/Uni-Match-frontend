@@ -129,7 +129,8 @@ const ProfileGrid = () => {
   const navigate = useNavigate();
   const { setLikesNoti } = useAuth();
   //const [open, setOpen] = useState(false);
-  const [name, setName] = useState(false);
+  const [accept, setAccept] = useState(false);
+  const [reject, setReject] = useState(false);
   const [target_reg_no, setTargetRegNo] = useState(null);
   const [profile, setSelectedProfile] = useState({});
   const [loading, setLoading] = useState(false);
@@ -289,7 +290,7 @@ const ProfileGrid = () => {
       })
       .finally(() => {
         setLoading(false);
-        setName(false);
+        setAccept(false);
       });
   }
 
@@ -358,22 +359,22 @@ const ProfileGrid = () => {
       })
       .finally(() => {
         setLoading(false);
-        setName(false);
+        setReject(false);
       });
   }
 
   return (
     <>
       <RejectModal
-        setModalOpen={setName}
-        modalOpen={name}
+        setModalOpen={setReject}
+        modalOpen={reject}
         handleCrossClick={handleCrossClick}
         target_reg_no={String(target_reg_no)}
       />
 
       <AcceptModal
-        setModalOpen={setName}
-        modalOpen={name}
+        setModalOpen={setAccept}
+        modalOpen={accept}
         handleLikeClick={handleLikeClick}
         target_reg_no={String(target_reg_no)}
       />
@@ -456,7 +457,7 @@ const ProfileGrid = () => {
                             onClick={(e) => {
                               e.stopPropagation();
                               setTargetRegNo(profile.reg_no);
-                              setTimeout(setName("reject"), 500);
+                              setTimeout(setReject("reject"), 500);
                             }}
                             sx={{
                               width: "48px",
@@ -498,7 +499,7 @@ const ProfileGrid = () => {
                             onClick={(e) => {
                               e.stopPropagation();
                               setTargetRegNo(profile.reg_no);
-                              setTimeout(setName("accept"), 500);
+                              setTimeout(setAccept("accept"), 500);
                             }}
                             sx={{
                               width: "48px",

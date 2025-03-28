@@ -8,7 +8,7 @@ import axios from "axios";
 import CenterLoading from "./CenterLoading";
 import NoSuchProfiles from "./NoSuchProfiles";
 import { Interests } from "@mui/icons-material";
-
+import NotiModal from "./NotiModal";
 
 const profiless =[
   {reg_no:1241343,
@@ -40,6 +40,7 @@ const profiless =[
 export default function Match() {
   const [profiles, setProfiles] = useState(profiless);
   const [currentIndex, setCurrentIndex] = useState(0);
+  const [modalOpen, setModalOpen] = useState(true)
   const currentIndexRef = useRef(currentIndex);
   const [isDrawerOpen, setIsDrawerOpen] = React.useState(false);
   const [cardStates, setCardStates] = useState([]);
@@ -230,6 +231,10 @@ export default function Match() {
 
   return (
     <>
+    <NotiModal
+    modalOpen={modalOpen}
+    setModalOpen={setModalOpen}
+    />
       <Box
         sx={{
           display: "flex",
