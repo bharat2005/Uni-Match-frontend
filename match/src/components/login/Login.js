@@ -255,7 +255,8 @@ const LoginPage = () => {
           />
 
           <a
-          onClick={()=> window.open("https://ums.lpu.in/lpuums/forgetpassword.aspx")}
+          //onClick={()=> window.open("https://ums.lpu.in/lpuums/forgetpassword.aspx")}
+          onClick={()=> setError(true)}
             style={{
               color: "#ff69b4",
               alignSelf: "flex-end",

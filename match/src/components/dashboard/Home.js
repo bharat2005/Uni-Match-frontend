@@ -7,9 +7,8 @@ import Likesoo from "./Likesoo";
 import Matchesoo from "./Matchesoo";
 import axios from "axios";
 import { useAuth } from "../../AuthProvider";
-
 import Match from "./Match";
-import Modall from "./Modal";
+import NotiModal from "./NotiModal";
 import { Outlet, useLocation } from "react-router-dom";
 
 function AppLayout() {

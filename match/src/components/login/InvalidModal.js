@@ -2,8 +2,10 @@
 import * as React from "react";
 import { Player } from "@lottiefiles/react-lottie-player";
 import { Box, Typography, Button, Modal, Fade } from "@mui/material";
+import animationData from "./invalid.json"; 
 
 const Container = ({ invalid, setInvalid }) => {
+  const playerRef = React.useRef(null); 
   return (
     <Modal
       open={invalid}
@@ -49,11 +51,12 @@ const Container = ({ invalid, setInvalid }) => {
           }}
         >
           <Box sx={{ position: "relative", bottom: "28%" }}>
-            <Player
+          <Player
+              ref={playerRef} // ✅ Use ref to avoid re-rendering delays
               autoplay
               loop
-              src={"invalid.json"}
-              style={{ height: "230px"}}
+              src={animationData} // ✅ Use preloaded JSON
+              style={{ height: "230px" }}
             />
           </Box>
 

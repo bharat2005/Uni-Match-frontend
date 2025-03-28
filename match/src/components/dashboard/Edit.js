@@ -19,7 +19,7 @@ import {
 } from "@mui/material";
 import SmallLoading from "../login/SmallLoading";
 import { useAuth } from "../../AuthProvider";
-import Modall from "./Modal2.0";
+import UpdateModal from "./UpdateModal";
 import AddPhotoAlternateIcon from "@mui/icons-material/AddPhotoAlternate";
 import DeleteIcon from "@mui/icons-material/Delete";
 import axios from "axios";
@@ -432,10 +432,9 @@ function SearchContainer({ onClose, setIsDrawerOpen }) {
     <>
       {loading && <SmallLoading />}
 
-      <Modall
+      <UpdateModal
         setModalOpen={setModalOpen}
         modalOpen={modalOpen}
-        name={"update"}
       />
 
       <Box

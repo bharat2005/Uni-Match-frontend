@@ -11,7 +11,8 @@ import {
   Modal,
 } from "@mui/material";
 import { ArrowBackIos, ArrowForwardIos } from "@mui/icons-material";
-import Modall from "./Modal";
+import RejectModal from "./RejectModal";
+import AcceptModal from "./AcceptModal";
 import { Player } from "@lottiefiles/react-lottie-player";
 import Drawer2 from "./Drawer2";
 import axios from "axios";
@@ -363,14 +364,20 @@ const ProfileGrid = () => {
 
   return (
     <>
-      <Modall
+      <RejectModal
         setModalOpen={setName}
         modalOpen={name}
-        name={name}
         handleCrossClick={handleCrossClick}
+        target_reg_no={String(target_reg_no)}
+      />
+
+      <AcceptModal
+        setModalOpen={setName}
+        modalOpen={name}
         handleLikeClick={handleLikeClick}
         target_reg_no={String(target_reg_no)}
       />
+
 
       <Outlet context={{ profile }} />
 

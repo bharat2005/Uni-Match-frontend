@@ -2,8 +2,10 @@
 import * as React from "react";
 import { Player } from "@lottiefiles/react-lottie-player";
 import { Box, Typography, Button, Modal, Fade } from "@mui/material";
+import animationData from "./share.json"; 
 
-const Container = ({ modalOpen, setModalOpen, name, handleShare }) => {
+const Container = ({ modalOpen, setModalOpen, handleShare }) => {
+   const playerRef = React.useRef(null); 
   return (
     <Modal
       open={modalOpen}
@@ -50,15 +52,10 @@ const Container = ({ modalOpen, setModalOpen, name, handleShare }) => {
         >
           <Box sx={{ position: "relative", bottom: "28%" }}>
             <Player
-              autoplay
-              loop
-              src={
-                name == "share"
-                  ? "/share.json"
-                  : name == "update"
-                    ? "/update.json"
-                    : null
-              }
+            ref={playerRef} // ✅ Use ref to avoid re-rendering delays
+            autoplay
+            loop
+            src={animationData} 
               style={{ height: "130px" }}
             />
           </Box>
@@ -71,7 +68,7 @@ const Container = ({ modalOpen, setModalOpen, name, handleShare }) => {
               position: "relative",
               bottom: "40%",
               alignItems: "center",
-              gap: name == "update" ? "16px" : "8px",
+              gap: "8px",
               width: "100%",
             }}
           >
@@ -92,8 +89,8 @@ const Container = ({ modalOpen, setModalOpen, name, handleShare }) => {
                 // },
               }}
             >
-              {name === "share" && "Spread the love at LPU!"}
-              {name === "update" && "Profile updated successfully!"}
+            Spread the love at LPU!
+          
             </Typography>
             <Typography
               id="modal-description"
@@ -114,10 +111,7 @@ const Container = ({ modalOpen, setModalOpen, name, handleShare }) => {
                 //   lineHeight: "32px",
                 // },
               }}
-            >
-              {name === "share" &&
-                "Help your friends find meaningful connections — share Uni-Match and grow the LPU community into a place where real bonds and relationships thrive!"}
-              {name === "update" && "Your updates have been applied."}
+            >Help your friends find meaningful connections — share Uni-Match and grow the LPU community into a place where real bonds and relationships thrive!
             </Typography>
           </Box>
 
@@ -129,19 +123,11 @@ const Container = ({ modalOpen, setModalOpen, name, handleShare }) => {
               alignItems: "center",
               width: "100%",
               position: "relative",
-              bottom: name == "update" ? "30%" : "40%",
+              bottom: "40%",
             }}
           >
             <Button
-              onClick={
-                name == "share"
-                  ? handleShare
-                  : name == "update"
-                    ? () => {
-                        setModalOpen(false);
-                      }
-                    : null
-              }
+              onClick={handleShare}
               sx={{
                 height: "50px",
                 padding: "0 40px",
@@ -167,9 +153,7 @@ const Container = ({ modalOpen, setModalOpen, name, handleShare }) => {
                 //   padding: "0 20px",
                 // },
               }}
-            >
-              {name === "share" && "Share"}
-              {name === "update" && "Okay!"}
+            >Share
             </Button>
           </Box>
         </Box>

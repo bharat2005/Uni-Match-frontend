@@ -109,7 +109,7 @@ export default function Match() {
       .finally(() => {
         setIsReady(true);
       });
-  }, [page]);
+  }, []);
 
   const childRefs = useMemo(
     () => profiles.map(() => React.createRef()),

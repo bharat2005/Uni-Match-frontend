@@ -131,7 +131,7 @@ export default function App() {
               </Route>
 
               <Route path="matches" element={<Matchesoo />}>
-                <Route path=":info" element={<Drawer2 />} />
+                <Route path="info" element={<Drawer2 />} />
               </Route>
 
               <Route path="home" element={<Match />}>

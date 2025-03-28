@@ -10,7 +10,7 @@ import {
   Skeleton,
   Modal,
 } from "@mui/material";
-import Modall from "./Modal";
+import UnlikeModal from "./UnlikeModal";
 import { ArrowBackIos, ArrowForwardIos } from "@mui/icons-material";
 import { Player } from "@lottiefiles/react-lottie-player";
 import Drawer2 from "./Drawer2";
@@ -181,10 +181,9 @@ const ProfileGrid = () => {
 
   return (
     <>
-      <Modall
+      <UnlikeModal
         setModalOpen={setModalOpen}
         modalOpen={modalOpen}
-        name={"unlike"}
         handleCrossClick1={handleCrossClick}
         target_reg_no={String(target_reg_no)}
       />

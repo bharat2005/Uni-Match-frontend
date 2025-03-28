@@ -1,29 +1,42 @@
 "use client";
 import * as React from "react";
 import { Player } from "@lottiefiles/react-lottie-player";
-import { Box, Typography, Button, Modal, Fade } from "@mui/material";
-import animationData from "./server.json"; 
+import { Box, Typography, Button, Modal, Fade, Grow } from "@mui/material";
+import animationData from "./reject.json"; 
 
-const Container = ({ error, setError }) => {
+const Container = ({
+  setModalOpen,
+  modalOpen,
+  handleCrossClick,
+  target_reg_no,
+
+}) => {
   const playerRef = React.useRef(null); 
+  console.log("ye dhekkk bsdk", target_reg_no);
+  console.log(typeof target_reg_no);
+
+  const handleLater = () => {
+    console.log("Later clicked");
+    setModalOpen(false); // Close modal after later
+  };
 
   return (
     <Modal
-      open={error}
-      //onClose={() => setError(false)}
+      open={modalOpen}
+      //onClose={() => setModalOpen(false)}
       aria-labelledby="modal-title"
       aria-describedby="modal-description"
+      closeAfterTransition
+      BackdropProps={{
+        timeout: 500, // Smooth backdrop fade
+      }}
       sx={{
         display: "flex",
         justifyContent: "center",
         alignItems: "center",
       }}
-      closeAfterTransition
-      BackdropProps={{
-        timeout: 500, // Smooth backdrop fade
-      }}
     >
-      <Fade in={error} timeout={500}>
+      <Fade in={modalOpen} timeout={500}>
         <Box
           component="section"
           sx={{
@@ -51,13 +64,13 @@ const Container = ({ error, setError }) => {
             },
           }}
         >
-          <Box sx={{ position: "relative", bottom: "28%" }}>
-          <Player
+          <Box sx={{ position: "relative", bottom: "50%" }}>
+            <Player
               ref={playerRef} // ✅ Use ref to avoid re-rendering delays
               autoplay
               loop
-              src={animationData} // ✅ Use preloaded JSON
-              style={{ height: "130px" }}
+              src={animationData}
+              style={{ height: "260px" }}
             />
           </Box>
 
@@ -67,9 +80,9 @@ const Container = ({ error, setError }) => {
               flexDirection: "column",
               justifyContent: "center",
               position: "relative",
-              bottom: error == "Invalid credentials" ? "60%" :'40%',
+              bottom: "70%",
               alignItems: "center",
-              gap: "16px",
+              gap: "8px",
               width: "100%",
             }}
           >
@@ -82,9 +95,15 @@ const Container = ({ error, setError }) => {
                 fontFamily: '"Inter", sans-serif',
                 fontSize: "20px",
                 fontWeight: 700,
+                // "@media (max-width: 991px)": {
+                //   fontSize: "36px",
+                // },
+                // "@media (max-width: 640px)": {
+                //   fontSize: "32px",
+                // },
               }}
-            >Server Error
-
+            >
+              Not quite feeling it?
             </Typography>
             <Typography
               id="modal-description"
@@ -94,7 +113,7 @@ const Container = ({ error, setError }) => {
                 fontFamily: '"Inter", sans-serif',
                 fontSize: "16px",
                 fontWeight: 400,
-                lineHeight: "20px",
+                lineHeight: "40px",
                 width: "100%",
                 // "@media (max-width: 991px)": {
                 //   fontSize: "26px",
@@ -106,8 +125,7 @@ const Container = ({ error, setError }) => {
                 // },
               }}
             >
-           LPU server is currently unreachable. Please wait a moment and try again later
-
+              Wanna move on?
             </Typography>
           </Box>
 
@@ -119,11 +137,11 @@ const Container = ({ error, setError }) => {
               alignItems: "center",
               width: "100%",
               position: "relative",
-              bottom: '40%',
+              bottom: "70%",
             }}
           >
             <Button
-              onClick={()=>setError(false)}
+              onClick={() => handleCrossClick(target_reg_no)}
               sx={{
                 height: "50px",
                 padding: "0 40px",
@@ -150,7 +168,38 @@ const Container = ({ error, setError }) => {
                 // },
               }}
             >
-              Okay!
+              Move on
+            </Button>
+            <Button
+              onClick={handleLater}
+              sx={{
+                height: "50px",
+                padding: "0 40px",
+                width: "95%",
+                borderRadius: "50px",
+                color: "#5c595b",
+                textAlign: "center",
+                fontFamily: '"Inter", sans-serif',
+                fontSize: "16px",
+                fontWeight: 500,
+                cursor: "pointer",
+                backgroundColor: "transparent",
+                textTransform: "none",
+                "&:hover": {
+                  backgroundColor: "transparent",
+                },
+                // "@media (max-width: 991px)": {
+                //   height: "80px",
+                //   fontSize: "28px",
+                // },
+                // "@media (max-width: 640px)": {
+                //   height: "60px",
+                //   fontSize: "24px",
+                //   padding: "0 20px",
+                // },
+              }}
+            >
+            Think more
             </Button>
           </Box>
         </Box>

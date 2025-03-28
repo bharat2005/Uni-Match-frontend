@@ -2,18 +2,15 @@
 import * as React from "react";
 import { Player } from "@lottiefiles/react-lottie-player";
 import { Box, Typography, Button, Modal, Fade, Grow } from "@mui/material";
+import animationData from "./accept.json"; 
 
 const Container = ({
   setModalOpen,
-  modalOpen = "true",
-  name = "reject",
-  handleCrossClick,
+  modalOpen,
   handleLikeClick,
   target_reg_no,
-  handleCrossClick1,
 }) => {
-  console.log("ye dhekkk bsdk", target_reg_no);
-  console.log(typeof target_reg_no);
+  const playerRef = React.useRef(null);
 
   const handleLater = () => {
     console.log("Later clicked");
@@ -66,19 +63,10 @@ const Container = ({
         >
           <Box sx={{ position: "relative", bottom: "50%" }}>
             <Player
+              ref={playerRef} // ✅ Use ref to avoid re-rendering delays
               autoplay
               loop
-              src={
-                name == "unlike"
-                  ? "/unlike.json"
-                  : name == "reject"
-                    ? "/reject.json"
-                    : name == "accept"
-                      ? "/accept.json"
-                      : name == "noti"
-                        ? "/noti.json"
-                        : null
-              }
+              src={animationData}
               style={{ height: "260px" }}
             />
           </Box>
@@ -112,10 +100,7 @@ const Container = ({
                 // },
               }}
             >
-              {name === "unlike" && "Are you sure about this?"}
-              {name === "reject" && "Not quite feeling it?"}
-              {name === "accept" && "Feeling the connection?"}
-              {name === "noti" && "You’ve got a match!"}
+Feeling the connection?
             </Typography>
             <Typography
               id="modal-description"
@@ -137,10 +122,7 @@ const Container = ({
                 // },
               }}
             >
-              {name === "unlike" && "Want to undo the like?"}
-              {name === "reject" && "Wanna move on?"}
-              {name === "accept" && "Wanna say yes?"}
-              {name === "noti" && "Wanna see who it is?"}
+             Wanna say yes?
             </Typography>
           </Box>
 
@@ -156,21 +138,7 @@ const Container = ({
             }}
           >
             <Button
-              onClick={
-                name == "reject"
-                  ? () => {
-                      handleCrossClick(target_reg_no);
-                    }
-                  : name == "accept"
-                    ? () => {
-                        handleLikeClick(target_reg_no);
-                      }
-                    : name == "unlike"
-                      ? () => {
-                          handleCrossClick1(target_reg_no);
-                        }
-                      : null
-              }
+              onClick={() => handleLikeClick(target_reg_no)}
               sx={{
                 height: "50px",
                 padding: "0 40px",
@@ -197,10 +165,7 @@ const Container = ({
                 // },
               }}
             >
-              {name === "unlike" && "Undo"}
-              {name === "reject" && "Move on"}
-              {name === "accept" && "Say yes"}
-              {name === "noti" && "See now"}
+             Say yes
             </Button>
             <Button
               onClick={handleLater}
@@ -231,10 +196,7 @@ const Container = ({
                 // },
               }}
             >
-              {name === "unlike" && "Keep it"}
-              {name === "reject" && "Think more"}
-              {name === "accept" && "Not now"}
-              {name === "noti" && "Later"}
+Not now
             </Button>
           </Box>
         </Box>

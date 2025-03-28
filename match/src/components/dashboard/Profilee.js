@@ -31,7 +31,7 @@ import About from "./About";
 import Delete from "./DeleteProfile";
 import Support from "./Support";
 import EditStepForm from "./Edit";
-import Modal from "./Modal2.0";
+import ShareModal from "./ShareModal";
 import { useAuth } from "../../AuthProvider";
 
 const ProfileContainer = () => {
@@ -287,10 +287,9 @@ const ProfileContainer = () => {
 
   return (
     <>
-      <Modal
+      <ShareModal
         modalOpen={modalOpen}
         setModalOpen={setModalOpen}
-        name={"share"}
         handleShare={handleShare}
       />
       <LogOutModal

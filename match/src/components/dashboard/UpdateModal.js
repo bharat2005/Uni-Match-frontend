@@ -2,15 +2,14 @@
 import * as React from "react";
 import { Player } from "@lottiefiles/react-lottie-player";
 import { Box, Typography, Button, Modal, Fade } from "@mui/material";
-import animationData from "./server.json"; 
+import animationData from "./update.json"; 
 
-const Container = ({ error, setError }) => {
+const Container = ({ modalOpen, setModalOpen }) => {
   const playerRef = React.useRef(null); 
-
   return (
     <Modal
-      open={error}
-      //onClose={() => setError(false)}
+      open={modalOpen}
+      onClose={() => setModalOpen(false)}
       aria-labelledby="modal-title"
       aria-describedby="modal-description"
       sx={{
@@ -23,7 +22,7 @@ const Container = ({ error, setError }) => {
         timeout: 500, // Smooth backdrop fade
       }}
     >
-      <Fade in={error} timeout={500}>
+      <Fade in={modalOpen} timeout={500}>
         <Box
           component="section"
           sx={{
@@ -52,11 +51,11 @@ const Container = ({ error, setError }) => {
           }}
         >
           <Box sx={{ position: "relative", bottom: "28%" }}>
-          <Player
-              ref={playerRef} // ✅ Use ref to avoid re-rendering delays
-              autoplay
-              loop
-              src={animationData} // ✅ Use preloaded JSON
+            <Player
+                ref={playerRef} // ✅ Use ref to avoid re-rendering delays
+                autoplay
+                loop
+                src={animationData} 
               style={{ height: "130px" }}
             />
           </Box>
@@ -67,9 +66,9 @@ const Container = ({ error, setError }) => {
               flexDirection: "column",
               justifyContent: "center",
               position: "relative",
-              bottom: error == "Invalid credentials" ? "60%" :'40%',
+              bottom: "40%",
               alignItems: "center",
-              gap: "16px",
+              gap:"16px",
               width: "100%",
             }}
           >
@@ -82,9 +81,14 @@ const Container = ({ error, setError }) => {
                 fontFamily: '"Inter", sans-serif',
                 fontSize: "20px",
                 fontWeight: 700,
+                // "@media (max-width: 991px)": {
+                //   fontSize: "36px",
+                // },
+                // "@media (max-width: 640px)": {
+                //   fontSize: "32px",
+                // },
               }}
-            >Server Error
-
+            >Profile updated successfully!
             </Typography>
             <Typography
               id="modal-description"
@@ -105,9 +109,7 @@ const Container = ({ error, setError }) => {
                 //   lineHeight: "32px",
                 // },
               }}
-            >
-           LPU server is currently unreachable. Please wait a moment and try again later
-
+            >Your updates have been applied
             </Typography>
           </Box>
 
@@ -119,11 +121,11 @@ const Container = ({ error, setError }) => {
               alignItems: "center",
               width: "100%",
               position: "relative",
-              bottom: '40%',
+              bottom:"30%",
             }}
           >
             <Button
-              onClick={()=>setError(false)}
+              onClick={() => setModalOpen(false)}
               sx={{
                 height: "50px",
                 padding: "0 40px",
@@ -149,8 +151,7 @@ const Container = ({ error, setError }) => {
                 //   padding: "0 20px",
                 // },
               }}
-            >
-              Okay!
+            >Okay!
             </Button>
           </Box>
         </Box>
