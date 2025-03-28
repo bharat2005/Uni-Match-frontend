@@ -9,8 +9,36 @@ import CenterLoading from "./CenterLoading";
 import NoSuchProfiles from "./NoSuchProfiles";
 import { Interests } from "@mui/icons-material";
 
+
+const profiless =[
+  {reg_no:1241343,
+    name:'Bharat',
+    reason:"Casual Dating",
+    images:["/9.jpg","/10.jpg","/8.jpg","/7.jpg","/6.jpg","/4.jpg"],
+    interests:["Running"]
+  },
+  // {reg_no:1241343,
+  //   name:'Bharat',
+  //   reason:"Casual Dating",
+  //   images:["/10.jpg","/10.jpg","/8.jpg","/7.jpg","/6.jpg","/4.jpg"],
+  //   interests:["Running"]
+  // },
+  // {reg_no:1241343,
+  //   name:'Bharat',
+  //   reason:"Casual Dating",
+  //   images:["/11.jpg","/10.jpg","/8.jpg","/7.jpg","/6.jpg","/4.jpg"],
+  //   interests:["Running"]
+  // },
+  // {reg_no:1241343,
+  //   name:'Bharat',
+  //   reason:"Casual Dating",
+  //   images:["/8.jpg","/10.jpg","/8.jpg","/7.jpg","/6.jpg","/4.jpg"],
+  //   interests:["Running"]
+  // }
+]
+
 export default function Match() {
-  const [profiles, setProfiles] = useState([]);
+  const [profiles, setProfiles] = useState(profiless);
   const [currentIndex, setCurrentIndex] = useState(0);
   const currentIndexRef = useRef(currentIndex);
   const [isDrawerOpen, setIsDrawerOpen] = React.useState(false);
@@ -257,6 +285,7 @@ export default function Match() {
               objectFit: "cover",
             }}
           />
+        <img src="/beta.png" style={{ height: "15px", position:'relative', top:6 }} />
         </Box>
         <IconButton
           onClick={() => {

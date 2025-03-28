@@ -157,7 +157,7 @@ export default function Card({ profile, cardDir, isActive }) {
         <Box
           sx={{
             position: "absolute",
-            width: "80%",
+            width: "50%",
             top: "12px",
             left: "50%",
             transform: "translateX(-50%)",

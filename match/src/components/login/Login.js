@@ -17,6 +17,8 @@ import Visibility from "@mui/icons-material/Visibility";
 import { replace, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { useAuth } from "../../AuthProvider";
+import ErrorModal from './ErrorModal';
+import InvalidModal from './InvalidModal';
 
 const LoginPage = () => {
   const navigate = useNavigate();
@@ -26,7 +28,8 @@ const LoginPage = () => {
   const [lpuLogin, setLpuLogin] = useState({ regNo: "", password: "" });
   const [loading, setLoading] = useState(false);
   const [isReady, setIsReady] = useState(false);
-  const [barOpen, setBarOpen] = useState(false);
+  const [error, setError] = useState(false)
+  const [invalid, setInvalid] = useState(false)
 
   const handleClickShowPassword = () => setShowPassword((show) => !show);
 
@@ -68,18 +71,29 @@ const LoginPage = () => {
             navigate("/profile-setup");
           }
         } else {
-          setBarOpen(true);
+          response.data.message == "Invalid credentials" ? setInvalid(true) : setError(true)
         }
       })
       .catch((error) => {
         console.error(error);
         setLoading(false);
         login(false);
-        setBarOpen(true);
       });
   }
 
-  return (
+  return (<>
+
+  
+<ErrorModal
+        error={error}
+        setError={setError}
+      />
+
+<InvalidModal
+        invalid={invalid}
+        setInvalid={setInvalid}
+      />
+
     <Box
       sx={{
         background:
@@ -91,6 +105,8 @@ const LoginPage = () => {
         position: "relative",
       }}
     >
+
+
       <link
         href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap"
         rel="stylesheet"
@@ -133,7 +149,13 @@ const LoginPage = () => {
             }}
           />
           <img src="/Uni-match-14-3-2025.png" style={{ width: "85%" }} />
+          
         </Box>
+        
+        <Box sx={{textAlign:'right'}}>
+        <img src="/beta.png" style={{ width: "15%", position:'relative', left:10 }} />
+        </Box>
+        
 
         <Box
           sx={{
@@ -233,7 +255,7 @@ const LoginPage = () => {
           />
 
           <a
-            href="https://ums.lpu.in/lpuums/forgetpassword.aspx"
+          onClick={()=> window.open("https://ums.lpu.in/lpuums/forgetpassword.aspx")}
             style={{
               color: "#ff69b4",
               alignSelf: "flex-end",
@@ -288,19 +310,8 @@ const LoginPage = () => {
         </Box>
       </Box>
 
-      <Snackbar
-        open={barOpen}
-        autoHideDuration={1000}
-        anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
-      >
-        <Alert severity={bool ? "success" : "error"} sx={{ width: "100%" }}>
-          {bool
-            ? "Login successful! Redirecting..."
-            : "Incorrect username or password!"}
-        </Alert>
-      </Snackbar>
     </Box>
-  );
+ </> );
 };
 
 export default LoginPage;

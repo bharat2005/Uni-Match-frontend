@@ -23,6 +23,8 @@ import Chatsoo from "./components/dashboard/Chatsoo";
 import Chatoo from "./components/dashboard/Chatoo";
 import Edit from "./components/dashboard/Edit";
 import About from "./components/dashboard/About";
+import Terms1 from './components/dashboard/Terms';
+import PrivacyPolicy1 from "./components/dashboard/PrivacyPolicy";
 import Drawer2 from "./components/dashboard/Drawer2";
 import Support from "./components/dashboard/Support";
 import DeleteProfile from "./components/dashboard/DeleteProfile";
@@ -144,6 +146,8 @@ export default function App() {
 
               <Route path="profile" element={<Profilee />}>
                 <Route path="edit" element={<Edit />} />
+                <Route path="terms" element={<Terms1 />} />
+                <Route path="privacy" element={<PrivacyPolicy1 />} />
                 <Route path="about" element={<About />} />
                 <Route path="support" element={<Support />} />
                 <Route path="delete" element={<DeleteProfile />} />

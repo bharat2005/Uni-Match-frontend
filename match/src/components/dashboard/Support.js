@@ -135,7 +135,7 @@ const SupportUs = ({ onClose }) => {
         }}
       >
         <Button
-          onClick={() => setOpen(true)}
+          onClick={() => window.open("https://buymeacoffee.com/unimatch")}
           variant="contained"
           sx={{
             py: 1.5,
@@ -156,112 +156,6 @@ const SupportUs = ({ onClose }) => {
         </Button>
       </Box>
 
-      {/* CONFIRMATION MODAL */}
-      <Modal open={open} onClose={handleClose}>
-        <Box
-          sx={{
-            position: "absolute",
-            top: "50%",
-            left: "50%",
-            transform: "translate(-50%, -50%)",
-            width: 320,
-            zindex: 11,
-            backgroundColor: "#FFFFFF",
-            borderRadius: "12px",
-            boxShadow: "0 4px 12px rgba(0,0,0,0.1)",
-            padding: "24px",
-            textAlign: "center",
-            outline: "none",
-          }}
-        >
-          {/* TITLE */}
-          <Typography
-            variant="h6"
-            sx={{
-              fontSize: "18px",
-              fontWeight: 600,
-              color: "#212121",
-              marginBottom: "12px",
-            }}
-          >
-            Support Uni-Match❣️
-          </Typography>
-
-          {/* QR CODE */}
-          <Box
-            sx={{
-              width: "160px",
-              height: "160px",
-              margin: "0 auto 16px",
-              backgroundImage: "url(/qr.png)",
-              backgroundPosition: "center",
-              backgroundSize: "cover",
-              backgroundRepeat: "no-repeat",
-              borderRadius: "8px",
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-            }}
-          />
-
-          {/* UPI ID */}
-          <Typography
-            variant="body2"
-            sx={{
-              fontSize: "15px",
-              color: "#555",
-              marginBottom: "16px",
-            }}
-          >
-            UPI ID: <strong>bharatvdeshm2005-1@okhdfcbank</strong>
-          </Typography>
-
-          {/* BUTTONS */}
-          <Box
-            sx={{
-              display: "flex",
-              justifyContent: "space-between",
-              gap: "16px",
-            }}
-          >
-            <Button
-              onClick={handleClose}
-              sx={{
-                flex: 1,
-                backgroundColor: "#F5F5F5",
-                color: "#212121",
-                padding: "8px",
-                fontSize: "14px",
-                fontWeight: 500,
-                borderRadius: "24px",
-                "&:hover": {
-                  backgroundColor: "#E0E0E0",
-                },
-              }}
-            >
-              Close
-            </Button>
-            <Button
-              onClick={handleClose}
-              sx={{
-                flex: 1,
-                backgroundColor: "#1976D2",
-                color: "#FFFFFF",
-                padding: "8px",
-                fontSize: "14px",
-                fontWeight: 500,
-                borderRadius: "24px",
-                bgcolor: "#ff6b9c",
-                "&:hover": {
-                  bgcolor: "#ff5c8f",
-                },
-              }}
-            >
-              Done
-            </Button>
-          </Box>
-        </Box>
-      </Modal>
     </Box>
   );
 };

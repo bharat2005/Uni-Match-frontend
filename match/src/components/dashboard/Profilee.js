@@ -157,7 +157,7 @@ const ProfileContainer = () => {
       md: "24px 32px",
     },
     borderRadius: "20px",
-    margin: "34px 0",
+    margin: "17px 0",
     background: "transparent",
     overflow: "hidden",
   };
@@ -212,15 +212,6 @@ const ProfileContainer = () => {
     {
       icon: (
         <i
-          className="ti ti-share"
-          style={{ fontSize: "24px", color: "black" }}
-        />
-      ),
-      text: "Share",
-    },
-    {
-      icon: (
-        <i
           className="ti ti-info-circle"
           style={{ fontSize: "24px", color: "black" }}
         />
@@ -230,12 +221,42 @@ const ProfileContainer = () => {
     {
       icon: (
         <i
+          className="ti ti-share"
+          style={{ fontSize: "24px", color: "black" }}
+        />
+      ),
+      text: "Share Uni-Match",
+    },
+
+    {
+      icon: (
+        <i
+          className="ti ti-file-description"
+          style={{ fontSize: "24px", color: "black" }}
+        />
+      ),
+      text: "Terms & Conditions",
+    },
+    {
+      icon: (
+        <i
+          className="ti ti-lock"
+          style={{ fontSize: "24px", color: "black" }}
+        />
+      ),
+      text: "Privacy Policy",
+    },
+    
+    {
+      icon: (
+        <i
           className="ti ti-heart-handshake"
           style={{ fontSize: "24px", color: "black" }}
         />
       ),
       text: "Support Us",
     },
+
     {
       icon: (
         <i
@@ -243,26 +264,26 @@ const ProfileContainer = () => {
           style={{ fontSize: "24px", color: "black" }}
         />
       ),
-      text: "Delete Profile",
+      text: "Delete Account",
     },
   ];
 
-  if (open) {
-    switch (open) {
-      case "Edit Profile": {
-        return <EditStepForm onClose={() => setOpen(false)} />;
-      }
-      case "About Developer": {
-        return <About onClose={() => setOpen(false)} />;
-      }
-      case "Support Us": {
-        return <Support onClose={() => setOpen(false)} />;
-      }
-      case "Delete Profile": {
-        return <Delete onClose={() => setOpen(false)} />;
-      }
-    }
-  }
+  // if (open) {
+  //   switch (open) {
+  //     case "Edit Profile": {
+  //       return <EditStepForm onClose={() => setOpen(false)} />;
+  //     }
+  //     case "About Developer": {
+  //       return <About onClose={() => setOpen(false)} />;
+  //     }
+  //     case "Support Us": {
+  //       return <Support onClose={() => setOpen(false)} />;
+  //     }
+  //     case "Delete Profile": {
+  //       return <Delete onClose={() => setOpen(false)} />;
+  //     }
+  //   }
+  // }
 
   return (
     <>
@@ -327,7 +348,11 @@ const ProfileContainer = () => {
                   } else if (item.text === "Edit Profile") {
                     navigate("/app/profile/edit");
                   } else if (item.text === "About Developer") {
-                    navigate("/app/profile/about");
+                    navigate("/app/profile/about")
+                  } else if (item.text === "Terms & Conditions"){
+                    navigate("/app/profile/terms")
+                  } else if (item.text === "Privacy Policy"){
+                    navigate("/app/profile/privacy")
                   } else if (item.text === "Support Us") {
                     navigate("/app/profile/support");
                   } else if (item.text === "Delete Profile") {
