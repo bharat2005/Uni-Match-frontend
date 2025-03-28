@@ -22,7 +22,7 @@ export default function AuthWrapper({ setBool }) {
         const csrfTokenAccess = response.headers["x-csrf-token-access"];
         localStorage.setItem("csrfTokenAccess", csrfTokenAccess);
 
-        if (localStorage.getItem("login") == null) {
+        if (localStorage.getItem("login") == null || localStorage.getItem("login") == undefined) {
           navigate("/app/home", { replace: true });
         }
       })
