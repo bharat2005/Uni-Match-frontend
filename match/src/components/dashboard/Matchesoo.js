@@ -441,7 +441,7 @@ const ProfileGrid = () => {
                             left: "50%", // Center horizontally
                             transform: "translate(-50%, -20%)", // Adjust positioning slightly upwards
                             display: "flex",
-                            gap: 8,
+                            gap: 6,
                           }}
                         >
                           <IconButton

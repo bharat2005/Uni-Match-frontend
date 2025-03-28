@@ -42,24 +42,6 @@ function Drawer() {
     setImageLoaded(false);
   };
 
-  function emoji() {
-    switch (profile.reason) {
-      case "Casual Dating":
-        return "🎉";
-      case "Short-term fun":
-        return "😍";
-      case "Long-term relationship":
-        return "💘";
-      case "New friends":
-        return "👋";
-      case "Study buddy":
-        return "📚";
-      case "Still figuring it out":
-        return "🤔";
-      default:
-        return "";
-    }
-  }
 
   return (
     <>
@@ -301,24 +283,6 @@ function Drawer() {
                     }}
                   />
 
-                  {/* Developer Chip */}
-                  {profile.reg_no === "12413923" && (
-                    <Chip
-                      icon={
-                        <i
-                          className="ti ti-settings"
-                          style={{ fontSize: "18px", color: "white" }}
-                        />
-                      }
-                      label="Developer"
-                      sx={{
-                        bgcolor: "#6A0DAD",
-                        color: "white",
-                        borderRadius: "8px",
-                        fontSize: "14px",
-                      }}
-                    />
-                  )}
                 </Box>
               </Box>
 
