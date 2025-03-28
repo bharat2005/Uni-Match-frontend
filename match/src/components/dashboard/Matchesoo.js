@@ -441,7 +441,7 @@ const ProfileGrid = () => {
                             left: "50%", // Center horizontally
                             transform: "translate(-50%, -20%)", // Adjust positioning slightly upwards
                             display: "flex",
-                            gap: 6,
+                            gap: 8,
                           }}
                         >
                           <IconButton
@@ -452,8 +452,8 @@ const ProfileGrid = () => {
                               setTimeout(setName("reject"), 500);
                             }}
                             sx={{
-                              width: "44px",
-                              height: "44px",
+                              width: "48px",
+                              height: "48px",
                               color: "transparent", // Make the text transparent to allow gradient to show
                               backgroundColor: "rgba(0, 0, 0, 0.8)", // Inverted background color
                               padding: "12px",
@@ -476,7 +476,7 @@ const ProfileGrid = () => {
                             <i
                               className="ti ti-x"
                               style={{
-                                fontSize: "26px",
+                                fontSize: "28px",
                                 background:
                                   "linear-gradient(145deg, #FF006E 0%, #FB5607 50%, #FFBE0B 100%)",
                                 WebkitBackgroundClip: "text", // Clip gradient to text
@@ -494,8 +494,8 @@ const ProfileGrid = () => {
                               setTimeout(setName("accept"), 500);
                             }}
                             sx={{
-                              width: "44px",
-                              height: "44px",
+                              width: "48px",
+                              height: "48px",
                               color: "transparent",
                               background: "rgba(0, 0, 0, 0.8)",
                               padding: "12px",
@@ -518,7 +518,7 @@ const ProfileGrid = () => {
                             <i
                               className="ti ti-heart-filled"
                               style={{
-                                fontSize: "26px",
+                                fontSize: "28px",
                                 background:
                                   "linear-gradient(145deg, #00C853 0%, #B2FF59 50%, #FFD600 100%)",
                                 WebkitBackgroundClip: "text", // Clip gradient to text

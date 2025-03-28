@@ -292,8 +292,8 @@ const ProfileGrid = () => {
                               setModalOpen(true);
                             }}
                             sx={{
-                              width: "42px",
-                              height: "42px",
+                              width: "48px",
+                              height: "48px",
                               color: "white",
                               backgroundColor: "rgba(0, 0, 0, 0.8)",
                               padding: "12px",
@@ -309,7 +309,7 @@ const ProfileGrid = () => {
                           >
                             <i
                               className="ti ti-x"
-                              style={{ fontSize: "24px" }}
+                              style={{ fontSize: "32px" }}
                             ></i>
                           </IconButton>
                         </Box>

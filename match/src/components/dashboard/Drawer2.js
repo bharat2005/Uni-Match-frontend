@@ -324,7 +324,6 @@ function Drawer() {
 
               {/* Reason Section */}
               <Typography variant="body2" sx={{ color: "#666", my: 1.25 }}>
-                {emoji()}
                 {profile.reason}
               </Typography>
 

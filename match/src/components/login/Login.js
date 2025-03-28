@@ -281,8 +281,8 @@ const LoginPage = () => {
               }}
             />
             <Typography sx={{ fontSize: "12px", color: "#666" }}>
-              I agree to <a style={{ color: "#ff69b4" }}>Terms</a> &{" "}
-              <a style={{ color: "#ff69b4" }}>Privacy Policy.</a>
+              I agree to <a onClick={()=> navigate('/terms-conditions')} style={{ color: "#ff69b4" }}>Terms & </a> &{" "}
+              <a onClick={()=> navigate('/privacy-policy')}  style={{ color: "#ff69b4" }}>Privacy Policy.</a>
             </Typography>
           </Box>
         </Box>

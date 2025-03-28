@@ -131,8 +131,8 @@ const InputDesign = ({ setStep, formData, setFormData }) => {
                 borderColor: "transparent", // Border color on hover
               },
               "&.Mui-focused fieldset": {
-                borderColor: "#b3d1ff", // Soft blue when focused
-                boxShadow: "0 0 5px rgba(179, 209, 255, 0.5)", // Removes the blue border when focused
+                borderColor: "rgba(255, 160, 191, 0.9)", // Soft blue when focused
+                boxShadow: "0 0 5px rgba(255, 140, 179, 0.66) ", // Removes the blue border when focused
               },
             },
           }}

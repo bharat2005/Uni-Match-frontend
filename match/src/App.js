@@ -26,6 +26,8 @@ import About from "./components/dashboard/About";
 import Drawer2 from "./components/dashboard/Drawer2";
 import Support from "./components/dashboard/Support";
 import DeleteProfile from "./components/dashboard/DeleteProfile";
+import Terms  from './components/login/Terms';
+import PrivacyPolicy from './components/login/PrivacyPolicy';
 
 export default function App() {
   const [bool, setBool] = useState(false);
@@ -92,6 +94,9 @@ export default function App() {
         {bool ? (
           <Routes>
             <Route path="/" element={<Login />} />
+            <Route path="/privacy-policy" element={<PrivacyPolicy />} />
+            <Route path="/terms-conditions" element={<Terms />} />
+
 
             <Route
               path="/profile-setup"
