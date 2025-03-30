@@ -417,7 +417,7 @@ const ProfileGrid = () => {
                       <Card
                         onClick={() => {
                           setSelectedProfile(profile);
-                          navigate("/app/mathes/info");
+                          navigate("/app/matches/info");
                         }}
                         sx={{
                           display: "flex",

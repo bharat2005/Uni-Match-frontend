@@ -210,12 +210,10 @@ const ProfileGrid = () => {
           <Typography
             sx={{
               textAlign: "left",
-              fontSize: { xs: "24px", sm: "28px" }, // Responsive font size
-              fontWeight: 600, // Bold for clear hierarchy
-              color: "#333", // Subtle but clear color
-              letterSpacing: "0.5px", // Improve readability
-              //paddingBottom: "8px", // Space between subheading and content
-              // borderBottom: "2px solid #eee", // Light separator for clarity
+              fontSize: { xs: "24px", sm: "28px" }, 
+              fontWeight: 600, 
+              color: "#333", 
+              letterSpacing: "0.5px"
             }}
           >
             Likes

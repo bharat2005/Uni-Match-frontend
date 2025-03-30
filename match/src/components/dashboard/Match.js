@@ -17,12 +17,12 @@ const profiless =[
     images:["/9.jpg","/10.jpg","/8.jpg","/7.jpg","/6.jpg","/4.jpg"],
     interests:["Running"]
   },
-  // {reg_no:1241343,
-  //   name:'Bharat',
-  //   reason:"Casual Dating",
-  //   images:["/10.jpg","/10.jpg","/8.jpg","/7.jpg","/6.jpg","/4.jpg"],
-  //   interests:["Running"]
-  // },
+  {reg_no:1241343,
+    name:'Bharat',
+    reason:"Casual Dating",
+    images:["/10.jpg","/10.jpg","/8.jpg","/7.jpg","/6.jpg","/4.jpg"],
+    interests:["Running"]
+  },
   // {reg_no:1241343,
   //   name:'Bharat',
   //   reason:"Casual Dating",
