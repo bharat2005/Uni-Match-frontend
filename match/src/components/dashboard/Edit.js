@@ -717,7 +717,7 @@ function SearchContainer({ onClose, setIsDrawerOpen }) {
               endIcon={<KeyboardArrowDownIcon />}
               onClick={toggleSmallDrawer(true)}
             >
-              {selectedOption || "Select an option"}
+              {formData['reason']}
             </Button>
           </Box>
 
