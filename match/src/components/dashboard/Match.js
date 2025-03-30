@@ -195,11 +195,13 @@ export default function Match() {
     }
   
 
-    const childRefs = useMemo(
-      () => Array(profiles.length).fill(0).map(() => React.createRef()), 
-      [profiles.length]
-    );
-    
+  const childRefs = useMemo(
+    () =>
+      Array(profiles.length)
+        .fill(0)
+        .map((i) => React.createRef()),
+    []
+  )
 
   const updateCurrentIndex = (val) => {
     setCurrentIndex(val)
@@ -238,11 +240,10 @@ export default function Match() {
   }
 
   const swipe = async (dir) => {
-    if (canSwipe && currentIndex < profiles.length && childRefs[currentIndex]?.current) {
-      await childRefs[currentIndex].current.swipe(dir);
+    if (canSwipe && currentIndex < profiles.length) {
+      await childRefs[currentIndex].current.swipe(dir) 
     }
   }
-  
   const goBack = async () => {
     if (!canGoBack) return
 
