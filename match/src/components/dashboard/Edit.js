@@ -673,7 +673,7 @@ function SearchContainer({ onClose, setIsDrawerOpen }) {
                   key={option}
                   label={option}
                   onClick={() => {
-                    setFormData((prev) => ({ ...prev, personality: option.label }));
+                    setFormData((prev) => ({ ...prev, personality: option }));
                   }}
                   sx={{
                     borderRadius: "18px",
@@ -695,7 +695,7 @@ function SearchContainer({ onClose, setIsDrawerOpen }) {
                       },
                     },
                   }}
-                  className={selectedGender === option ? "selected" : ""}
+                  className={formData['personality'] === option ? "selected" : ""}
                 />
               ))}
             </Box>
