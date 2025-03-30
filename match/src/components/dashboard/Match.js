@@ -10,29 +10,29 @@ import NoSuchProfiles from "./NoSuchProfiles";
 import { Interests } from "@mui/icons-material";
 import NotiModal from "./NotiModal";
 
-// const db =[
-//   {reg_no:141343,
-//     name:'Bharat',
-//     reason:"Casual Dating",
-//     images:["/6.jpg"],
-//     interests:["Running"]
-//   },
-//   {reg_no:12443,
-//     name:'Bharat',
-//     reason:"Casual Dating",
-//     images:["/9.jpg"],
-//     interests:["Running"]
-//   },
-//   {reg_no:124134399,
-//     name:'Bharat',
-//     reason:"Casual Dating",
-//     images:["/4.jpg","/4.jpg","/4.jpg", "/4.jpg","/4.jpg", "/4.jpg" ],
-//     interests:["Running"]
-//   }
-// ]
+const db =[
+  {reg_no:141343,
+    name:'Bharat',
+    reason:"Casual Dating",
+    images:["/6.jpg"],
+    interests:["Running"]
+  },
+  {reg_no:12443,
+    name:'Bharat',
+    reason:"Casual Dating",
+    images:["/9.jpg"],
+    interests:["Running"]
+  },
+  {reg_no:124134399,
+    name:'Bharat',
+    reason:"Casual Dating",
+    images:["/4.jpg","/4.jpg","/4.jpg", "/4.jpg","/4.jpg", "/4.jpg" ],
+    interests:["Running"]
+  }
+]
 
 export default function Match() {
-  const [profiles, setProfiles] = useState([]);
+  const [profiles, setProfiles] = useState(db);
   const [modalOpen, setModalOpen] = useState(true)
   const [isDrawerOpen, setIsDrawerOpen] = React.useState(false);
   const [cardStates, setCardStates] = useState([]);
@@ -195,13 +195,11 @@ export default function Match() {
     }
   
 
-  const childRefs = useMemo(
-    () =>
-      Array(profiles.length)
-        .fill(0)
-        .map((i) => React.createRef()),
-    []
-  )
+    const childRefs = useMemo(
+      () => Array(profiles.length).fill(0).map(() => React.createRef()), 
+      [profiles.length]
+    );
+    
 
   const updateCurrentIndex = (val) => {
     setCurrentIndex(val)
@@ -240,10 +238,11 @@ export default function Match() {
   }
 
   const swipe = async (dir) => {
-    if (canSwipe && currentIndex < profiles.length) {
-      await childRefs[currentIndex].current.swipe(dir) 
+    if (canSwipe && currentIndex < profiles.length && childRefs[currentIndex]?.current) {
+      await childRefs[currentIndex].current.swipe(dir);
     }
   }
+  
   const goBack = async () => {
     if (!canGoBack) return
 
