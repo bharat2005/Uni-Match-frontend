@@ -32,7 +32,7 @@ const db =[
 ]
 
 export default function Match() {
-  const [profiles, setProfiles] = useState(db);
+  const [profiles, setProfiles] = useState([]);
   const [modalOpen, setModalOpen] = useState(true)
   const [isDrawerOpen, setIsDrawerOpen] = React.useState(false);
   const [cardStates, setCardStates] = useState([]);
@@ -200,7 +200,7 @@ export default function Match() {
       Array(profiles.length)
         .fill(0)
         .map((i) => React.createRef()),
-    [profiles.length]
+    []
   )
 
   const updateCurrentIndex = (val) => {
