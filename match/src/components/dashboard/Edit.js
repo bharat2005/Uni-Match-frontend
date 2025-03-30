@@ -326,6 +326,7 @@ function SearchContainer({ onClose, setIsDrawerOpen }) {
 
   const handleOptionSelect = (option) => {
     setSelectedOption(option);
+    setFormData(prev => ({...prev, personality:option}))
     setSmallDrawerOpen(false);
   };
 
@@ -371,6 +372,7 @@ function SearchContainer({ onClose, setIsDrawerOpen }) {
   };
 
   function handleDone() {
+    console.log(formData)
     setLoading(true);
     console.log(formData);
     axios
@@ -670,7 +672,9 @@ function SearchContainer({ onClose, setIsDrawerOpen }) {
                 <Chip
                   key={option}
                   label={option}
-                  onClick={() => setSelectedGender(option)}
+                  onClick={() => {
+                    setFormData((prev) => ({ ...prev, personality: option.label }));
+                  }}
                   sx={{
                     borderRadius: "18px",
                     fontSize: "14px",
@@ -730,19 +734,25 @@ function SearchContainer({ onClose, setIsDrawerOpen }) {
           >
             <List sx={{ paddingBottom: 0 }}>
               {[
-                "Casual dating",
-                "Long-term",
-                "Short-term",
-                "New friends",
-                "Study buddy",
-                "Still figuring",
+          { symbol: "🎉", label: "Casual dating" },
+          { symbol: "💘", label: "Long-term" },
+          { symbol: "😍", label: "Short-term" },
+          { symbol: "👋", label: "New friends" },
+          { symbol: "🎓", label: "Study buddy" },
+          { symbol: "🤔", label: "Still figuring" },
               ].map((option, index) => (
                 <ListItemButton
                   key={index}
-                  onClick={() => handleOptionSelect(option)}
+                  onClick={() => {
+                    setFormData((prev) => ({
+                      ...prev,
+                      reason: `${option.symbol} ${option.label}`,
+                    }));
+                    setSmallDrawerOpen(false)
+                  }}
                   sx={{ borderBottom: "1px solid #f0f0f0" }}
                 >
-                  <ListItemText primary={option} sx={{ textAlign: "center" }} />
+                  <ListItemText primary={`${option.symbol} ${option.label}`} sx={{ textAlign: "center" }} />
                 </ListItemButton>
               ))}
             </List>
