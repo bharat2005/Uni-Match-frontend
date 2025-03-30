@@ -35,7 +35,8 @@ export default function Match() {
         setCurrentIndex(response.data.cards.length - 1);
         setCardStates(Array(response.data.cards.length).fill(null));
         setHasNext(response.data.has_next);
-        setPage((prev) => (response.data.has_next ? prev + 1 : 1));
+        console.log("page1",page)
+        setPage((prev) => (response.data.has_next==true ? prev + 1 : 1));
         console.log("page",page)
       })
       .catch((error) => {
