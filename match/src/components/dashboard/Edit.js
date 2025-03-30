@@ -379,6 +379,8 @@ function SearchContainer({ onClose, setIsDrawerOpen }) {
         headers: { "X-CSRF-TOKEN": localStorage.getItem("csrfTokenAccess") },
       })
       .then((response) => {
+        setSelfProfile(response.data.message)
+        console.log(selfprofile)
         setLoading(false);
         console.log("Message from server: ", response.data);
         setModalOpen(true);
