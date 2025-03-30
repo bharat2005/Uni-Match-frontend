@@ -123,7 +123,7 @@ export default function Match() {
     }
   };
   const outOfFrame = (name, idx) => {
-    console.log("profiles.loength",profiles.length)
+    console.log("childeredfas.loength",childRefs.length)
     console.log(`${name} (${idx}) left the screen!`, currentIndexRef.current);
     if (childRefs[idx] && childRefs[idx].current) {
       currentIndexRef.current >= idx && childRefs[idx].current.restoreCard();
@@ -184,7 +184,7 @@ export default function Match() {
     }
   };
   const loadMoreProfiles = () => {
-    console.log(profiles.length)
+    console.log("hiii",childRefs.length)
   if (profiles.length ===  0) {
     setIsReady(false);
       axios
