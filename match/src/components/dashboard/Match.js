@@ -55,7 +55,7 @@ export default function Match() {
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
   const [cardStates, setCardStates] = useState([]);
   const [isReady, setIsReady] = useState(false);
-  const [currentIndex, setCurrentIndex] = useState(-1);
+  const [currentIndex, setCurrentIndex] = useState(1);
   const [page, setPage] = useState(1);
   const [hasNext, setHasNext] = useState(true);
   const currentIndexRef = useRef(currentIndex);
@@ -128,8 +128,9 @@ export default function Match() {
     if (childRefs[idx] && childRefs[idx].current) {
       currentIndexRef.current >= idx && childRefs[idx].current.restoreCard();
     }
-
+if (currentIndexRef == 1){
     loadMoreProfiles(); 
+}
   };
 
 
@@ -184,8 +185,6 @@ export default function Match() {
     }
   };
   const loadMoreProfiles = () => {
-    console.log("hiii",childRefs.length)
-  if (profiles.length ===  0) {
     setIsReady(false);
       axios
       .get(`https://api.uni-match.in/matchcomp?page=${page}`, {
@@ -246,7 +245,7 @@ export default function Match() {
       .finally(() => {
         setIsReady(true);
       });
-    }
+    
     }
   
 
