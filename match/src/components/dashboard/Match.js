@@ -36,6 +36,7 @@ export default function Match() {
         setCardStates(Array(response.data.cards.length).fill(null));
         setHasNext(response.data.has_next);
         setPage((prev) => (response.data.has_next ? prev + 1 : 1));
+        console.log("page",page)
       })
       .catch((error) => {
         console.error("Error fetching profiles:", error);
@@ -186,6 +187,8 @@ export default function Match() {
 
         setHasNext(prev => response.data.has_next)
         setPage(prev => hasNext ? prev+1 : 1)
+
+        console.log("page",page)
       })
       .catch((error) => {
         console.error("Error fetching profiles:", error);
