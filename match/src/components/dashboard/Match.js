@@ -200,7 +200,7 @@ export default function Match() {
       Array(profiles.length)
         .fill(0)
         .map((i) => React.createRef()),
-    []
+    [profiles.length]
   )
 
   const updateCurrentIndex = (val) => {
@@ -240,11 +240,10 @@ export default function Match() {
   }
 
   const swipe = async (dir) => {
-    if (canSwipe && currentIndex < profiles.length && childRefs[currentIndex]?.current) {
-      await childRefs[currentIndex].current.swipe(dir);
+    if (canSwipe && currentIndex < profiles.length) {
+      await childRefs[currentIndex].current.swipe(dir) 
     }
   }
-  
   const goBack = async () => {
     if (!canGoBack) return
 
