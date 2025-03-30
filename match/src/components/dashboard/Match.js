@@ -93,7 +93,6 @@ export default function Match() {
         .map((_, i) => prev[i] || React.createRef())
     );
 
-    loadMoreProfiles(); 
   }, [profiles]);
 
   const updateCurrentIndex = (val) => {
@@ -124,10 +123,13 @@ export default function Match() {
     }
   };
   const outOfFrame = (name, idx) => {
+    console.log("profiles.loength",profiles.length)
     console.log(`${name} (${idx}) left the screen!`, currentIndexRef.current);
     if (childRefs[idx] && childRefs[idx].current) {
       currentIndexRef.current >= idx && childRefs[idx].current.restoreCard();
     }
+
+    loadMoreProfiles(); 
   };
 
 
