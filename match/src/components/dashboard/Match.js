@@ -34,10 +34,10 @@ export default function Match() {
         setProfiles(response.data.cards);
         setCurrentIndex(response.data.cards.length - 1);
         setCardStates(Array(response.data.cards.length).fill(null));
-        setHasNext(response.data.has_next);
+        setHasNext(prev => response.data.has_next);
         console.log("page1",page)
-        setPage((prev) => (response.data.has_next==true ? prev + 1 : 1));
-        console.log("page",page)
+        setPage((prev) => (response.data.has_next==false ? 1 : prev + 1));
+        console.log("page2",page)
       })
       .catch((error) => {
         console.error("Error fetching profiles:", error);
@@ -187,9 +187,9 @@ export default function Match() {
         setCardStates(Array(response.data.cards.length).fill(null));
 
         setHasNext(prev => response.data.has_next)
-        setPage(prev => hasNext ? prev+1 : 1)
-
-        console.log("page",page)
+        console.log("page1",page)
+        setPage((prev) => (response.data.has_next==false ? 1 : prev + 1));
+        console.log("page2",page)
       })
       .catch((error) => {
         console.error("Error fetching profiles:", error);
