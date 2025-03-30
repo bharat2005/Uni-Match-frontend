@@ -84,6 +84,7 @@ export default function Match() {
       });
   }, []);
 
+
   // Ensure childRefs updates when profiles update
   useEffect(() => {
     setChildRefs((prev) =>
@@ -91,6 +92,8 @@ export default function Match() {
         .fill(null)
         .map((_, i) => prev[i] || React.createRef())
     );
+
+    loadMoreProfiles(); 
   }, [profiles]);
 
   const updateCurrentIndex = (val) => {
@@ -100,7 +103,6 @@ export default function Match() {
 
   const canGoBack = currentIndex < profiles.length - 1;
   const canSwipe = currentIndex >= 0;
-
   const swiped = (direction, profile, index) => {
     setCardStates((prev) => {
       const newState = [...prev];
@@ -121,13 +123,17 @@ export default function Match() {
       loadMoreProfiles();
     }
   };
-
   const outOfFrame = (name, idx) => {
     console.log(`${name} (${idx}) left the screen!`, currentIndexRef.current);
     if (childRefs[idx] && childRefs[idx].current) {
       currentIndexRef.current >= idx && childRefs[idx].current.restoreCard();
     }
   };
+
+
+
+
+
 
   const swipe = async (dir) => {
     if (canSwipe && currentIndex >= 0 && currentIndex < childRefs.length) {
@@ -151,11 +157,6 @@ export default function Match() {
     updateCurrentIndex(newIndex)
     await childRefs[newIndex].current.restoreCard();
   }
-
-
-
-
-
   const sendSwipeData = (direction, targetRegNo) => {
     if (direction === "right") {
       axios
@@ -180,9 +181,10 @@ export default function Match() {
         });
     }
   };
-
   const loadMoreProfiles = () => {
-    if (profiles.length < 3)
+    console.log(profiles.length)
+  if (profiles.length ===  0) {
+    setIsReady(false);
       axios
       .get(`https://api.uni-match.in/matchcomp?page=${page}`, {
         withCredentials: true,
@@ -190,7 +192,7 @@ export default function Match() {
       })
       .then((response) => {
         console.log(response.data);
-        setProfiles(prev => [...response.data.cards, ...prev]);
+        setProfiles(response.data.cards);
         setCurrentIndex(response.data.cards.length - 1);
         setCardStates(Array(response.data.cards.length).fill(null));
 
@@ -242,6 +244,7 @@ export default function Match() {
       .finally(() => {
         setIsReady(true);
       });
+    }
     }
   
 
