@@ -10,37 +10,43 @@ import NoSuchProfiles from "./NoSuchProfiles";
 import { Interests } from "@mui/icons-material";
 import NotiModal from "./NotiModal";
 
-// const db =[
-//   {reg_no:141343,
-//     name:'Bharat',
-//     reason:"Casual Dating",
-//     images:["/6.jpg"],
-//     interests:["Running"]
-//   },
-//   {reg_no:12443,
-//     name:'Bharat',
-//     reason:"Casual Dating",
-//     images:["/9.jpg"],
-//     interests:["Running"]
-//   },
-//   {reg_no:124134399,
-//     name:'Bharat',
-//     reason:"Casual Dating",
-//     images:["/4.jpg","/4.jpg","/4.jpg", "/4.jpg","/4.jpg", "/4.jpg" ],
-//     interests:["Running"]
-//   }
-// ]
+const profiless =[
+  {reg_no:1241343,
+    name:'Bharat',
+    reason:"Casual Dating",
+    images:["/9.jpg","/10.jpg","/8.jpg","/7.jpg","/6.jpg","/4.jpg"],
+    interests:["Running"]
+  },
+  {reg_no:1241343,
+    name:'Bharat',
+    reason:"Casual Dating",
+    images:["/10.jpg","/10.jpg","/8.jpg","/7.jpg","/6.jpg","/4.jpg"],
+    interests:["Running"]
+  },
+  // {reg_no:1241343,
+  //   name:'Bharat',
+  //   reason:"Casual Dating",
+  //   images:["/11.jpg","/10.jpg","/8.jpg","/7.jpg","/6.jpg","/4.jpg"],
+  //   interests:["Running"]
+  // },
+  // {reg_no:1241343,
+  //   name:'Bharat',
+  //   reason:"Casual Dating",
+  //   images:["/8.jpg","/10.jpg","/8.jpg","/7.jpg","/6.jpg","/4.jpg"],
+  //   interests:["Running"]
+  // }
+]
 
 export default function Match() {
-  const [profiles, setProfiles] = useState([]);
+  const [profiles, setProfiles] = useState(profiless);
+  const [currentIndex, setCurrentIndex] = useState(0);
   const [modalOpen, setModalOpen] = useState(true)
+  const currentIndexRef = useRef(currentIndex);
   const [isDrawerOpen, setIsDrawerOpen] = React.useState(false);
   const [cardStates, setCardStates] = useState([]);
   const [isReady, setIsReady] = useState(false);
-  const [currentIndex, setCurrentIndex] = useState(profiles.length - 1)
   const [page, setPage] = useState(1);
-  const [hasNext, sethasNext] = useState(true);
-  const currentIndexRef = useRef(currentIndex);
+  const [hasNext, sethasNext] = useState(true)
  
 
   useEffect(() => {
@@ -106,6 +112,20 @@ export default function Match() {
       });
   }, []);
 
+  const childRefs = useMemo(
+    () => profiles.map(() => React.createRef()),
+    [profiles],
+  );
+
+  const updateCurrentIndex = (val) => {
+    setCurrentIndex(val);
+    currentIndexRef.current = val;
+  };
+
+  const canGoBack = currentIndex < profiles.length - 1;
+
+  const canSwipe = currentIndex >= 0 && profiles.length > 0;
+
   const sendSwipeData = (direction, targetRegNo) => {
     if (direction === "right") {
       axios
@@ -131,86 +151,15 @@ export default function Match() {
     }
   };
 
+
   const loadMoreProfiles = () => {
-    if (profiles.length < 3)
-      axios
-      .get(`https://api.uni-match.in/matchcomp?page=${page}`, {
-        withCredentials: true,
-        headers: { "X-CSRF-TOKEN": localStorage.getItem("csrfTokenAccess") },
-      })
-      .then((response) => {
-        console.log(response.data);
-        setProfiles(prev => [...response.data.cards, ...prev]);
-        setCurrentIndex(response.data.cards.length - 1);
-        setCardStates(Array(response.data.cards.length).fill(null));
-
-        sethasNext(prev => response.data.has_next)
-        setPage(prev => hasNext ? prev+1 : 1)
-      })
-      .catch((error) => {
-        console.error("Error fetching profiles:", error);
-
-        if (error.response?.status === 401) {
-          axios
-            .post(
-              "https://api.uni-match.in/refresh",
-              {},
-              {
-                withCredentials: true,
-                headers: {
-                  "X-CSRF-TOKEN": localStorage.getItem("csrfTokenRefresh"),
-                },
-              },
-            )
-
-            .then((response) => {
-              const csrfTokenAccess = response.headers["x-csrf-token-access"];
-              localStorage.setItem("csrfTokenAccess", csrfTokenAccess);
-
-              axios
-                .get("https://api.uni-match.in/matchcomp", {
-                  withCredentials: true,
-                  headers: {
-                    "X-CSRF-TOKEN": localStorage.getItem("csrfTokenAccess"),
-                  },
-                })
-                .then((response) => {
-                  console.log(response.data);
-                  setProfiles(response.data.cards);
-                  setCurrentIndex(response.data.cards.length - 1);
-                  setCardStates(Array(response.data.cards.length).fill(null));
-                })
-                .catch((retryError) =>
-                  console.error("Failed after refresh:", retryError),
-                );
-            })
-            .catch(() =>
-              console.error("Session expired, please log in again."),
-            );
-        }
-      })
-      .finally(() => {
-        setIsReady(true);
-      });
+    if (profiles.length < 3) {
+      setPage((prevPage) => prevPage + 1);
     }
-  
+  };
 
-  const childRefs = useMemo(
-    () =>
-      Array(profiles.length)
-        .fill(0)
-        .map((i) => React.createRef()),
-    []
-  )
 
-  const updateCurrentIndex = (val) => {
-    setCurrentIndex(val)
-    currentIndexRef.current = val
-  }
 
-  const canGoBack = currentIndex < profiles.length - 1
-
-  const canSwipe = currentIndex >= 0
 
   const swiped = (direction, profile, index) => {
     setCardStates((prev) => {
@@ -226,43 +175,59 @@ export default function Match() {
     updateCurrentIndex(index - 1);
     setTimeout(() => {
       updateCurrentIndex(index - 1);
-    }, 600);
+    }, 600); // Ensure the image stays longer before moving
 
     if (index <= 2) { 
       loadMoreProfiles();
     }
 
-  }
+
+  };
 
   const outOfFrame = (name, idx) => {
-    console.log(`${name} (${idx}) left the screen!`, currentIndexRef.current)
-    currentIndexRef.current >= idx && childRefs[idx].current.restoreCard()
-  }
+    console.log(`${name} (${idx}) left the screen!`, currentIndexRef.current);
+    currentIndexRef.current >= idx && childRefs[idx].current.restoreCard();
+  };
 
-  const swipe = async (dir) => {
-    if (canSwipe && currentIndex < profiles.length) {
-      await childRefs[currentIndex].current.swipe(dir) 
-    }
-  }
   const goBack = async () => {
-    if (!canGoBack) return
+    if (!canGoBack) return;
 
-    
     setCardStates((prev) => {
       const newState = [...prev];
-      newState[newIndex] = null;
+      newState[newIndex] = null; // Set back to null
       return newState;
     });
-
+  
     const newIndex = currentIndex + 1;
-
+  
+    // Check if the last swipe direction was "left"
     if (cardStates[newIndex] !== "left") return; 
-
-    updateCurrentIndex(newIndex)
+  
+    // Restore the card
+    updateCurrentIndex(newIndex);
     await childRefs[newIndex].current.restoreCard();
-  }
+  
+    // Reset the swipe state of the restored card
 
+  };
+  
+  
 
+  const swipe = (dir) => {
+    if (canSwipe && currentIndex < profiles.length) {
+      // Show like/unlike image first
+      setCardStates((prev) => {
+        const newState = [...prev];
+        newState[currentIndex] = dir; // 'left' or 'right'
+        return newState;
+      });
+
+      // Delay swipe to let image be visible
+      setTimeout(() => {
+        childRefs[currentIndex].current.swipe(dir);
+      }, 500); // Adjust delay as needed
+    }
+  };
 
   return (
     <>
@@ -341,7 +306,7 @@ export default function Match() {
 
       {isReady ? (
         <>
-          {profiles.length ? (
+          {profiles.length? (
             <Box
               sx={{
                 width: "100%",

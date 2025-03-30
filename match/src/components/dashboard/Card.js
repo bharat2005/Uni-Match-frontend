@@ -171,7 +171,8 @@ export default function Card({ profile, cardDir, isActive }) {
               key={index}
               sx={{
                 flex: 1,
-                height: "6px", // Slightly taller for better visibility
+                height: "6px",
+                maxWidth:"15%", // Slightly taller for better visibility
                 borderRadius: "10px",
                 backgroundColor:
                   index === currentImageIndex
