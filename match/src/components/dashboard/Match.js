@@ -23,12 +23,30 @@ const db =[
     images:["/9.jpg"],
     interests:["Running"]
   },
-  {reg_no:124134399,
-    name:'Bharat',
-    reason:"Casual Dating",
-    images:["/4.jpg","/4.jpg","/4.jpg", "/4.jpg","/4.jpg", "/4.jpg" ],
-    interests:["Running"]
-  }
+  // {reg_no:124134399,
+  //   name:'Bharat',
+  //   reason:"Casual Dating",
+  //   images:["/4.jpg","/4.jpg","/4.jpg", "/4.jpg","/4.jpg", "/4.jpg" ],
+  //   interests:["Running"]
+  // },
+  // {reg_no:141343,
+  //   name:'Bharat',
+  //   reason:"Casual Dating",
+  //   images:["/6.jpg"],
+  //   interests:["Running"]
+  // },
+  // {reg_no:12443,
+  //   name:'Bharat',
+  //   reason:"Casual Dating",
+  //   images:["/9.jpg"],
+  //   interests:["Running"]
+  // },
+  // {reg_no:124134399,
+  //   name:'Bharat',
+  //   reason:"Casual Dating",
+  //   images:["/4.jpg","/4.jpg","/4.jpg", "/4.jpg","/4.jpg", "/4.jpg" ],
+  //   interests:["Running"]
+  // }
 ]
 
 export default function Match() {
@@ -52,7 +70,7 @@ export default function Match() {
       })
       .then((response) => {
         console.log(response.data);
-        setProfiles((prev) => [...response.data.cards, ...prev]);
+        setProfiles(response.data.cards);
         setCurrentIndex(response.data.cards.length - 1);
         setCardStates(Array(response.data.cards.length).fill(null));
         setHasNext(response.data.has_next);
@@ -116,19 +134,23 @@ export default function Match() {
       await childRefs[currentIndex]?.current?.swipe(dir);
     }
   };
-
   const goBack = async () => {
-    if (!canGoBack) return;
+    if (!canGoBack) return
+
+    
+    setCardStates((prev) => {
+      const newState = [...prev];
+      newState[newIndex] = null;
+      return newState;
+    });
 
     const newIndex = currentIndex + 1;
-    if (cardStates[newIndex] !== "left") return;
 
-    updateCurrentIndex(newIndex);
+    if (cardStates[newIndex] !== "left") return; 
 
-    if (childRefs[newIndex] && childRefs[newIndex].current) {
-      await childRefs[newIndex].current.restoreCard();
-    }
-  };
+    updateCurrentIndex(newIndex)
+    await childRefs[newIndex].current.restoreCard();
+  }
 
 
 
