@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import { io } from "socket.io-client";
 
-const socket = io("http://api.uni-match.in:5001"); // Change this to your server IP
+const socket = io("https://api.uni-match.in:5001"); // Change this to your server IP
 
 function App() {
   useEffect(() => {
