@@ -35,9 +35,7 @@ export default function Match() {
         setCurrentIndex(response.data.cards.length - 1);
         setCardStates(Array(response.data.cards.length).fill(null));
         setHasNext(prev => response.data.has_next);
-        console.log("page1",page)
-        setPage((prev) => (response.data.has_next==false ? 1 : prev + 1));
-        console.log("page2",page)
+        setPage((prev) => response.data.has_next==false ? 1 : prev + 1);
       })
       .catch((error) => {
         console.error("Error fetching profiles:", error);
@@ -188,7 +186,14 @@ export default function Match() {
 
         setHasNext(prev => response.data.has_next)
         console.log("page1",page)
-        setPage((prev) => (response.data.has_next==false ? 1 : prev + 1));
+        setPage((prev) => {
+          if (response.data.has_next==false){
+            console.log("middle returned 1")
+            return  1 
+          } else {
+            console.log("midddle returned prev+1")
+              return prev + 1
+            }})
         console.log("page2",page)
       })
       .catch((error) => {
