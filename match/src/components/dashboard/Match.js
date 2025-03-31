@@ -17,7 +17,7 @@ export default function Match() {
   const [cardStates, setCardStates] = useState([]);
   const [isReady, setIsReady] = useState(false);
   const [currentIndex, setCurrentIndex] = useState(1);
-  const [page, setPage] = useState(1);
+  const [page, setPage] = useState(0);
   const [hasNext, setHasNext] = useState(true);
   const currentIndexRef = useRef(currentIndex);
   const [childRefs, setChildRefs] = useState([]);
@@ -189,7 +189,7 @@ export default function Match() {
         setPage((prev) => {
           if (response.data.has_next==false){
             console.log("middle returned 1")
-            return  1 
+            return  0 
           } else {
             console.log("midddle returned prev+1")
               return prev + 1
@@ -240,6 +240,7 @@ export default function Match() {
       })
       .finally(() => {
         setIsReady(true);
+        console.log(page)
       });
     
     }
