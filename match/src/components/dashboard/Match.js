@@ -121,7 +121,7 @@ export default function Match() {
       updateCurrentIndex(index - 1);
       
       // If no more cards left, load more profiles
-      if (index - 1 < 0 && hasNext) {
+      if (index - 1 < 0) {
         loadMoreProfiles();
       }
     }, 600);
@@ -265,6 +265,7 @@ export default function Match() {
           padding: "4px",
         }}
       >
+        {page}
         <Box
           sx={{
             display: "flex",
