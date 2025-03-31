@@ -36,7 +36,6 @@ export default function Match() {
         setCardStates(Array(response.data.cards.length).fill(null));
         setHasNext(prev => response.data.has_next);
         if (!response.data.has_next) {
-          console.log("Resetting page to 0");
           setPage(0);
         } else {
           setPage((prev) => prev + 1);
@@ -128,7 +127,7 @@ export default function Match() {
   };
   
   const outOfFrame = (name, idx) => {
-    console.log(`${name} (${idx}) left the screen!`, currentIndexRef.current);
+    //console.log(`${name} (${idx}) left the screen!`, currentIndexRef.current);
     if (childRefs[idx] && childRefs[idx].current) {
       currentIndexRef.current >= idx && childRefs[idx].current.restoreCard();
     }
@@ -191,9 +190,7 @@ export default function Match() {
         setCardStates(Array(response.data.cards.length).fill(null));
 
         setHasNext(prev => response.data.has_next)
-        console.log("page1",page)
         if (!response.data.has_next) {
-          console.log("Resetting page to 0");
           setPage(0);
         } else {
           setPage((prev) => prev + 1);
@@ -243,7 +240,6 @@ export default function Match() {
       })
       .finally(() => {
         setIsReady(true);
-        console.log("page2",page)
       });
     
     }
@@ -265,7 +261,6 @@ export default function Match() {
           padding: "4px",
         }}
       >
-        {page}
         <Box
           sx={{
             display: "flex",
