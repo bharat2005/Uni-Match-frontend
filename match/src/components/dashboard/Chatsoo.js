@@ -227,7 +227,7 @@ export default function ChatInterface() {
               <ListItem
                 onClick={() => {
                   //handleNotiClick("12413326");
-                  setSelectedProfile(profile);
+                  setSelectedProfile(chat);
                   navigate(`/app/${chat.reg_no}`);
                 }}
                 key={index}
@@ -246,7 +246,7 @@ export default function ChatInterface() {
                     onClick={(e) => {
                       e.stopPropagation();
                       e.preventDefault();
-                      setSelectedProfile(profile);
+                      setSelectedProfile(chat);
                       navigate("/app/chats/info");
                     }}
                     src={chat.images[0]}
