@@ -1,48 +1,14 @@
 "use client";
 import React, { useState, useEffect, useRef } from "react";
+import { db } from './firebase';
+import { collection, addDoc, serverTimestamp, getDocs, orderBy, query, onSnapshot } from "firebase/firestore";
 import { Box, Typography, TextField, IconButton, Avatar } from "@mui/material";
 import { useNavigate } from "react-router-dom";
-const ChatComponent = ({ setChatt }) => {
+const ChatComponent = ({ match_id="chats_12413922_12413923", reg_no="12413922", target_reg_no="12413923"  }) => {
   const [messageText, setMessageText] = useState("");
   const navigate = useNavigate();
-  const [messages, setMessages] = useState([
-    { id: 1, text: "Hello？", sender: "other" },
-    { id: 2, text: "Are you there?", sender: "other" },
-    { id: 3, text: "Hey!!!", sender: "other" },
-    { id: 4, text: "Bolo?", sender: "me" },
-    { id: 5, text: "Mujhe kaam hai", sender: "me" },
-    { id: 6, text: "Pleaseee", sender: "other" },
-    { id: 7, text: "I wanna talk with you right now!", sender: "other" },
-    { id: 8, text: "Thinki hsu", sender: "me" },
-    { id: 9, text: "Jaldi bolo", sender: "me" },
-    { id: 1, text: "Hello？", sender: "other" },
-    { id: 2, text: "Are you there?", sender: "other" },
-    { id: 3, text: "Hey!!!", sender: "other" },
-    { id: 4, text: "Bolo?", sender: "me" },
-    { id: 5, text: "Mujhe kaam hai", sender: "me" },
-    { id: 6, text: "Pleaseee", sender: "other" },
-    { id: 7, text: "I wanna talk with you right now!", sender: "other" },
-    { id: 8, text: "Thinki hsu", sender: "me" },
-    { id: 9, text: "Jaldi bolo", sender: "me" },
-    { id: 1, text: "Hello？", sender: "other" },
-    { id: 2, text: "Are you there?", sender: "other" },
-    { id: 3, text: "Hey!!!", sender: "other" },
-    { id: 4, text: "Bolo?", sender: "me" },
-    { id: 5, text: "Mujhe kaam hai", sender: "me" },
-    { id: 6, text: "Pleaseee", sender: "other" },
-    { id: 7, text: "I wanna talk with you right now!", sender: "other" },
-    { id: 8, text: "Thinki hsu", sender: "me" },
-    { id: 9, text: "Jaldi bolo", sender: "me" },
-    { id: 1, text: "Hello？", sender: "other" },
-    { id: 2, text: "Are you there?", sender: "other" },
-    { id: 3, text: "Hey!!!", sender: "other" },
-    { id: 4, text: "Bolo?", sender: "me" },
-    { id: 5, text: "Mujhe kaam hai", sender: "me" },
-    { id: 6, text: "Pleaseee", sender: "other" },
-    { id: 7, text: "I wanna talk with you right now!", sender: "other" },
-    { id: 8, text: "Thinki hsu", sender: "me" },
-    { id: 9, text: "Jaldi bolo", sender: "me" },
-  ]);
+  const [message, setMessage] = useState("");
+  const [textMessages, setTextMessages] = useState([]);
 
   const messagesEndRef = useRef(null);
   const messageInputRef = useRef(null);
@@ -52,24 +18,62 @@ const ChatComponent = ({ setChatt }) => {
     setTimeout(() => {
       messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
     }, 10);
-  }, [messages]);
+  }, [textMessages]);
 
-  const sendMessage = (e) => {
-    e.preventDefault(); // Prevent default action
 
-    if (messageText.trim()) {
-      setMessages((prev) => [
-        ...prev,
-        { id: Date.now(), text: messageText, sender: "me" },
-      ]);
-      setMessageText("");
+      useEffect(() => {
+  
+      const unsubscribe = onSnapshot(query(collection(db, "chats", match_id, "messages"), orderBy("timestamp")),
+      (response)=> {
+          setTextMessages(response.docs.map(doc => doc.data()))
+      },
+      (error)=> {
+          console.error("Error", error)
+      })
+  
+      return unsubscribe
+  
+      }, []);
 
-      // Delay the focus to avoid input flickering
-      setTimeout(() => {
-        messageInputRef.current?.focus();
-      }, 10);
-    }
-  };
+  // const sendMessage = (e) => {
+  //   e.preventDefault(); // Prevent default action
+
+  //   if (messageText.trim()) {
+  //     setMessages((prev) => [
+  //       ...prev,
+  //       { id: Date.now(), text: messageText, sender: "me" },
+  //     ]);
+  //     setMessageText("");
+
+  //     // Delay the focus to avoid input flickering
+  //     setTimeout(() => {
+  //       messageInputRef.current?.focus();
+  //     }, 10);
+  //   }
+  // };
+
+
+      function handleSend() {
+        if (!message.trim()) return;
+
+        const tempMessage = message
+        setMessage("")
+  
+          addDoc(collection(db, "chats", match_id, "messages"), {
+              sender_reg_no: reg_no,
+              receiver_reg_no : target_reg_no,
+              text: tempMessage,
+              timestamp: serverTimestamp(),
+          })
+              .then((docRef) => {
+                  console.log("Message sent successfully!", docRef.id);
+              })
+              .catch((error) => {
+                  console.error("Error sending message:", error);
+              })
+              .finally(() => {
+              });
+      }
 
   return (
     <Box
@@ -135,16 +139,16 @@ const ChatComponent = ({ setChatt }) => {
           scrollbarWidth: "none",
         }}
       >
-        {messages.map((msg) => (
+        {textMessages.map((msg, index) => (
           <Box
-            key={msg.id}
+            key={index}
             sx={{
               display: "flex",
-              justifyContent: msg.sender === "me" ? "flex-end" : "flex-start",
+              justifyContent: msg.sender_reg_no === reg_no ? "flex-end" : "flex-start",
               gap: "10px",
             }}
           >
-            {msg.sender !== "me" && (
+            {msg.sender_reg_no !== reg_no && (
               <Avatar
                 src="5.jpg"
                 alt="Avatar"
@@ -161,16 +165,16 @@ const ChatComponent = ({ setChatt }) => {
                 fontSize: "16px",
                 lineHeight: "1.4",
                 maxWidth: "70%",
-                backgroundColor: msg.sender === "me" ? "#FE6BA2" : "#FFFFFF",
-                color: msg.sender === "me" ? "#FFFFFF" : "#111",
+                backgroundColor: msg.sender_reg_no === reg_no ? "#FE6BA2" : "#FFFFFF",
+                color: msg.sender_reg_no === reg_no ? "#FFFFFF" : "#111",
                 boxShadow: "0 2px 4px rgba(0,0,0,0.1)",
-                border: msg.sender !== "me" ? "1px solid #eee" : "none",
+                border: msg.sender_reg_no !== reg_no ? "1px solid #eee" : "none",
                 wordBreak: "break-word",
               }}
             >
               {msg.text}
             </Box>
-            {msg.sender === "me" && (
+            {msg.sender_reg_no === reg_no && (
               <Avatar
                 src="/4.avif"
                 alt="Avatar"
@@ -206,13 +210,14 @@ const ChatComponent = ({ setChatt }) => {
 
         {/* TextField */}
         <TextField
-          value={messageText}
+          value={message}
           autoComplete="off"
           inputRef={messageInputRef}
-          onChange={(e) => setMessageText(e.target.value)}
+          onChange={(e) => setMessage(e.target.value)}
           onKeyDown={(e) => {
-            if (e.key === "Enter") sendMessage();
-          }}
+            if (e.key === "Enter" && message.trim()) handleSend();
+        }}
+        
           placeholder="Message"
           variant="outlined"
           size="small"
@@ -245,7 +250,7 @@ const ChatComponent = ({ setChatt }) => {
 
         {/* Send Icon */}
         <IconButton
-          onClick={sendMessage}
+          onClick={handleSend}
           sx={{
             color: "#FE6BA2",
           }}

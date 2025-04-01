@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../../AuthProvider";
 import axios from "axios";
@@ -39,170 +39,65 @@ const profile = {
   ],
 };
 
-const chatData = [
-  {
-    name: "Bharat",
-    message: "hi",
-    id: 0,
-    count: 8,
-    time: "16:04",
-    image: "/4.jpg",
-  },
-  {
-    name: "Bharat",
-    message: "hi",
-    id: 1,
-    count: 8,
-    time: "16:04",
-    image: "/5.jpg",
-  },
-  {
-    name: "Bharat",
-    message: "hi",
-    id: 2,
-    count: 8,
-    time: "16:04",
-    image: "/6.jpg",
-  },
-  {
-    name: "Bharat",
-    message: "hi",
-    id: 3,
-    count: 8,
-    time: "16:04",
-    image: "/7.jpg",
-  },
-  {
-    name: "Bharat",
-    message: "hi",
-    id: 0,
-    count: 8,
-    time: "16:04",
-    image: "/4.jpg",
-  },
-  {
-    name: "Bharat",
-    message: "hi",
-    id: 1,
-    count: 8,
-    time: "16:04",
-    image: "/5.jpg",
-  },
-  {
-    name: "Bharat",
-    message: "hi",
-    id: 2,
-    count: 8,
-    time: "16:04",
-    image: "/6.jpg",
-  },
-  {
-    name: "Bharat",
-    message: "hi",
-    id: 3,
-    count: 8,
-    time: "16:04",
-    image: "/7.jpg",
-  },
-
-  {
-    name: "Bharat",
-    message: "hi",
-    id: 0,
-    count: 8,
-    time: "16:04",
-    image: "/4.jpg",
-  },
-  {
-    name: "Bharat",
-    message: "hi",
-    id: 1,
-    count: 8,
-    time: "16:04",
-    image: "/5.jpg",
-  },
-  {
-    name: "Bharat",
-    message: "hi",
-    id: 2,
-    count: 8,
-    time: "16:04",
-    image: "/6.jpg",
-  },
-  {
-    name: "Bharat",
-    message: "hi",
-    id: 3,
-    count: 8,
-    time: "16:04",
-    image: "/7.jpg",
-  },
-];
 export default function ChatInterface() {
   const navigate = useNavigate();
   const { setMatchesNoti } = useAuth();
-  const [imageClick, setImageClick] = useState(false);
-  const [currentImageIndex, setCurrentImageIndex] = useState(0);
-  const [imageLoaded, setImageLoaded] = useState(false);
-  const list = profile.images.filter((item) => item != null);
+  const [matchList, setMatchList] = useState([])
 
-  //  useEffect(() => {
-  //     axios
-  //       .get("https://api.uni-match.in/matches", {
-  //         withCredentials: true,
-  //         headers: { "X-CSRF-TOKEN": localStorage.getItem("csrfTokenAccess") },
-  //       })
-  //       .then((response) => {
-  //         console.log(response.data);
-  //         setMatchList(response.data.matches);
-  //         setNotifications(response.data.notifications);
-  //       })
-  //       .catch((error) => {
-  //         console.error("Error: ", error);
+   useEffect(() => {
+      axios
+        .get("https://api.uni-match.in/matches", {
+          withCredentials: true,
+          headers: { "X-CSRF-TOKEN": localStorage.getItem("csrfTokenAccess") },
+        })
+        .then((response) => {
+          console.log(response.data);
+          setMatchList(response.data.matches);
+          // setNotifications(response.data.notifications);
+        })
+        .catch((error) => {
+          console.error("Error: ", error);
 
-  //         if (error.response?.status === 401) {
-  //           axios
-  //             .post(
-  //               "https://api.uni-match.in/refresh",
-  //               {},
-  //               {
-  //                 withCredentials: true,
-  //                 headers: {
-  //                   "X-CSRF-TOKEN": localStorage.getItem("csrfTokenRefresh"),
-  //                 },
-  //               },
-  //             )
+          if (error.response?.status === 401) {
+            axios
+              .post(
+                "https://api.uni-match.in/refresh",
+                {},
+                {
+                  withCredentials: true,
+                  headers: {
+                    "X-CSRF-TOKEN": localStorage.getItem("csrfTokenRefresh"),
+                  },
+                },
+              )
 
-  //             .then((refreshResponse) => {
-  //               const csrfToken = refreshResponse.headers["x-csrf-token"];
-  //               localStorage.setItem("csrfToken", csrfToken);
+              .then((refreshResponse) => {
+                const csrfToken = refreshResponse.headers["x-csrf-token"];
+                localStorage.setItem("csrfToken", csrfToken);
 
-  //               axios
-  //                 .get("https://api.uni-match.in/matches", {
-  //                   withCredentials: true,
-  //                   headers: {
-  //                     "X-CSRF-TOKEN": localStorage.getItem("csrfTokenAccess"),
-  //                   },
-  //                 })
-  //                 .then((response) => {
-  //                   console.log("Protected Data (After Refresh):", response.data);
-  //                   setMatchList(response.data.matches);
-  //                   setNotifications(response.data.notifications);
-  //                 })
-  //                 .catch((retryError) =>
-  //                   console.error("Failed after refresh:", retryError),
-  //                 );
-  //             })
-  //             .catch(() =>
-  //               console.error("Session expired, please log in again."),
-  //             );
-  //         }
-  //       });
-  //   }, [selectedMatch]);
+                axios
+                  .get("https://api.uni-match.in/matches", {
+                    withCredentials: true,
+                    headers: {
+                      "X-CSRF-TOKEN": localStorage.getItem("csrfTokenAccess"),
+                    },
+                  })
+                  .then((response) => {
+                    console.log("Protected Data (After Refresh):", response.data);
+                    setMatchList(response.data.matches);
+                    // setNotifications(response.data.notifications);
+                  })
+                  .catch((retryError) =>
+                    console.error("Failed after refresh:", retryError),
+                  );
+              })
+              .catch(() =>
+                console.error("Session expired, please log in again."),
+              );
+          }
+        });
+    }, []);
 
-  // const handleTabChange = (event, newValue) => {
-  //   setValue(newValue);
-  // };
 
   function handleNotiClick(sender_reg_no) {
     axios
@@ -223,21 +118,21 @@ export default function ChatInterface() {
       });
   }
 
-  // function handleDeleteMatch(e, data) {
-  //   e.stopPropagation();
-  //   axios
-  //     .post("https://api.uni-match.in/matchdel", data, {
-  //       withCredentials: true,
-  //       headers: { "X-CSRF-TOKEN": localStorage.getItem("csrfToken") },
-  //     })
-  //     .then((response) => {
-  //       setMatchList(response.data.matches);
-  //       setMatchesNoti(response.data.MatchesNoti);
-  //     })
-  //     .catch((error) => {
-  //       console.error("Error :", error);
-  //     });
-  // }
+  function handleDeleteMatch(e, data) {
+    e.stopPropagation();
+    axios
+      .post("https://api.uni-match.in/matchdel", data, {
+        withCredentials: true,
+        headers: { "X-CSRF-TOKEN": localStorage.getItem("csrfToken") },
+      })
+      .then((response) => {
+        setMatchList(response.data.matches);
+        setMatchesNoti(response.data.MatchesNoti);
+      })
+      .catch((error) => {
+        console.error("Error :", error);
+      });
+  }
 
   // function handleClick(sender_reg_no) {
   //   handleNotiClick(sender_reg_no);
@@ -256,21 +151,6 @@ export default function ChatInterface() {
   //     .catch((error) => {
   //       console.error("Error: ", error);
   //     });
-  // }
-
-  // let filteredList;
-  // if (matchList) {
-  //   filteredList = matchList;
-  // }
-
-  // if (selectedMatch) {
-  //   return (
-  //     <Chat
-  //       match={selectedMatch}
-  //       profile={profile}
-  //       onBack={() => setSelectedMatch(null)}
-  //     />
-  //   );
   // }
 
   return (
@@ -334,11 +214,11 @@ export default function ChatInterface() {
               },
             }}
           >
-            {chatData.map((chat, index) => (
+            {matchList.map((chat, index) => (
               <ListItem
                 onClick={() => {
-                  handleNotiClick("12413326");
-                  navigate(`/app/${chat.id}`);
+                  //handleNotiClick("12413326");
+                  navigate(`/app/${chat.reg_no}`);
                 }}
                 key={index}
                 sx={{
@@ -358,7 +238,7 @@ export default function ChatInterface() {
                       e.preventDefault();
                       navigate("/app/chats/info");
                     }}
-                    src={chat.image}
+                    src={chat.images[0]}
                     alt={`${chat.name}'s profile`}
                     sx={{
                       width: {
@@ -389,22 +269,22 @@ export default function ChatInterface() {
                       {chat.name}
                     </Typography>
                   }
-                  secondary={
-                    <Typography
-                      sx={{
-                        fontSize: {
-                          xs: "15px",
-                          sm: "16px",
-                        },
-                        color: "#6b7280",
-                        margin: 0,
-                      }}
-                    >
-                      {chat.message}
-                    </Typography>
-                  }
+                  // secondary={
+                  //   <Typography
+                  //     sx={{
+                  //       fontSize: {
+                  //         xs: "15px",
+                  //         sm: "16px",
+                  //       },
+                  //       color: "#6b7280",
+                  //       margin: 0,
+                  //     }}
+                  //   >
+                  //     {chat.message}
+                  //   </Typography>
+                  // }
                 />
-                {chat.count > 0 && (
+                {/* {chat.count > 0 && (
                   <Badge
                     badgeContent={chat.count}
                     sx={{
@@ -430,8 +310,8 @@ export default function ChatInterface() {
                       },
                     }}
                   />
-                )}
-                <Typography
+                )} */}
+                {/* <Typography
                   component="time"
                   sx={{
                     color: "#9ca3af",
@@ -445,7 +325,7 @@ export default function ChatInterface() {
                   }}
                 >
                   {chat.time}
-                </Typography>
+                </Typography> */}
               </ListItem>
             ))}
             <Box
