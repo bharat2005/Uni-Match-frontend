@@ -1,10 +1,13 @@
 "use client";
 import React, { useState, useEffect, useRef } from "react";
+import { useAuth } from "../../AuthProvider";
 import { db } from './firebase';
 import { collection, addDoc, serverTimestamp, getDocs, orderBy, query, onSnapshot } from "firebase/firestore";
 import { Box, Typography, TextField, IconButton, Avatar } from "@mui/material";
-import { useNavigate } from "react-router-dom";
+import { useNavigate,useOutletContext  } from "react-router-dom";
 const ChatComponent = ({ match_id="chats_12413922_12413923", reg_no="12413922", target_reg_no="12413923"  }) => {
+  const { profile } = useOutletContext();
+  const { selfprofile } = useAuth();
   const [messageText, setMessageText] = useState("");
   const navigate = useNavigate();
   const [message, setMessage] = useState("");
@@ -121,7 +124,7 @@ const ChatComponent = ({ match_id="chats_12413922_12413923", reg_no="12413922", 
             color: "#212121",
           }}
         >
-          Bharat
+          {profile.name}
         </Typography>
       </Box>
 
@@ -150,7 +153,7 @@ const ChatComponent = ({ match_id="chats_12413922_12413923", reg_no="12413922", 
           >
             {msg.sender_reg_no !== reg_no && (
               <Avatar
-                src="5.jpg"
+                src={profile.images[0]}
                 alt="Avatar"
                 sx={{
                   width: "40px",
@@ -176,7 +179,7 @@ const ChatComponent = ({ match_id="chats_12413922_12413923", reg_no="12413922", 
             </Box>
             {msg.sender_reg_no === reg_no && (
               <Avatar
-                src="/4.avif"
+                src={selfprofile.images[0]}
                 alt="Avatar"
                 sx={{
                   width: "40px",

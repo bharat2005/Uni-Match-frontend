@@ -8,6 +8,7 @@ import {
   Badge,
   List,
   ListItem,
+  Skeleton,
   ListItemAvatar,
   ListItemText,
   Typography,
@@ -43,8 +44,11 @@ export default function ChatInterface() {
   const navigate = useNavigate();
   const { setMatchesNoti } = useAuth();
   const [matchList, setMatchList] = useState([])
+  const [profile, setSelectedProfile] = useState({});
+  const [loading, setLoading] = useState(true)
 
    useEffect(() => {
+    setLoading(true)
       axios
         .get("https://api.uni-match.in/matches", {
           withCredentials: true,
@@ -95,7 +99,10 @@ export default function ChatInterface() {
                 console.error("Session expired, please log in again."),
               );
           }
-        });
+        })
+        .finally(()=> {
+          setLoading(false)
+        })
     }, []);
 
 
@@ -155,7 +162,7 @@ export default function ChatInterface() {
 
   return (
     <>
-      <Outlet />
+      <Outlet context={{ profile }} />
 
       <Container
         component="main"
@@ -214,10 +221,13 @@ export default function ChatInterface() {
               },
             }}
           >
-            {matchList.map((chat, index) => (
+            { !loading ? (
+             matchList.length ? (
+            matchList.map((chat, index) => (
               <ListItem
                 onClick={() => {
                   //handleNotiClick("12413326");
+                  setSelectedProfile(profile);
                   navigate(`/app/${chat.reg_no}`);
                 }}
                 key={index}
@@ -236,6 +246,7 @@ export default function ChatInterface() {
                     onClick={(e) => {
                       e.stopPropagation();
                       e.preventDefault();
+                      setSelectedProfile(profile);
                       navigate("/app/chats/info");
                     }}
                     src={chat.images[0]}
@@ -327,7 +338,48 @@ export default function ChatInterface() {
                   {chat.time}
                 </Typography> */}
               </ListItem>
-            ))}
+            ))
+            ):(
+            <Box
+                sx={{
+                                  display: "flex",
+                                  flexDirection: "column",
+                                  alignItems: "center",
+                                  position: "absolute",
+                                  top: "50%",
+                                  left: "50%",
+                                  transform: "translate(-50%, -50%)", // Lighter look for placeholders
+                                }}
+                              >
+                                <img src={"/empty-box.png"} style={{ width: "110px" }} />
+                                <Box
+                                  sx={{
+                                    fontSize: "18px",
+                                    color: "#888", // Typical gray placeholder color
+                                  }}
+                                >
+                                  No chats yet!
+                                </Box>
+            </Box>
+            )
+          ):(
+            Array.from(new Array(10)).map((_, index) => ( // Generates 5 skeletons
+              <ListItem key={index} sx={{ padding: { xs: "10px", sm: "13px" }, display: "flex", alignItems: "center" }}>
+                {/* Avatar Skeleton */}
+                <ListItemAvatar>
+                  <Skeleton variant="circular" width={55} height={55} />
+                </ListItemAvatar>
+      
+                {/* Text Skeletons */}
+                <ListItemText
+                  primary={<Skeleton variant="text" width="40%" height={24} />}
+                  secondary={<Skeleton variant="text" width="60%" height={16} />}
+                />
+              </ListItem>
+            ))
+          )}
+
+            
             <Box
               sx={{
                 height: "40px", // Same as or slightly more than the navbar height
