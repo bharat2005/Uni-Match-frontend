@@ -213,14 +213,6 @@ export default function ChatInterface() {
     return () => unsubscribers.forEach((unsub) => unsub());
   }, []);
   
-  useEffect(() => {
-    const handleResize = () => {
-      document.body.style.overflow = window.visualViewport.height < window.innerHeight ? "hidden" : "auto";
-    };
-  
-    window.visualViewport.addEventListener("resize", handleResize);
-    return () => window.visualViewport.removeEventListener("resize", handleResize);
-  }, []);
   
 
   function handleNotiClick(sender_reg_no) {
@@ -303,8 +295,6 @@ export default function ChatInterface() {
       <Container
         component="main"
         sx={{
-          height: "100dvh", // Fix for keyboard issue
-          overflow: "hidden", 
           background:
             "linear-gradient(180deg, rgba(245, 245, 245, 0) 0%, #F5F5F5 26%)",
           padding: {

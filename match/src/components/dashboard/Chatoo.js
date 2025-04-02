@@ -60,11 +60,10 @@ const ChatComponent = () => {
     };
 
     window.visualViewport.addEventListener("resize", handleResize);
-    handleResize(); // Set initial height
+    handleResize();
 
     return () => window.visualViewport.removeEventListener("resize", handleResize);
   }, []);
-  
 
 
       function handleSend() {
@@ -99,26 +98,28 @@ const ChatComponent = () => {
         sx={{
           display: "flex",
           flexDirection: "column",
-          height: `${appHeight}px`, // Dynamically update height
+          height: "100dvh",
           backgroundColor: "#fff",
           fontFamily: '"Inter", sans-serif',
+          overflow: "hidden",
         }}
       >
-      {/* HEADER */}
-      <Box
-        sx={{
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
-          padding: "28px 20px 12px 20px",
-          position: "sticky",
-          top: 0,
-          backgroundColor: "#FFFFFF",
-          zIndex: 10,
-          borderBottom: "1px solid #E0E0E0",
-          boxShadow: "0 1px 4px rgba(0,0,0,0.05)",
-        }}
-      >
+        {/* HEADER */}
+        <Box
+          sx={{
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            padding: "28px 20px 12px 20px",
+            position: "absolute",
+            top: 0,
+            left: 0,
+            right: 0,
+            backgroundColor: "#FFFFFF",
+            zIndex: 10,
+            borderBottom: "1px solid #E0E0E0",
+          }}
+        >
         <IconButton
           sx={{
             padding: "5px",
