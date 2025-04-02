@@ -178,8 +178,8 @@ export default function ChatInterface() {
   //       console.error("Error: ", error);
   //     });
   // }
-  console.log("new--------------", selfprofile)
-  console.log("new--------------", profile)
+
+  console.log("list--------------", profile)
 
   return (
     <>
