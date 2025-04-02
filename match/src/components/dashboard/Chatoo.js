@@ -53,22 +53,6 @@ const ChatComponent = () => {
       }, [chatProfile.match_instance.match_id]);
 
 
-      useEffect(() => {
-        const handleResize = () => {
-          if (window.visualViewport.height < window.innerHeight) {
-            // Keyboard is open → Keep header visible
-            document.getElementById("header").style.display = "flex";
-          } else {
-            // Keyboard is closed → Restore original state
-            document.getElementById("header").style.display = "flex";
-          }
-        };
-      
-        window.visualViewport.addEventListener("resize", handleResize);
-        return () => window.visualViewport.removeEventListener("resize", handleResize);
-      }, []);
-      
-      
       function handleSend() {
         if (!message.trim()) return;
       
@@ -113,7 +97,7 @@ const ChatComponent = () => {
           alignItems: "center",
           justifyContent: "center",
           padding: "28px 20px 12px 20px",
-          position: "absolute",
+          position: "sticky",
           top: 0,
           backgroundColor: "#FFFFFF",
           zIndex: 10,
