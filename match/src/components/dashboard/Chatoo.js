@@ -41,11 +41,11 @@ const selfprofile = {
     "Art",
     "Juggling",
   ],
-  
+
 };
 const ChatComponent = ({ match_id="chats_12413922_12413923", reg_no="12413922", target_reg_no="12413923"  }) => {
-  // const { profile } = useOutletContext();
-  // const { selfprofile } = useAuth();
+  //const { profile } = useOutletContext();
+  const { selfprofile } = useAuth();
   const [messageText, setMessageText] = useState("");
   const navigate = useNavigate();
   const [message, setMessage] = useState("");
@@ -54,7 +54,7 @@ const ChatComponent = ({ match_id="chats_12413922_12413923", reg_no="12413922", 
   const messagesEndRef = useRef(null);
   const messageInputRef = useRef(null);
   
-  console.log("profiel", profile, "selfProfile", selfprofile)
+  console.log("profiel", "profile", "selfProfile", selfprofile)
 
   // Auto-scroll to latest message
   useEffect(() => {
