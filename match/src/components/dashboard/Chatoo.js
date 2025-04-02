@@ -204,10 +204,6 @@ const ChatComponent = () => {
           zIndex: 10,
         }}
       >
-        {/* Emoji Icon */}
-        <IconButton sx={{ padding: "5px", color: "black" }}>
-          <i className="ti ti-mood-smile" style={{ fontSize: "28px" }} />
-        </IconButton>
 
         {/* TextField */}
         <TextField

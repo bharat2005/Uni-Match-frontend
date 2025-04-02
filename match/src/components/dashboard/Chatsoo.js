@@ -251,31 +251,10 @@ export default function ChatInterface() {
     }, 800); // Trigger after 800ms hold
   };
 
-  // Function to clear long press if released early
   const endPress = () => {
     clearTimeout(pressTimer.current);
     setIsPressed(false);
   };
- 
-
-  // function handleClick(sender_reg_no) {
-  //   handleNotiClick(sender_reg_no);
-  //   axios
-  //     .post(
-  //       "https://api.uni-match.in/seen",
-  //       { sender_reg_no },
-  //       {
-  //         withCredentials: true,
-  //         headers: { "X-CSRF-TOKEN": localStorage.getItem("csrfTokenAccess") },
-  //       },
-  //     )
-  //     .then((responce) => {
-  //       console.log(responce.data.message);
-  //     })
-  //     .catch((error) => {
-  //       console.error("Error: ", error);
-  //     });
-  // }
 
 
   return (
@@ -346,7 +325,7 @@ export default function ChatInterface() {
               onTouchStart={startPress} // Mobile
               onTouchEnd={endPress}
                 onClick={() => {
-                  //handleNotiClick("12413326");
+                  handleNotiClick(chat.match_user_data.reg_no);
                   setChatProfile(chat);
                   //setSelectedProfile(chat)
                   navigate(`/app/${chat.match_user_data.reg_no}`)
