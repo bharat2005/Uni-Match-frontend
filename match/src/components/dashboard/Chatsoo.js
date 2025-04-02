@@ -52,8 +52,8 @@ export default function ChatInterface() {
   const [profile, setSelectedProfile] = useState({});
   const [loading, setLoading] = useState(true)
   const pressTimer = useRef(null);
-  const [unseenCounts, setUnseenCounts] = useState({})
-
+  const [unseenCounts, setUnseenCounts] = useState({});
+  const [lastMessages, setLastMessages] = useState({})
 
   useEffect(() => {
     setLoading(true);
@@ -68,10 +68,12 @@ export default function ChatInterface() {
         console.log(response.data);
         setMatchList(response.data.matches);
   
-        // Setup Firestore listeners for unseen messages
+        // 🛠 Setup Firestore listeners for unseen messages + last message
         unsubscribers = response.data.matches.map((chat) => {
           const match_id = chat.match_instance.match_id;
-          return onSnapshot(
+  
+          // 🟢 Unseen Messages Listener
+          const unseenListener = onSnapshot(
             query(
               collection(db, "chats", match_id, "messages"),
               where("status", "==", "unseen"),
@@ -84,6 +86,32 @@ export default function ChatInterface() {
               }));
             }
           );
+  
+          // 🟠 Last Message Listener
+          const lastMessageListener = onSnapshot(
+            query(
+              collection(db, "chats", match_id, "messages"),
+              orderBy("timestamp", "desc"), // Latest message first
+              limit(1) // Fetch only the latest message
+            ),
+            (snapshot) => {
+              if (!snapshot.empty) {
+                const lastMessage = snapshot.docs[0].data();
+                setLastMessages((prev) => ({
+                  ...prev,
+                  [match_id]: {
+                    text: lastMessage.text,
+                    time: lastMessage.timestamp,
+                  },
+                }));
+              }
+            }
+          );
+  
+          return () => {
+            unseenListener();
+            lastMessageListener();
+          };
         });
       })
       .catch((error) => {
@@ -115,11 +143,14 @@ export default function ChatInterface() {
                 .then((response) => {
                   console.log("Protected Data (After Refresh):", response.data);
                   setMatchList(response.data.matches);
-                  // 🔴 PROBLEM: Not setting up Firestore listeners again! (Fix below)
-                  unsubscribers.forEach((unsub) => unsub()); // Remove old listeners
+  
+                  // 🔴 Remove old listeners before adding new ones
+                  unsubscribers.forEach((unsub) => unsub());
                   unsubscribers = response.data.matches.map((chat) => {
                     const match_id = chat.match_instance.match_id;
-                    return onSnapshot(
+  
+                    // 🟢 Unseen Messages Listener
+                    const unseenListener = onSnapshot(
                       query(
                         collection(db, "chats", match_id, "messages"),
                         where("status", "==", "unseen"),
@@ -132,6 +163,32 @@ export default function ChatInterface() {
                         }));
                       }
                     );
+  
+                    // 🟠 Last Message Listener
+                    const lastMessageListener = onSnapshot(
+                      query(
+                        collection(db, "chats", match_id, "messages"),
+                        orderBy("timestamp", "desc"), 
+                        limit(1)
+                      ),
+                      (snapshot) => {
+                        if (!snapshot.empty) {
+                          const lastMessage = snapshot.docs[0].data();
+                          setLastMessages((prev) => ({
+                            ...prev,
+                            [match_id]: {
+                              text: lastMessage.text,
+                              time: lastMessage.timestamp,
+                            },
+                          }));
+                        }
+                      }
+                    );
+  
+                    return () => {
+                      unseenListener();
+                      lastMessageListener();
+                    };
                   });
                 })
                 .catch((retryError) =>
@@ -145,7 +202,7 @@ export default function ChatInterface() {
         setLoading(false);
       });
   
-    // Cleanup function (outside axios call)
+    // Cleanup function to remove Firestore listeners
     return () => unsubscribers.forEach((unsub) => unsub());
   }, []);
   
@@ -355,7 +412,7 @@ export default function ChatInterface() {
                         margin: 0,
                       }}
                     >
-                      love you so muchhhh
+                      {lastMessages[chat.match_instance.match_id].text}
                     </Typography>
                   }
                 />
@@ -399,7 +456,7 @@ export default function ChatInterface() {
                     top: "15px",
                   }}
                 >
-                  12:00 pm
+                  {lastMessages[chat.match_instance.match_id].time}
                 </Typography>
               </ListItem>
             ))
