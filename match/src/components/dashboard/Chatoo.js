@@ -4,10 +4,48 @@ import { useAuth } from "../../AuthProvider";
 import { db } from './firebase';
 import { collection, addDoc, serverTimestamp, getDocs, orderBy, query, onSnapshot } from "firebase/firestore";
 import { Box, Typography, TextField, IconButton, Avatar } from "@mui/material";
-import { useNavigate,useOutletContext  } from "react-router-dom";
+import { useNavigate, useOutletContext  } from "react-router-dom";
+
+
+const profile = {
+  reg_no: "12413928",
+  reason: "Long-term relationship",
+  age: 20,
+  name: "Jisoo",
+  personality: "extrovert",
+  images: ["/2.jpg", "/3.jpg", "/1.jpg", null, null],
+  bio: "Im the solo developer of this whole Uni-Match platform...😎",
+  interests: [
+    "Gardening",
+    "Paragliding",
+    "Puzzles",
+    "Juggling",
+    "Art",
+    "Juggling",
+  ],
+};
+
+const selfprofile = {
+  reg_no: "12413928",
+  reason: "Long-term relationship",
+  age: 20,
+  name: "Jisoo",
+  personality: "extrovert",
+  images: ["/2.jpg", "/3.jpg", "/1.jpg", null, null],
+  bio: "Im the solo developer of this whole Uni-Match platform...😎",
+  interests: [
+    "Gardening",
+    "Paragliding",
+    "Puzzles",
+    "Juggling",
+    "Art",
+    "Juggling",
+  ],
+  
+};
 const ChatComponent = ({ match_id="chats_12413922_12413923", reg_no="12413922", target_reg_no="12413923"  }) => {
-  const { profile } = useOutletContext();
-  const { selfprofile } = useAuth();
+  // const { profile } = useOutletContext();
+  // const { selfprofile } = useAuth();
   const [messageText, setMessageText] = useState("");
   const navigate = useNavigate();
   const [message, setMessage] = useState("");
@@ -15,6 +53,8 @@ const ChatComponent = ({ match_id="chats_12413922_12413923", reg_no="12413922", 
 
   const messagesEndRef = useRef(null);
   const messageInputRef = useRef(null);
+  
+  console.log("profiel", profile, "selfProfile", selfprofile)
 
   // Auto-scroll to latest message
   useEffect(() => {

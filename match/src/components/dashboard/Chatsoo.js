@@ -1,5 +1,5 @@
 "use client";
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../../AuthProvider";
 import axios from "axios";
@@ -22,7 +22,7 @@ import Drawer2 from "./Drawer2";
 import SmallLoading from "../login/SmallLoading";
 import { Outlet } from "react-router-dom";
 
-const profile = {
+const profileX = {
   reg_no: "12413928",
   reason: "Long-term relationship",
   age: 20,
@@ -41,11 +41,14 @@ const profile = {
 };
 
 export default function ChatInterface() {
+  const { selfprofile } = useAuth();
   const navigate = useNavigate();
+  const [isPressed, setIsPressed] = useState(false);
   const { setMatchesNoti } = useAuth();
-  const [matchList, setMatchList] = useState([])
+  const [matchList, setMatchList] = useState([profileX])
   const [profile, setSelectedProfile] = useState({});
   const [loading, setLoading] = useState(true)
+  const pressTimer = useRef(null);
 
    useEffect(() => {
     setLoading(true)
@@ -141,6 +144,22 @@ export default function ChatInterface() {
       });
   }
 
+  const startPress = () => {
+    setIsPressed(true); // Change color
+    pressTimer.current = setTimeout(() => {
+      if ("vibrate" in navigator) {
+        navigator.vibrate(200); // Vibrate for 200ms
+      }
+    }, 800); // Trigger after 800ms hold
+  };
+
+  // Function to clear long press if released early
+  const endPress = () => {
+    clearTimeout(pressTimer.current);
+    setIsPressed(false);
+  };
+
+
   // function handleClick(sender_reg_no) {
   //   handleNotiClick(sender_reg_no);
   //   axios
@@ -159,6 +178,8 @@ export default function ChatInterface() {
   //       console.error("Error: ", error);
   //     });
   // }
+  console.log("new--------------", selfprofile)
+  console.log("new--------------", profile)
 
   return (
     <>
@@ -225,10 +246,12 @@ export default function ChatInterface() {
              matchList.length ? (
             matchList.map((chat, index) => (
               <ListItem
+              onTouchStart={startPress} // Mobile
+              onTouchEnd={endPress}
                 onClick={() => {
                   //handleNotiClick("12413326");
                   setSelectedProfile(chat);
-                  navigate(`/app/${chat.reg_no}`);
+                  //navigate(`/app/${chat.reg_no}`);
                 }}
                 key={index}
                 sx={{
