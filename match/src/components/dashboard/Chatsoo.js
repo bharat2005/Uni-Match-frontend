@@ -75,7 +75,7 @@ export default function ChatInterface() {
             query(
               collection(db, "chats", match_id, "messages"),
               where("status", "==", "unseen"),
-              where("sender_reg_no", "!=", selfprofile.reg_no)
+              where("receiver_reg_no", "==", selfprofile.reg_no)
             ),
             (snapshot) => {
               setUnseenCounts((prev) => ({
