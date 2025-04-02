@@ -54,17 +54,23 @@ const ChatComponent = () => {
       }, [chatProfile.match_instance.match_id]);
 
 
-  useEffect(() => {
-    const handleResize = () => {
-      setAppHeight(window.visualViewport.height);
-    };
-
-    window.visualViewport.addEventListener("resize", handleResize);
-    handleResize();
-
-    return () => window.visualViewport.removeEventListener("resize", handleResize);
-  }, []);
-
+      useEffect(() => {
+        const handleResize = () => {
+          const viewportHeight = window.visualViewport.height;
+          
+          document.body.style.overflow = "hidden"; // Prevent scrolling
+          setAppHeight(viewportHeight);
+        };
+      
+        window.visualViewport.addEventListener("resize", handleResize);
+        handleResize();
+      
+        return () => {
+          window.visualViewport.removeEventListener("resize", handleResize);
+          document.body.style.overflow = ""; // Reset when unmounting
+        };
+      }, []);
+      
 
       function handleSend() {
         if (!message.trim()) return;
@@ -98,7 +104,7 @@ const ChatComponent = () => {
         sx={{
           display: "flex",
           flexDirection: "column",
-          height: "100dvh",
+          height: `${appHeight}px`,
           backgroundColor: "#fff",
           fontFamily: '"Inter", sans-serif',
           overflow: "hidden",
