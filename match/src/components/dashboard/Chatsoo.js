@@ -158,7 +158,7 @@ export default function ChatInterface() {
     clearTimeout(pressTimer.current);
     setIsPressed(false);
   };
-
+ 
 
   // function handleClick(sender_reg_no) {
   //   handleNotiClick(sender_reg_no);
@@ -183,7 +183,7 @@ export default function ChatInterface() {
 
   return (
     <>
-      <Outlet context={{ profile }} />
+      <Outlet context={{ profile: profileX}} />
 
       <Container
         component="main"
