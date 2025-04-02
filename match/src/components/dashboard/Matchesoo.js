@@ -239,16 +239,14 @@ const ProfileGrid = () => {
         console.log(response.data.message);
   
         setLikesList((prev) => [...response.data.likesYou]);
-  
-        const match_id =
-          selfprofile.reg_no < target_reg_no
-            ? `${selfprofile.reg_no}_${target_reg_no}`
-            : `${target_reg_no}_${selfprofile.reg_no}`;
+
+        const array = [Number(selfprofile.reg_no), Number(target_reg_no)].sort((a, b) => a - b);
+        const match_id = `${array[0]}_${array[1]}`
   
         // ✅ Return setDoc properly so it stays in the chain
         return setDoc(doc(db, "chats", match_id), {
-          user_1_reg_no: selfprofile.reg_no,
-          user_2_reg_no: target_reg_no,
+          user_1_reg_no: array[0],
+          user_2_reg_no: array[1],
           timestamp: serverTimestamp(),
         });
       })

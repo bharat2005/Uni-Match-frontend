@@ -44,11 +44,13 @@ export default function ChatInterface() {
   const navigate = useNavigate();
   const {setChatProfile} = useAuth();
   const [isPressed, setIsPressed] = useState(false);
+  const [matchIdList, setMatchIdList] = useState([])
   const { setMatchesNoti } = useAuth();
   const [matchList, setMatchList] = useState([profileX])
   const [profile, setSelectedProfile] = useState({});
   const [loading, setLoading] = useState(true)
   const pressTimer = useRef(null);
+
 
    useEffect(() => {
     setLoading(true)
@@ -60,6 +62,7 @@ export default function ChatInterface() {
         .then((response) => {
           console.log(response.data);
           setMatchList(response.data.matches);
+          setMatchIdList(response.data.matches_ids);
           // setNotifications(response.data.notifications);
         })
         .catch((error) => {
