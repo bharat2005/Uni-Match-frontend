@@ -186,11 +186,11 @@ const ChatComponent = () => {
           alignItems: "center",
           justifyContent: "center",
           padding: "28px 20px 12px 20px",
-          position: "fixed",
+          position: "absolute",
           top: 0,
           left:0,
           right:0,
-          
+
           backgroundColor: "#FFFFFF",
           zIndex: 10,
           borderBottom: "1px solid #E0E0E0",
