@@ -104,10 +104,8 @@ const ChatComponent = () => {
   const [textMessages, setTextMessages] = useState([...list]);
   const [appHeight, setAppHeight] = useState(window.innerHeight);
 
-
   const messagesEndRef = useRef(null);
   const messageInputRef = useRef(null);
-  
 
   useEffect(() => {
     setTimeout(() => {
@@ -115,28 +113,26 @@ const ChatComponent = () => {
     }, 10);
   }, [textMessages]);
 
-  // Dynamically adjust height when keyboard opens/closes
   useEffect(() => {
     const handleResize = () => {
       setAppHeight(window.visualViewport.height);
     };
 
     window.visualViewport.addEventListener("resize", handleResize);
-    handleResize(); // Set initial height
+    handleResize();
 
     return () => window.visualViewport.removeEventListener("resize", handleResize);
   }, []);
-  
-      
 
   return (
     <Box
       sx={{
         display: "flex",
         flexDirection: "column",
-        height: `${appHeight}px`, // Dynamically update height
+        height: "100dvh",
         backgroundColor: "#fff",
         fontFamily: '"Inter", sans-serif',
+        overflow: "hidden",
       }}
     >
       {/* HEADER */}
@@ -148,13 +144,11 @@ const ChatComponent = () => {
           padding: "28px 20px 12px 20px",
           position: "absolute",
           top: 0,
-          left:0,
-          right:0,
-
+          left: 0,
+          right: 0,
           backgroundColor: "#FFFFFF",
           zIndex: 10,
           borderBottom: "1px solid #E0E0E0",
-          boxShadow: "0 1px 4px rgba(0,0,0,0.05)",
         }}
       >
         <IconButton
