@@ -55,6 +55,8 @@ export default function ChatInterface() {
   const [unseenCounts, setUnseenCounts] = useState({});
   const [lastMessages, setLastMessages] = useState({})
 
+  console.log("lastmmmmmmmm", lastMessages)
+
   useEffect(() => {
     setLoading(true);
     let unsubscribers = [];
@@ -391,7 +393,8 @@ export default function ChatInterface() {
                         margin: 0,
                       }}
                     >
-                      {lastMessages[chat.match_instance.match_id].text}
+                      {/* {lastMessages[chat.match_instance.match_id].text} */}
+                      hiiiiiiiiiiii
                     </Typography>
                   }
                 />
@@ -435,7 +438,8 @@ export default function ChatInterface() {
                     top: "15px",
                   }}
                 >
-                  {lastMessages[chat.match_instance.match_id].time}
+                  {/* {lastMessages[chat.match_instance.match_id].time} */}
+                  hiii
                 </Typography>
               </ListItem>
             ))
