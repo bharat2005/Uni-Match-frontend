@@ -52,29 +52,32 @@ const ChatComponent = () => {
   
       }, [chatProfile.match_instance.match_id]);
 
-  
       function handleSend() {
         if (!message.trim()) return;
-
-        const tempMessage = message
-        setMessage("")
-  
-          addDoc(collection(db, "chats", chatProfile.match_instance.match_id, "messages"), {
-              sender_reg_no: selfprofile.reg_no,
-              receiver_reg_no : chatProfile.match_user_data.reg_no,
-              text: tempMessage,
-              status:"unseen",
-              timestamp: serverTimestamp(),
+      
+        const tempMessage = message;
+        setMessage("");
+      
+        // Ensure focus remains on input after message is sent
+        setTimeout(() => {
+          messageInputRef.current?.focus();
+        }, 10);
+      
+        addDoc(collection(db, "chats", chatProfile.match_instance.match_id, "messages"), {
+          sender_reg_no: selfprofile.reg_no,
+          receiver_reg_no: chatProfile.match_user_data.reg_no,
+          text: tempMessage,
+          status: "unseen",
+          timestamp: serverTimestamp(),
+        })
+          .then((docRef) => {
+            console.log("Message sent successfully!", docRef.id);
           })
-              .then((docRef) => {
-                  console.log("Message sent successfully!", docRef.id);
-              })
-              .catch((error) => {
-                  console.error("Error sending message:", error);
-              })
-              .finally(() => {
-              });
+          .catch((error) => {
+            console.error("Error sending message:", error);
+          });
       }
+      
 
   return (
     <Box
