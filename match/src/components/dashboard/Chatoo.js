@@ -13,6 +13,7 @@ const ChatComponent = () => {
   const navigate = useNavigate();
   const [message, setMessage] = useState("");
   const [textMessages, setTextMessages] = useState([]);
+  const [appHeight, setAppHeight] = useState(window.innerHeight);
 
   const messagesEndRef = useRef(null);
   const messageInputRef = useRef(null);
@@ -53,6 +54,19 @@ const ChatComponent = () => {
       }, [chatProfile.match_instance.match_id]);
 
 
+  useEffect(() => {
+    const handleResize = () => {
+      setAppHeight(window.visualViewport.height);
+    };
+
+    window.visualViewport.addEventListener("resize", handleResize);
+    handleResize(); // Set initial height
+
+    return () => window.visualViewport.removeEventListener("resize", handleResize);
+  }, []);
+  
+
+
       function handleSend() {
         if (!message.trim()) return;
       
@@ -81,15 +95,15 @@ const ChatComponent = () => {
       
 
   return (
-    <Box
-      sx={{
-        display: "flex",
-        flexDirection: "column",
-        height: "100vh",
-        backgroundColor: "#fff",
-        fontFamily: '"Inter", sans-serif',
-      }}
-    >
+      <Box
+        sx={{
+          display: "flex",
+          flexDirection: "column",
+          height: `${appHeight}px`, // Dynamically update height
+          backgroundColor: "#fff",
+          fontFamily: '"Inter", sans-serif',
+        }}
+      >
       {/* HEADER */}
       <Box
         sx={{
