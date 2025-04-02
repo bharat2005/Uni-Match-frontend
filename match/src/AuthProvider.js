@@ -18,6 +18,7 @@ export const AuthProvider = ({ children }) => {
   const [likesNoti, setLikesNoti] = useState([]);
   const [matchesNoti, setMatchesNoti] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [chatProfile, setChatProfile] = useState({})
 
   console.log(
     `AuthProvider --selfprofile-->${selfprofile}\n lpuselfprofile--->${lpuselfprofile}`,
@@ -106,6 +107,8 @@ export const AuthProvider = ({ children }) => {
         selfprofile,
         setLpuSelfProfile,
         setSelfProfile,
+        chatProfile,
+        setChatProfile
       }}
     >
       {children}

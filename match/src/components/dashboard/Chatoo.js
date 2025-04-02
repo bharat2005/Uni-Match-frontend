@@ -7,27 +7,8 @@ import { Box, Typography, TextField, IconButton, Avatar } from "@mui/material";
 import { useNavigate, useOutletContext  } from "react-router-dom";
 
 
-const profile = {
-  reg_no: "12413928",
-  reason: "Long-term relationship",
-  age: 20,
-  name: "Jisoo",
-  personality: "extrovert",
-  images: ["/2.jpg", "/3.jpg", "/1.jpg", null, null],
-  bio: "Im the solo developer of this whole Uni-Match platform...😎",
-  interests: [
-    "Gardening",
-    "Paragliding",
-    "Puzzles",
-    "Juggling",
-    "Art",
-    "Juggling",
-  ],
-};
-
 const ChatComponent = ({ match_id="chats_12413922_12413923", reg_no="12413922", target_reg_no="12413923"  }) => {
-  const { profile } = useOutletContext();
-  const { selfprofile } = useAuth();
+  const { selfprofile, chatProfile } = useAuth();
   const [messageText, setMessageText] = useState("");
   const navigate = useNavigate();
   const [message, setMessage] = useState("");
@@ -36,7 +17,6 @@ const ChatComponent = ({ match_id="chats_12413922_12413923", reg_no="12413922", 
   const messagesEndRef = useRef(null);
   const messageInputRef = useRef(null);
   
-  console.log("profiel from chat", profile)
 
   // Auto-scroll to latest message
   useEffect(() => {
@@ -146,7 +126,7 @@ const ChatComponent = ({ match_id="chats_12413922_12413923", reg_no="12413922", 
             color: "#212121",
           }}
         >
-          {profile.name}
+          {chatProfile.name}
         </Typography>
       </Box>
 
@@ -175,7 +155,7 @@ const ChatComponent = ({ match_id="chats_12413922_12413923", reg_no="12413922", 
           >
             {msg.sender_reg_no !== reg_no && (
               <Avatar
-                src={profile.images[0]}
+                src={chatProfile.images[0]}
                 alt="Avatar"
                 sx={{
                   width: "40px",

@@ -41,8 +41,8 @@ const profileX = {
 };
 
 export default function ChatInterface() {
-  const { selfprofile } = useAuth();
   const navigate = useNavigate();
+  const {setChatProfile} = useAuth();
   const [isPressed, setIsPressed] = useState(false);
   const { setMatchesNoti } = useAuth();
   const [matchList, setMatchList] = useState([profileX])
@@ -179,11 +179,10 @@ export default function ChatInterface() {
   //     });
   // }
 
-  console.log("list--------------", profile)
 
   return (
     <>
-      <Outlet context={{ profile: profileX}} />
+      <Outlet context={{ profile }} />
 
       <Container
         component="main"
@@ -250,8 +249,9 @@ export default function ChatInterface() {
               onTouchEnd={endPress}
                 onClick={() => {
                   //handleNotiClick("12413326");
-                  setSelectedProfile(chat);
-                  setTimeout(()=> navigate(`/app/${chat.reg_no}`),1000)
+                  setChatProfile(chat);
+                  //setSelectedProfile(chat)
+                  navigate(`/app/${chat.reg_no}`)
                 }}
                 key={index}
                 sx={{
