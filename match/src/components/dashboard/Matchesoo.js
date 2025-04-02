@@ -130,17 +130,12 @@ const detailsStyle = {
 const ProfileGrid = () => {
   const navigate = useNavigate();
   const { setLikesNoti, selfprofile } = useAuth();
-  //const [open, setOpen] = useState(false);
   const [accept, setAccept] = useState(false);
   const [reject, setReject] = useState(false);
   const [target_reg_no, setTargetRegNo] = useState(null);
   const [profile, setSelectedProfile] = useState({});
   const [loading, setLoading] = useState(false);
   const [likesList, setLikesList] = useState([]);
-  // const [imageClick, setImageClick] = useState(false);
-  // const [currentImageIndex, setCurrentImageIndex] = useState(0);
-  //  const [imageLoaded, setImageLoaded] = useState(false);
-  //const list = profile.images.filter((item) => item != null);
 
   useEffect(() => {
     // Disable scrolling for the whole page
@@ -247,8 +242,8 @@ const ProfileGrid = () => {
   
         const match_id =
           selfprofile.reg_no < target_reg_no
-            ? `chats_${selfprofile.reg_no}_${target_reg_no}`
-            : `chats_${target_reg_no}_${selfprofile.reg_no}`;
+            ? `${selfprofile.reg_no}_${target_reg_no}`
+            : `${target_reg_no}_${selfprofile.reg_no}`;
   
         // ✅ Return setDoc properly so it stays in the chain
         return setDoc(doc(db, "chats", match_id), {
