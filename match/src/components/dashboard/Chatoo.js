@@ -2,7 +2,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import { useAuth } from "../../AuthProvider";
 import { db } from './firebase';
-import { collection, addDoc, serverTimestamp, getDocs, orderBy, query, onSnapshot } from "firebase/firestore";
+import { collection, addDoc, serverTimestamp, getDocs, orderBy, query, onSnapshot, writeBatch } from "firebase/firestore";
 import { Box, Typography, TextField, IconButton, Avatar } from "@mui/material";
 import { useNavigate, useOutletContext  } from "react-router-dom";
 
@@ -17,8 +17,6 @@ const ChatComponent = () => {
   const messagesEndRef = useRef(null);
   const messageInputRef = useRef(null);
   
-
-  // Auto-scroll to latest message
   useEffect(() => {
     setTimeout(() => {
       messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
@@ -31,6 +29,20 @@ const ChatComponent = () => {
       const unsubscribe = onSnapshot(query(collection(db, "chats", chatProfile.match_instance.match_id, "messages"), orderBy("timestamp")),
       (response)=> {
           setTextMessages(response.docs.map(doc => doc.data()))
+          const unSeenTextMessages = response.docs.filter(doc => doc.data().status == "unseen" && doc.data().sender_reg_no  != selfprofile.reg_no)
+          if (unSeenTextMessages.length > 0){
+            const batch = writeBatch(db)
+            unSeenTextMessages.forEach(docSnap => {
+              batch.update(docSnap.ref, {status:"seen"})
+            })
+            batch.commit()
+            .then(()=> {
+              console.log("Messages updated to seen")
+            })
+            .catch(()=> {
+              console.log("Error in updating messages to seen")
+            })
+          }
       },
       (error)=> {
           console.error("Error", error)
@@ -38,26 +50,9 @@ const ChatComponent = () => {
   
       return unsubscribe
   
-      }, []);
+      }, [chatProfile.match_instance.match_id]);
 
-  // const sendMessage = (e) => {
-  //   e.preventDefault(); // Prevent default action
-
-  //   if (messageText.trim()) {
-  //     setMessages((prev) => [
-  //       ...prev,
-  //       { id: Date.now(), text: messageText, sender: "me" },
-  //     ]);
-  //     setMessageText("");
-
-  //     // Delay the focus to avoid input flickering
-  //     setTimeout(() => {
-  //       messageInputRef.current?.focus();
-  //     }, 10);
-  //   }
-  // };
-
-
+  
       function handleSend() {
         if (!message.trim()) return;
 
@@ -68,6 +63,7 @@ const ChatComponent = () => {
               sender_reg_no: selfprofile.reg_no,
               receiver_reg_no : chatProfile.match_user_data.reg_no,
               text: tempMessage,
+              status:"unseen",
               timestamp: serverTimestamp(),
           })
               .then((docRef) => {

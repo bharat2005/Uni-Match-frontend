@@ -3,6 +3,8 @@ import React, { useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../../AuthProvider";
 import axios from "axios";
+import { db } from './firebase';
+import { collection, addDoc, serverTimestamp, getDocs, orderBy, where, query, onSnapshot, writeBatch } from "firebase/firestore";
 import {
   Avatar,
   Badge,
@@ -42,7 +44,7 @@ const profileX = {
 
 export default function ChatInterface() {
   const navigate = useNavigate();
-  const {setChatProfile} = useAuth();
+  const {setChatProfile, selfprofile} = useAuth();
   const [isPressed, setIsPressed] = useState(false);
   const [matchIdList, setMatchIdList] = useState([])
   const { setMatchesNoti } = useAuth();
@@ -50,65 +52,103 @@ export default function ChatInterface() {
   const [profile, setSelectedProfile] = useState({});
   const [loading, setLoading] = useState(true)
   const pressTimer = useRef(null);
+  const [unseenCounts, setUnseenCounts] = useState({})
 
 
-   useEffect(() => {
-    setLoading(true)
-      axios
-        .get("https://api.uni-match.in/matches", {
-          withCredentials: true,
-          headers: { "X-CSRF-TOKEN": localStorage.getItem("csrfTokenAccess") },
-        })
-        .then((response) => {
-          console.log(response.data);
-          setMatchList(response.data.matches);
-        })
-        .catch((error) => {
-          console.error("Error: ", error);
-
-          if (error.response?.status === 401) {
-            axios
-              .post(
-                "https://api.uni-match.in/refresh",
-                {},
-                {
+  useEffect(() => {
+    setLoading(true);
+    let unsubscribers = [];
+  
+    axios
+      .get("https://api.uni-match.in/matches", {
+        withCredentials: true,
+        headers: { "X-CSRF-TOKEN": localStorage.getItem("csrfTokenAccess") },
+      })
+      .then((response) => {
+        console.log(response.data);
+        setMatchList(response.data.matches);
+  
+        // Setup Firestore listeners for unseen messages
+        unsubscribers = response.data.matches.map((chat) => {
+          const match_id = chat.match_instance.match_id;
+          return onSnapshot(
+            query(
+              collection(db, "chats", match_id, "messages"),
+              where("status", "==", "unseen"),
+              where("sender_reg_no", "!=", selfprofile.reg_no)
+            ),
+            (snapshot) => {
+              setUnseenCounts((prev) => ({
+                ...prev,
+                [match_id]: snapshot.docs.length,
+              }));
+            }
+          );
+        });
+      })
+      .catch((error) => {
+        console.error("Error: ", error);
+  
+        if (error.response?.status === 401) {
+          axios
+            .post(
+              "https://api.uni-match.in/refresh",
+              {},
+              {
+                withCredentials: true,
+                headers: {
+                  "X-CSRF-TOKEN": localStorage.getItem("csrfTokenRefresh"),
+                },
+              }
+            )
+            .then((refreshResponse) => {
+              const csrfToken = refreshResponse.headers["x-csrf-token"];
+              localStorage.setItem("csrfToken", csrfToken);
+  
+              axios
+                .get("https://api.uni-match.in/matches", {
                   withCredentials: true,
                   headers: {
-                    "X-CSRF-TOKEN": localStorage.getItem("csrfTokenRefresh"),
+                    "X-CSRF-TOKEN": localStorage.getItem("csrfTokenAccess"),
                   },
-                },
-              )
-
-              .then((refreshResponse) => {
-                const csrfToken = refreshResponse.headers["x-csrf-token"];
-                localStorage.setItem("csrfToken", csrfToken);
-
-                axios
-                  .get("https://api.uni-match.in/matches", {
-                    withCredentials: true,
-                    headers: {
-                      "X-CSRF-TOKEN": localStorage.getItem("csrfTokenAccess"),
-                    },
-                  })
-                  .then((response) => {
-                    console.log("Protected Data (After Refresh):", response.data);
-                    setMatchList(response.data.matches);
-                    // setNotifications(response.data.notifications);
-                  })
-                  .catch((retryError) =>
-                    console.error("Failed after refresh:", retryError),
-                  );
-              })
-              .catch(() =>
-                console.error("Session expired, please log in again."),
-              );
-          }
-        })
-        .finally(()=> {
-          setLoading(false)
-        })
-    }, []);
-
+                })
+                .then((response) => {
+                  console.log("Protected Data (After Refresh):", response.data);
+                  setMatchList(response.data.matches);
+                  // 🔴 PROBLEM: Not setting up Firestore listeners again! (Fix below)
+                  unsubscribers.forEach((unsub) => unsub()); // Remove old listeners
+                  unsubscribers = response.data.matches.map((chat) => {
+                    const match_id = chat.match_instance.match_id;
+                    return onSnapshot(
+                      query(
+                        collection(db, "chats", match_id, "messages"),
+                        where("status", "==", "unseen"),
+                        where("sender_reg_no", "!=", selfprofile.reg_no)
+                      ),
+                      (snapshot) => {
+                        setUnseenCounts((prev) => ({
+                          ...prev,
+                          [match_id]: snapshot.docs.length,
+                        }));
+                      }
+                    );
+                  });
+                })
+                .catch((retryError) =>
+                  console.error("Failed after refresh:", retryError)
+                );
+            })
+            .catch(() => console.error("Session expired, please log in again."));
+        }
+      })
+      .finally(() => {
+        setLoading(false);
+      });
+  
+    // Cleanup function (outside axios call)
+    return () => unsubscribers.forEach((unsub) => unsub());
+  }, []);
+  
 
   function handleNotiClick(sender_reg_no) {
     axios
@@ -304,24 +344,24 @@ export default function ChatInterface() {
                       {chat.match_user_data.name}
                     </Typography>
                   }
-                  // secondary={
-                  //   <Typography
-                  //     sx={{
-                  //       fontSize: {
-                  //         xs: "15px",
-                  //         sm: "16px",
-                  //       },
-                  //       color: "#6b7280",
-                  //       margin: 0,
-                  //     }}
-                  //   >
-                  //     {chat.message}
-                  //   </Typography>
-                  // }
+                  secondary={
+                    <Typography
+                      sx={{
+                        fontSize: {
+                          xs: "15px",
+                          sm: "16px",
+                        },
+                        color: "#6b7280",
+                        margin: 0,
+                      }}
+                    >
+                      love you so muchhhh
+                    </Typography>
+                  }
                 />
-                {/* {chat.count > 0 && (
+                {unseenCounts[chat.match_instance.match_id] > 0 && (
                   <Badge
-                    badgeContent={chat.count}
+                    badgeContent={unseenCounts[chat.match_instance.match_id]}
                     sx={{
                       position: "absolute",
                       right: "6%",
@@ -345,8 +385,8 @@ export default function ChatInterface() {
                       },
                     }}
                   />
-                )} */}
-                {/* <Typography
+                )}
+                <Typography
                   component="time"
                   sx={{
                     color: "#9ca3af",
@@ -359,8 +399,8 @@ export default function ChatInterface() {
                     top: "15px",
                   }}
                 >
-                  {chat.time}
-                </Typography> */}
+                  12:00 pm
+                </Typography>
               </ListItem>
             ))
             ):(
