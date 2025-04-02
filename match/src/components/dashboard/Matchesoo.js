@@ -136,6 +136,7 @@ const ProfileGrid = () => {
   const [profile, setSelectedProfile] = useState({});
   const [loading, setLoading] = useState(false);
   const [likesList, setLikesList] = useState([]);
+  const [smallLoading, setSmallLoading] = useState(false)
 
   useEffect(() => {
     // Disable scrolling for the whole page
@@ -223,7 +224,7 @@ const ProfileGrid = () => {
   }
 
   function handleLikeClick(target_reg_no) {
-    setLoading(true);
+    setSmallLoading(true);
     handleNotiClick(target_reg_no);
   
     axios
@@ -293,13 +294,13 @@ const ProfileGrid = () => {
         }
       })
       .finally(() => {
-        setLoading(false);
+        setSmallLoading(false);
         setAccept(false);
       });
   }
   
   function handleCrossClick(target_reg_no) {
-    setLoading(true);
+    setSmallLoading(true);
     handleNotiClick(target_reg_no);
     axios
       .post(
@@ -362,13 +363,15 @@ const ProfileGrid = () => {
         }
       })
       .finally(() => {
-        setLoading(false);
+        setSmallLoading(false);
         setReject(false);
       });
   }
 
   return (
     <>
+
+{smallLoading && <SmallLoading/>}
       <RejectModal
         setModalOpen={setReject}
         modalOpen={reject}

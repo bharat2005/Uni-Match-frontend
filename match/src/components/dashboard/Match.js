@@ -8,11 +8,13 @@ import axios from "axios";
 import CenterLoading from "./CenterLoading";
 import NoSuchProfiles from "./NoSuchProfiles";
 import { Interests } from "@mui/icons-material";
+import { useAuth } from "../../AuthProvider";
 import NotiModal from "./NotiModal";
 
 export default function Match() {
   const [profiles, setProfiles] = useState([]);
-  const [modalOpen, setModalOpen] = useState(true);
+  const { likesNoti } = useAuth();
+  const [modalOpen, setModalOpen] = useState(()=> likesNoti.length > 0 ? true : false);
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
   const [cardStates, setCardStates] = useState([]);
   const [isReady, setIsReady] = useState(false);

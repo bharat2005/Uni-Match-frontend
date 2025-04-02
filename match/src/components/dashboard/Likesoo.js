@@ -44,6 +44,7 @@ const ProfileGrid = () => {
   const [likedList, setLikedList] = useState([]);
   const [profile, setSelectedProfile] = useState({});
   const [target_reg_no, setTargetRegNo] = useState(null);
+  const [smallLoading, setSmallLoading] = useState(false)
 
   useEffect(() => {
     setLoading(true);
@@ -112,7 +113,7 @@ const ProfileGrid = () => {
   }, []);
 
   function handleCrossClick(target_reg_no) {
-    setLoading(true);
+    setSmallLoading(true);
     axios
       .post(
         "https://api.uni-match.in/likedbyudel",
@@ -174,13 +175,15 @@ const ProfileGrid = () => {
         }
       })
       .finally(() => {
-        setLoading(false);
+        setSmallLoading(false);
         setModalOpen(false);
       });
   }
 
   return (
     <>
+    {smallLoading && <SmallLoading/>}
+    
       <UnlikeModal
         setModalOpen={setModalOpen}
         modalOpen={modalOpen}
