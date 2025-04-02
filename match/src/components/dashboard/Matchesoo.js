@@ -10,6 +10,8 @@ import {
   Grid,
   Modal,
 } from "@mui/material";
+import {db} from './firebase';
+import {collection, doc, query, setDoc, serverTimestamp} from 'firebase/firestore';
 import { ArrowBackIos, ArrowForwardIos } from "@mui/icons-material";
 import RejectModal from "./RejectModal";
 import AcceptModal from "./AcceptModal";
@@ -127,7 +129,7 @@ const detailsStyle = {
 
 const ProfileGrid = () => {
   const navigate = useNavigate();
-  const { setLikesNoti } = useAuth();
+  const { setLikesNoti, selfprofile } = useAuth();
   //const [open, setOpen] = useState(false);
   const [accept, setAccept] = useState(false);
   const [reject, setReject] = useState(false);
@@ -228,6 +230,7 @@ const ProfileGrid = () => {
   function handleLikeClick(target_reg_no) {
     setLoading(true);
     handleNotiClick(target_reg_no);
+  
     axios
       .post(
         "https://api.uni-match.in/match",
@@ -235,16 +238,31 @@ const ProfileGrid = () => {
         {
           withCredentials: true,
           headers: { "X-CSRF-TOKEN": localStorage.getItem("csrfTokenAccess") },
-        },
+        }
       )
-      .then((responce) => {
-        console.log(responce.data.message);
-        setLikesList((prev) => {
-          return [...responce.data.likesYou];
+      .then((response) => {
+        console.log(response.data.message);
+  
+        setLikesList((prev) => [...response.data.likesYou]);
+  
+        const match_id =
+          selfprofile.reg_no < target_reg_no
+            ? `chats_${selfprofile.reg_no}_${target_reg_no}`
+            : `chats_${target_reg_no}_${selfprofile.reg_no}`;
+  
+        // ✅ Return setDoc properly so it stays in the chain
+        return setDoc(doc(db, "chats", match_id), {
+          user_1_reg_no: selfprofile.reg_no,
+          user_2_reg_no: target_reg_no,
+          timestamp: serverTimestamp(),
         });
+      })
+      .then(() => {
+        console.log("Match created successfully!");
       })
       .catch((error) => {
         console.error("Error: ", error);
+  
         if (error.response?.status === 401) {
           axios
             .post(
@@ -255,36 +273,29 @@ const ProfileGrid = () => {
                 headers: {
                   "X-CSRF-TOKEN": localStorage.getItem("csrfTokenRefresh"),
                 },
-              },
+              }
             )
-
             .then((response) => {
               const csrfTokenAccess = response.headers["x-csrf-token-access"];
               localStorage.setItem("csrfTokenAccess", csrfTokenAccess);
-
-              axios
-                .post(
-                  "https://api.uni-match.in/match",
-                  { target_reg_no, swipe_action: "right" },
-                  {
-                    withCredentials: true,
-                    headers: {
-                      "X-CSRF-TOKEN": localStorage.getItem("csrfTokenAccess"),
-                    },
+  
+              return axios.post(
+                "https://api.uni-match.in/match",
+                { target_reg_no, swipe_action: "right" },
+                {
+                  withCredentials: true,
+                  headers: {
+                    "X-CSRF-TOKEN": localStorage.getItem("csrfTokenAccess"),
                   },
-                )
-                .then((responce) => {
-                  console.log(responce.data.message);
-                  setLikesList((prev) => {
-                    return [...responce.data.likesYou];
-                  });
-                })
-                .catch((retryError) =>
-                  console.error("Failed after refresh:", retryError),
-                );
+                }
+              );
             })
-            .catch(() =>
-              console.error("Session expired, please log in again."),
+            .then((response) => {
+              console.log(response.data.message);
+              setLikesList((prev) => [...response.data.likesYou]);
+            })
+            .catch((retryError) =>
+              console.error("Failed after refresh:", retryError)
             );
         }
       })
@@ -293,7 +304,7 @@ const ProfileGrid = () => {
         setAccept(false);
       });
   }
-
+  
   function handleCrossClick(target_reg_no) {
     setLoading(true);
     handleNotiClick(target_reg_no);
