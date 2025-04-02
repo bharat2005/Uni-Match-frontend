@@ -70,7 +70,7 @@ export default function ChatInterface() {
       })
       .then((response) => {
         console.log(response.data);
-        setMatchList(response.data.matches);
+ 
   
         // 🛠 Setup Firestore listeners for unseen messages + last message
         unsubscribers = response.data.matches.map((chat) => {
@@ -117,6 +117,8 @@ export default function ChatInterface() {
             lastMessageListener();
           };
         });
+
+        setMatchList(response.data.matches);
       })
       .catch((error) => {
         console.error("Error: ", error);
@@ -146,7 +148,7 @@ export default function ChatInterface() {
                 })
                 .then((response) => {
                   console.log("Protected Data (After Refresh):", response.data);
-                  setMatchList(response.data.matches);
+                
   
                   // 🔴 Remove old listeners before adding new ones
                   unsubscribers.forEach((unsub) => unsub());
@@ -194,6 +196,8 @@ export default function ChatInterface() {
                       lastMessageListener();
                     };
                   });
+
+                  setMatchList(response.data.matches);
                 })
                 .catch((retryError) =>
                   console.error("Failed after refresh:", retryError)
