@@ -102,71 +102,31 @@ const ChatComponent = () => {
   const [messageText, setMessageText] = useState("");
   const [message, setMessage] = useState("");
   const [textMessages, setTextMessages] = useState([...list]);
+  const [appHeight, setAppHeight] = useState(window.innerHeight);
+
 
   const messagesEndRef = useRef(null);
   const messageInputRef = useRef(null);
   
+
   useEffect(() => {
     setTimeout(() => {
       messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
     }, 10);
   }, [textMessages]);
 
+  // Dynamically adjust height when keyboard opens/closes
+  useEffect(() => {
+    const handleResize = () => {
+      setAppHeight(window.visualViewport.height);
+    };
 
-      // useEffect(() => {
-  
-      // const unsubscribe = onSnapshot(query(collection(db, "chats", chatProfile.match_instance.match_id, "messages"), orderBy("timestamp")),
-      // (response)=> {
-      //     setTextMessages(response.docs.map(doc => doc.data()))
-      //     const unSeenTextMessages = response.docs.filter(doc => doc.data().status == "unseen" && doc.data().sender_reg_no  != selfprofile.reg_no)
-      //     if (unSeenTextMessages.length > 0){
-      //       const batch = writeBatch(db)
-      //       unSeenTextMessages.forEach(docSnap => {
-      //         batch.update(docSnap.ref, {status:"seen"})
-      //       })
-      //       batch.commit()
-      //       .then(()=> {
-      //         console.log("Messages updated to seen")
-      //       })
-      //       .catch(()=> {
-      //         console.log("Error in updating messages to seen")
-      //       })
-      //     }
-      // },
-      // (error)=> {
-      //     console.error("Error", error)
-      // })
-  
-      // return unsubscribe
-  
-      // }, [chatProfile.match_instance.match_id]);
+    window.visualViewport.addEventListener("resize", handleResize);
+    handleResize(); // Set initial height
 
-
-      // function handleSend() {
-      //   if (!message.trim()) return;
-      
-      //   const tempMessage = message;
-      //   setMessage("");
-      
-      //   // Ensure focus remains on input after message is sent
-      //   setTimeout(() => {
-      //     messageInputRef.current?.focus();
-      //   }, 10);
-      
-      //   addDoc(collection(db, "chats", chatProfile.match_instance.match_id, "messages"), {
-      //     sender_reg_no: selfprofile.reg_no,
-      //     receiver_reg_no: chatProfile.match_user_data.reg_no,
-      //     text: tempMessage,
-      //     status: "unseen",
-      //     timestamp: serverTimestamp(),
-      //   })
-      //     .then((docRef) => {
-      //       console.log("Message sent successfully!", docRef.id);
-      //     })
-      //     .catch((error) => {
-      //       console.error("Error sending message:", error);
-      //     });
-      // }
+    return () => window.visualViewport.removeEventListener("resize", handleResize);
+  }, []);
+  
       
 
   return (
@@ -174,7 +134,7 @@ const ChatComponent = () => {
       sx={{
         display: "flex",
         flexDirection: "column",
-        height: "100vh",
+        height: `${appHeight}px`, // Dynamically update height
         backgroundColor: "#fff",
         fontFamily: '"Inter", sans-serif',
       }}
