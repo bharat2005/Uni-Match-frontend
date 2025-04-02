@@ -251,7 +251,7 @@ export default function ChatInterface() {
                 onClick={() => {
                   //handleNotiClick("12413326");
                   setSelectedProfile(chat);
-                  //navigate(`/app/${chat.reg_no}`);
+                  setTimeout(()=> navigate(`/app/${profile.reg_no}`),1000)
                 }}
                 key={index}
                 sx={{
