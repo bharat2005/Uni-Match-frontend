@@ -42,6 +42,8 @@ const profileX = {
   ],
 };
 
+
+
 export default function ChatInterface() {
   const navigate = useNavigate();
   const {setChatProfile, selfprofile} = useAuth();
@@ -258,6 +260,29 @@ export default function ChatInterface() {
     setIsPressed(false);
   };
 
+  const formatTime = (timestamp) => {
+    if (!timestamp) return null; // If no timestamp, return nothing
+  
+    const date = timestamp.toDate ? timestamp.toDate() : new Date(timestamp);
+    const now = new Date();
+  
+    // Check if it's today
+    if (date.toDateString() === now.toDateString()) {
+      return date.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" }); // e.g., "10:30 AM"
+    }
+  
+    // Check if it's yesterday
+    const yesterday = new Date();
+    yesterday.setDate(now.getDate() - 1);
+    if (date.toDateString() === yesterday.toDateString()) {
+      return "Yesterday";
+    }
+  
+    // Otherwise, return date in "DD/MM/YY" format
+    return date.toLocaleDateString();
+  };
+  
+
 
   return (
     <>
@@ -393,8 +418,7 @@ export default function ChatInterface() {
                         margin: 0,
                       }}
                     >
-                      {/* {lastMessages[chat.match_instance.match_id].text} */}
-                      hiiiiiiiiiiii
+                   {lastMessages[chat.match_instance.match_id]?.text || null}
                     </Typography>
                   }
                 />
@@ -438,8 +462,7 @@ export default function ChatInterface() {
                     top: "15px",
                   }}
                 >
-                  {/* {lastMessages[chat.match_instance.match_id].time} */}
-                  hiii
+      {formatTime(lastMessages[chat.match_instance.match_id]?.time)}
                 </Typography>
               </ListItem>
             ))
