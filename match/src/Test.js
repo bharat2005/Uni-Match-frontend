@@ -1,73 +1,88 @@
-import React from "react";
-import {
-  Box,
-  Typography,
-  Grid,
-  Card,
-  CardContent,
-  Skeleton,
-} from "@mui/material";
+import React, { useState, useRef } from "react";
+import { TextField, IconButton, Popover } from "@mui/material";
+import "emoji-mart/css/emoji-mart.css";  // ✅ Works only with v3
+import { Picker } from "emoji-mart";
+ // ✅ Correct import for new version
 
-const ProfileGridSkeleton = () => {
+
+
+const ChatInput = ({ message, setMessage, handleSend }) => {
+  const [anchorEl, setAnchorEl] = useState(null); // For emoji picker popup
+  const messageInputRef = useRef(null);
+
+  // Open Emoji Picker
+  const openEmojiPicker = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  // Close Emoji Picker
+  const closeEmojiPicker = () => {
+    setAnchorEl(null);
+  };
+
+  // Add selected emoji to the message input
+  const addEmoji = (emoji) => {
+    setMessage((prev) => prev + emoji.native);
+    messageInputRef.current.focus(); // Refocus the input field
+  };
+
   return (
-    <Box
-      sx={{
-        background:
-          "linear-gradient(180deg, rgba(245, 245, 245, 0) 0%, #F5F5F5 26%)",
-        minHeight: "100vh",
-        padding: { xs: "12px", sm: "14px", md: "18px" },
-      }}
-    >
-      <Box sx={{ marginBottom: "16px" }}>
-        <Typography
-          sx={{
-            textAlign: "left",
-            fontSize: { xs: "24px", sm: "28px" },
-            fontWeight: 600,
-            color: "#333",
-            letterSpacing: "0.5px",
-          }}
-        >
-          Likes
-        </Typography>
-      </Box>
+    <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
+      {/* Emoji Picker Button */}
+      <IconButton onClick={openEmojiPicker} sx={{ color: "#FE6BA2" }}>
+        <i className="ti ti-mood-smile" style={{ fontSize: "28px" }} />
+      </IconButton>
 
-      <Grid container spacing={{ xs: 1, sm: 2 }} columns={{ xs: 2, sm: 2 }}>
-        {[...Array(6)].map((_, index) => (
-          <Grid item xs={1} key={index}>
-            <Card
-              sx={{
-                display: "flex",
-                flexDirection: "column",
-                overflow: "hidden",
-                boxShadow: "none",
-                background: "transparent",
-                height: "100%",
-                position: "relative",
-                textAlign: "left",
-              }}
-            >
-              <Skeleton
-                variant="rectangular"
-                width="100%"
-                height={200}
-                sx={{ borderRadius: "26px" }}
-              />
-              <CardContent
-                sx={{
-                  paddingBottom: "12px !important",
-                  paddingTop: "6px !important",
-                }}
-              >
-                <Skeleton width="60%" height={30} />
-                <Skeleton width="40%" height={20} />
-              </CardContent>
-            </Card>
-          </Grid>
-        ))}
-      </Grid>
-    </Box>
+      {/* Emoji Picker Popup */}
+      <Popover
+        open={Boolean(anchorEl)}
+        anchorEl={anchorEl}
+        onClose={closeEmojiPicker}
+        anchorOrigin={{
+          vertical: "top",
+          horizontal: "left",
+        }}
+        transformOrigin={{
+          vertical: "bottom",
+          horizontal: "left",
+        }}
+      >
+        <Picker onSelect={addEmoji} />
+      </Popover>
+
+      {/* Message Input Field */}
+      <TextField
+        value={message}
+        autoComplete="off"
+        inputRef={messageInputRef}
+        onChange={(e) => setMessage(e.target.value)}
+        onKeyDown={(e) => {
+          if (e.key === "Enter" && message.trim()) handleSend();
+        }}
+        placeholder="Message"
+        variant="outlined"
+        size="small"
+        fullWidth
+        sx={{
+          background: "#F5F5F5",
+          borderRadius: "20px",
+          "& .MuiOutlinedInput-root": {
+            borderRadius: "20px",
+            border: "none",
+          },
+          "& .MuiOutlinedInput-input": {
+            padding: "10px",
+            border: "none",
+          },
+        }}
+      />
+
+      {/* Send Button */}
+      <IconButton onClick={handleSend} sx={{ color: "#FE6BA2" }}>
+        <i className="ti ti-send-2" style={{ fontSize: "28px" }} />
+      </IconButton>
+    </div>
   );
 };
 
-export default ProfileGridSkeleton;
+export default ChatInput;
