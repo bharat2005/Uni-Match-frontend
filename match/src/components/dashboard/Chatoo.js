@@ -7,7 +7,7 @@ import { Box, Typography, TextField, IconButton, Avatar } from "@mui/material";
 import { useNavigate, useOutletContext  } from "react-router-dom";
 
 
-const ChatComponent = ({ match_id="chats_12413922_12413923", reg_no="12413922", target_reg_no="12413923"  }) => {
+const ChatComponent = () => {
   const { selfprofile, chatProfile } = useAuth();
   const [messageText, setMessageText] = useState("");
   const navigate = useNavigate();
@@ -28,7 +28,7 @@ const ChatComponent = ({ match_id="chats_12413922_12413923", reg_no="12413922", 
 
       useEffect(() => {
   
-      const unsubscribe = onSnapshot(query(collection(db, "chats", match_id, "messages"), orderBy("timestamp")),
+      const unsubscribe = onSnapshot(query(collection(db, "chats", chatProfile.match_instance.match_id, "messages"), orderBy("timestamp")),
       (response)=> {
           setTextMessages(response.docs.map(doc => doc.data()))
       },
@@ -64,9 +64,9 @@ const ChatComponent = ({ match_id="chats_12413922_12413923", reg_no="12413922", 
         const tempMessage = message
         setMessage("")
   
-          addDoc(collection(db, "chats", match_id, "messages"), {
-              sender_reg_no: reg_no,
-              receiver_reg_no : target_reg_no,
+          addDoc(collection(db, "chats", chatProfile.match_instance.match_id, "messages"), {
+              sender_reg_no: selfprofile.reg_no,
+              receiver_reg_no : chatProfile.match_user_data.reg_no,
               text: tempMessage,
               timestamp: serverTimestamp(),
           })
@@ -126,7 +126,7 @@ const ChatComponent = ({ match_id="chats_12413922_12413923", reg_no="12413922", 
             color: "#212121",
           }}
         >
-          {chatProfile.name}
+          {chatProfile.match_user_data.name}
         </Typography>
       </Box>
 
@@ -149,13 +149,13 @@ const ChatComponent = ({ match_id="chats_12413922_12413923", reg_no="12413922", 
             key={index}
             sx={{
               display: "flex",
-              justifyContent: msg.sender_reg_no === reg_no ? "flex-end" : "flex-start",
+              justifyContent: msg.sender_reg_no === selfprofile.reg_no ? "flex-end" : "flex-start",
               gap: "10px",
             }}
           >
-            {msg.sender_reg_no !== reg_no && (
+            {msg.sender_reg_no !== selfprofile.reg_no && (
               <Avatar
-                src={chatProfile.images[0]}
+                src={chatProfile.match_user_data.images[0]}
                 alt="Avatar"
                 sx={{
                   width: "40px",
@@ -170,16 +170,16 @@ const ChatComponent = ({ match_id="chats_12413922_12413923", reg_no="12413922", 
                 fontSize: "16px",
                 lineHeight: "1.4",
                 maxWidth: "70%",
-                backgroundColor: msg.sender_reg_no === reg_no ? "#FE6BA2" : "#FFFFFF",
-                color: msg.sender_reg_no === reg_no ? "#FFFFFF" : "#111",
+                backgroundColor: msg.sender_reg_no === selfprofile.reg_no ? "#FE6BA2" : "#FFFFFF",
+                color: msg.sender_reg_no === selfprofile.reg_no ? "#FFFFFF" : "#111",
                 boxShadow: "0 2px 4px rgba(0,0,0,0.1)",
-                border: msg.sender_reg_no !== reg_no ? "1px solid #eee" : "none",
+                border: msg.sender_reg_no !== selfprofile.reg_no ? "1px solid #eee" : "none",
                 wordBreak: "break-word",
               }}
             >
               {msg.text}
             </Box>
-            {msg.sender_reg_no === reg_no && (
+            {msg.sender_reg_no === selfprofile.reg_no && (
               <Avatar
                 src={selfprofile.images[0]}
                 alt="Avatar"

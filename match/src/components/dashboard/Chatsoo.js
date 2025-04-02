@@ -62,8 +62,6 @@ export default function ChatInterface() {
         .then((response) => {
           console.log(response.data);
           setMatchList(response.data.matches);
-          setMatchIdList(response.data.matches_ids);
-          // setNotifications(response.data.notifications);
         })
         .catch((error) => {
           console.error("Error: ", error);
@@ -254,7 +252,7 @@ export default function ChatInterface() {
                   //handleNotiClick("12413326");
                   setChatProfile(chat);
                   //setSelectedProfile(chat)
-                  navigate(`/app/${chat.reg_no}`)
+                  navigate(`/app/${chat.match_user_data.reg_no}`)
                 }}
                 key={index}
                 sx={{
@@ -272,11 +270,11 @@ export default function ChatInterface() {
                     onClick={(e) => {
                       e.stopPropagation();
                       e.preventDefault();
-                      setSelectedProfile(chat);
+                      setSelectedProfile(chat.match_user_data);
                       navigate("/app/chats/info");
                     }}
-                    src={chat.images[0]}
-                    alt={`${chat.name}'s profile`}
+                    src={chat.match_user_data.images[0]}
+                    alt={`${chat.match_user_data.name}'s profile`}
                     sx={{
                       width: {
                         xs: "55px",
@@ -303,7 +301,7 @@ export default function ChatInterface() {
                         marginBottom: "0px",
                       }}
                     >
-                      {chat.name}
+                      {chat.match_user_data.name}
                     </Typography>
                   }
                   // secondary={
