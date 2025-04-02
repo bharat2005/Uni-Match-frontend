@@ -54,12 +54,27 @@ const ChatComponent = () => {
       }, [chatProfile.match_instance.match_id]);
 
 
+
+
+
+
+
+
+
+
+
       useEffect(() => {
         const handleResize = () => {
           const viewportHeight = window.visualViewport.height;
           
-          document.body.style.overflow = "hidden"; // Prevent scrolling
-          setAppHeight(viewportHeight);
+          document.documentElement.style.setProperty("--app-height", `${viewportHeight}px`);
+      
+          // Prevent body scrolling when keyboard is open
+          if (viewportHeight < window.innerHeight) {
+            document.body.style.overflow = "hidden"; 
+          } else {
+            document.body.style.overflow = "";
+          }
         };
       
         window.visualViewport.addEventListener("resize", handleResize);
@@ -67,10 +82,24 @@ const ChatComponent = () => {
       
         return () => {
           window.visualViewport.removeEventListener("resize", handleResize);
-          document.body.style.overflow = ""; // Reset when unmounting
+          document.body.style.overflow = ""; // Reset on cleanup
         };
       }, []);
       
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
       function handleSend() {
         if (!message.trim()) return;
@@ -104,7 +133,7 @@ const ChatComponent = () => {
         sx={{
           display: "flex",
           flexDirection: "column",
-          height: `${appHeight}px`,
+          height: "var(--app-height)",
           backgroundColor: "#fff",
           fontFamily: '"Inter", sans-serif',
           overflow: "hidden",
