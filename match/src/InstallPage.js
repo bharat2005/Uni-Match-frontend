@@ -24,7 +24,7 @@ export default function InstallPage({ deferredPrompt }) {
         }
       });
     } else {
-      alert("Installation not supported on this browser.");
+      alert("App already installed in the device.");
     }
   };
 
