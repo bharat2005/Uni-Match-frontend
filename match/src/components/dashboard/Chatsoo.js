@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { useAuth } from "../../AuthProvider";
 import axios from "axios";
 import { db } from './firebase';
-import { collection, writeBatch ,doc, serverTimestamp, getDocs, orderBy, where, query, onSnapshot, limit, writeBatch } from "firebase/firestore";
+import { collection ,doc, serverTimestamp, getDocs, orderBy, where, query, onSnapshot, limit, writeBatch } from "firebase/firestore";
 import {
   Avatar,
   Badge,
