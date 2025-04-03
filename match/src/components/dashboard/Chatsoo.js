@@ -280,16 +280,22 @@ function handleDeleteMatch(target_reg_no) {
 }
 
 
-  const startPress = () => {
-    setIsPressed(true);
+const startPress = () => {
+  setIsPressed(true);
 
-    pressTimer.current = setTimeout(() => {
-      if ("vibrate" in navigator) {
-        navigator.vibrate(200); // Haptic feedback (200ms)
-      }
-      setModalOpen(true); // Open modal
-    }, 600); // Trigger after 600ms hold
-  };
+  pressTimer.current = setTimeout(() => {
+    // ✅ Ensure vibration API is available and device supports it
+    if ("vibrate" in navigator) {
+      navigator.vibrate(200); // ✅ Haptic feedback (200ms)
+      console.log("Vibration triggered!"); // Debugging
+    } else {
+      console.log("Vibration API not supported");
+    }
+    
+    setModalOpen(true); // ✅ Open modal
+  }, 600); // ✅ Trigger after 600ms hold
+};
+
 
   // Handle long press end (prevent accidental trigger)
   const endPress = () => {
@@ -389,6 +395,7 @@ function handleDeleteMatch(target_reg_no) {
               },
             }}
           >
+            
             { !loading ? (
              matchList.length ? (
             matchList.map((chat, index) => (

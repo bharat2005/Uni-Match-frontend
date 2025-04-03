@@ -2,7 +2,7 @@
 import * as React from "react";
 import { Player } from "@lottiefiles/react-lottie-player";
 import { Box, Typography, Button, Modal, Fade, Grow } from "@mui/material";
-import animationData from "./accept.json"; 
+import animationData from "./chat.json"; 
 
 const Container = ({
   setModalOpen,
