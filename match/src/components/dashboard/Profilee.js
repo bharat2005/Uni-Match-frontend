@@ -348,7 +348,7 @@ const ProfileContainer = () => {
             {menuItems.map((item, index) => (
               <ListItem
                 onClick={() => {
-                  if (item.text === "Share") {
+                  if (item.text === "Share Uni-Match") {
                     setModalOpen(true);
                   } else if (item.text === "Edit Profile") {
                     navigate("/app/profile/edit");
