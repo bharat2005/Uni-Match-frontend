@@ -89,7 +89,7 @@ export const AuthProvider = ({ children }) => {
 
   function login(a) {
     setBool(a);
-    localStorage.setItem(bool,"true")
+    localStorage.setItem("boolean","true")
   }
 
   return (
@@ -126,7 +126,7 @@ export const ProtectedRoute = ({ children }) => {
   // if (loading){
   //   return <Loading/>
   // }
-  return localStorage.getItem(bool) ? children : <Navigate to="/" />;
+  return localStorage.getItem("boolean") ? children : <Navigate to="/" />;
 };
 
 export const ProtectedRoute2 = ({ children }) => {
