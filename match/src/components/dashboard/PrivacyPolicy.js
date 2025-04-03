@@ -112,6 +112,9 @@ const SupportUs = ({ onClose }) => {
         <strong>Data Security:</strong> While we implement security measures to protect your information, this beta version is still in development, and security protocols may be updated.
       </li>
       <li>
+        <strong>Message Privacy & Safety:</strong> Your messages are securely stored and only visible to you and the recipient. We continuously monitor platform security to ensure a safe and respectful dating experience.
+      </li>
+      <li>
         <strong>Sharing of Data:</strong> We do not sell or share your personal data with third parties, except when required by law or to ensure platform safety.
       </li>
       <li>

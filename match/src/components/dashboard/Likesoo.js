@@ -45,6 +45,7 @@ const ProfileGrid = () => {
   const [profile, setSelectedProfile] = useState({});
   const [target_reg_no, setTargetRegNo] = useState(null);
   const [smallLoading, setSmallLoading] = useState(false)
+  const [loaded, setLoaded] = useState({})
 
   useEffect(() => {
     setLoading(true);
@@ -183,7 +184,7 @@ const ProfileGrid = () => {
   return (
     <>
     {smallLoading && <SmallLoading/>}
-    
+
       <UnlikeModal
         setModalOpen={setModalOpen}
         modalOpen={modalOpen}
@@ -264,13 +265,28 @@ const ProfileGrid = () => {
                           textAlign: "left",
                         }}
                       >
+
+{![index] && (
+        <Skeleton
+          variant="rectangular"
+          sx={{
+            width: "100%",
+            height: "200px",
+            borderRadius: "26px",
+            objectFit: "cover",
+          }}// Same as CardMedia height
+          animation="wave" // Try "pulse" or disable with false
+        />
+      )}
                         <CardMedia
                           component="img"
                           image={profile.images[0]}
+                          onLoad={() => setLoaded(prev=>({...prev, [index]:true}))}
                           sx={{
                             width: "100%",
                             height: "200px",
                             borderRadius: "26px",
+                            display: loaded[index] ? "block" : "none",
                             objectFit: "cover",
                           }}
                         />
