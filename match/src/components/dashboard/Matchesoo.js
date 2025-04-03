@@ -241,7 +241,7 @@ const ProfileGrid = () => {
   
         setLikesList((prev) => [...response.data.likesYou]);
 
-        const array = [Number(selfprofile.reg_no), Number(target_reg_no)].sort((a, b) => b - a);
+        const array = [Number(selfprofile.reg_no), Number(target_reg_no)].sort((a, b) => a - b);
         const match_id = `${array[0]}_${array[1]}`
   
         // ✅ Return setDoc properly so it stays in the chain
