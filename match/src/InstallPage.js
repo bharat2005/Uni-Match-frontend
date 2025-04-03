@@ -43,9 +43,10 @@ export default function InstallPage({ deferredPrompt }) {
         sx={{
           background:
             "linear-gradient(32.33deg, #FEEDFB 40.6%, #FEE5EC 58.42%, #F5E6FF 79.81%, #BFEAFF 100%)",
-          height: "95dvh",
+          height: "97dvh",
           overflow: "hidden",
           padding: "20px",
+          paddingTop:'0px',
           fontFamily: '"Inter", sans-serif',
           position: "relative",
           display: "flex",
@@ -85,6 +86,9 @@ export default function InstallPage({ deferredPrompt }) {
             />
             <img src="/Uni-match-14-3-2025.png" style={{ width: "85%" }} />
           </Box>
+                 <Box sx={{textAlign:'right'}}>
+                  <img src="/beta.png" style={{ width: "15%", position:'relative', left:10 }} />
+                  </Box>
 
           <Box
             sx={{
@@ -117,7 +121,7 @@ export default function InstallPage({ deferredPrompt }) {
               marginBottom: "12px",
             }}
           >
-            Uni-Match
+            Uni-Match-beta
           </Typography>
 
           {/* Short Intro Paragraph */}
@@ -131,7 +135,7 @@ export default function InstallPage({ deferredPrompt }) {
           >
             Meet new people, build real connections, and explore campus life
             like never before! <strong>Uni-Match</strong> is exclusively for LPU
-            students—whether for friendships, networking, or more.
+            students—whether for love, friendships, networking, or more.
           </Typography>
 
           {/* Bullet Points - Features */}
