@@ -59,6 +59,7 @@ export default function ChatInterface() {
   const [modalOpen, setModalOpen] = useState(false);
   const [unseenCounts, setUnseenCounts] = useState({});
   const [lastMessages, setLastMessages] = useState({})
+  const [smallLoading, setSmallLoading] = useState(false)
 
 
   useEffect(() => {
@@ -238,7 +239,7 @@ export default function ChatInterface() {
   }
 
   function handleDeleteMatch(target_reg_no) {
-  
+    setSmallLoading(true);
     axios
       .post("https://api.uni-match.in/matchdel", {user_2_reg_no:target_reg_no}, {
         withCredentials: true,
@@ -258,7 +259,11 @@ export default function ChatInterface() {
       })  
       .catch((error) => {
         console.error("Error :", error);
-      });
+      })
+      .finally(()=>{
+        setSmallLoading(false);
+        setModalOpen(false);
+      })
   }
   const startPress = () => {
     setIsPressed(true);
@@ -303,6 +308,7 @@ export default function ChatInterface() {
 
   return (
     <>
+    {smallLoading && <SmallLoading/>}
           <DeleteModal
         setModalOpen={setModalOpen}
         modalOpen={modalOpen}
