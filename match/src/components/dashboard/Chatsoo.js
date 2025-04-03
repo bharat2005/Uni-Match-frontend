@@ -380,6 +380,11 @@ export default function ChatInterface() {
                       setSelectedProfile(chat.match_user_data);
                       navigate("/app/chats/info");
                     }}
+                    imgProps={{
+                      onLoad: (e) => (e.target.style.opacity = 1), // Smooth fade-in
+                      onError: (e) => (e.target.src = "/4.jpg"), // Fallback image
+                      style: { opacity: 0, transition: "opacity 0.3s ease-in-out" },
+                    }}                
                     src={chat.match_user_data.images[0]}
                     alt={`${chat.match_user_data.name}'s profile`}
                     sx={{

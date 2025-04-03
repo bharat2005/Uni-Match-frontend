@@ -211,6 +211,12 @@ const ChatComponent = () => {
                   width: "40px",
                   height: "40px",
                 }}
+                imgProps={{
+                  onLoad: (e) => (e.target.style.opacity = 1), // Smooth fade-in
+                  onError: (e) => (e.target.src = "/4.jpg"), // Fallback image
+                  style: { opacity: 0, transition: "opacity 0.3s ease-in-out" },
+                }}
+            
               />
             )}
             <Box
@@ -237,6 +243,12 @@ const ChatComponent = () => {
                   width: "40px",
                   height: "40px",
                 }}
+                imgProps={{
+                  onLoad: (e) => (e.target.style.opacity = 1), // Smooth fade-in
+                  onError: (e) => (e.target.src = "/4.jpg"), // Fallback image
+                  style: { opacity: 0, transition: "opacity 0.3s ease-in-out" },
+                }}
+            
               />
             )}
           </Box>

@@ -308,6 +308,12 @@ const ProfileContainer = () => {
               marginBottom: "10px",
               border: "2px solid #fd7e14",
             }}
+            imgProps={{
+              onLoad: (e) => (e.target.style.opacity = 1), // Smooth fade-in
+              onError: (e) => (e.target.src = "/4.jpg"), // Fallback image
+              style: { opacity: 0, transition: "opacity 0.3s ease-in-out" },
+            }}
+        
           />
           <Typography
             sx={{
