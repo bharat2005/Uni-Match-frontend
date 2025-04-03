@@ -242,7 +242,7 @@ export default function ChatInterface() {
     axios
       .post("https://api.uni-match.in/matchdel", {user_2_reg_no:target_reg_no}, {
         withCredentials: true,
-        headers: { "X-CSRF-TOKEN": localStorage.getItem("csrfToken") },
+        headers: { "X-CSRF-TOKEN": localStorage.getItem("csrfTokenAccess") },
       })
       .then((response) => {
         setMatchList(response.data.matches);
@@ -305,7 +305,7 @@ export default function ChatInterface() {
     <>
           <DeleteModal
         setModalOpen={setModalOpen}
-        modalOpen={modalOpen}
+        modalOpen={true}
         handleDeleteMatch={handleDeleteMatch}
         target_reg_no={String(target_reg_no)}
       />

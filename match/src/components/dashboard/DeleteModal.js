@@ -122,7 +122,7 @@ Delete this chat?
                 // },
               }}
             >
-            This can't be undone. Sure you want to proceed?
+            Sure you want to proceed?
             </Typography>
           </Box>
 
