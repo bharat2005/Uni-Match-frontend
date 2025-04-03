@@ -415,7 +415,7 @@ const startPress = () => {
                     sm: "13px",
                   },
                   display: "flex",
-                  backgroundColor: isPressed ? "#64b5f6" : null,
+                  backgroundColor: modalOpen ? "rgb(249, 129, 129)" : null,
                   alignItems: "center",
                   position: "relative",
                 }}
