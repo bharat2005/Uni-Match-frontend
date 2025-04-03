@@ -240,7 +240,7 @@ const TextBoard = ({ onClose }) => {
         >
           Got feedback or ideas? I’d love to hear from you. Reach out to me at{" "}
           <strong style={{ color: "#1976D2", fontWeight: 500 }}>
-            @uni-match.in
+            support@uni-match.in
           </strong>
           . Whether it's feature suggestions or just a friendly chat — I'm all
           ears.

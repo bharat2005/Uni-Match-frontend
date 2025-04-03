@@ -55,50 +55,29 @@ const ChatComponent = () => {
 
 
 
-
-
-
-
-
-
-
-
-      useEffect(() => {
-        const handleResize = () => {
-          const viewportHeight = window.visualViewport.height;
+      // useEffect(() => {
+      //   const handleResize = () => {
+      //     const viewportHeight = window.visualViewport.height;
           
-          document.documentElement.style.setProperty("--app-height", `${viewportHeight}px`);
+      //     document.documentElement.style.setProperty("--app-height", `${viewportHeight}px`);
       
-          // Prevent body scrolling when keyboard is open
-          if (viewportHeight < window.innerHeight) {
-            document.body.style.overflow = "hidden"; 
-          } else {
-            document.body.style.overflow = "";
-          }
-        };
+      //     // Prevent body scrolling when keyboard is open
+      //     if (viewportHeight < window.innerHeight) {
+      //       document.body.style.overflow = "hidden"; 
+      //     } else {
+      //       document.body.style.overflow = "";
+      //     }
+      //   };
       
-        window.visualViewport.addEventListener("resize", handleResize);
-        handleResize();
+      //   window.visualViewport.addEventListener("resize", handleResize);
+      //   handleResize();
       
-        return () => {
-          window.visualViewport.removeEventListener("resize", handleResize);
-          document.body.style.overflow = ""; // Reset on cleanup
-        };
-      }, []);
+      //   return () => {
+      //     window.visualViewport.removeEventListener("resize", handleResize);
+      //     document.body.style.overflow = ""; // Reset on cleanup
+      //   };
+      // }, []);
       
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
       function handleSend() {
@@ -133,7 +112,7 @@ const ChatComponent = () => {
         sx={{
           display: "flex",
           flexDirection: "column",
-          height: "var(--app-height)",
+          height: "100vh",
           backgroundColor: "#fff",
           fontFamily: '"Inter", sans-serif',
           overflow: "hidden",

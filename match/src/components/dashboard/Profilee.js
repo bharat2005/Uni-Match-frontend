@@ -360,7 +360,7 @@ const ProfileContainer = () => {
                     navigate("/app/profile/privacy")
                   } else if (item.text === "Support Us") {
                     navigate("/app/profile/support");
-                  } else if (item.text === "Delete Profile") {
+                  } else if (item.text === "Delete Account") {
                     navigate("/app/profile/delete");
                   }
                 }}
