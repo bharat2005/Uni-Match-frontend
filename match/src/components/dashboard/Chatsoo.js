@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { useAuth } from "../../AuthProvider";
 import axios from "axios";
 import { db } from './firebase';
-import { collection, deleteDoc,doc, serverTimestamp, getDocs, orderBy, where, query, onSnapshot, limit, writeBatch } from "firebase/firestore";
+import { collection, writeBatch ,doc, serverTimestamp, getDocs, orderBy, where, query, onSnapshot, limit, writeBatch } from "firebase/firestore";
 import {
   Avatar,
   Badge,
@@ -238,33 +238,48 @@ export default function ChatInterface() {
       });
   }
 
-  function handleDeleteMatch(target_reg_no) {
-    setSmallLoading(true);
-    axios
-      .post("https://api.uni-match.in/matchdel", {user_2_reg_no:target_reg_no}, {
-        withCredentials: true,
-        headers: { "X-CSRF-TOKEN": localStorage.getItem("csrfTokenAccess") },
-      })
-      .then((response) => {
-        setMatchList(response.data.matches);
-        setMatchesNoti(response.data.MatchesNoti);
 
-        const array = [Number(selfprofile.reg_no), Number(target_reg_no)].sort((a, b) => a - b);
-        const match_id = `${array[0]}_${array[1]}`
+function handleDeleteMatch(target_reg_no) {
+  setSmallLoading(true);
 
-       return deleteDoc(doc(db, "chats", match_id))
-      })
-      .then(() => {
-        console.log("Chat deleted successfully!");
-      })  
-      .catch((error) => {
-        console.error("Error :", error);
-      })
-      .finally(()=>{
-        setSmallLoading(false);
-        setModalOpen(false);
-      })
-  }
+  axios
+    .post("https://api.uni-match.in/matchdel", { user_2_reg_no: target_reg_no }, {
+      withCredentials: true,
+      headers: { "X-CSRF-TOKEN": localStorage.getItem("csrfTokenAccess") },
+    })
+    .then((response) => {
+      setMatchList(response.data.matches);
+      setMatchesNoti(response.data.MatchesNoti);
+
+      const array = [Number(selfprofile.reg_no), Number(target_reg_no)].sort((a, b) => a - b);
+      const match_id = `${array[0]}_${array[1]}`;
+
+      const batch = writeBatch(db); // 🔥 Start a Firestore batch
+      const messagesRef = collection(db, "chats", match_id, "messages");
+
+      return getDocs(messagesRef)
+        .then((messagesSnapshot) => {
+          messagesSnapshot.forEach((messageDoc) => {
+            batch.delete(doc(db, "chats", match_id, "messages", messageDoc.id)); // 🔥 Delete each message
+          });
+
+          batch.delete(doc(db, "chats", match_id)); // 🔥 Delete the chat document
+          return batch.commit(); // 🔥 Execute all deletions at once
+        });
+    })
+    .then(() => {
+      console.log("Chat and all messages deleted successfully!");
+    })
+    .catch((error) => {
+      console.error("Error deleting chat:", error);
+    })
+    .finally(() => {
+      setSmallLoading(false);
+      setModalOpen(false);
+    });
+}
+
+
   const startPress = () => {
     setIsPressed(true);
 
