@@ -305,7 +305,7 @@ export default function ChatInterface() {
     <>
           <DeleteModal
         setModalOpen={setModalOpen}
-        modalOpen={true}
+        modalOpen={modalOpen}
         handleDeleteMatch={handleDeleteMatch}
         target_reg_no={String(target_reg_no)}
       />
