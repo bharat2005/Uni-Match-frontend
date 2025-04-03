@@ -185,7 +185,7 @@ const ChatComponent = () => {
         sx={{
           flex: 1,
           padding: "15px",
-          paddingTop:'64px',
+          paddingTop:'68px',
           overflowY: "auto",
           backgroundColor: "#F5F5F5",
           display: "flex",

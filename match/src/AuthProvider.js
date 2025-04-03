@@ -125,7 +125,7 @@ export const ProtectedRoute = ({ children }) => {
   // if (loading){
   //   return <Loading/>
   // }
-  return true ? children : <Navigate to="/" />;
+  return bool ? children : <Navigate to="/" />;
 };
 
 export const ProtectedRoute2 = ({ children }) => {
