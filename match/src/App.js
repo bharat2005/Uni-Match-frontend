@@ -85,9 +85,9 @@ export default function App() {
     return <Restrict />;
   }
 
-  if (!isStandalone){
-    return  <InstallPage deferredPrompt={deferredPrompt} />
-  }
+  // if (!isStandalone){
+  //   return  <InstallPage deferredPrompt={deferredPrompt} />
+  // }
 
   return (
     <AuthProvider>
