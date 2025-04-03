@@ -266,7 +266,7 @@ const ProfileGrid = () => {
                         }}
                       >
 
-{![index] && (
+{!loaded[index] && (
         <Skeleton
           variant="rectangular"
           sx={{

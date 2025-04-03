@@ -137,6 +137,7 @@ const ProfileGrid = () => {
   const [loading, setLoading] = useState(false);
   const [likesList, setLikesList] = useState([]);
   const [smallLoading, setSmallLoading] = useState(false)
+  const [loaded, setLoaded] = useState({})
 
   useEffect(() => {
     // Disable scrolling for the whole page
@@ -437,16 +438,30 @@ const ProfileGrid = () => {
                           textAlign: "left",
                         }}
                       >
-                        <CardMedia
-                          component="img"
-                          image={profile.images[0]}
-                          sx={{
-                            width: "100%",
-                            height: "200px",
-                            borderRadius: "26px",
-                            objectFit: "cover",
-                          }}
-                        />
+ {!loaded[index] && (
+         <Skeleton
+           variant="rectangular"
+           sx={{
+             width: "100%",
+             height: "200px",
+             borderRadius: "26px",
+             objectFit: "cover",
+           }}// Same as CardMedia height
+           animation="wave" // Try "pulse" or disable with false
+         />
+       )}
+                         <CardMedia
+                           component="img"
+                           image={profile.images[0]}
+                           onLoad={() => setLoaded(prev=>({...prev, [index]:true}))}
+                           sx={{
+                             width: "100%",
+                             height: "200px",
+                             borderRadius: "26px",
+                             display: loaded[index] ? "block" : "none",
+                             objectFit: "cover",
+                           }}
+                         />
 
                         {/* Heart and Cross Buttons */}
                         <Box
