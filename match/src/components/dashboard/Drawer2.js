@@ -7,6 +7,7 @@ import {
   Paper,
   Avatar,
   Typography,
+  Skeleton,
   Box,
   SwipeableDrawer,
   Chip,
@@ -27,21 +28,24 @@ function Drawer() {
     setIsDrawerOpen(true);
   }, []);
 
+  React.useEffect(() => {
+    setImageLoaded(false);
+    const img = new Image();
+    img.src = list[currentImageIndex];
+    img.onload = () => setImageLoaded(true);
+  }, [currentImageIndex]);
+
   const nextImage = () => {
     setCurrentImageIndex((prevIndex) =>
-      prevIndex === list.length - 1 ? 0 : prevIndex + 1,
+      prevIndex === list.length - 1 ? 0 : prevIndex + 1
     );
-
-    setImageLoaded(false);
   };
 
   const prevImage = () => {
     setCurrentImageIndex((prevIndex) =>
-      prevIndex === 0 ? list.length - 1 : prevIndex - 1,
+      prevIndex === 0 ? list.length - 1 : prevIndex - 1
     );
-    setImageLoaded(false);
   };
-
 
   return (
     <>
@@ -54,26 +58,33 @@ function Drawer() {
             overflow: "hidden",
           }}
         >
-          <Box
+       <Box
             sx={{
-              height: "55vh", // Slightly reduced height for better balance
-              backgroundImage: `url(${list[currentImageIndex]})`,
+              height: "55vh",
+              backgroundImage: imageLoaded ? `url(${list[currentImageIndex]})` : "none",
               backgroundPosition: "center",
               backgroundSize: "cover",
               backgroundRepeat: "no-repeat",
               position: "fixed",
               top: 0,
-              transform: true
-                ? "translate3d(0, 0, 0)"
-                : "translate3d(0, 110%, 0)",
+              transform: "translate3d(0, 0, 0)",
               transition: "transform 0.4s ease-out",
               willChange: "transform",
               left: 0,
               right: 0,
               zIndex: 600,
-              borderRadius: "0 0 16px 16px", // Add a soft curve at the bottom
+              borderRadius: "0 0 16px 16px",
             }}
           >
+            {!imageLoaded && (
+              <Skeleton
+                variant="rectangular"
+                width="100%"
+                height="100%"
+                animation="wave"
+                sx={{ position: "absolute", top: 0, left: 0, bgcolor: "#ddd" }}
+              />
+            )}
             <IconButton
               sx={{
                 position: "absolute",
