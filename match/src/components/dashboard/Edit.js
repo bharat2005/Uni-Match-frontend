@@ -402,7 +402,6 @@ function SearchContainer({ onClose, setIsDrawerOpen }) {
                 },
               },
             )
-
             .then((response) => {
               const csrfTokenAccess = response.headers["x-csrf-token-access"];
               localStorage.setItem("csrfTokenAccess", csrfTokenAccess);

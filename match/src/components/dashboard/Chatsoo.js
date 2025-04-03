@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { useAuth } from "../../AuthProvider";
 import axios from "axios";
 import { db } from './firebase';
-import { collection, addDoc, serverTimestamp, getDocs, orderBy, where, query, onSnapshot, limit, writeBatch } from "firebase/firestore";
+import { collection, deleteDoc,doc, serverTimestamp, getDocs, orderBy, where, query, onSnapshot, limit, writeBatch } from "firebase/firestore";
 import {
   Avatar,
   Badge,
@@ -22,6 +22,7 @@ import Chatoo from "./Chatoo";
 import { ArrowBackIos, ArrowForwardIos } from "@mui/icons-material";
 import Drawer2 from "./Drawer2";
 import SmallLoading from "../login/SmallLoading";
+import DeleteModal from './DeleteModal';
 import { Outlet } from "react-router-dom";
 
 const profileX = {
@@ -54,6 +55,8 @@ export default function ChatInterface() {
   const [profile, setSelectedProfile] = useState({});
   const [loading, setLoading] = useState(true)
   const pressTimer = useRef(null);
+  const [target_reg_no, setTargetRegNo] = useState(null);
+  const [modalOpen, setModalOpen] = useState(false);
   const [unseenCounts, setUnseenCounts] = useState({});
   const [lastMessages, setLastMessages] = useState({})
 
@@ -234,31 +237,41 @@ export default function ChatInterface() {
       });
   }
 
-  function handleDeleteMatch(e, data) {
-    e.stopPropagation();
+  function handleDeleteMatch(target_reg_no) {
+  
     axios
-      .post("https://api.uni-match.in/matchdel", data, {
+      .post("https://api.uni-match.in/matchdel", {user_2_reg_no:target_reg_no}, {
         withCredentials: true,
         headers: { "X-CSRF-TOKEN": localStorage.getItem("csrfToken") },
       })
       .then((response) => {
         setMatchList(response.data.matches);
         setMatchesNoti(response.data.MatchesNoti);
+
+        const array = [Number(selfprofile.reg_no), Number(target_reg_no)].sort((a, b) => a - b);
+        const match_id = `${array[0]}_${array[1]}`
+
+       return deleteDoc(doc(db, "chats", match_id))
       })
+      .then(() => {
+        console.log("Chat deleted successfully!");
+      })  
       .catch((error) => {
         console.error("Error :", error);
       });
   }
-
   const startPress = () => {
-    setIsPressed(true); // Change color
+    setIsPressed(true);
+
     pressTimer.current = setTimeout(() => {
       if ("vibrate" in navigator) {
-        navigator.vibrate(200); // Vibrate for 200ms
+        navigator.vibrate(200); // Haptic feedback (200ms)
       }
-    }, 800); // Trigger after 800ms hold
+      setModalOpen(true); // Open modal
+    }, 600); // Trigger after 600ms hold
   };
 
+  // Handle long press end (prevent accidental trigger)
   const endPress = () => {
     clearTimeout(pressTimer.current);
     setIsPressed(false);
@@ -290,6 +303,12 @@ export default function ChatInterface() {
 
   return (
     <>
+          <DeleteModal
+        setModalOpen={setModalOpen}
+        modalOpen={modalOpen}
+        handleDeleteMatch={handleDeleteMatch}
+        target_reg_no={String(target_reg_no)}
+      />
       <Outlet context={{ profile }} />
 
       <Container
@@ -353,7 +372,7 @@ export default function ChatInterface() {
              matchList.length ? (
             matchList.map((chat, index) => (
               <ListItem
-              onTouchStart={startPress} // Mobile
+              onTouchStart={()=> {setTargetRegNo(chat.match_user_data.reg_no); startPress()}} // Mobile support
               onTouchEnd={endPress}
                 onClick={() => {
                   handleNotiClick(chat.match_user_data.reg_no);
