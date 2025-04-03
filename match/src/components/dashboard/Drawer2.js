@@ -81,9 +81,9 @@ function Drawer() {
                 variant="rectangular"
                 width="100%"
                 height="100%"
-                animation="pulse"
+                animation="wave"
                 sx={{ position: "absolute", top: 0, left: 0,
-                   bgcolor: " #fce4ec" 
+                   bgcolor: " #ddd" 
                   }}
               />
             )}

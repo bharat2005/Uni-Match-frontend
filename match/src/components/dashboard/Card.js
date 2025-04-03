@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import "../../App.css";
-import { Box, Typography, IconButton } from "@mui/material";
+import { Box, Typography, IconButton, Skeleton } from "@mui/material";
 import { createPortal } from "react-dom";
 import { ArrowBackIos, ArrowForwardIos } from "@mui/icons-material";
 import Drawer from "../../OldComp/Drawer.js";
@@ -11,7 +11,16 @@ import { Outlet } from "react-router-dom";
 export default function Card({ profile, cardDir, isActive }) {
   const navigate = useNavigate();
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
+  const [imageLoaded, setImageLoaded] = React.useState(false);
   const list = profile.images.filter((item) => item != null);
+
+
+  React.useEffect(() => {
+    setImageLoaded(false);
+    const img = new Image();
+    img.src = list[currentImageIndex];
+    img.onload = () => setImageLoaded(true);
+  }, [currentImageIndex]);
 
   const nextImage = () => {
     setCurrentImageIndex((prevIndex) =>
@@ -64,7 +73,7 @@ export default function Card({ profile, cardDir, isActive }) {
           height: "calc(100vh - 108px)",
           boxShadow: "inset 0px -240px 60px 0px black",
           borderRadius: "24px",
-          backgroundImage: `url(${list[currentImageIndex]})`,
+          backgroundImage: imageLoaded ? `url(${list[currentImageIndex]})` : "none",
           backgroundSize: "cover",
           backgroundPosition: `center bottom 140px`, // Offset from the bottom
           backgroundRepeat: "repeat", // Repeat the image
@@ -73,6 +82,20 @@ export default function Card({ profile, cardDir, isActive }) {
           alignItems: "center",
         }}
       >
+            {!imageLoaded && (
+              <Skeleton
+                variant="rectangular"
+                width="100%"
+                height="100%"
+                animation="wave"
+                sx={{ position: "absolute", top: 0, left: 0,
+                   bgcolor: " #ddd" 
+                  }}
+              />
+            )}
+
+
+
         <Box
           sx={{ display: "flex", width: "100%", position: "absolute", top: 0 }}
         >

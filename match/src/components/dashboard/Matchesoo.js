@@ -447,7 +447,7 @@ const ProfileGrid = () => {
              borderRadius: "26px",
              objectFit: "cover",
            }}// Same as CardMedia height
-           animation="pulse" // Try "pulse" or disable with false
+           animation="wave" // Try "pulse" or disable with false
          />
        )}
                          <CardMedia
